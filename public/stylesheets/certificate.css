@@ -8,54 +8,47 @@
         text-align: center;
     }
 }
- 
+
 .certificate-nav {
-	position: relative;
-	width: 100%;
-	height: 150px;
 	background-color: blue;
+	width: 100%;
+	height: 200px;
+	position: relative;
 }
 
 .certificate-nav-logo-container {
-	background-color: red;
-	width: 300px;
-	height: 100px;
 	position: absolute;
 	left: 100px;
 	top: 20px;
-}
-
-.certificate-nav-logo {
-	width: 100%;
+	width: 300px;
+	height: 100px;
+	background-color: red;
 }
 
 .certificate-nav-bar {
+	background-color: transparent !important;
+	border: none !important;
+	background-image: none !important;
 	width: 50%;
 	margin: 0 auto;
-	background-color: transparent !important;
-	background-image: none !important;
-	border: none !important;
 }
 
 .certificate-content-container {
-	/*margin-top: 20px;*/
+	margin-top: 0px;
 	width: 100%;
 	height: 800px;
 	background-color: lightgray;
 }
 
 .certificate-pane {
+	margin: 0 auto;
 	width: 1024px;
 	height: 600px;
 	background-color: white;
-	margin: 0 auto;
-	/*margin-top: 20px !important;*/
 }
 
 .certificate-pane-head {
 	width: 100%;
-	height: 50px;
-	border-bottom-color: blue;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	height: 80px;
+	border-bottom: 1px solid blue;
 }
