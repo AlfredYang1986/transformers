@@ -1,0 +1,119 @@
+@media (min-width: 768px) {
+    .navbar .navbar-nav {
+        display: inline-block;
+        float: none;
+    }
+    
+    .navbar .navbar-collapse {
+        text-align: center;
+    }
+}
+
+.home-nav {
+	background-color: blue;
+	width: 100%;
+	height: 220px;
+	position: relative;
+}
+
+.home-nav-phone {
+	background-color: transparent;
+	position: absolute;
+
+	/**
+	 * 根据王同学的标注填写
+	 */
+	left: 20px;
+	top: 20px;
+	width: 300px;
+	height: 100px;
+
+	/**
+ 	 * 去掉第一句，用第二句替代
+ 	 */
+	background-color: red !important;
+	background-image: url("/assets/images/home-phone.png");
+	background-repeat: no-repeat;
+}
+
+.home-nav-logo-container {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.home-nav-logo {
+	text-align: center;
+	margin: 0 auto;
+	width: 300px;
+	height: 100px;
+	background-color: yellow !important;
+	/*background-image: url("/assets/images/home-logo.png");*/
+}
+
+.home-nav-bar {
+	text-align: center !important;
+	background-image: none !important;
+	background-color: transparent !important;
+	border: none !important;
+}
+
+.home-nav-sign-btn-group {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	width: 300px;
+	height: 100px;
+	background-color: purple !important;
+}
+
+.home-img-wall {
+	background-color: green !important;
+	width: 100%;
+	height: 500px;
+}
+
+.home-table-container {
+	width: 100%;
+}
+
+.home-table {
+	width: 80%;
+	height: 400px;
+	margin: 0 auto;
+	background-color: blue;
+}
+
+.home-table-icon {
+	text-align: center;
+}
+
+.home-table-des-text {
+	font-size: 1.5em;
+	color: red;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.home-footer {
+	width: 100%;
+	height: 300px;
+	background-image: url("/assets/images/home-footer-bkg.png");
+	background-repeat: no-repeat;
+	background-color: yellow;
+}
+
+.home-footer-table {
+	width: 40%;
+	margin: 0 auto;	
+}
+
+.home-footer-table-title {
+	font-size: 2em;
+	color: #fff;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.home-footer-cell {
+	text-align: center;
+}
