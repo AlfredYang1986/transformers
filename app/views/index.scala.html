@@ -1,15 +1,147 @@
 @(message: String)
 
-@main("Welcome to Play") {
+@main("Welcome to Play")  {
     
 } {
+    
 	<div class="home-nav">
 		<div style="margin-top:0">&nbsp;</div>
-		<div class="home-nav-phone">&nbsp;</div>
-		<div class="home-nav-sign-btn-group">&nbsp;</div>
-		<div class="home-nav-logo-container">
-			<img class="home-nav-logo" src="@routes.Assets.at("images/home-logo.png")">
+		
+		<div class="home-nav-phone">全国免费服务热线<br />400-000-0000</div>
+		
+		
+		<div class="home-nav-sign-btn-group">
+		
+		  <button type="button" class="btn" data-toggle="modal" data-target="#home-register">免费注册</button>
+		  <button type="button" class="btn" data-toggle="modal" data-target="#home-login">登陆</button>
+		
 		</div>
+
+		<!-- Home Page User Login dialog -->
+    <div class="modal fade" id="home-register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+       
+          <div class="modal-content">
+          
+             <div class="modal-header">
+             
+                <button type="button" class="close" 
+                   data-dismiss="modal" aria-hidden="true">
+                      &times;
+                </button>
+                
+                <h4 class="modal-title" id="myModalLabel">
+                   注册类别选择
+                </h4>
+                
+             </div>
+             
+             <div class="modal-body">
+                
+                
+                
+
+             <form class="form-horizontal">
+             
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-8">
+                    <img src="images/homeRegister/company-icon.png" class="img-responsive">
+                    <button type="button" class="btn btn-primary btn-lg">物流公司/厂家/专线</button>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-8">
+                    <img src="images/homeRegister/driver-icon.png" class="img-responsive">
+                    <button type="button" class="btn btn-primary btn-lg">驾驶员</button>
+                  </div>
+                </div>
+                
+              </form>
+
+
+             </div>
+             
+             
+             <div class="modal-footer">
+
+             </div>
+          </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+    </div>
+
+
+
+
+
+
+
+
+		<!-- Home Page User Login dialog -->
+    <div class="modal fade" id="home-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+       
+          <div class="modal-content">
+          
+             <div class="modal-header">
+             
+                <button type="button" class="close" 
+                   data-dismiss="modal" aria-hidden="true">
+                      &times;
+                </button>
+                
+                <h4 class="modal-title" id="myModalLabel">
+                   <img style="" src=""""),_display_(Seq[Any](/*11.37*/routes/*11.37*/.Assets.at("images/homeLogin/logo.png"))),format.raw/*11.85*/("""">
+                     用户登陆
+                </h4>
+                
+             </div>
+             
+             <div class="modal-body">
+                
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-8">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="邮箱/手机号/用户名">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-8">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="密码">
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> 记住密码
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                
+              </form>
+
+             </div>
+             
+             
+             <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                   登陆
+                </button>
+             </div>
+          </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+    </div>
+
+
+		<div class="home-nav-logo-container">
+			<img class="home-nav-logo" src=""""),_display_(Seq[Any](/*11.37*/routes/*11.43*/.Assets.at("images/homePage/homeLogo.png"))),format.raw/*11.85*/("""">
+		</div>
+		
+		
 		<nav class="navbar navbar-default home-nav-bar">
 	      <!-- Brand and toggle get grouped for better mobile display -->
 	      <div class="navbar-header">
@@ -24,11 +156,12 @@
 	      <!-- Collect the nav links, forms, and other content for toggling -->
 	      <div class="collapse navbar-collapse navbar-ex1-collapse">
 	        <ul class="nav navbar-nav">
-	          <li class="active"><a href="#">Link</a></li>
-	          <li><a href="#">Link</a></li>
-	          <li><a href="#">Link</a></li>
-	          <li><a href="#">Link</a></li>
-	          <li class="dropdown">
+	          <li class=""><a href="#">首页</a></li>
+	          <li><a href="#">公司介绍</a></li>
+	          <li><a href="#">商务合作</a></li>
+	          <li><a href="#">招兵买马</a></li>
+	          <li><a href="#">帮助</a></li>
+<!-- 	          <li class="dropdown">
 	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 	            <ul class="dropdown-menu">
 	              <li><a href="#">Action</a></li>
@@ -38,25 +171,67 @@
 	              <li><a href="#">One more separated link</a></li>
 	            </ul>
 	          </li>
+ -->
 	        </ul>
 	      </div><!-- /.navbar-collapse -->
 		</nav>
 
-		<div class="home-img-wall">
-			<img style="width: 100%" src="@routes.Assets.at("images/home-img-wall.png")">
+		<div id="myCarousel" class="carousel slide home-img-wall">
+			<img style="width: 100%" src=""""),_display_(Seq[Any](/*48.35*/routes/*48.41*/.Assets.at("images/home-img-wall.png"))),format.raw/*48.79*/("""">
+			        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 1</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 2</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption 3</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>  
+			  
+			  
 		</div>
 
 		<div class="home-table-container">
 			<table class="home-table">
 				<tr>
 					<td class="home-table-icon">
-						<img style="width: 100px; background-color: green;" src="@routes.Assets.at("images/home-safe-icon.png")">
+						<img style="width: 100px;" src=""""),_display_(Seq[Any](/*55.40*/routes/*55.46*/.Assets.at("images/homePage/security.png"))),format.raw/*55.88*/("""">
 					</td>
 					<td class="home-table-icon">
-						<img style="width: 100px; background-color: green;" src="@routes.Assets.at("images/home-rocket-icon.png")">
+						<img style="width: 100px;" src=""""),_display_(Seq[Any](/*58.40*/routes/*58.46*/.Assets.at("images/homePage/effectively.png"))),format.raw/*58.91*/("""">
 					</td>
 					<td class="home-table-icon">
-						<img style="width: 100px; background-color: green;" src="@routes.Assets.at("images/home-money-icon.png")">
+						<img style="width: 100px;" src=""""),_display_(Seq[Any](/*61.40*/routes/*61.46*/.Assets.at("images/homePage/economy.png"))),format.raw/*61.87*/("""">
 					</td>
 				</tr>
 				<tr>
@@ -80,10 +255,10 @@
 				</tr>
 				<tr>
 					<td class="home-footer-cell">
-						<img style="width: 100px" src="@routes.Assets.at("images/home-qq-icon.png")">
+						<img style="" src=""""),_display_(Seq[Any](/*85.27*/routes/*85.33*/.Assets.at("images/homePage/qq.png"))),format.raw/*85.69*/("""">
 					</td>
 					<td class="home-footer-cell">
-						<img style="width: 100px" src="@routes.Assets.at("images/home-qq-icon.png")">
+						<img style="" src=""""),_display_(Seq[Any](/*88.27*/routes/*88.33*/.Assets.at("images/homePage/wechat.png"))),format.raw/*88.73*/("""">
 					</td>
 				</tr>
 			</table>
