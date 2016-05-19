@@ -33,6 +33,11 @@
 	margin: 0 auto;
 }
 
+.nav.navbar-nav li a{
+	color: #008bdc !important;
+	font-size: 18px !important;
+}
+
 .certificate-content-container {
 	margin-top: 0px;
 	width: 100%;
