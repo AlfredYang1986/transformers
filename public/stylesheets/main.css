@@ -12,15 +12,16 @@
 .home-nav {
 	background-color: #008bdc;
 	width: 100%;
-	height: 220px;
+	height: 100%;
 	position: relative;
 }
 
 .home-nav-phone {
 	background-color: transparent;
 	position: absolute;
-
-	/**
+	margin-top: 40px;
+/**
+	
 	 * 根据王同学的标注填写
 	 
 	left: 20px;
@@ -30,24 +31,33 @@
 */
 	/**
  	 * 去掉第一句，用第二句替代
- 	 */
+ 	 
 	
 	background-image: url("/assets/images/homePage/homePhoneNo.png");
 	background-repeat: no-repeat;
+	*/
+}
+
+.home-nav-phone-text {
+	color: #FFFFFF;
+	font-size: 14px;
+	
+}
+
+.home-nav-phone-number {
+	color: #FFFFFF;
+	font-size: 24px;
 }
 
 .home-nav-logo-container {
 	text-align: center;
 	margin-top: 20px;
+/*	vertical-align: middle; */
 }
 
 .home-nav-logo {
 	text-align: center;
 	margin: 0 auto;
-/*	width: 300px;
-	height: 100px;
-	background-color: yellow !important;
-	background-image: url("/assets/images/home-logo.png");*/
 }
 
 .home-nav-bar {
@@ -58,9 +68,21 @@
 	font-size: 18px;
 }
 
-.li {
-	color: #FFFFF;
+.nav.navbar-nav li a {
+	color: #FFFFFF !important;
 	font-size: 18px;
+}
+
+.nav.navbar-nav > .active > a{
+	background-image: none !important;
+	background-color: #008bdc !important;
+}
+
+.nav.navbar-nav > .active > a:focus{
+	color: #FFFFFF !important;
+	font-size: 24px !important;
+	background-image: none !important;
+	background-color: #008bdc !important;
 }
 
 .home-nav-sign-btn-group {
