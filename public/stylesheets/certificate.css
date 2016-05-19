@@ -9,6 +9,13 @@
     }
 }
 
+.certificate-body {
+	background-color: transparent !important;
+	background-image: url("/assets/images/certification/certification-bg.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
 .certificate-nav {
 	background-color: transparent !important;
 	width: 100%;
@@ -42,7 +49,10 @@
 	margin-top: 0px;
 	width: 100%;
 	height: 800px;
-	background-color: lightgray;
+	background-color: transparent !important;
+	background-image: url("/assets/images/certification/transparency-bg.png");
+	background-size: 100% 800px;
+	background-repeat: no-repeat;
 }
 
 .certificate-pane {
