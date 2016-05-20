@@ -103,7 +103,7 @@
 	margin: 280px auto;
 }
 
-.home-reg-dialog>div {
+.home-reg-header {
 	border: none !important;
 }
 
@@ -144,6 +144,39 @@
 .home-reg-table-cell:hover>a {
 	color: white;
 	text-decoration: none;
+}
+
+.home-login-header {
+	position: relative;
+	border-bottom: 1px solid blue !important;
+}
+
+.home-login-title {
+	text-align: center;
+}
+
+.home-login-icon {
+	position: absolute;
+	top: 5px;
+	left: 10px;
+}
+
+.home-login-btn {
+	text-align: center;
+	margin: 0 auto !important;
+	color: #000;
+	font-size: 18px;
+	max-width: 405px;
+	height: 35px;
+	border: 1px solid #000;
+	background-color: transparent !important;
+	background-image: none !important;
+	border-radius: 0px;
+	float: none !important;
+}
+
+.home-login-btn:hover {
+	background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .home-img-wall {
