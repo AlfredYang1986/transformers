@@ -82,6 +82,70 @@
 	top: 20px;
 }
 
+.home-nav-sign-btn-group>button {
+	background-image: none !important;
+	background-color: transparent !important;
+	color: white !important;
+	border: 1px solid white;
+	border-radius: 0px !important;
+}
+
+.home-nav-sign-btn-group>button:hover {
+	color: #ffaf02 !important;
+	border: 1px solid #ffaf02;
+}
+
+.home-reg-dialog {
+	background-image: none !important;
+	background-color: rgba(255, 255, 255, 0.5) !important; 
+	width: 560px;
+	height: 280px;
+	margin: 280px auto;
+}
+
+.home-reg-dialog>div {
+	border: none !important;
+}
+
+.home-reg-table-title {
+	text-align: center;
+	color: #000b2a;
+	font-size: 24px;
+	height: 80px;
+}
+
+.table>thead>tr>th {
+	border: none !important;
+}
+
+.table>tbody>tr>td {
+	border: none !important;
+}
+
+.home-reg-table-cell {
+	text-align: center;
+	margin: 0;
+	font-size: 18px;
+	height: 60px;
+	vertical-align: middle !important;	
+}
+
+.home-reg-table-cell>a {
+	color: #333333;
+	width: 100%;
+}
+
+.home-reg-table-cell:hover {
+	color: white;
+	background-color: #008bdc;
+	cursor: pointer;
+}
+
+.home-reg-table-cell:hover>a {
+	color: white;
+	text-decoration: none;
+}
+
 .home-img-wall {
 	height: auto !important;
 }
