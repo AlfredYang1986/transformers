@@ -47,4 +47,32 @@
 	background-image: url("/assets/images/company-content-bkg.jpg");
 	background-repeat: no-repeat;
 	min-height: 500px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+	-moz-background-size:100% 100%;
+	background-size:100% 100%;
+}
+
+.content-bkg1 {
+	margin-top: -100px;
+}
+
+.another-bkg {
+	background-image: url("/assets/images/another-bkg.png");
+	background-repeat: no-repeat;
+	min-height: 440px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+	-moz-background-size:100% 100%;
+	background-size:100% 100%;
+	margin: 30px;
+}
+
+.third-bkg {
+	background-color: white;
+	min-height: 380px;
+	margin: 30px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+	-moz-background-size:100% 100%;
+	background-size:100% 100%;
+	padding-left: 45px !important;
+	padding-right: 45px !important;
 }
