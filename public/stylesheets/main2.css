@@ -42,3 +42,9 @@
 	font-size: 24px;
 	color: #008bdc !important;
 }
+
+.content-bkg {
+	background-image: url("/assets/images/company-content-bkg.jpg");
+	background-repeat: no-repeat;
+	min-height: 500px;
+}
