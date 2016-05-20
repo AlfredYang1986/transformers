@@ -1,11 +1,16 @@
 @(message: String)
 
-@index_main("Welcome to Play")  {
+@main("Welcome to Play")  {
     
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/company.css")">
 } {
-   	<div>
-   		<h1 style="text-align: center">这里是公司简介</h1>
-   	</div>
+   	<div class="container-fluid" style="padding-left: 0; padding-right: 0">
+		<img width="100%" src="@routes.Assets.at("images/aboutus-bkg.png")">
+	</div>
+
+	<div class="container-fluid company-content-bkg">
+		<p>在这里写介绍</p>
+	</div>
 } {
 	<script type="text/javascript">
 		$(function(){

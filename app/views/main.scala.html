@@ -11,7 +11,7 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="keywords" content="keywords">
 	    <meta name="description" content="description">
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/certificate.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main2.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -74,6 +74,38 @@
         @include
     </head>
     <body>
+    	<div class="container-fluid">
+    		<div class="container main-nav-container">
+    			<div class="main-nav-logo">
+    				<img style="width:200px" src="@routes.Assets.at("images/homeLogin/logo.png")">
+    			</div>
+
+    			<nav class="navbar navbar-default main-nav-bar">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse navbar-ex1-collapse">  
+						<ul class="nav navbar-nav">
+						  	<li data-current="index"><a href="/index">首页</a></li>
+						  	<li data-current="company"><a href="/company">公司介绍</a></li>
+						  	<li data-current="business"><a href="/business">商务合作</a></li>
+						  	<li data-current="recruit"><a href="/recruit">招兵买马</a></li>
+						  	<li data-current="help"><a href="/help">帮助</a></li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</nav>
+    		</div>
+		</div>
+
         @content
 
         @scripts
