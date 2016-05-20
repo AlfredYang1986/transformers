@@ -21,10 +21,16 @@
 	position: absolute !important;
 }
 
+.home-nav-phone-logo {
+	padding-top: 35px;
+}
+
 .home-nav-phone-text {
 	color: #FFFFFF;
 	font-size: 14px;
-	
+	padding-top: 10px;
+	position: absolute !important;
+	padding-left: 20px;
 }
 
 .home-nav-phone-number {
@@ -225,10 +231,12 @@
 	color: #fff;
 	letter-spacing: 1px;
 	text-align: center;
+	padding-top: 40px;
 }
 
 .home-footer-cell {
 	text-align: center;
+	padding-top: 30px;
 }
 
 /* the image of user experience in home page */

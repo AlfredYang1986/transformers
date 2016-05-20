@@ -17,6 +17,7 @@
 	position: absolute;
 	left: 20px;
 	top: 5px;
+	margin-top: 30px;
 }
 
 .main-nav-bar {
@@ -26,6 +27,9 @@
 	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 	margin-top: 30px;
+	width: 100%;
+	height: 100px;
+	position: relative;
 }
 
 .navbar-nav>li>a {
@@ -36,6 +40,7 @@
 	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 	font-weight: 400 !important;
+	margin-top: 30px;
 }
 
 .navbar-nav>.active>a {
@@ -59,11 +64,15 @@
 .another-bkg {
 	background-image: url("/assets/images/another-bkg.png");
 	background-repeat: no-repeat;
-	min-height: 440px;
+	min-height: 875px;
 	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
 	-moz-background-size:100% 100%;
 	background-size:100% 100%;
 	margin: 30px;
+}
+
+.help-title {
+	text-align: center;
 }
 
 .third-bkg {
@@ -76,3 +85,16 @@
 	padding-left: 45px !important;
 	padding-right: 45px !important;
 }
+
+.main-container {
+	background-color: #008bdc;
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+
+.company-text {
+	margin-top: 60px; 
+	font-size: 14px;
+}
+
