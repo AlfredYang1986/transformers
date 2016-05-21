@@ -98,3 +98,50 @@
 	font-size: 14px;
 }
 
+.business-license-btn {
+	text-align: center;
+}
+
+.business-license-btn>button {
+	border: 1px solid #008bdc;
+	background-color: #008bdc; !important;
+	background-image: none !important;
+	color: white;
+	border-radius: 0px !important;
+	width: 400px;
+	min-width: 250px;
+}
+
+.road-license-btn {
+	text-align: center;
+}
+
+.road-license-btn>button {
+	border: 1px solid #008bdc;
+	background-color: #008bdc !important;
+	background-image: none !important;
+	color: white;
+	border-radius: 0px !important;
+	width: 400px;
+	min-width: 250px;
+}
+
+.verifiable-code-btn>button {
+	border: 1px solid #008bdc;
+	background-color: #008bdc; !important;
+	background-image: none !important;
+	color: white;
+	border-radius: 0px !important;
+}
+
+.register-btn{
+	text-align: center;
+}
+
+.register-btn>button {
+	border: 1px solid #008bdc;
+	background-color: transparent !important;
+	background-image: none !important;
+	width: 150px;
+}
+
