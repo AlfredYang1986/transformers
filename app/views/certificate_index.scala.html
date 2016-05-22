@@ -143,5 +143,21 @@
 		</div>
 	</div>
 } {
-	
+	<script type="text/javascript">
+	/**
+		only one type of certification can be selected
+	**/
+		$('input[type="checkbox"]').on('change', function() {
+		   $('input[type="checkbox"]').not(this).prop('checked', false);
+		});
+
+		$(function(){
+			
+
+
+
+
+		});
+
+	</script>
 }
