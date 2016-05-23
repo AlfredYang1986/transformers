@@ -33,12 +33,11 @@ object requestArgsQuery extends Controller {
 //	} 
   
   	def requestGetRequestArgs(request :Request[AnyContent])(auth : String => Option[(String, Int)])(func : (String, JsValue) => JsValue)(bNeedApproved : Boolean) : Result = {
-       import module.auth.RegisterApprovedStatus._
+//       import module.auth.RegisterApprovedStatus._
   	   try {
   	     request.body.asJson.map { x => 
   	         request.headers.get("Authorization").map (auth(_)).getOrElse(None) match {
-  	           case Some((user_id, status)) => if ((bNeedApproved && status == approved.s) || !bNeedApproved)  Ok(authCheckUser(user_id)(x)(func))
-  	                                           else Ok(ErrorCode.errorToJson("user not approved"))
+  	           case Some((user_id, status)) => Ok(authCheckUser(user_id)(x)(func))
   	           case None => Ok(ErrorCode.errorToJson("email not exist"))
   	         }
   	     }.getOrElse(BadRequest)

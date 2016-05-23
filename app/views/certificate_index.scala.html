@@ -1,23 +1,24 @@
-@(message: String)
 
-@main("Welcome to Play") {
+
+@main("机构注册") {
     
 } {
 	<div class="container-fluid content-bkg">
 		<div class="container another-bkg">
-			<div class="third-bkg">
 
+			<!-- common step -->
+			<div class="third-bkg" id='common-step'>
 				<label style="font-size: 36px; text-align: left;">公司/厂家/专线</label>
 				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
-				<form class="form-horizontal" style="margin-top: 40px;">
+				<div class="form-horizontal" style="margin-top: 40px;">
 				
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">企业全称</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="company-name">
+							<input type="text" class="form-control" data-name='company-name'>
 						</div>
 					</div>
 
@@ -31,14 +32,14 @@
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person">
+							<input type="text" class="form-control" data-name='legal-person'>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person-id">
+							<input type="text" class="form-control" data-name='legal-person-id'>
 						</div>
 					</div>			  
 
@@ -52,7 +53,7 @@
 					<div class="form-group">
 						<label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="company-reg-address">
+							<input type="text" class="form-control" data-name="reg-address" data-target="company-reg-address">
 						</div>
 					</div>	
 
@@ -64,20 +65,20 @@
 							</select>
 						</div>
 						<div class="col-sm-2">
-							<input type="email" class="form-control" id="company-phone-dir" placeholder="区号">
+							<input type="text" class="form-control" data-name="company-phone-dir" placeholder="区号">
 						</div>
 						<div class="col-sm-3">
-							<input type="email" class="form-control" id="company-phone-no" placeholder="电话号">
+							<input type="text" class="form-control" data-name="company-phone-no" placeholder="电话号">
 						</div>
 						<div class="col-sm-3">
-							<input type="email" class="form-control" id="company-phone-sep" placeholder="分机">
+							<input type="text" class="form-control" data-name="company-phone-sep" placeholder="分机">
 						</div>
 					</div>			  		  
 
 					<div class="form-group">
 						<label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="principal-name">
+							<input type="text" class="form-control" data-name="principal-name">
 						</div>
 					</div>
 
@@ -89,14 +90,14 @@
 							</select>
 						</div>
 						<div class="col-sm-8">
-							<input type="email" class="form-control" id="principal-phone-no">
+							<input type="text" class="form-control" id="principal-phone-no">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
 						<div class="col-sm-8">
-							<input type="email" class="form-control" id="verifiable-code" placeholder="在此输入验证码" >
+							<input type="text" class="form-control" id="verifiable-code" placeholder="在此输入验证码" >
 						</div>
 						<div class="col-sm-2 verifiable-code-btn">
 							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn">获取动态验证码</button>
@@ -108,15 +109,15 @@
 						<div class="col-sm-10">
 							<div class="checkbox">
 								<label>
-									<input type="checkbox"> 物流公司
+									<input name='company-type' type="radio" value=1> 物流公司
 								</label>
 
 								<label style="margin-left: 90px">
-									<input type="checkbox"> 厂家
+									<input name='company-type' type="radio" value=2> 厂家
 								</label>
 
 								<label style="margin-left: 90px">
-									<input type="checkbox"> 专线
+									<input name='company-type' type="radio" value=3> 专线
 								</label>
 							</div>
 						</div>
@@ -134,30 +135,573 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10 register-btn">
+							<button type="submit" class="btn btn-lg" onclick="nextStep()">下一步</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- company step -->
+			<div class="third-bkg" id='company-step'>
+				<label style="font-size: 36px; text-align: left;">公司注册</label>
+				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+
+				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
+
+				<div class="form-horizontal" style="margin-top: 40px;">
+				
+					<div class="form-group">
+
+						<label for="certificate-type" class="col-sm-2 control-label" >业务领域</label>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input name="field" type="checkbox" value=0> 公路
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input name="field" type="checkbox" value=1> 铁路
+							</label>
+						</div>						
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input name="field" type="checkbox" value=2> 船运
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input name="field" type="checkbox" value=3> 航空
+							</label>
+						</div>							
+						
+					</div>				
+
+					<div class="form-group">
+						<label for="principal-phone-no" class="col-sm-2 control-label">营业范围</label>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择省区</option>
+								<option value="浙江省">浙江省</option>
+							</select>
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择市区</option>
+								<option value="杭州市">杭州市</option>
+							</select>
+						</div>
+
+						<div class="col-sm-1" style="text-align:center;">
+							<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择省区</option>
+								<option value="zhejiang">浙江省</option>
+							</select>
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择市区</option>
+								<option value="zhejiang">杭州市</option>
+							</select>
+						</div>
+					</div>				
+				
+					<div class="form-group">
+						<label for="" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10 business-license-btn">
+							<button type="button" class="btn" data-toggle="modal" data-target="newroute">新增主营路线</button>
+						</div>
+					</div>									
+				
+					<div class="form-group">
+						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-name="company-web">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" data-name="company-fax">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" data-name="company-email">
+						</div>
+					</div>			  
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox" style="text-align: center;">
+								<label>
+									<input type="checkbox" checked><a href>注册视为认同《易聚货会员服务协议》</a>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10 register-btn">
+							<button type="submit" class="btn btn-lg" onclick="register()">注册</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- indusry step -->
+			<div class="third-bkg" id='industry-step'>
+				<label style="font-size: 36px; text-align: left;">厂家注册</label>
+				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+
+				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
+
+				<div class="form-horizontal" style="margin-top: 40px;">								
+				
+					<div class="form-group">
+						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="company-name">
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="legal-person">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="legal-person-id">
+						</div>
+					</div>			  
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox" style="text-align: center;">
+								<label>
+									<input type="checkbox" checked="true"><a href>注册视为认同《易聚货会员服务协议》</a>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10 register-btn">
 							<button type="submit" class="btn btn-lg">注册</button>
 						</div>
 					</div>
-				</form>
+				</div>
+			</div>
+
+			<!-- spical step -->
+			<div class="third-bkg" id='spical-step'>
+				<label style="font-size: 36px; text-align: left;">专线注册</label>
+				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+
+				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
+
+				<div class="form-horizontal" style="margin-top: 40px;">			
+
+					<div class="form-group">
+						<label for="principal-phone-no" class="col-sm-2 control-label">仓库地址</label>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择省区</option>
+								<option value="zhejiang">浙江省</option>
+							</select>
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择市区</option>
+								<option value="zhejiang">杭州市</option>
+							</select>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+							<textarea type="address" class="form-control" rows="3" id="specialway-address" placeholder="填写详细地址"></textarea>
+						</div>
+					</div>
+				
+					<div class="form-group">
+						<label for="" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10 business-license-btn">
+							<button type="button" class="btn" data-toggle="modal" data-target="newroute">新增仓库地址</button>
+						</div>
+					</div>									
+				
+					<div class="form-group">
+						<label for="principal-phone-no" class="col-sm-2 control-label">主营线路</label>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择省区</option>
+								<option value="zhejiang">浙江省</option>
+							</select>
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择市区</option>
+								<option value="zhejiang">杭州市</option>
+							</select>
+						</div>
+
+						<div class="col-sm-1" style="text-align:center; vertical-">
+							<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择省区</option>
+								<option value="zhejiang">浙江省</option>
+							</select>
+						</div>
+
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option selected disabled>请选择市区</option>
+								<option value="zhejiang">杭州市</option>
+							</select>
+						</div>
+
+					</div>				
+				
+					<div class="form-group">
+						<label for="" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10 business-license-btn">
+							<button type="button" class="btn" data-toggle="modal" data-target="newroute">新增主营路线</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+
+						<label for="certificate-type" class="col-sm-2 control-label" >发车时效</label>
+
+						<div class="col-sm-3 radio">
+							<label>
+								<input type="radio"> 天天发车
+							</label>
+						</div>
+
+						<div class="col-sm-3 radio">
+							<label>
+								<input type="radio"> 隔天发车
+							</label>
+						</div>						
+						
+					</div>	
+
+					<div class="form-group">
+
+						<label for="certificate-type" class="col-sm-2 control-label" >拥有车型</label>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 平板车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 高栏车
+							</label>
+						</div>						
+						
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 厢式车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 保温冷藏
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 半挂车
+							</label>
+						</div>
+					</div>	
+
+					<div class="form-group">
+
+						<label for="certificate-type" class="col-sm-2 control-label" ></label>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 危险品车
+							</label>
+						</div>						
+						
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 高低板
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 起重车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 牵引车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 仓棚车
+							</label>
+						</div>	
+					</div>	
+
+					<div class="form-group">
+
+						<label for="certificate-type" class="col-sm-2 control-label" ></label>
+						
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 罐式车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 特种车
+							</label>
+						</div>
+
+						<div class="col-sm-2 checkbox">
+							<label>
+								<input type="checkbox"> 集装箱车
+							</label>
+						</div>						
+
+					</div>	
+
+					<div class="form-group">
+						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="company-name">
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="legal-person">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="legal-person-id">
+						</div>
+					</div>			  
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox" style="text-align: center;">
+								<label>
+									<input type="checkbox" checked="true"><a href>注册视为认同《易聚货会员服务协议》</a>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10 register-btn">
+							<button type="submit" class="btn btn-lg">注册</button>
+						</div>
+					</div>
+
+				</div>
 
 			</div>
 		</div>
 	</div>
 } {
 	<script type="text/javascript">
-	/**
-		only one type of certification can be selected
-	**/
+		var query_object;
+		/**
+			only one type of certification can be selected
+		**/
 		$('input[type="checkbox"]').on('change', function() {
 		   $('input[type="checkbox"]').not(this).prop('checked', false);
 		});
 
 		$(function(){
-			
-
-
-
-
+			$('#company-step').hide();
+			$('#industry-step').hide();
+			$('#spical-step').hide();
 		});
+
+		function nextStep() {
+			var result = getIndexInfo();
+			if (!result) {
+				return;
+			};
+
+			var t = $('input[name="company-type"]:checked').val();
+			$('#common-step').hide();
+			if (t == 1) {
+				$('#company-step').show();
+			} else if (t == 2) {
+				$('#industry-step').show();
+			} else if (t == 3) {
+				$('#spical-step').show();
+			}
+		} 
+
+		function getIndexInfo() {
+			var result = true;
+			var company_name = $('input[data-name="company-name"]').val();
+			if (hasInput(company_name)) {
+				// TODO: 错误提示，公司名
+				result = false;
+			};
+
+			var legal_person = $('input[data-name="legal-person"]').val();
+			if (hasInput(legal_person)) {
+				// TODO; 错误提示，法人名
+				result = false;
+			}
+
+			var legal_person_id = $('input[data-name="legal-person-id"]').val();
+			if (hasInput(legal_person_id)) {
+				// TODO; 错误提示，法人身份证
+				result = false;
+			}
+
+			var company_reg_address = $('input[data-name="reg-address"]').val();
+			if (hasInput(company_reg_address)) {
+				// TODO; 错误提示，公司地址
+				result = false;
+			}
+
+			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
+			var company_phone_no = $('input[data-name="company-phone-no"]').val();
+			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
+
+			var company_type = $('input[name="company-type"]:checked').val();
+			if (typeof(company_type) == "undefined") {
+				//alert('选中你的公司类型');
+				// TODO: 错误提示，公司类型必须选择
+				result = false;
+			}
+
+			if (result) {
+				query_object = new Object();
+				query_object['company_type'] = Number(company_type);
+        		query_object['company_name'] = company_name;
+        		query_object['legal_person'] = legal_person;
+        		query_object['legal_person_id'] = legal_person_id;
+        		query_object['address'] = company_reg_address;
+        		query_object['phone_dir'] = company_phone_dir;
+        		query_object['phone_no'] = company_phone_no;
+        		query_object['phone_sep'] = company_phone_sep;
+			}
+
+			return result;
+		}
+
+		function getCompanyInfo() {
+			var result = true;
+			var company_field = $('input[name="field"]:checked').val();
+			if (typeof(company_field) == "undefined") {
+				//alert('选中你的公司类型');
+				// TODO: 错误提示，公司类型必须选择
+				result = false;
+			}
+
+			var company_web = $('input[data-name="company-web"]').val();
+			var company_fax = $('input[data-name="company-fax"]').val();
+			var company_email = $('input[data-name="company-email"]').val();
+			
+			if (result) {
+				query_object['company_business'] = Number(company_field);
+				query_object['company_web'] = company_web;
+				query_object['company_fax'] = company_fax;
+				query_object['company_email'] = company_email;
+			}
+
+			return result
+		}
+
+		function hasInput(str) {
+			return typeof(t) == "string" && str != "";
+		}
+
+		function register() {
+			var t = $('input[name="company-type"]:checked').val();
+			// $('#common-step').hide();
+			var result;
+			if (t == 1) {
+				result = getCompanyInfo();
+			} else if (t == 2) {
+				// $('#industry-step').show();
+			} else if (t == 3) {
+				// $('#spical-step').show();
+			}
+
+			$.ajax({
+	            url: "/auth/register",
+	            type: 'POST',
+	            dataType: 'json',
+	            contentType: 'application/json, charset=utf-8',
+	            data: JSON.stringify(query_object),
+	            cache: false,
+	            success: function (data) {
+	                if (data.status == "ok") {                                          
+	                     alert("注册成功审核！");
+	                     location.href = "/";
+	                } else {
+	                    alert(data.error.message);
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                alert("请检查您的输入");
+	            }
+	        });
+		}
 
 	</script>
 }

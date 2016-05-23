@@ -39,48 +39,4 @@ object Elogco extends Controller {
     def help = Action {
         Ok(views.html.help("Your new application is ready."))
     }
-    
-    /**
-     * certificate
-     */
-    def certificate = Action {
-        Ok(views.html.certificate_index("test"))
-    }
-    
-     /**
-     * certificate company
-     */
-    def certificateCompany = Action {
-        Ok(views.html.certificateCompany("test"))
-    }
-    
-     /**
-     * certificate industry
-     */
-    def certificateIndustry = Action {
-        Ok(views.html.certificateIndustry("test"))
-    }
-
-     /**
-     * certificate Special Way
-     */
-    def certificateSpecialWay = Action {
-        Ok(views.html.certificateSpecialWay("test"))
-    }    
-    
-     /**
-     * certificate Driver
-     */
-    def certificateDriver = Action {
-        Ok(views.html.certificateDriver("test"))
-    }
-        
-     /**
-     * certificate Compelete
-     */
-    def certificateComplete = Action {
-        Ok(views.html.certificateComplete("test"))
-    }
-    
-    
 }

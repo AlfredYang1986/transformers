@@ -14,34 +14,113 @@ import util.dao._data_connection
 import util.errorcode.ErrorCode
 import com.mongodb.casbah.Imports._
 import module.sercurity.Sercurity
-//import module.statistic.StatisticModule.pushNewUsers
 
-object IDType {
-  case object socialID extends IDTypeDefines(0, "身份证")
-  case object militaryID extends IDTypeDefines(1, "军官证")
-  case object passportID extends IDTypeDefines(2, "护照")
-  case object other extends IDTypeDefines(3, "其它")
+object authTypes {
+    case object admin extends authTypeDefines(0, "admin")
+    case object driverMaster extends authTypeDefines(1, "driver master")
+    case object companyMaster extends authTypeDefines(2, "company master")
+    case object companyOthers extends authTypeDefines(3, "company others")
 }
 
-sealed abstract class IDTypeDefines(val s : Int, val des : String)
+sealed abstract class authTypeDefines(val t : Int, val des : String)
 
-object RegisterApprovedStatus {
-  case object notApproved extends RegisterApprovedDefines(0, "未验证")
-  case object approved extends RegisterApprovedDefines(1, "已验证")
-  case object approving extends RegisterApprovedDefines(2, "审核中")
+object registerTypes {
+    case object driver extends registerTypesDefines(0, "driver")
+    case object company extends registerTypesDefines(1, "company")
+    case object industry extends registerTypesDefines(2, "industry")
+    case object spicalway extends registerTypesDefines(3, "spicalway")
 }
 
-sealed abstract class RegisterApprovedDefines(val s : Int, val des : String)
+sealed abstract class registerTypesDefines(val t : Int, val des : String)
 
-//object UserTypes {
-//  case object 
-//}
+object businessTypes {
+    case object car extends businessTypesDefines(0, "公路")
+    case object train extends businessTypesDefines(1, "铁路")
+    case object ship extends businessTypesDefines(2, "船运")
+    case object plane extends businessTypesDefines(3, "航空")
+}
 
-sealed abstract class UserTypeDefines(val s : Int, val des : String)
+sealed abstract class businessTypesDefines(val t : Int, val des : String)
 
 object AuthModule {
     def register(data : JsValue) : JsValue = {
-        null
+     
+        def commonRegisterImpl(x : MongoDBObject) : (Boolean, String) =
+            try {
+                (data \ "company_name").asOpt[String].map (tmp => x += "company_name" -> tmp).getOrElse(throw new Exception("input company name"))
+                (data \ "legal_person").asOpt[String].map (tmp => x += "legal_person" -> tmp).getOrElse(throw new Exception("input legal person"))
+                (data \ "legal_person_id").asOpt[String].map (tmp => x += "legal_person_id" -> tmp).getOrElse(throw new Exception("input legal person id"))
+                (data \ "address").asOpt[String].map (tmp => x += "address" -> tmp).getOrElse(throw new Exception("input company reg address"))
+                (data \ "phone_dir").asOpt[String].map (tmp => x += "phone_dir" -> tmp).getOrElse(x += "phone_dir" -> "")
+                (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(x += "phone_no" -> "")
+                (data \ "phone_sep").asOpt[String].map (tmp => x += "phone_sep" -> tmp).getOrElse(x += "phone_sep" -> "")
+                
+                (true, "")
+            } catch {
+              case ex : Exception => (false, ex.getMessage)
+            }
+      
+        def companyRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
+            try {
+                (data \ "company_business").asOpt[Int].map (tmp => x += "company_business" -> tmp.asInstanceOf[Number]).getOrElse(throw new Exception("input company business"))
+                (data \ "company_web").asOpt[String].map (tmp => x += "company_web" -> tmp).getOrElse("")
+                (data \ "company_fax").asOpt[String].map (tmp => x += "company_fax" -> tmp).getOrElse("")
+                (data \ "company_email").asOpt[String].map (tmp => x += "company_email" -> tmp).getOrElse(throw new Exception("input company email"))
+                
+                (true, "")
+            } catch {
+              case ex : Exception => (false, ex.getMessage)
+            }
+        }
+        
+        def industryRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
+            (false, "")
+        }
+        
+        def spicalwayRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
+            (false, "")
+        }
+        
+        def createBasicAccount(x : MongoDBObject) = {
+            val company_name = (data \ "company_name").asOpt[String].get
+            val company_email = (data \ "company_email").asOpt[String].get
+            val company_type = (data \ "company_type").asOpt[Int].get
+
+            val user_id = Sercurity.md5Hash(company_name + company_email + Sercurity.getTimeSpanWithMillSeconds)
+            x += "user_id" -> user_id
+            x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
+            x += "type" -> company_type.asInstanceOf[Number]
+            x += "auth" -> authTypes.companyMaster.t.asInstanceOf[Number]
+        }
+        
+        val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
+       
+        val common = MongoDBObject.newBuilder.result
+        val (common_result, common_error) = commonRegisterImpl(common)
+        if (!common_result) ErrorCode.errorToJson(common_error)
+        else {
+            import registerTypes._
+            val detail = MongoDBObject.newBuilder.result
+            val (detail_result, detail_error) = company_type match {
+              case company.t => companyRegisterImpl(detail)
+              case industry.t => industryRegisterImpl(detail)
+              case spicalway.t => spicalwayRegisterImpl(detail)
+              case _ => ???
+            }
+            
+            if (!detail_result) ErrorCode.errorToJson(detail_error)
+            else { 
+               common += "detail" -> detail
+               val user_lst = MongoDBList.newBuilder
+               val company_master = MongoDBObject.newBuilder.result
+               createBasicAccount(company_master)
+               user_lst += company_master
+               common += "user_lst" -> user_lst.result
+               
+               _data_connection.getCollection("companies") += common
+               toJson(Map("status" -> "ok", "result" -> "register success"))
+            }
+        }
     }
     
     def login(data : JsValue) : JsValue = {
@@ -125,7 +204,7 @@ object AuthModule {
         def authCheckAcc(t : String) : (String, Int) = {
             (from db() in ("users") where ("token" -> t) select (x => x)).toList match {
               case Nil => null
-              case head :: Nil => (head.getAs[String]("user_id").get, head.getAs[Number]("status").map (x => x.intValue).getOrElse(RegisterApprovedStatus.notApproved.s))
+//              case head :: Nil => (head.getAs[String]("user_id").get, head.getAs[Number]("status").map (x => x.intValue).getOrElse(RegisterApprovedStatus.notApproved.s))
               case _ => null
             }
         }

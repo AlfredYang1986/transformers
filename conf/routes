@@ -3,17 +3,20 @@
 # ~~~~
 
 # Home page
-GET		/							controllers.Elogco.index
-GET     /index                      controllers.Elogco.index
-GET		/company					controllers.Elogco.company
-GET     /certificate                controllers.Elogco.certificate
-GET		/business					controllers.Elogco.business
-GET		/recruit					controllers.Elogco.recruit
-GET		/help						controllers.Elogco.help
-GET		/certificateCompany			controllers.Elogco.certificateCompany
-GET		/certificateIndustry		controllers.Elogco.certificateIndustry
-GET		/certificateSpecialWay		controllers.Elogco.certificateSpecialWay
-GET		/certificateDriver			controllers.Elogco.certificateDriver
-GET		/certificateComplete		controllers.Elogco.certificateComplete
+GET		/								controllers.Elogco.index
+GET     /index                      	controllers.Elogco.index
+GET		/company						controllers.Elogco.company
+GET		/business						controllers.Elogco.business
+GET		/recruit						controllers.Elogco.recruit
+GET		/help							controllers.Elogco.help
+
+# register page
+GET     /register/company		        controllers.RegisterController.certificate
+GET		/register/driver				controllers.RegisterController.certificateDriver
+GET		/register/complete				controllers.RegisterController.certificateComplete
+
+# auth restful
+POST	/auth/register					controllers.AuthController.register
+
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file               	controllers.Assets.at(path="/public", file)

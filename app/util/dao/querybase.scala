@@ -9,7 +9,7 @@ import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.query.dsl.QueryExpressionObject
 
 object _data_connection {
-	def conn_name : String = "bitcoin"
+	def conn_name : String = "transformers"
 
 	val _conn = MongoConnection()
 	var _conntion : Map[String, MongoCollection] = Map.empty
