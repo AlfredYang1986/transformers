@@ -20,15 +20,15 @@ GET		/admin							controllers.AdminController.index
 GET		/admin/index					controllers.AdminController.index
 GET		/admin/company/pass				controllers.AdminController.passCompanyPage
 GET		/admin/industry/pass			controllers.AdminController.passIndustryPage
-GET		/admin/spicalway/pass			controllers.AdminController.passSpicalwayPage
+GET		/admin/specialway/pass			controllers.AdminController.passSpecialwayPage
 GET		/admin/driver/pass				controllers.AdminController.passDriverPage
 GET		/admin/company/faild			controllers.AdminController.faildCompanyPage
 GET		/admin/industry/faild			controllers.AdminController.faildIndustryPage
-GET		/admin/spicalway/faild			controllers.AdminController.faildSpicalwayPage
+GET		/admin/specialway/faild			controllers.AdminController.faildSpecialwayPage
 GET		/admin/driver/faild				controllers.AdminController.faildDriverPage
 GET		/admin/company/certificating	controllers.AdminController.certificatingCompanyPage
 GET		/admin/industry/certificating	controllers.AdminController.certificatingIndustryPage
-GET		/admin/spicalway/certificating	controllers.AdminController.certificatingSpicalwayPage
+GET		/admin/specialway/certificating	controllers.AdminController.certificatingSpecialwayPage
 GET		/admin/driver/certificating		controllers.AdminController.certificatingDriverPage
 
 # auth restful

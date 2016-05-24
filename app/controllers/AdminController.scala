@@ -16,8 +16,8 @@ object AdminController extends Controller {
         Ok(views.html.admin_industry_pass())
     }
     
-    def passSpicalwayPage = Action {
-        Ok(views.html.admin_spicalway_pass())
+    def passSpecialwayPage = Action {
+        Ok(views.html.admin_specialway_pass())
     }
     
     def passDriverPage = Action {
@@ -32,8 +32,8 @@ object AdminController extends Controller {
         Ok(views.html.admin_industry_faild())
     }
     
-    def faildSpicalwayPage = Action {
-        Ok(views.html.admin_spicalway_faild())
+    def faildSpecialwayPage = Action {
+        Ok(views.html.admin_specialway_faild())
     }
     
     def faildDriverPage = Action {
@@ -48,8 +48,8 @@ object AdminController extends Controller {
         Ok(views.html.admin_industry_certificating())
     }
     
-    def certificatingSpicalwayPage = Action {
-        Ok(views.html.admin_spicalway_certificating())
+    def certificatingSpecialwayPage = Action {
+        Ok(views.html.admin_specialway_certificating())
     }
     
     def certificatingDriverPage = Action {
