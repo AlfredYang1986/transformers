@@ -16,6 +16,7 @@ GET		/register/driver				controllers.RegisterController.certificateDriver
 GET		/register/complete				controllers.RegisterController.certificateComplete
 
 # admin pages
+GET		/admin/login					controllers.AdminController.adminLogin
 GET		/admin							controllers.AdminController.index
 GET		/admin/index					controllers.AdminController.index
 GET		/admin/company/pass				controllers.AdminController.passCompanyPage

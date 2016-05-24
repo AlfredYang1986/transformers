@@ -4,6 +4,11 @@ import play.api._
 import play.api.mvc._
 
 object AdminController extends Controller {
+    def adminLogin = Action {
+        Ok(views.html.admin_login())
+    }  
+  
+  
     def index = Action {
         Ok(views.html.admin_index())
     }
