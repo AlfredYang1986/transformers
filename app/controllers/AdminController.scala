@@ -39,4 +39,20 @@ object AdminController extends Controller {
     def faildDriverPage = Action {
         Ok(views.html.admin_driver_faild())
     }
+   
+    def certificatingCompanyPage = Action {
+        Ok(views.html.admin_company_certificating())
+    }
+    
+    def certificatingIndustryPage = Action {
+        Ok(views.html.admin_industry_certificating())
+    }
+    
+    def certificatingSpicalwayPage = Action {
+        Ok(views.html.admin_spicalway_certificating())
+    }
+    
+    def certificatingDriverPage = Action {
+        Ok(views.html.admin_driver_certificating())
+    }
 }

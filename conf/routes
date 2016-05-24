@@ -26,6 +26,10 @@ GET		/admin/company/faild			controllers.AdminController.faildCompanyPage
 GET		/admin/industry/faild			controllers.AdminController.faildIndustryPage
 GET		/admin/spicalway/faild			controllers.AdminController.faildSpicalwayPage
 GET		/admin/driver/faild				controllers.AdminController.faildDriverPage
+GET		/admin/company/certificating	controllers.AdminController.certificatingCompanyPage
+GET		/admin/industry/certificating	controllers.AdminController.certificatingIndustryPage
+GET		/admin/spicalway/certificating	controllers.AdminController.certificatingSpicalwayPage
+GET		/admin/driver/certificating		controllers.AdminController.certificatingDriverPage
 
 # auth restful
 POST	/auth/register					controllers.AuthController.register
