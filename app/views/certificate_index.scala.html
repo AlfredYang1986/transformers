@@ -276,7 +276,7 @@
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="company-name">
+							<input type="text" class="form-control" data-name="industry-web">
 						</div>
 					</div>
 
@@ -285,14 +285,14 @@
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person">
+							<input type="text" class="form-control" data-name="industry-fax">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person-id">
+							<input type="email" class="form-control" data-name="industry-email">
 						</div>
 					</div>			  
 
@@ -309,7 +309,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10 register-btn">
-							<button type="submit" class="btn btn-lg">注册</button>
+							<button class="btn btn-lg" onclick="register()">注册</button>
 						</div>
 					</div>
 				</div>
@@ -407,13 +407,13 @@
 
 						<div class="col-sm-3 radio">
 							<label>
-								<input type="radio"> 天天发车
+								<input name="occation" type="radio"> 天天发车
 							</label>
 						</div>
 
 						<div class="col-sm-3 radio">
 							<label>
-								<input type="radio"> 隔天发车
+								<input name="occation" type="radio"> 隔天发车
 							</label>
 						</div>						
 						
@@ -425,31 +425,31 @@
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 平板车
+								<input name="vehicle" type="checkbox"> 平板车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 高栏车
+								<input name="vehicle" type="checkbox"> 高栏车
 							</label>
 						</div>						
 						
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 厢式车
+								<input name="vehicle" type="checkbox"> 厢式车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 保温冷藏
+								<input name="vehicle" type="checkbox"> 保温冷藏
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 半挂车
+								<input name="vehicle" type="checkbox"> 半挂车
 							</label>
 						</div>
 					</div>	
@@ -460,31 +460,31 @@
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 危险品车
+								<input name="vehicle" type="checkbox"> 危险品车
 							</label>
 						</div>						
 						
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 高低板
+								<input name="vehicle" type="checkbox"> 高低板
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 起重车
+								<input name="vehicle" type="checkbox"> 起重车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 牵引车
+								<input name="vehicle" type="checkbox"> 牵引车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 仓棚车
+								<input name="vehicle" type="checkbox"> 仓棚车
 							</label>
 						</div>	
 					</div>	
@@ -495,19 +495,19 @@
 						
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 罐式车
+								<input name="vehicle" type="checkbox"> 罐式车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 特种车
+								<input name="vehicle" type="checkbox"> 特种车
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input type="checkbox"> 集装箱车
+								<input name="vehicle" type="checkbox"> 集装箱车
 							</label>
 						</div>						
 
@@ -516,7 +516,7 @@
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="company-name">
+							<input type="text" class="form-control" data-name="specialway-web">
 						</div>
 					</div>
 
@@ -525,14 +525,14 @@
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person">
+							<input type="text" class="form-control" data-name="specialway-fax">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person-id">
+							<input type="email" class="form-control" data-name="specialway-email">
 						</div>
 					</div>			  
 
@@ -549,7 +549,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10 register-btn">
-							<button type="submit" class="btn btn-lg">注册</button>
+							<button class="btn btn-lg" onclick="register()">注册</button>
 						</div>
 					</div>
 
@@ -666,6 +666,36 @@
 			return result
 		}
 
+		function getIndustryInfo() {
+			var result = true;
+			var industry_web = $('input[data-name="industry-web"]').val();
+			var industry_fax = $('input[data-name="industry-fax"]').val();
+			var industry_email = $('input[data-name="industry-email"]').val();
+			
+			if (result) {
+				query_object['industry_web'] = industry_web;
+				query_object['industry_fax'] = industry_fax;
+				query_object['industry_email'] = industry_email;
+			}
+
+			return result
+		}
+
+		function getSpecialwayInfo() {
+			var result = true;
+			var special_web = $('input[data-name="specialway-web"]').val();
+			var special_fax = $('input[data-name="specialway-fax"]').val();
+			var special_email = $('input[data-name="specialway-email"]').val();
+			
+			if (result) {
+				query_object['special_web'] = special_web;
+				query_object['special_fax'] = special_fax;
+				query_object['special_email'] = special_email;
+			}
+
+			return result
+		}
+
 		function hasInput(str) {
 			return typeof(t) == "string" && str != "";
 		}
@@ -677,10 +707,12 @@
 			if (t == 1) {
 				result = getCompanyInfo();
 			} else if (t == 2) {
-				// $('#industry-step').show();
+				result = getIndustryInfo();
 			} else if (t == 3) {
-				// $('#spical-step').show();
+				result = getSpecialwayInfo();
 			}
+
+			if (!result) return;
 
 			$.ajax({
 	            url: "/auth/register",

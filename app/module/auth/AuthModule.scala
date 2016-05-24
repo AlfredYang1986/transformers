@@ -74,19 +74,39 @@ object AuthModule {
         }
         
         def industryRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
-            (false, "")
+            try {
+                (data \ "industry_web").asOpt[String].map (tmp => x += "industry_web" -> tmp).getOrElse("")
+                (data \ "industry_fax").asOpt[String].map (tmp => x += "industry_fax" -> tmp).getOrElse("")
+                (data \ "industry_email").asOpt[String].map (tmp => x += "industry_email" -> tmp).getOrElse(throw new Exception("input company email"))
+                
+                (true, "")
+            } catch {
+              case ex : Exception => (false, ex.getMessage)
+            }
         }
         
         def spicalwayRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
-            (false, "")
+            try {
+                (data \ "special_web").asOpt[String].map (tmp => x += "special_web" -> tmp).getOrElse("")
+                (data \ "special_fax").asOpt[String].map (tmp => x += "special_fax" -> tmp).getOrElse("")
+                (data \ "special_email").asOpt[String].map (tmp => x += "special_email" -> tmp).getOrElse(throw new Exception("input company email"))
+                
+                (true, "")
+            } catch {
+              case ex : Exception => (false, ex.getMessage)
+            }
         }
         
-        def createBasicAccount(x : MongoDBObject) = {
-            val company_name = (data \ "company_name").asOpt[String].get
-            val company_email = (data \ "company_email").asOpt[String].get
-            val company_type = (data \ "company_type").asOpt[Int].get
+        import registerTypes._
+        def createBasicAccount(x : MongoDBObject, company_type : Int) = {
+            val name = (data \ "company_name").asOpt[String].get
+            val email = (data \ (company_type match {
+              case company.t => "company_email"
+              case industry.t => "industry_email"
+              case spicalway.t => "special_email"
+            })).asOpt[String].get
 
-            val user_id = Sercurity.md5Hash(company_name + company_email + Sercurity.getTimeSpanWithMillSeconds)
+            val user_id = Sercurity.md5Hash(name + email + Sercurity.getTimeSpanWithMillSeconds)
             x += "user_id" -> user_id
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
             x += "type" -> company_type.asInstanceOf[Number]
@@ -99,7 +119,6 @@ object AuthModule {
         val (common_result, common_error) = commonRegisterImpl(common)
         if (!common_result) ErrorCode.errorToJson(common_error)
         else {
-            import registerTypes._
             val detail = MongoDBObject.newBuilder.result
             val (detail_result, detail_error) = company_type match {
               case company.t => companyRegisterImpl(detail)
@@ -109,11 +128,11 @@ object AuthModule {
             }
             
             if (!detail_result) ErrorCode.errorToJson(detail_error)
-            else { 
+            else {
                common += "detail" -> detail
                val user_lst = MongoDBList.newBuilder
                val company_master = MongoDBObject.newBuilder.result
-               createBasicAccount(company_master)
+               createBasicAccount(company_master, company_type)
                user_lst += company_master
                common += "user_lst" -> user_lst.result
                
