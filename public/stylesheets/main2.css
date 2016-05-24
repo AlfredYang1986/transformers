@@ -148,3 +148,37 @@
 	background-image: none !important;
 	width: 150px;
 }
+
+/**Admin login page css**/
+
+.admin-bg{
+	background-image: url("/assets/images/admin/admin-main-bg.png");
+	background-repeat: no-repeat;
+	min-height: 875px;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+	-moz-background-size:100% 100%;
+	background-size:100% 100%;
+	margin: 30px;
+}
+
+.admin-login-cell {
+	background-image: none !important;
+	background-color: rgba(255, 255, 255, 0.5) !important; 
+	width: 560px;
+	height: 280px;
+	margin: 400px auto;
+}
+
+.admin-login-btn {
+	text-align: center;
+	margin: 0 auto !important;
+	color: black !important;
+	font-size: 18px;
+	max-width: 405px;
+	height: 35px;
+	border: 1px solid #000;
+	background-color: transparent !important;
+	background-image: none !important;
+	border-radius: 0px;
+	float: none !important;
+}
