@@ -182,40 +182,41 @@
 
 					<div class="form-group" >
 						<label for="principal-phone-no" class="col-sm-2 control-label">营业范围</label>
-<fieldset id="company_new_route_form">
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="浙江省">浙江省</option>
-							</select>
-						</div>
+						<fieldset id="company_new_route_form">
+							<div class="company-line">
+								<div class="col-sm-2">
+									<select class="form-control" data-name="origin-province">
+										<option selected disabled>请选择省区</option>
+										<option value="浙江省">浙江省</option>
+									</select>
+								</div>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="杭州市">杭州市</option>
-							</select>
-						</div>
+								<div class="col-sm-2">
+									<select class="form-control" data-name="origin-city">
+										<option selected disabled>请选择市区</option>
+										<option value="杭州市">杭州市</option>
+									</select>
+								</div>
 
-						<div class="col-sm-1" style="text-align:center;">
-							<img  src="@routes.Assets.at("images/arrow/oneway.png")">
-						</div>
+								<div class="col-sm-1" style="text-align:center;">
+									<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+								</div>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
-							</select>
-						</div>
+								<div class="col-sm-2">
+									<select class="form-control" data-name="destination-provice">
+										<option selected disabled>请选择省区</option>
+										<option value="zhejiang">浙江省</option>
+									</select>
+								</div>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
-							</select>
-						</div>
-					</div>				
-</fieldset>				
+								<div class="col-sm-2">
+									<select class="form-control" data-name="destination_provice">
+										<option selected disabled>请选择市区</option>
+										<option value="zhejiang">杭州市</option>
+									</select>
+								</div>
+							</div>				
+						</fieldset>				
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label"></label>
 						<div class="col-sm-10 business-license-btn">
@@ -651,6 +652,44 @@
 			return result;
 		}
 
+		function getCompanylines() {
+			var result = true;
+			var lines_lst = [];
+			$.each($('.company-line'), function( index, value ) {
+				var origin_province = $(this).find('select[data-name="origin-province"]').val();
+				if (typeof(origin_province) == "undefined") {
+					result = false;
+				}
+
+				var origin_city = $(this).find('select[data-name="origin-city"]').val();
+				if (typeof(origin_city) == "undefined") {
+					result = false;
+				}
+
+				var destination_province = $(this).find('select[data-name="origin-province"]').val();
+				if (typeof(destination_province) == "undefined") {
+					result = false;
+				}
+
+				var destination_city = $(this).find('select[data-name="origin-city"]').val();
+				if (typeof(destination_city) == "undefined") {
+					result = false;
+				}				
+
+				if (result) {
+					var tmp = new Object();
+					tmp['origin_province'] = origin_province;
+					tmp['origin_city'] = origin_city;
+					tmp['destination_province'] = destination_province;
+					tmp['destination_city'] = destination_city;
+
+					lines_lst.push(tmp);
+				};
+			});
+			query_object['company_lines'] = lines_lst;
+			return result;
+		}
+
 		function getCompanyInfo() {
 			var result = true;
 			var company_field = $('input[name="field"]:checked').val();
@@ -659,6 +698,8 @@
 				// TODO: 错误提示，公司类型必须选择
 				result = false;
 			}
+
+			result = getCompanylines();
 
 			var company_web = $('input[data-name="company-web"]').val();
 			var company_fax = $('input[data-name="company-fax"]').val();

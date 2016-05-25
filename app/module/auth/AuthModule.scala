@@ -65,6 +65,17 @@ object AuthModule {
       
         def companyRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
             try {
+                val lines = MongoDBList.newBuilder
+                (data \ "company_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
+                      val line = MongoDBObject.newBuilder
+                      (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
+                      (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
+                      (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
+                      (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
+                      lines += line.result
+                }
+                x += "company_lines" -> lines.result
+              
                 (data \ "company_business").asOpt[Int].map (tmp => x += "company_business" -> tmp.asInstanceOf[Number]).getOrElse(throw new Exception("input company business"))
                 (data \ "company_web").asOpt[String].map (tmp => x += "company_web" -> tmp).getOrElse("")
                 (data \ "company_fax").asOpt[String].map (tmp => x += "company_fax" -> tmp).getOrElse("")
@@ -112,7 +123,7 @@ object AuthModule {
                 x += "special_lines" -> lines.result
                 
                 val vehicle = MongoDBList.newBuilder
-                (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter => 
+                (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter =>
                       vehicle += iter
                 }
                 x += "vehicle" -> vehicle.result 
