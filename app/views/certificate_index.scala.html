@@ -180,9 +180,9 @@
 						
 					</div>				
 
-					<div class="form-group">
+					<div class="form-group" >
 						<label for="principal-phone-no" class="col-sm-2 control-label">营业范围</label>
-
+<fieldset id="company_new_route_form">
 						<div class="col-sm-2">
 							<select class="form-control">
 								<option selected disabled>请选择省区</option>
@@ -215,14 +215,14 @@
 							</select>
 						</div>
 					</div>				
-				
+</fieldset>				
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label"></label>
 						<div class="col-sm-10 business-license-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="newroute">新增主营路线</button>
+							<button id="add_company_route" type="button" class="btn" data-toggle="modal" data-target="newroute">新增主营路线</button>
 						</div>
 					</div>									
-				
+
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
 						<div class="col-sm-10">
@@ -567,6 +567,19 @@
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
+		});
+
+
+		var $button = $('#add_company_route');
+		var $company_route = $('#company_new_route_form').clone();
+		var numOfroutes = 0;
+
+		$button.click(function(){
+			numOfroutes++;
+		    $company_route.clone().insertBefore($button);
+		    if(numOfroutes>4){
+		    	$button.prop('disabled', true);
+		    }
 		});
 
 		function nextStep() {
