@@ -358,42 +358,45 @@
 						</div>
 					</div>									
 				
-					<div class="form-group">
-						<label for="principal-phone-no" class="col-sm-2 control-label">主营线路</label>
+					<div class="special-line-lst">
+						<div class="special-line">
+							<div class="form-group">
+								<label for="principal-phone-no" class="col-sm-2 control-label">主营线路</label>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="浙江省">浙江省</option>
-							</select>
+								<div class="col-sm-2">
+									<select class="form-control" data-name="origin-province">
+										<option selected disabled>请选择省区</option>
+										<option value="浙江省">浙江省</option>
+									</select>
+								</div>
+
+								<div class="col-sm-2">
+									<select class="form-control" data-name="origin-city">
+										<option selected disabled>请选择市区</option>
+										<option value="杭州市">杭州市</option>
+									</select>
+								</div>
+
+								<div class="col-sm-1" style="text-align:center; vertical-">
+									<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+								</div>
+
+								<div class="col-sm-2">
+									<select class="form-control" data-name="destination-province">
+										<option selected disabled>请选择省区</option>
+										<option value="浙江省">浙江省</option>
+									</select>
+								</div>
+
+								<div class="col-sm-2">
+									<select class="form-control" data-name="destination-city">
+										<option selected disabled>请选择市区</option>
+										<option value="杭州市">杭州市</option>
+									</select>
+								</div>
+							</div>
 						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="杭州市">杭州市</option>
-							</select>
-						</div>
-
-						<div class="col-sm-1" style="text-align:center; vertical-">
-							<img  src="@routes.Assets.at("images/arrow/oneway.png")">
-						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="浙江省">浙江省</option>
-							</select>
-						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="杭州市">杭州市</option>
-							</select>
-						</div>
-
-					</div>				
+					</div>		
 				
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label"></label>
@@ -424,94 +427,85 @@
 
 						<label for="certificate-type" class="col-sm-2 control-label" >拥有车型</label>
 
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 平板车
-							</label>
+						<div class="col-sm-10">
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="平板车"> 平板车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value＝"高栏车"> 高栏车
+								</label>
+							</div>						
+							
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="厢式车"> 厢式车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="半挂车"> 半挂车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="危险品车"> 危险品车
+								</label>
+							</div>						
+							
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="高地板"> 高低板
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="起重车"> 起重车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="牵引车"> 牵引车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="罐式车"> 罐式车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="特种车"> 特种车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
+								</label>
+							</div>	
 						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 高栏车
-							</label>
-						</div>						
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 厢式车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 保温冷藏
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 半挂车
-							</label>
-						</div>
-					</div>	
-
-					<div class="form-group">
-
-						<label for="certificate-type" class="col-sm-2 control-label" ></label>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 危险品车
-							</label>
-						</div>						
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 高低板
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 起重车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 牵引车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 仓棚车
-							</label>
-						</div>	
-					</div>	
-
-					<div class="form-group">
-
-						<label for="certificate-type" class="col-sm-2 control-label" ></label>
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 罐式车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 特种车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input name="vehicle" type="checkbox"> 集装箱车
-							</label>
-						</div>						
-
 					</div>	
 
 					<div class="form-group">
@@ -682,6 +676,44 @@
 			return result
 		}
 
+		function getSpecialwaylines() {
+			var result = true;
+			var lines_lst = [];
+			$.each($('.special-line'), function( index, value ) {
+				var origin_province = $(this).find('select[data-name="origin-province"]').val();
+				if (typeof(origin_province) == "undefined") {
+					result = false;
+				}
+
+				var origin_city = $(this).find('select[data-name="origin-city"]').val();
+				if (typeof(origin_city) == "undefined") {
+					result = false;
+				}
+
+				var destination_province = $(this).find('select[data-name="origin-province"]').val();
+				if (typeof(destination_province) == "undefined") {
+					result = false;
+				}
+
+				var destination_city = $(this).find('select[data-name="origin-city"]').val();
+				if (typeof(destination_city) == "undefined") {
+					result = false;
+				}				
+
+				if (result) {
+					var tmp = new Object();
+					tmp['origin_province'] = origin_province;
+					tmp['origin_city'] = origin_city;
+					tmp['destination_province'] = destination_province;
+					tmp['destination_city'] = destination_city;
+
+					lines_lst.push(tmp);
+				};
+			});
+			query_object['special_lines'] = lines_lst;
+			return result;
+		}
+
 		function getSpecialwayStorage() {
 			var result = true;
 			var storage_lst = [];
@@ -709,11 +741,19 @@
 					tmp['address'] = address;
 
 					storage_lst.push(tmp);
-
-					// alert(storage_lst);
 				};
 			});
 			query_object['special_storage'] = storage_lst;
+			return result;
+		}
+
+		function getSpecialwayVehicle() {
+			var result = true;
+			var vehicle_lst = [];
+			$.each($('input[name="vehicle"]:checked'), function(index, value){
+				vehicle_lst.push($(this).val());
+			});
+			query_object['vehicle'] = vehicle_lst;
 			return result;
 		}
 
@@ -728,6 +768,8 @@
 			}
 
 			result = getSpecialwayStorage();
+			result = getSpecialwaylines();
+			result = getSpecialwayVehicle();
 
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();

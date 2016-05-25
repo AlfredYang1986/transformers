@@ -100,6 +100,23 @@ object AuthModule {
                 }
                 x += "special_storage" -> lst.result
                 
+                val lines = MongoDBList.newBuilder
+                (data \ "special_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
+                      val line = MongoDBObject.newBuilder
+                      (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
+                      (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
+                      (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
+                      (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
+                      lines += line.result
+                }
+                x += "special_lines" -> lines.result
+                
+                val vehicle = MongoDBList.newBuilder
+                (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter => 
+                      vehicle += iter
+                }
+                x += "vehicle" -> vehicle.result 
+                
                 (data \ "special_web").asOpt[String].map (tmp => x += "special_web" -> tmp).getOrElse("special_web" -> "")
                 (data \ "special_fax").asOpt[String].map (tmp => x += "special_fax" -> tmp).getOrElse("special_web" -> "")
                 (data \ "special_email").asOpt[String].map (tmp => x += "special_email" -> tmp).getOrElse(throw new Exception("input company email"))
