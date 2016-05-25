@@ -156,25 +156,25 @@
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=0> 公路
+								<input name="field" type="radio" value=0> 公路
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=1> 铁路
+								<input name="field" type="radio" value=1> 铁路
 							</label>
 						</div>						
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=2> 船运
+								<input name="field" type="radio" value=2> 船运
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=3> 航空
+								<input name="field" type="radio" value=3> 航空
 							</label>
 						</div>							
 						
@@ -280,8 +280,6 @@
 						</div>
 					</div>
 
-
-
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
 						<div class="col-sm-10">
@@ -324,32 +322,35 @@
 
 				<div class="form-horizontal" style="margin-top: 40px;">			
 
-					<div class="form-group">
-						<label for="principal-phone-no" class="col-sm-2 control-label">仓库地址</label>
+					<div class="special-storage-list">
+						<div class="special-storage"> 
+							<div class="form-group">
+								<label for="principal-phone-no" class="col-sm-2 control-label">仓库地址</label>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
-							</select>
+								<div class="col-sm-2">
+									<select class="form-control" data-name='province'>
+										<option selected disabled>请选择省区</option>
+										<option value="浙江省">浙江省</option>
+									</select>
+								</div>
+
+								<div class="col-sm-2">
+									<select class="form-control" data-name='city'>
+										<option selected disabled>请选择市区</option>
+										<option value="杭州市">杭州市</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="company-name" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="填写详细地址"></textarea>
+								</div>
+							</div>
 						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
-							</select>
-						</div>
-
 					</div>
 
-					<div class="form-group">
-						<label for="company-name" class="col-sm-2 control-label"></label>
-						<div class="col-sm-10">
-							<textarea type="address" class="form-control" rows="3" id="specialway-address" placeholder="填写详细地址"></textarea>
-						</div>
-					</div>
-				
 					<div class="form-group">
 						<label for="" class="col-sm-2 control-label"></label>
 						<div class="col-sm-10 business-license-btn">
@@ -363,14 +364,14 @@
 						<div class="col-sm-2">
 							<select class="form-control">
 								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
+								<option value="浙江省">浙江省</option>
 							</select>
 						</div>
 
 						<div class="col-sm-2">
 							<select class="form-control">
 								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
+								<option value="杭州市">杭州市</option>
 							</select>
 						</div>
 
@@ -381,14 +382,14 @@
 						<div class="col-sm-2">
 							<select class="form-control">
 								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
+								<option value="浙江省">浙江省</option>
 							</select>
 						</div>
 
 						<div class="col-sm-2">
 							<select class="form-control">
 								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
+								<option value="杭州市">杭州市</option>
 							</select>
 						</div>
 
@@ -407,13 +408,13 @@
 
 						<div class="col-sm-3 radio">
 							<label>
-								<input name="occation" type="radio"> 天天发车
+								<input name="occation" type="radio" value="0"> 天天发车
 							</label>
 						</div>
 
 						<div class="col-sm-3 radio">
 							<label>
-								<input name="occation" type="radio"> 隔天发车
+								<input name="occation" type="radio" value="1"> 隔天发车
 							</label>
 						</div>						
 						
@@ -564,9 +565,9 @@
 		/**
 			only one type of certification can be selected
 		**/
-		$('input[type="checkbox"]').on('change', function() {
-		   $('input[type="checkbox"]').not(this).prop('checked', false);
-		});
+		// $('input[type="checkbox"]').on('change', function() {
+		   // $('input[type="checkbox"]').not(this).prop('checked', false);
+		// });
 
 		$(function(){
 			$('#company-step').hide();
@@ -681,8 +682,53 @@
 			return result
 		}
 
+		function getSpecialwayStorage() {
+			var result = true;
+			var storage_lst = [];
+			$.each($('.special-storage'), function( index, value ) {
+				var province = $(this).find('select[data-name="province"]').val();
+				if (typeof(province) == "undefined") {
+					result = false;
+				}
+
+				var city = $(this).find('select[data-name="city"]').val();
+				if (typeof(city) == "undefined") {
+					result = false;
+				}
+
+				var address = $(this).find('textarea[data-name="address"]').val();
+				if (hasInput(address)) {
+					// TODO: add code 
+					result = false;
+				}
+
+				if (result) {
+					var tmp = new Object();
+					tmp['province'] = province;
+					tmp['city'] = city;
+					tmp['address'] = address;
+
+					storage_lst.push(tmp);
+
+					// alert(storage_lst);
+				};
+			});
+			query_object['special_storage'] = storage_lst;
+			return result;
+		}
+
 		function getSpecialwayInfo() {
 			var result = true;
+
+			var special_occation = $('input[name="occation"]:checked').val();
+			if (typeof(special_occation) == "undefined") {
+				//alert('选中你的发车频率');
+				// TODO: 错误提示，公司类型必须选择
+				result = false;
+			}
+
+			result = getSpecialwayStorage();
+
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();
 			var special_email = $('input[data-name="specialway-email"]').val();

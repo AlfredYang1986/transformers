@@ -45,6 +45,8 @@ sealed abstract class businessTypesDefines(val t : Int, val des : String)
 object AuthModule {
     def register(data : JsValue) : JsValue = {
      
+        val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
+
         def commonRegisterImpl(x : MongoDBObject) : (Boolean, String) =
             try {
                 (data \ "company_name").asOpt[String].map (tmp => x += "company_name" -> tmp).getOrElse(throw new Exception("input company name"))
@@ -54,6 +56,7 @@ object AuthModule {
                 (data \ "phone_dir").asOpt[String].map (tmp => x += "phone_dir" -> tmp).getOrElse(x += "phone_dir" -> "")
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(x += "phone_no" -> "")
                 (data \ "phone_sep").asOpt[String].map (tmp => x += "phone_sep" -> tmp).getOrElse(x += "phone_sep" -> "")
+                x += "type" -> company_type.asInstanceOf[Number]
                 
                 (true, "")
             } catch {
@@ -75,8 +78,8 @@ object AuthModule {
         
         def industryRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
             try {
-                (data \ "industry_web").asOpt[String].map (tmp => x += "industry_web" -> tmp).getOrElse("")
-                (data \ "industry_fax").asOpt[String].map (tmp => x += "industry_fax" -> tmp).getOrElse("")
+                (data \ "industry_web").asOpt[String].map (tmp => x += "industry_web" -> tmp).getOrElse(x += "industry_web" -> "")
+                (data \ "industry_fax").asOpt[String].map (tmp => x += "industry_fax" -> tmp).getOrElse(x += "industry_fax" -> "")
                 (data \ "industry_email").asOpt[String].map (tmp => x += "industry_email" -> tmp).getOrElse(throw new Exception("input company email"))
                 
                 (true, "")
@@ -87,8 +90,18 @@ object AuthModule {
         
         def spicalwayRegisterImpl(x : MongoDBObject) : (Boolean, String) = {
             try {
-                (data \ "special_web").asOpt[String].map (tmp => x += "special_web" -> tmp).getOrElse("")
-                (data \ "special_fax").asOpt[String].map (tmp => x += "special_fax" -> tmp).getOrElse("")
+                val lst = MongoDBList.newBuilder
+                (data \ "special_storage").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
+                      val storage = MongoDBObject.newBuilder
+                      (iter \ "province").asOpt[String].map (tmp => storage += "province" -> tmp).getOrElse(storage += "provice" -> "")
+                      (iter \ "city").asOpt[String].map (tmp => storage += "city" -> tmp).getOrElse(storage += "city" -> "")
+                      (iter \ "address").asOpt[String].map (tmp => storage += "address" -> tmp).getOrElse(storage += "address" -> "")
+                      lst += storage.result
+                }
+                x += "special_storage" -> lst.result
+                
+                (data \ "special_web").asOpt[String].map (tmp => x += "special_web" -> tmp).getOrElse("special_web" -> "")
+                (data \ "special_fax").asOpt[String].map (tmp => x += "special_fax" -> tmp).getOrElse("special_web" -> "")
                 (data \ "special_email").asOpt[String].map (tmp => x += "special_email" -> tmp).getOrElse(throw new Exception("input company email"))
                 
                 (true, "")
@@ -109,11 +122,8 @@ object AuthModule {
             val user_id = Sercurity.md5Hash(name + email + Sercurity.getTimeSpanWithMillSeconds)
             x += "user_id" -> user_id
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
-            x += "type" -> company_type.asInstanceOf[Number]
             x += "auth" -> authTypes.companyMaster.t.asInstanceOf[Number]
         }
-        
-        val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
        
         val common = MongoDBObject.newBuilder.result
         val (common_result, common_error) = commonRegisterImpl(common)
