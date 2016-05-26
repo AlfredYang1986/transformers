@@ -15,6 +15,9 @@ object ErrorCode {
   		new ErrorNode("input company reg address", -5, "请输入公司注册地址"),
   		new ErrorNode("input company business", -6, "请输入公司经营范围"),
   		new ErrorNode("input company email", -7, "请输入公司联系邮箱"),
+  		new ErrorNode("input driver name", -8, "请输入司机姓名"),
+  		new ErrorNode("input driver secial id", -9, "请输入司机身份证号"),
+  		new ErrorNode("input driver phone", -10, "请输入司机手机号"),
 
   		new ErrorNode("not implement", -998, "还没有实现"),
   		new ErrorNode("unknown error", -999, "unknown error")

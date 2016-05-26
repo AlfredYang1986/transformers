@@ -185,16 +185,16 @@
 							</div>
 
 							<div class="col-sm-2">
-								<select class="form-control" data-name="destination-provice">
+								<select class="form-control" data-name="destination-province">
 									<option selected disabled>请选择省区</option>
-									<option value="zhejiang">浙江省</option>
+									<option value="浙江省">浙江省</option>
 								</select>
 							</div>
 
 							<div class="col-sm-2">
-								<select class="form-control" data-name="destination_provice">
+								<select class="form-control" data-name="destination-city">
 									<option selected disabled>请选择市区</option>
-									<option value="zhejiang">杭州市</option>
+									<option value="杭州市">杭州市</option>
 								</select>
 							</div>
 						</div>
@@ -251,6 +251,7 @@
 		// $('input[type="radio"]').on('change', function() {
 		//    $('input[type="radio"]').not(this).prop('checked', false);
 		// });
+		var query_object;
 
 		$(function(){
 
@@ -267,6 +268,14 @@
 			return result;
 		}
 
+		function validate_number(ele, value) {
+			var tmp = Number(value);
+			var result = typeof(tmp) != "undefined";
+			if (result) $(ele).removeClass('validate-error');
+			else $(ele).addClass('validate-error');
+			return result;
+		}
+
 		function getDriverCommonInfo() {
 			var result = true;
 			var driver_name = $('input[data-name="driver-name"]').val();
@@ -277,22 +286,100 @@
 
 			var driver_phone_no = $('input[data-name="phone-no"]').val();
 			result &= validate($('input[data-name="phone-no"]'), hasInput(driver_phone_no));
+			result &= validate_number($('input[data-name="phone-no"]'), driver_phone_no);
 
 			var driver_capacity = $('input[data-name="capacity"]').val();
 			result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity));
+			result &= validate_number($('input[data-name="capacity"]'), driver_capacity);
 
 			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
 			result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length));
+			result &= validate_number($('input[data-name="vehicle-length"]'), driver_phone_no);
 
 			var driver_insurance = $('input[name="insurance"]:checked').val();
-			result &= validate($('input[name="insurance"]'), typeof(driver_insurance != "undefined"));
+			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"));
 
+			if (Boolean(result)) {
+				query_object = new Object();
+				query_object['driver_name'] = driver_name;
+				query_object['driver_secial_id'] = driver_secial_id;
+				query_object['phone_no'] = driver_phone_no;
+				query_object['capacity'] = Number(driver_capacity);
+				query_object['vehicle_length'] = Number(driver_vehicle_length);
+				query_object['insurance'] = Number(driver_insurance);
+			};
+
+			return Boolean(result);
+		}
+
+		function getDriverVehicle() {
+			var result = true;
+			var vehicle_lst = [];
+			$.each($('input[name="vehicle"]:checked'), function(index, value){
+				vehicle_lst.push($(this).val());
+			});
+			result &= validate($('input[name="vehicle"]'), vehicle_lst.length > 0)
+
+			query_object['vehicle'] = vehicle_lst;
+			return Boolean(result);
+		}
+
+		function getDriverLines() {
+			var result = true;
+			var lines_lst = [];
+			$.each($('.driver-line'), function( index, value ) {
+				var origin_province = $(this).find('select[data-name="origin-province"]').val();
+				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
+
+				var origin_city = $(this).find('select[data-name="origin-city"]').val();
+				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
+
+				var destination_province = $(this).find('select[data-name="destination-province"]').val();
+				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
+
+				var destination_city = $(this).find('select[data-name="destination-city"]').val();
+				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
+
+				if (Boolean(result)) {
+					var tmp = new Object();
+					tmp['origin_province'] = origin_province;
+					tmp['origin_city'] = origin_city;
+					tmp['destination_province'] = destination_province;
+					tmp['destination_city'] = destination_city;
+
+					lines_lst.push(tmp);
+				};
+			});
+			query_object['driver_lines'] = lines_lst;
 			return Boolean(result);
 		}
 
 		function register() {
 			var result = getDriverCommonInfo();
-			alert(Boolean(result));
+			result &= getDriverLines();
+			result &= getDriverVehicle();
+
+			if (Boolean(result)) { 
+				$.ajax({
+		            url: "/auth/driver/register",
+		            type: 'POST',
+		            dataType: 'json',
+		            contentType: 'application/json, charset=utf-8',
+		            data: JSON.stringify(query_object),
+		            cache: false,
+		            success: function (data) {
+		                if (data.status == "ok") {                                          
+		                     alert("注册成功审核！");
+		                     location.href = "/register/complete";
+		                } else {
+		                    alert(data.error.message);
+		                }
+		            },
+		            error: function (xhr, status, error) {
+		                alert("请检查您的输入");
+		            }
+		        });
+			}
 		}
 
 	</script>

@@ -42,6 +42,13 @@ object businessTypes {
 
 sealed abstract class businessTypesDefines(val t : Int, val des : String)
 
+object insuranceStatus {
+    case object insuranced extends insuranceStatusDefines(0, "已购买")
+    case object not_insuranced extends insuranceStatusDefines(1, "未购买")
+}
+
+sealed abstract class insuranceStatusDefines(val t : Int, val des : String)
+
 object AuthModule {
     def register(data : JsValue) : JsValue = {
      
@@ -177,6 +184,62 @@ object AuthModule {
                _data_connection.getCollection("companies") += common
                toJson(Map("status" -> "ok", "result" -> "register success"))
             }
+        }
+    }
+    
+    def driverRegister(data : JsValue) : JsValue = {
+      
+        import registerTypes._
+        def createBasicAccount(x : MongoDBObject) = {
+            val name = (data \ "driver_name").asOpt[String].get
+            val phone = (data \ "phone_no").asOpt[String].get
+
+            println("bablablalb")
+            val user_id = Sercurity.md5Hash(name + phone + Sercurity.getTimeSpanWithMillSeconds)
+            x += "user_id" -> user_id
+            x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
+            x += "auth" -> authTypes.driverMaster.t.asInstanceOf[Number]
+        }
+      
+        try {
+            val x = MongoDBObject.newBuilder
+            val vehicle = MongoDBList.newBuilder
+            (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter =>
+                  vehicle += iter
+            }
+            x += "vehicle" -> vehicle.result 
+            
+            val lines = MongoDBList.newBuilder
+            (data \ "driver_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
+                  val line = MongoDBObject.newBuilder
+                  (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
+                  (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
+                  (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
+                  (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
+                  lines += line.result
+            }
+            x += "driver_lines" -> lines.result
+           
+            import insuranceStatus._
+            (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
+            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
+            (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
+            (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> tmp.asInstanceOf[Number]).getOrElse(x += "vehicle_length" -> 0)
+            (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
+            (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
+           
+            val user_lst = MongoDBList.newBuilder
+            val company_master = MongoDBObject.newBuilder.result
+            createBasicAccount(company_master)
+            println(company_master)
+            user_lst += company_master
+            x += "user_lst" -> user_lst.result
+            
+            _data_connection.getCollection("drivers") += x.result
+    
+            toJson(Map("status" -> "ok", "result" -> "driver register success"))
+        } catch {
+            case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
     
