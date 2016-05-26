@@ -583,6 +583,12 @@
 		    }
 		});
 
+		function validate(ele, result) {
+			if (result) $(ele).removeClass('validate-error');
+			else $(ele).addClass('validate-error');
+			return result;
+		}
+
 		function nextStep() {
 			var result = getIndexInfo();
 			if (!result) {
@@ -603,41 +609,25 @@
 		function getIndexInfo() {
 			var result = true;
 			var company_name = $('input[data-name="company-name"]').val();
-			if (hasInput(company_name)) {
-				// TODO: 错误提示，公司名
-				result = false;
-			};
+			result &= validate($('input[data-name="company-name"]'), hasInput(company_name));
 
 			var legal_person = $('input[data-name="legal-person"]').val();
-			if (hasInput(legal_person)) {
-				// TODO; 错误提示，法人名
-				result = false;
-			}
+			result &= validate($('input[data-name="legal-person"]'), hasInput(legal_person));
 
 			var legal_person_id = $('input[data-name="legal-person-id"]').val();
-			if (hasInput(legal_person_id)) {
-				// TODO; 错误提示，法人身份证
-				result = false;
-			}
+			result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id));
 
 			var company_reg_address = $('input[data-name="reg-address"]').val();
-			if (hasInput(company_reg_address)) {
-				// TODO; 错误提示，公司地址
-				result = false;
-			}
+			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address));
 
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
 			var company_phone_no = $('input[data-name="company-phone-no"]').val();
 			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
 
 			var company_type = $('input[name="company-type"]:checked').val();
-			if (typeof(company_type) == "undefined") {
-				//alert('选中你的公司类型');
-				// TODO: 错误提示，公司类型必须选择
-				result = false;
-			}
+			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"));
 
-			if (result) {
+			if (Boolean(result)) {
 				query_object = new Object();
 				query_object['company_type'] = Number(company_type);
         		query_object['company_name'] = company_name;
@@ -649,7 +639,7 @@
         		query_object['phone_sep'] = company_phone_sep;
 			}
 
-			return result;
+			return Boolean(result);
 		}
 
 		function getCompanylines() {
@@ -657,26 +647,18 @@
 			var lines_lst = [];
 			$.each($('.company-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				if (typeof(origin_province) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				if (typeof(origin_city) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
 
-				var destination_province = $(this).find('select[data-name="origin-province"]').val();
-				if (typeof(destination_province) == "undefined") {
-					result = false;
-				}
+				var destination_province = $(this).find('select[data-name="destination_province"]').val();
+				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
 
-				var destination_city = $(this).find('select[data-name="origin-city"]').val();
-				if (typeof(destination_city) == "undefined") {
-					result = false;
-				}				
+				var destination_city = $(this).find('select[data-name="destination_city"]').val();
+				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
 
-				if (result) {
+				if (Boolean(result)) {
 					var tmp = new Object();
 					tmp['origin_province'] = origin_province;
 					tmp['origin_city'] = origin_city;
@@ -687,32 +669,29 @@
 				};
 			});
 			query_object['company_lines'] = lines_lst;
-			return result;
+			return Boolean(result);
 		}
 
 		function getCompanyInfo() {
 			var result = true;
 			var company_field = $('input[name="field"]:checked').val();
-			if (typeof(company_field) == "undefined") {
-				//alert('选中你的公司类型');
-				// TODO: 错误提示，公司类型必须选择
-				result = false;
-			}
+			result &= validate($('input[name="field"]'), (typeof(company_field) != "undefined"));
 
-			result = getCompanylines();
+			result &= getCompanylines();
 
 			var company_web = $('input[data-name="company-web"]').val();
 			var company_fax = $('input[data-name="company-fax"]').val();
 			var company_email = $('input[data-name="company-email"]').val();
+			result &= validate($('input[data-name="company-email"]'), hasInput(company_email));
 			
-			if (result) {
+			if (Boolean(result)) {
 				query_object['company_business'] = Number(company_field);
 				query_object['company_web'] = company_web;
 				query_object['company_fax'] = company_fax;
 				query_object['company_email'] = company_email;
 			}
 
-			return result
+			return Boolean(result);
 		}
 
 		function getIndustryInfo() {
@@ -720,14 +699,15 @@
 			var industry_web = $('input[data-name="industry-web"]').val();
 			var industry_fax = $('input[data-name="industry-fax"]').val();
 			var industry_email = $('input[data-name="industry-email"]').val();
+			result &= validate($('input[data-name="industry-email"]'), hasInput(industry_email));
 			
-			if (result) {
+			if (Boolean(result)) {
 				query_object['industry_web'] = industry_web;
 				query_object['industry_fax'] = industry_fax;
 				query_object['industry_email'] = industry_email;
 			}
 
-			return result
+			return Boolean(result);
 		}
 
 		function getSpecialwaylines() {
@@ -735,26 +715,18 @@
 			var lines_lst = [];
 			$.each($('.special-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				if (typeof(origin_province) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				if (typeof(origin_city) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
 
-				var destination_province = $(this).find('select[data-name="origin-province"]').val();
-				if (typeof(destination_province) == "undefined") {
-					result = false;
-				}
+				var destination_province = $(this).find('select[data-name="destination_province"]').val();
+				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
 
-				var destination_city = $(this).find('select[data-name="origin-city"]').val();
-				if (typeof(destination_city) == "undefined") {
-					result = false;
-				}				
+				var destination_city = $(this).find('select[data-name="destination_city"]').val();
+				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
 
-				if (result) {
+				if (Boolean(result)) {
 					var tmp = new Object();
 					tmp['origin_province'] = origin_province;
 					tmp['origin_city'] = origin_city;
@@ -765,7 +737,7 @@
 				};
 			});
 			query_object['special_lines'] = lines_lst;
-			return result;
+			return Boolean(result);
 		}
 
 		function getSpecialwayStorage() {
@@ -773,22 +745,15 @@
 			var storage_lst = [];
 			$.each($('.special-storage'), function( index, value ) {
 				var province = $(this).find('select[data-name="province"]').val();
-				if (typeof(province) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="province"]'), (typeof(province) != "undefined"));
 
 				var city = $(this).find('select[data-name="city"]').val();
-				if (typeof(city) == "undefined") {
-					result = false;
-				}
+				result &= validate($(this).find('select[name="city"]'), (typeof(city) != "undefined"));
 
 				var address = $(this).find('textarea[data-name="address"]').val();
-				if (hasInput(address)) {
-					// TODO: add code 
-					result = false;
-				}
+				result &= validate($(this).find('select[name="city"]'), hasInput(address));
 
-				if (result) {
+				if (Boolean(result)) {
 					var tmp = new Object();
 					tmp['province'] = province;
 					tmp['city'] = city;
@@ -798,7 +763,7 @@
 				};
 			});
 			query_object['special_storage'] = storage_lst;
-			return result;
+			return Boolean(result);
 		}
 
 		function getSpecialwayVehicle() {
@@ -807,39 +772,39 @@
 			$.each($('input[name="vehicle"]:checked'), function(index, value){
 				vehicle_lst.push($(this).val());
 			});
+			result &= validate($('input[name="vehicle"]'), vehicle_lst.count > 0)
+
 			query_object['vehicle'] = vehicle_lst;
-			return result;
+			return Boolean(result);
 		}
 
 		function getSpecialwayInfo() {
 			var result = true;
 
 			var special_occation = $('input[name="occation"]:checked').val();
-			if (typeof(special_occation) == "undefined") {
-				//alert('选中你的发车频率');
-				// TODO: 错误提示，公司类型必须选择
-				result = false;
-			}
+			result &= validate($('input[name="occation"]'), (typeof(special_occation) != "undefined"));
 
-			result = getSpecialwayStorage();
-			result = getSpecialwaylines();
-			result = getSpecialwayVehicle();
+			result &= getSpecialwayStorage();
+			result &= getSpecialwaylines();
+			result &= getSpecialwayVehicle();
 
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();
 			var special_email = $('input[data-name="specialway-email"]').val();
+			result &= validate($('input[data-name="specialway-email"]'), hasInput(special_email));
 			
-			if (result) {
+			if (Boolean(result)) {
 				query_object['special_web'] = special_web;
 				query_object['special_fax'] = special_fax;
 				query_object['special_email'] = special_email;
 			}
 
-			return result
+			return Boolean(result);
 		}
 
 		function hasInput(str) {
-			return typeof(t) == "string" && str != "";
+			var result = (typeof(str) == "string") && (str != "");
+			return result;
 		}
 
 		function register() {
@@ -866,7 +831,7 @@
 	            success: function (data) {
 	                if (data.status == "ok") {                                          
 	                     alert("注册成功审核！");
-	                     location.href = "/";
+	                     location.href = "/register/complete";
 	                } else {
 	                    alert(data.error.message);
 	                }

@@ -12,19 +12,19 @@
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
-				<form class="form-horizontal" style="margin-top: 40px;">
+				<div class="form-horizontal" style="margin-top: 40px;">
 				
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">姓名</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="company-name">
+							<input type="text" class="form-control" data-name="driver-name">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">身份证号码</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person">
+							<input type="text" class="form-control" data-name="driver-secial-id">
 						</div>
 					</div>
 
@@ -50,14 +50,14 @@
 							</select>
 						</div>
 						<div class="col-sm-8">
-							<input type="email" class="form-control" id="principal-phone-no">
+							<input type="text" class="form-control" data-name="phone-no">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
 						<div class="col-sm-8">
-							<input type="email" class="form-control" id="verifiable-code" placeholder="在此输入验证码" >
+							<input type="email" class="form-control" data-name="phone-code" placeholder="在此输入验证码" >
 						</div>
 						<div class="col-sm-2 verifiable-code-btn">
 							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn">获取动态验证码</button>
@@ -68,145 +68,136 @@
 
 						<label for="certificate-type" class="col-sm-2 control-label" >拥有车型</label>
 
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 平板车
-							</label>
-						</div>
+						<div class="col-sm-10">
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="平板车"> 平板车
+								</label>
+							</div>
 
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 高栏车
-							</label>
-						</div>						
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 厢式车
-							</label>
-						</div>
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="高栏车"> 高栏车
+								</label>
+							</div>						
+							
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="厢式车"> 厢式车
+								</label>
+							</div>
 
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 保温冷藏
-							</label>
-						</div>
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
+								</label>
+							</div>
 
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 半挂车
-							</label>
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="半挂车"> 半挂车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="危险品车"> 危险品车
+								</label>
+							</div>						
+							
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="高地板"> 高低板
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="起重车"> 起重车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="牵引车"> 牵引车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="罐式车"> 罐式车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="特种车"> 特种车
+								</label>
+							</div>
+
+							<div class="col-sm-2 checkbox">
+								<label>
+									<input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
+								</label>
+							</div>	
 						</div>
 					</div>	
-
-					<div class="form-group">
-
-						<label for="certificate-type" class="col-sm-2 control-label" ></label>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 危险品车
-							</label>
-						</div>						
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 高低板
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 起重车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 牵引车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 仓棚车
-							</label>
-						</div>	
-					</div>	
-
-					<div class="form-group">
-
-						<label for="certificate-type" class="col-sm-2 control-label" ></label>
-						
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 罐式车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 特种车
-							</label>
-						</div>
-
-						<div class="col-sm-2 checkbox">
-							<label>
-								<input type="checkbox"> 集装箱车
-							</label>
-						</div>						
-
-					</div>
 
 					<div class="form-group">
 						<label for="legal-person" class="col-sm-2 control-label">载重</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person">
+							<input type="text" class="form-control" data-name="capacity">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label for="legal-person-id" class="col-sm-2 control-label">车长</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="legal-person-id">
+							<input type="text" class="form-control" data-name="vehicle-length">
 						</div>
 					</div>			  
 
 					<div class="form-group">
 						<label for="principal-phone-no" class="col-sm-2 control-label">常用路线</label>
+						<div class="driver-line">
+							<div class="col-sm-2">
+								<select class="form-control" data-name="origin-province">
+									<option selected disabled>请选择省区</option>
+									<option value="浙江省">浙江省</option>
+								</select>
+							</div>
 
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
-							</select>
+							<div class="col-sm-2">
+								<select class="form-control" data-name="origin-city">
+									<option selected disabled>请选择市区</option>
+									<option value="杭州市">杭州市</option>
+								</select>
+							</div>
+
+							<div class="col-sm-1" style="text-align:center;">
+								<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+							</div>
+
+							<div class="col-sm-2">
+								<select class="form-control" data-name="destination-provice">
+									<option selected disabled>请选择省区</option>
+									<option value="zhejiang">浙江省</option>
+								</select>
+							</div>
+
+							<div class="col-sm-2">
+								<select class="form-control" data-name="destination_provice">
+									<option selected disabled>请选择市区</option>
+									<option value="zhejiang">杭州市</option>
+								</select>
+							</div>
 						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
-							</select>
-						</div>
-
-						<div class="col-sm-1" style="text-align:center; vertical-">
-							<img  src="@routes.Assets.at("images/arrow/oneway.png")">
-						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择省区</option>
-								<option value="zhejiang">浙江省</option>
-							</select>
-						</div>
-
-						<div class="col-sm-2">
-							<select class="form-control">
-								<option selected disabled>请选择市区</option>
-								<option value="zhejiang">杭州市</option>
-							</select>
-						</div>
-
 					</div>		
 
 					<div class="form-group">
@@ -221,11 +212,11 @@
 						<div class="col-sm-10">
 							<div class="radio">
 								<label>
-									<input type="radio"> 已购买
+									<input type="radio" name="insurance" value="1"> 已购买
 								</label>
 
 								<label style="margin-left: 90px">
-									<input type="radio"> 未购买
+									<input type="radio" name="insurance" value="0"> 未购买
 								</label>
 
 							</div>
@@ -244,10 +235,10 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10 register-btn">
-							<button type="submit" class="btn btn-lg">注册</button>
+							<button class="btn btn-lg" onclick="register()">注册</button>
 						</div>
 					</div>
-				</form>
+				</div>
 
 			</div>
 		</div>
@@ -257,17 +248,52 @@
 	/**
 		only one type of certification can be selected
 	**/
-		$('input[type="radio"]').on('change', function() {
-		   $('input[type="radio"]').not(this).prop('checked', false);
-		});
+		// $('input[type="radio"]').on('change', function() {
+		//    $('input[type="radio"]').not(this).prop('checked', false);
+		// });
 
 		$(function(){
-			
-
-
-
 
 		});
+
+		function hasInput(str) {
+			var result = (typeof(str) == "string") && (str != "");
+			return result;
+		}
+
+		function validate(ele, result) {
+			if (result) $(ele).removeClass('validate-error');
+			else $(ele).addClass('validate-error');
+			return result;
+		}
+
+		function getDriverCommonInfo() {
+			var result = true;
+			var driver_name = $('input[data-name="driver-name"]').val();
+			result &= validate($('input[data-name="driver-name"]'), hasInput(driver_name));
+
+			var driver_secial_id = $('input[data-name="driver-secial-id"]').val();
+			result &= validate($('input[data-name="driver-secial-id"]'), hasInput(driver_secial_id));
+
+			var driver_phone_no = $('input[data-name="phone-no"]').val();
+			result &= validate($('input[data-name="phone-no"]'), hasInput(driver_phone_no));
+
+			var driver_capacity = $('input[data-name="capacity"]').val();
+			result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity));
+
+			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
+			result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length));
+
+			var driver_insurance = $('input[name="insurance"]:checked').val();
+			result &= validate($('input[name="insurance"]'), typeof(driver_insurance != "undefined"));
+
+			return Boolean(result);
+		}
+
+		function register() {
+			var result = getDriverCommonInfo();
+			alert(Boolean(result));
+		}
 
 	</script>
 }

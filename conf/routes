@@ -34,6 +34,7 @@ GET		/admin/driver/certificating		controllers.AdminController.certificatingDrive
 
 # auth restful
 POST	/auth/register					controllers.AuthController.register
+POST	/auth/driver/register			controllers.AuthController.driverRegister
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.at(path="/public", file)

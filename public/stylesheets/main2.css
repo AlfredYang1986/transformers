@@ -149,6 +149,10 @@
 	width: 150px;
 }
 
+.validate-error {
+	border: 1px solid red !important;
+}
+
 /**Admin login page css**/
 
 .admin-bg{
