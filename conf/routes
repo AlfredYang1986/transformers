@@ -11,7 +11,7 @@ GET		/recruit						controllers.Elogco.recruit
 GET		/help							controllers.Elogco.help
 
 # register page
-GET     /register/company		        controllers.RegisterController.certificate
+GET     /register/company		        controllers.RegisterController.register
 GET		/register/driver				controllers.RegisterController.certificateDriver
 GET		/register/complete				controllers.RegisterController.certificateComplete
 

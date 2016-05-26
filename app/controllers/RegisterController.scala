@@ -7,8 +7,8 @@ object RegisterController extends Controller {
     /**
      * certificate
      */
-    def certificate = Action {
-        Ok(views.html.certificate_index())
+    def register = Action {
+        Ok(views.html.register_index())
     }
      
     /**
