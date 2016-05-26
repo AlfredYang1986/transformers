@@ -25,8 +25,29 @@
 					<div class="form-group">
 						<label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
 						<div class="col-sm-10 business-license-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="">上传照片</button>
+							<button type="button" class="btn" data-toggle="modal" data-target="#business-image">上传照片</button>
 						</div>
+					</div>
+
+					<!-- business image upload-->
+					<div class="modal fade" id="business-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header home-login-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								<i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+								</button>
+								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
+								工商营业执照上传
+								</h3>
+							</div>
+
+							<div class="modal-body">
+								<input id="register-business-image" name="register-business-image[]" type="file" multiple=true class="file-loading">
+							</div>
+
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
 					</div>
 
 					<div class="form-group">
@@ -46,8 +67,29 @@
 					<div class="form-group">
 						<label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
 						<div class="col-sm-10 road-license-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="road-license">上传照片</button>
+							<button type="button" class="btn" data-toggle="modal" data-target="#road-license">上传照片</button>
 						</div>
+					</div>
+
+					<!-- road image upload-->
+					<div class="modal fade" id="road-license" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header home-login-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								<i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+								</button>
+								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
+								道路运输许可证上传
+								</h3>
+							</div>
+
+							<div class="modal-body">
+								<input id="road-image" name="road-image[]" type="file" multiple=true class="file-loading">
+							</div>
+
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal -->
 					</div>
 
 					<div class="form-group">
@@ -582,6 +624,22 @@
 		    	$button.prop('disabled', true);
 		    }
 		});
+
+		/** 工商营业执照图片上传**/
+	    $("#register-business-image").fileinput({
+		    uploadUrl: "/file-upload-batch/2",
+		    allowedFileExtensions: ["jpg", "png", "gif"],
+		    minImageWidth: 50,
+		    minImageHeight: 50
+    	});
+
+	    /** 道路许可证图片上传**/
+	    $("#road-image").fileinput({
+		    uploadUrl: "/file-upload-batch/2",
+		    allowedFileExtensions: ["jpg", "png", "gif"],
+		    minImageWidth: 50,
+		    minImageHeight: 50
+    	});
 
 		function validate(ele, result) {
 			if (result) $(ele).removeClass('validate-error');
