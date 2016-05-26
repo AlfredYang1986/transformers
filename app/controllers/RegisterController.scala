@@ -14,14 +14,14 @@ object RegisterController extends Controller {
     /**
      * certificate Driver
      */
-    def certificateDriver = Action {
-        Ok(views.html.certificateDriver("test"))
+    def registerDriver = Action {
+        Ok(views.html.registerDriver("test"))
     }
         
     /**
      * certificate Compelete
      */
-    def certificateComplete = Action {
-        Ok(views.html.certificateComplete("test"))
+    def registerComplete = Action {
+        Ok(views.html.registerComplete("test"))
     }
 }
