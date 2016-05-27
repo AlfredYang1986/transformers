@@ -18,65 +18,87 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="dataTable_wrapper table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-striped table-bordered table-hover" id="">
                                 <thead>
                                     <tr>
+                                        <th>审核时间</th>
                                         <th>企业名字</th>
-                                        <th>工商营业执照</th>
                                         <th>法定代表人</th>
                                         <th>法定代表人身份证</th>
                                         <th>企业注册地址</th>
                                         <th>企业办公电话</th>
-                                        <th>主要负责人姓名</th>
-                                        <th>主要负责人手机号码</th>
-                                        <th>认证类型</th>
-                                        <th>业务领域</th>
-                                        <th>营业范围</th>
-                                        <th>公司网站</th>
-                                        <th>公司传真</th>
-                                        <th>公司邮箱</th>                                           
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>查看详情</th>
+
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr class="odd gradeX">
-                                        <td>elogco</td>
-                                        <td><img src=""></td>
+                                        <td>27/05/2016</td>
                                         <td>Lynn</td>
-                                        <td class="center">12345678915</td>
-                                        <td class="center">hangzhou city</td>
+                                        <td>Shen</td>
+                                        <td>12345678915</td>
+                                        <td>hangzhou city</td>
                                         <td>88845645</td>
-                                        <td>Lynn2</td>
-                                        <td>123464613123</td>
-                                        <td>Company</td>
-                                        <td class="center">Railway</td>
-                                        <td>
-                                            <div>From: zhejiang hangzhou</div>
-                                            <div>To: zhejiang hangzhou</div>
-                                        </td>
-                                        <td>www.elogco.com</td>
-                                        <td>123456</td>
-                                        <td>someone@@elogco.com</td>
-
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button id="show-details-btn" class="btn btn-default">查看</button></td>
                                     </tr>
-                                    <tr class="even gradeX">
-                                        <td>aushen</td>
-                                        <td><img src=""></td>
+
+                                    <tr id="view-details" class="gradeX" style="display: none">
+                                        <td>27/05/2016</td>
                                         <td>Lynn</td>
-                                        <td class="center">12345678915</td>
-                                        <td class="center">hangzhou city</td>
+                                        <td>Shen</td>
+                                        <td>12345678915</td>
+                                        <td>hangzhou city</td>
                                         <td>88845645</td>
-                                        <td>Afred</td>
-                                        <td>123464613123</td>
-                                        <td>Company</td>
-                                        <td class="center">Railway</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td>
-                                            <div>From: zhejiang hangzhou</div>
-                                            <div>To: zhejiang hangzhou</div>
+                                            <button class="btn btn-default" id="hide-details-btn">收起</button>
                                         </td>
-                                        <td>www.aushen.com</td>
-                                        <td>123456</td>
-                                        <td>lynn@@aushentech.com</td>                                            
+                                    </tr>
+
+                                    <tr class="even gradeX">
+                                        <td>27/05/2016</td>
+                                        <td>Lynn</td>
+                                        <td>Shen</td>
+                                        <td>12345678915</td>
+                                        <td>hangzhou city</td>
+                                        <td>88845645</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button id="show-details-btn"  class="btn btn-default">查看</button></td>                                           
                                     </tr>
                                     
                                 </tbody>
@@ -93,5 +115,22 @@
     </div>
     <!-- /#page-wrapper -->
 } {
-    
+    <script type="text/javascript">
+        $(function(){
+            
+
+        });
+
+
+        $( "#show-details-btn" ).click(function() {
+            $( "#view-details" ).first().show( "fast", function showNext() {
+                $( this ).next( "#view-details" ).show( "fast", showNext );
+            });
+        });
+
+        $( "#hide-details-btn" ).click(function() {
+            $( "#view-details" ).hide(250);
+        });
+
+    </script>
 }
