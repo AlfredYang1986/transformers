@@ -8,98 +8,62 @@
 
 			<!-- common step -->
 			<div class="third-bkg" id='common-step'>
-				<label style="font-size: 36px; text-align: left;">公司/厂家/专线</label>
-				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+				<label style="font-size: 22px;" class="text-center">公司/厂家/专线 注册认证</label></br>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
 				<div class="form-horizontal" style="margin-top: 40px;">
-				
+					
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="company-name" class="col-sm-2 control-label">企业全称</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name='company-name'>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
-						<div class="col-sm-10 business-license-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="#business-image">上传照片</button>
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
+						<label for="business-license" class="col-sm-2 control-label">工商营业执照上传</label>
+						<div class="col-sm-9 business-license-btn">
+							<input id="register-business-image" name="register-business-image[]" type="file" multiple=true class="file-loading">
 						</div>
 					</div>
 
-					<!-- business image upload-->
-					<div class="modal fade" id="business-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-							<div class="modal-header home-login-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								<i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
-								</button>
-								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
-								工商营业执照上传
-								</h3>
-							</div>
-
-							<div class="modal-body">
-								<input id="register-business-image" name="register-business-image[]" type="file" multiple=true class="file-loading">
-							</div>
-
-							</div><!-- /.modal-content -->
-						</div><!-- /.modal -->
-					</div>
-
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name='legal-person'>
 						</div>
 					</div>
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name='legal-person-id'>
 						</div>
 					</div>			  
 
 					<div class="form-group">
-						<label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
-						<div class="col-sm-10 road-license-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="#road-license">上传照片</button>
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
+						<label for="road-license" class="col-sm-2 control-label">道路运输许可证上传</label>
+						<div class="col-sm-9 road-license-btn">
+							<input id="road-image" name="road-image[]" type="file" multiple=true class="file-loading">
 						</div>
 					</div>
 
-					<!-- road image upload-->
-					<div class="modal fade" id="road-license" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-							<div class="modal-header home-login-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								<i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
-								</button>
-								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
-								道路运输许可证上传
-								</h3>
-							</div>
-
-							<div class="modal-body">
-								<input id="road-image" name="road-image[]" type="file" multiple=true class="file-loading">
-							</div>
-
-							</div><!-- /.modal-content -->
-						</div><!-- /.modal -->
-					</div>
-
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="reg-address" data-target="company-reg-address">
 						</div>
 					</div>	
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="company-phone-no" class="col-sm-2 control-label">企业办公电话</label>
 						<div class="col-sm-2">
 							<select class="form-control" disabled>
@@ -112,33 +76,49 @@
 						<div class="col-sm-3">
 							<input type="text" class="form-control" data-name="company-phone-no" placeholder="电话号">
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<input type="text" class="form-control" data-name="company-phone-sep" placeholder="分机">
 						</div>
 					</div>			  		  
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="principal-name">
 						</div>
 					</div>
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">主要负责人手机号码</label>
 						<div class="col-sm-2">
 							<select class="form-control" disabled>
 								<option value="china">中国大陆&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+86</option>
 							</select>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-7">
 							<input type="text" class="form-control" id="principal-phone-no">
 						</div>
 					</div>
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
-						<div class="col-sm-8">
+						<div class="col-sm-2">
+							<select class="form-control" disabled>
+								<option value="china">中国大陆&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+86</option>
+							</select>
+						</div>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="principal-phone-no" placeholder="请输入您的手机号码">
+						</div>
+					</div>	
+
+					<div class="form-group">
+						<span class=" col-sm-1 control-label"></span>
+						<label for="verifiable-code" class="col-sm-2 control-label" ></label>
+						<div class="col-sm-7">
 							<input type="text" class="form-control" id="verifiable-code" placeholder="在此输入验证码" >
 						</div>
 						<div class="col-sm-2 verifiable-code-btn">
@@ -147,8 +127,9 @@
 					</div>			  
 
 					<div class="form-group">
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="certificate-type" class="col-sm-2 control-label" >认证类型</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<div class="checkbox">
 								<label>
 									<input name='company-type' type="radio" value=1> 物流公司
@@ -180,20 +161,24 @@
 							<button type="submit" class="btn btn-lg" onclick="nextStep()">下一步</button>
 						</div>
 					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10"></div>
+					</div>
+
 				</div>
 			</div>
 
 			<!-- company step -->
 			<div class="third-bkg" id='company-step'>
-				<label style="font-size: 36px; text-align: left;">公司注册</label>
-				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+				<label style="font-size: 22px; text-align: left;">公司注册认证</label></br>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
 				<div class="form-horizontal" style="margin-top: 40px;">
 				
 					<div class="form-group">
-
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="certificate-type" class="col-sm-2 control-label" >业务领域</label>
 
 						<div class="col-sm-2 checkbox">
@@ -223,6 +208,7 @@
 					</div>				
 
 					<div class="form-group" >
+						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">营业范围</label>
 						<fieldset id="company_new_route_form">
 							<div class="company-line">
@@ -260,29 +246,33 @@
 							</div>				
 						</fieldset>				
 					<div class="form-group">
+					<span class="col-sm-1 control-label"></span>
 						<label for="" class="col-sm-2 control-label"></label>
-						<div class="col-sm-10 business-license-btn">
+						<div class="col-sm-9 business-license-btn">
 							<button id="add_company_route" type="button" class="btn" data-toggle="modal" data-target="newroute">新增主营路线</button>
 						</div>
 					</div>									
 
 					<div class="form-group">
+						<span class="col-sm-1 control-label"></span>
 						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="company-web">
 						</div>
 					</div>
 
 					<div class="form-group">
+						<span class="col-sm-1 control-label"></span>
 						<label for="legal-person" class="col-sm-2 control-label">公司传真</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="company-fax">
 						</div>
 					</div>
 
 					<div class="form-group">
+						<span class="col-sm-1 control-label"></span>
 						<label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
-						<div class="col-sm-10">
+						<div class="col-sm-9">
 							<input type="email" class="form-control" data-name="company-email">
 						</div>
 					</div>			  
@@ -309,8 +299,7 @@
 
 			<!-- indusry step -->
 			<div class="third-bkg" id='industry-step'>
-				<label style="font-size: 36px; text-align: left;">厂家注册</label>
-				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+				<label style="font-size: 22px; text-align: left;">厂家注册认证</label></br>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
@@ -358,8 +347,7 @@
 
 			<!-- spical step -->
 			<div class="third-bkg" id='spical-step'>
-				<label style="font-size: 36px; text-align: left;">专线注册</label>
-				<label style="font-size: 18px; text-align: center;">注册认证</label> </br>
+				<label style="font-size: 22px; text-align: left;">专线注册认证</label></br>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:5px;"></div>
 
