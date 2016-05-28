@@ -1,11 +1,13 @@
 
-@admin_main("admin") {
+
+@admin_main("Admin") {
     
 } {
+
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">审核通过厂家列表</h1>
+                <h3 class="page-header">审核通过厂家列表</h3>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -16,53 +18,151 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="dataTable_wrapper table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-striped table-bordered table-hover" id="">
                                 <thead>
                                     <tr>
                                         <th>企业名字</th>
-                                        <th>工商营业执照</th>
-                                        <th>法定代表人</th>
-                                        <th>法定代表人身份证</th>
-                                        <th>企业注册地址</th>
-                                        <th>企业办公电话</th>
-                                        <th>主要负责人姓名</th>
-                                        <th>主要负责人手机号码</th>
-                                        <th>认证类型</th>
-                                        <th>公司网站</th>
-                                        <th>公司传真</th>
-                                        <th>公司邮箱</th>                                            
+                                        <th>审核时间</th>
+                                        <th>查看详情</th>
+
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr class="odd gradeX">
-                                        <td>elogco</td>
-                                        <td><img src=""></td>
-                                        <td>Lynn</td>
-                                        <td class="center">12345678915</td>
-                                        <td class="center">hangzhou city</td>
-                                        <td>88845645</td>
-                                        <td>Lynn2</td>
-                                        <td>123464613123</td>
-                                        <td>Industry</td>
-                                        <td>www.elogco.com</td>
-                                        <td>123456</td>
-                                        <td>someone@@elogco.com</td>
-
+                                        <td>Elogco</td>
+                                        <td>27/05/2016</td>
+                                        <td>
+                                            <button id="show-details-btn" class="btn btn-default">查看</button>
+                                        </td>
                                     </tr>
-                                    <tr class="even gradeX">
-                                        <td>aushen</td>
-                                        <td><img src=""></td>
-                                        <td>Lynn</td>
-                                        <td class="center">12345678915</td>
-                                        <td class="center">hangzhou city</td>
-                                        <td>88845645</td>
-                                        <td>Afred</td>
-                                        <td>123464613123</td>
-                                        <td>Industry</td>
-                                        <td>www.aushen.com</td>
-                                        <td>123456</td>
-                                        <td>lynn@@aushentech.com</td>                                            
+                                    <!--View Detail Show&Hide-->
+                                    <tr id="view-details" class="gradeX" style="display: none">
+                                        
+                                        <td>
+                                            <div class="container">
+                                                <h3 style="text-align: center">厂家认证详情列表</h3>
+                                                <form class="form-horizontal" role="form">
+
+                                                    <div class="form-group">
+                                                        <label for="company-name" class="col-sm-2 control-label">企业全称</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name='company-name'>data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
+                                                        <div class="col-sm-10 business-license-btn">
+                                                            <label type="button" class="btn" data-toggle="modal" data-target="#business-image">照片</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name='legal-person'>data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name='legal-person-id'>data</label>
+                                                        </div>
+                                                    </div>            
+
+                                                    <div class="form-group">
+                                                        <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
+                                                        <div class="col-sm-10 road-license-btn">
+                                                            <label type="button" class="btn" data-toggle="modal" data-target="#road-license">照片</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
+                                                        <div class="col-sm-10">
+                                                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">data</lbael>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="company-phone-no" class="col-sm-2 control-label">企业办公电话</label>
+                                                        
+                                                        <div class="col-sm-3">
+                                                            <label type="text" class="control-label" data-name="company-phone-dir" placeholder="区号">区号</label>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label type="text" class="control-label" data-name="company-phone-no" placeholder="电话号">电话</label>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <label type="text" class="control-label" data-name="company-phone-sep" placeholder="分机">分机</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name="principal-name">data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="principal-phone-no" class="col-sm-2 control-label">主要负责人手机号码</label>
+                                                        <div class="col-sm-8">
+                                                            <label type="text" class="control-label" id="principal-phone-no">data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="certificate-type" class="col-sm-2 control-label">认证类型</label>
+                                                        <div class="col-sm-8">
+                                                            <label type="text" class="control-label" id="certificate-type">data</label>
+                                                        </div>
+                                                    </div>                                                    
+
+                                                    <div class="form-group">
+                                                        <label for="company-name" class="col-sm-2 control-label">公司网站</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name="company-web">data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name="company-fax">data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="email" class="control-label" data-name="company-email">data</label>
+                                                        </div>
+                                                    </div>  
+
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+
+                                        <td>
+                                            <button id="" class="btn btn-default">通过</button></br></br>
+                                            <button id="" class="btn btn-default">失败</button></br></br>
+                                            <button class="btn btn-default" id="hide-details-btn">收起</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="odd gradeX">
+                                        <td>Aushen Tech</td>
+                                        <td>27/05/2016</td>
+                                        <td>
+                                            <button id="" class="btn btn-default">查看</button>
+                                        </td>
                                     </tr>
                                     
                                 </tbody>
@@ -79,5 +179,22 @@
     </div>
     <!-- /#page-wrapper -->
 } {
-    
+    <script type="text/javascript">
+        $(function(){
+            
+
+        });
+
+
+        $( "#show-details-btn" ).click(function() {
+            $( "#view-details" ).first().show( "fast", function showNext() {
+                $( this ).next( "#view-details" ).show( "fast", showNext );
+            });
+        });
+
+        $( "#hide-details-btn" ).click(function() {
+            $( "#view-details" ).hide(250);
+        });
+
+    </script>
 }
