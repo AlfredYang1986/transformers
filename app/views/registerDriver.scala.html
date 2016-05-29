@@ -202,7 +202,7 @@
 							</div>
 
 							<div class="col-sm-1" style="text-align:center;">
-								<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+								<img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
 							</div>
 
 							<div class="col-sm-2">
@@ -287,6 +287,16 @@
 
 		});
 
+		/**swap image one way & two way**/
+        $(function(){
+	        $(".img-swap").click(function(){
+	            var src = ($(this).attr("src") == "@routes.Assets.at("images/arrow/oneway.png")")
+	                    ?"@routes.Assets.at("images/arrow/twoway.png")"
+	                    :"@routes.Assets.at("images/arrow/oneway.png")";
+	            $(this).attr("src", src);
+	        });
+    	});
+			
 		/** 驾驶员行驶证图片上传**/
 	    $("#driver-image-upload").fileinput({
 		    uploadUrl: "/file-upload-batch/2",

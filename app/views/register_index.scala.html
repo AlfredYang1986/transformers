@@ -227,7 +227,7 @@
 								</div>
 
 								<div class="col-sm-1" style="text-align:center;">
-									<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+									<img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
 								</div>
 
 								<div class="col-sm-2">
@@ -409,7 +409,7 @@
 								</div>
 
 								<div class="col-sm-1" style="text-align:center; vertical-">
-									<img  src="@routes.Assets.at("images/arrow/oneway.png")">
+									<img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
 								</div>
 
 								<div class="col-sm-2">
@@ -600,6 +600,15 @@
 			$('#spical-step').hide();
 		});
 
+		/**swap image one way & two way**/
+        $(function(){
+	        $(".img-swap").click(function(){
+	            var src = ($(this).attr("src") == "@routes.Assets.at("images/arrow/oneway.png")")
+	                    ?"@routes.Assets.at("images/arrow/twoway.png")"
+	                    :"@routes.Assets.at("images/arrow/oneway.png")";
+	            $(this).attr("src", src);
+	        });
+    	});
 
 		var $button = $('#add_company_route');
 		var $company_route = $('#company_new_route_form').clone();
