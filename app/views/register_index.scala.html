@@ -26,7 +26,8 @@
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="business-license" class="col-sm-2 control-label">工商营业执照上传</label>
 						<div class="col-sm-9 business-license-btn">
-							<input id="register-business-image" name="register-business-image[]" type="file" multiple=true class="file-loading">
+							<input id="register-business-image" type="file" multiple=true class="file-loading">
+							<!-- <input id="register-business-image" type="file" class="file-loading"> -->
 						</div>
 					</div>
 
@@ -231,20 +232,22 @@
 								</div>
 
 								<div class="col-sm-2">
-									<select class="form-control" data-name="destination-provice">
+									<select class="form-control" data-name="destination-province">
 										<option selected disabled>请选择省区</option>
-										<option value="zhejiang">浙江省</option>
+										<option value="浙江省">浙江省</option>
 									</select>
 								</div>
 
 								<div class="col-sm-2">
-									<select class="form-control" data-name="destination_provice">
+									<select class="form-control" data-name="destination-city">
 										<option selected disabled>请选择市区</option>
-										<option value="zhejiang">杭州市</option>
+										<option value="杭州市">杭州市</option>
 									</select>
 								</div>
 							</div>				
-						</fieldset>				
+						</fieldset>
+					</div>	
+
 					<div class="form-group">
 					<span class="col-sm-1 control-label"></span>
 						<label for="" class="col-sm-2 control-label"></label>
@@ -587,19 +590,11 @@
 } {
 	<script type="text/javascript">
 		var query_object;
-		/**
-			only one type of certification can be selected
-		**/
-		// $('input[type="checkbox"]').on('change', function() {
-		   // $('input[type="checkbox"]').not(this).prop('checked', false);
-		// });
 
 		$(function(){
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
-
-			$("input[type=file][name=baz]").fileinput($("#replacement").remove());
 		});
 
 		/**swap image one way & two way**/
@@ -625,20 +620,9 @@
 		});
 
 		/** 工商营业执照图片上传**/
-	    $("#register-business-image").fileinput({
-		    uploadUrl: "/file-upload-batch/2",
-		    allowedFileExtensions: ["jpg", "png", "gif"],
-		    minImageWidth: 50,
-		    minImageHeight: 50
-    	});
-
-	    /** 道路许可证图片上传**/
-	    $("#road-image").fileinput({
-		    uploadUrl: "/file-upload-batch/2",
-		    allowedFileExtensions: ["jpg", "png", "gif"],
-		    minImageWidth: 50,
-		    minImageHeight: 50
-    	});
+		var register_business_image = new fileUpload($("#register-business-image"));
+		/** 道路许可证图片上传**/
+		var road_image = new fileUpload($("#road-image"));
 
 		function validate(ele, result) {
 			if (result) $(ele).removeClass('validate-error');
@@ -684,6 +668,18 @@
 			var company_type = $('input[name="company-type"]:checked').val();
 			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"));
 
+			var business_images = register_business_image.queryFileNames();
+			if (business_images.length != 1) {
+				alert("请上传并仅仅上传一张图片");
+				result &= false;
+			}
+
+			var road_image_arr = road_image.queryFileNames();
+			if (road_image_arr.length != 1) {
+				alert("请上传并仅仅上传一张图片");
+				result &= false;
+			}
+
 			if (Boolean(result)) {
 				query_object = new Object();
 				query_object['company_type'] = Number(company_type);
@@ -694,6 +690,8 @@
         		query_object['phone_dir'] = company_phone_dir;
         		query_object['phone_no'] = company_phone_no;
         		query_object['phone_sep'] = company_phone_sep;
+        		query_object['business_image'] = business_images[0];
+        		query_object['road_image'] = road_image_arr[0];
 			}
 
 			return Boolean(result);
@@ -704,16 +702,16 @@
 			var lines_lst = [];
 			$.each($('.company-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
 
-				var destination_province = $(this).find('select[data-name="destination_province"]').val();
-				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
+				var destination_province = $(this).find('select[data-name="destination-province"]').val();
+				result &= validate($(this).find('select[data-name="destination-province"]'), (typeof(destination_province) != "undefined"));
 
-				var destination_city = $(this).find('select[data-name="destination_city"]').val();
-				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
+				var destination_city = $(this).find('select[data-name="destination-city"]').val();
+				result &= validate($(this).find('select[data-name="destination-city"]'), (typeof(destination_city) != "undefined"));		
 
 				if (Boolean(result)) {
 					var tmp = new Object();
@@ -772,16 +770,16 @@
 			var lines_lst = [];
 			$.each($('.special-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
 
-				var destination_province = $(this).find('select[data-name="destination_province"]').val();
-				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
+				var destination_province = $(this).find('select[data-name="destination-province"]').val();
+				result &= validate($(this).find('select[data-name="destination-province"]'), (typeof(destination_province) != "undefined"));
 
-				var destination_city = $(this).find('select[data-name="destination_city"]').val();
-				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
+				var destination_city = $(this).find('select[data-name="destination-city"]').val();
+				result &= validate($(this).find('select[data-name="destination-city"]'), (typeof(destination_city) != "undefined"));		
 
 				if (Boolean(result)) {
 					var tmp = new Object();
@@ -829,7 +827,7 @@
 			$.each($('input[name="vehicle"]:checked'), function(index, value){
 				vehicle_lst.push($(this).val());
 			});
-			result &= validate($('input[name="vehicle"]'), vehicle_lst.count > 0)
+			result &= validate($('input[name="vehicle"]'), vehicle_lst.length > 0)
 
 			query_object['vehicle'] = vehicle_lst;
 			return Boolean(result);

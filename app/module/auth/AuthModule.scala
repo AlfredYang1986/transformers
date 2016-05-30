@@ -15,7 +15,15 @@ import util.errorcode.ErrorCode
 import com.mongodb.casbah.Imports._
 import module.sercurity.Sercurity
 
-object authTypes {
+object authStatus {  // auth  indicate weather account is approved 
+    case object approved extends authTypeDefines(0, "approved")
+    case object progress extends authTypeDefines(1, "in progress")
+    case object rejected extends authTypeDefines(2, "rejected")
+}
+
+sealed abstract class authStatusDefines(val t : Int, val des : String)
+
+object authTypes {  // auth  indicate which account 
     case object admin extends authTypeDefines(0, "admin")
     case object driverMaster extends authTypeDefines(1, "driver master")
     case object companyMaster extends authTypeDefines(2, "company master")
@@ -24,7 +32,7 @@ object authTypes {
 
 sealed abstract class authTypeDefines(val t : Int, val des : String)
 
-object registerTypes {
+object registerTypes {  // type indicate type of account
     case object driver extends registerTypesDefines(0, "driver")
     case object company extends registerTypesDefines(1, "company")
     case object industry extends registerTypesDefines(2, "industry")
@@ -33,7 +41,7 @@ object registerTypes {
 
 sealed abstract class registerTypesDefines(val t : Int, val des : String)
 
-object businessTypes {
+object businessTypes {  // company business indicate of company business
     case object car extends businessTypesDefines(0, "公路")
     case object train extends businessTypesDefines(1, "铁路")
     case object ship extends businessTypesDefines(2, "船运")
@@ -42,7 +50,7 @@ object businessTypes {
 
 sealed abstract class businessTypesDefines(val t : Int, val des : String)
 
-object insuranceStatus {
+object insuranceStatus {  // driver insurance indicate of driver insurance
     case object insuranced extends insuranceStatusDefines(0, "已购买")
     case object not_insuranced extends insuranceStatusDefines(1, "未购买")
 }
@@ -51,19 +59,24 @@ sealed abstract class insuranceStatusDefines(val t : Int, val des : String)
 
 object AuthModule {
     def register(data : JsValue) : JsValue = {
-     
         val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
 
         def commonRegisterImpl(x : MongoDBObject) : (Boolean, String) =
             try {
-                (data \ "company_name").asOpt[String].map (tmp => x += "company_name" -> tmp).getOrElse(throw new Exception("input company name"))
+                val company_name = (data \ "company_name").asOpt[String].map (tmp => tmp).getOrElse(throw new Exception("input company name"))
+                x += "company_name" -> company_name
+//                (data \ "company_name").asOpt[String].map (tmp => x += "company_name" -> tmp).getOrElse(throw new Exception("input company name"))
                 (data \ "legal_person").asOpt[String].map (tmp => x += "legal_person" -> tmp).getOrElse(throw new Exception("input legal person"))
                 (data \ "legal_person_id").asOpt[String].map (tmp => x += "legal_person_id" -> tmp).getOrElse(throw new Exception("input legal person id"))
                 (data \ "address").asOpt[String].map (tmp => x += "address" -> tmp).getOrElse(throw new Exception("input company reg address"))
                 (data \ "phone_dir").asOpt[String].map (tmp => x += "phone_dir" -> tmp).getOrElse(x += "phone_dir" -> "")
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(x += "phone_no" -> "")
                 (data \ "phone_sep").asOpt[String].map (tmp => x += "phone_sep" -> tmp).getOrElse(x += "phone_sep" -> "")
+                (data \ "business_image").asOpt[String].map (tmp => x += "business_image" -> tmp).getOrElse(throw new Exception("input business image"))
+                (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input road image"))
                 x += "type" -> company_type.asInstanceOf[Number]
+                x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
+                x += "open_id" -> module.sercurity.Sercurity.md5Hash(company_name + Sercurity.getTimeSpanWithMillSeconds)
                 
                 (true, "")
             } catch {
@@ -182,7 +195,7 @@ object AuthModule {
                common += "user_lst" -> user_lst.result
                
                _data_connection.getCollection("companies") += common
-               toJson(Map("status" -> "ok", "result" -> "register success"))
+               toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
             }
         }
     }
@@ -194,7 +207,6 @@ object AuthModule {
             val name = (data \ "driver_name").asOpt[String].get
             val phone = (data \ "phone_no").asOpt[String].get
 
-            println("bablablalb")
             val user_id = Sercurity.md5Hash(name + phone + Sercurity.getTimeSpanWithMillSeconds)
             x += "user_id" -> user_id
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
@@ -221,27 +233,126 @@ object AuthModule {
             x += "driver_lines" -> lines.result
            
             import insuranceStatus._
+            val driver_secial_id = (data \ "driver_secial_id").asOpt[String].map (tmp => tmp).getOrElse(throw new Exception("input driver secial id"))
+            x += "driver_secial_id" -> driver_secial_id
             (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
-            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
+//            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
             (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
             (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> tmp.asInstanceOf[Number]).getOrElse(x += "vehicle_length" -> 0)
             (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
             (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
+            (data \ "driver_image").asOpt[String].map (tmp => x += "business_image" -> tmp).getOrElse(throw new Exception("input drive image"))
+            (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input drive road image"))
+            x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
+            x += "open_id" -> Sercurity.md5Hash(driver_secial_id + Sercurity.getTimeSpanWithMillSeconds)
+            x += "type" -> registerTypes.driver.t.asInstanceOf[Number]
            
             val user_lst = MongoDBList.newBuilder
             val company_master = MongoDBObject.newBuilder.result
             createBasicAccount(company_master)
-            println(company_master)
             user_lst += company_master
             x += "user_lst" -> user_lst.result
             
             _data_connection.getCollection("drivers") += x.result
     
-            toJson(Map("status" -> "ok", "result" -> "driver register success"))
+            toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
         } catch {
             case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
+   
+    def userResult(x : MongoDBObject) : JsValue =
+        toJson(Map("user_id" -> toJson(x.getAs[String]("user_id").get),
+                   "token" -> toJson(x.getAs[String]("token").get)))
+    
+    def detailResult(x : MongoDBObject) : JsValue = 
+        toJson(Map("open_id" -> toJson(x.getAs[String]("open_id").get), "details" -> toJson(
+                   x.getAs[Number]("type").get.intValue match {
+                      case registerTypes.driver.t => Map(
+                          "dirver_name" -> toJson(x.getAs[String]("driver_name").get),
+                          "dirver_secial_id" -> toJson(x.getAs[String]("driver_secial_id").get),
+                          "capacity" -> toJson(x.getAs[Number]("capacity").get.intValue),
+                          "vehicle_length" -> toJson(x.getAs[Number]("vehicle_length").get.intValue),
+                          "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
+                          "phone_no" -> toJson(x.getAs[String]("phone_no").get),
+                          "driver_image" -> toJson(x.getAs[String]("driver_image").get),
+                          "road_image" -> toJson(x.getAs[String]("road_image").get),
+                          "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
+                          "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
+                          "driver_lines" -> toJson(x.getAs[MongoDBList]("driver_lines").get.toList.asInstanceOf[List[MongoDBObject]].map (tmp => 
+                              toJson(Map("origin_province" -> tmp.getAs[String]("origin_province").get,
+                                         "origin_city" -> tmp.getAs[String]("origin_city").get,
+                                         "destination_province" -> tmp.getAs[String]("destination_province").get,
+                                         "destination_city" -> tmp.getAs[String]("destination_city").get)))))
+                      case registerTypes.company.t => Map(
+                          "company_name" -> toJson(x.getAs[String]("company_name").get),
+                          "legal_person" -> toJson(x.getAs[String]("legal_person").get),
+                          "legal_secial_id" -> toJson(x.getAs[String]("legal_secial_id").get),
+                          "address" -> toJson(x.getAs[String]("address").get),
+                          "bussiness_image" -> toJson(x.getAs[String]("business_image").get),
+                          "road_image" -> toJson(x.getAs[String]("road_image").get),
+                          "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
+                          "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
+                          "phone_no" -> toJson(x.getAs[String]("phone_no").get),
+                          "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                          
+                          "company_business" -> toJson(x.getAs[Number]("company_business").get.intValue match {
+                            case businessTypes.car.t => businessTypes.car.des
+                            case businessTypes.plane.t => businessTypes.plane.des
+                            case businessTypes.ship.t => businessTypes.ship.des
+                            case businessTypes.train.t => businessTypes.train.des
+                          }),
+                          "company_web" -> toJson(x.getAs[String]("company_web").get),
+                          "company_fax" -> toJson(x.getAs[String]("company_fax").get),
+                          "company_email" -> toJson(x.getAs[String]("company_email").get),
+                          "company_lines" -> toJson(x.getAs[MongoDBList]("company_lines").get.toList.asInstanceOf[List[MongoDBObject]].map (tmp => 
+                              toJson(Map("origin_province" -> tmp.getAs[String]("origin_province").get,
+                                         "origin_city" -> tmp.getAs[String]("origin_city").get,
+                                         "destination_province" -> tmp.getAs[String]("destination_province").get,
+                                         "destination_city" -> tmp.getAs[String]("destination_city").get)))))
+                      case registerTypes.industry.t => Map(
+                          "company_name" -> toJson(x.getAs[String]("company_name").get),
+                          "legal_person" -> toJson(x.getAs[String]("legal_person").get),
+                          "legal_secial_id" -> toJson(x.getAs[String]("legal_secial_id").get),
+                          "address" -> toJson(x.getAs[String]("address").get),
+                          "bussiness_image" -> toJson(x.getAs[String]("business_image").get),
+                          "road_image" -> toJson(x.getAs[String]("road_image").get),
+                          "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
+                          "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
+                          "phone_no" -> toJson(x.getAs[String]("phone_no").get),
+                          "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                          
+                          "industry_web" -> toJson(x.getAs[String]("industry_web").get),
+                          "industry_fax" -> toJson(x.getAs[String]("industry_fax").get),
+                          "industry_email" -> toJson(x.getAs[String]("industry_email").get)
+                      )
+                      case registerTypes.spicalway.t => Map(
+                          "company_name" -> toJson(x.getAs[String]("company_name").get),
+                          "legal_person" -> toJson(x.getAs[String]("legal_person").get),
+                          "legal_secial_id" -> toJson(x.getAs[String]("legal_secial_id").get),
+                          "address" -> toJson(x.getAs[String]("address").get),
+                          "bussiness_image" -> toJson(x.getAs[String]("business_image").get),
+                          "road_image" -> toJson(x.getAs[String]("road_image").get),
+                          "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
+                          "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
+                          "phone_no" -> toJson(x.getAs[String]("phone_no").get),
+                          "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                          
+                          "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
+                          "special_web" -> toJson(x.getAs[String]("special_web").get),
+                          "special_fax" -> toJson(x.getAs[String]("special_fax").get),
+                          "special_email" -> toJson(x.getAs[String]("special_email").get),
+                          "special_storage" -> toJson(x.getAs[MongoDBList]("special_storage").get.toList.asInstanceOf[List[MongoDBObject]].map (tmp => 
+                              toJson(Map("province" -> tmp.getAs[String]("province").get,
+                                         "city" -> tmp.getAs[String]("city").get,
+                                         "address" -> tmp.getAs[String]("address").get)))),
+                          "special_lines" -> toJson(x.getAs[MongoDBList]("special_lines").get.toList.asInstanceOf[List[MongoDBObject]].map (tmp => 
+                              toJson(Map("origin_province" -> tmp.getAs[String]("origin_province").get,
+                                         "origin_city" -> tmp.getAs[String]("origin_city").get,
+                                         "destination_province" -> tmp.getAs[String]("destination_province").get,
+                                         "destination_city" -> tmp.getAs[String]("destination_city").get)))))
+                      case _ => ???
+                   })))
     
     def login(data : JsValue) : JsValue = {
         null

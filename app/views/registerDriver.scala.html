@@ -45,29 +45,6 @@
 						</div>
 					</div>
 
-<<<<<<< HEAD
-					<!-- driver image upload-->
-					<div class="modal fade" id="drivering-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-							<div class="modal-header home-login-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								&times;
-								</button>
-								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
-								驾驶员驾驶证上传
-								</h3>
-							</div>
-
-							<div class="modal-body">
-								<input id="driver-road-image" name="driver-road-image" type="file" multiple=true class="file-loading">
-							</div>
-
-							</div><!-- /.modal-content -->
-						</div><!-- /.modal -->
-					</div>
-=======
->>>>>>> origin/master
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">手机号码</label>
@@ -213,7 +190,7 @@
 
 							<div class="col-sm-2">
 
-								<select name="sheng" id="to_cn" onchange="set_city(this, document.getElementById('city')); WYL();" class="login_text_input form-control" data-name="origin-province"> 
+								<select name="sheng" id="to_cn" onchange="set_city(this, document.getElementById('city'));" class="login_text_input form-control" data-name="origin-province"> 
 									<option value=0>请选择省</option> 
 									<option value=台湾>台湾</option> 
 									<option value=马来西亚>马来西亚</option> 
@@ -265,7 +242,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<select name="sheng" id="to_cn_2" onchange="set_city_sec(this, document.getElementById('city_2')); WYL();" class="login_text_input form-control" data-name="origin-province"> 
+								<select name="sheng" id="to_cn_2" onchange="set_city_sec(this, document.getElementById('city_2'));" class="login_text_input form-control" data-name="destination-province"> 
 									<option value=0>请选择省</option> 
 									<option value=台湾>台湾</option> 
 									<option value=马来西亚>马来西亚</option> 
@@ -306,7 +283,7 @@
 							</div>
 
 							<div class="col-sm-2">
-								<select id="city_2" class="login_text_input form-control" name="shi" data-name="origin-city"> 
+								<select id="city_2" class="login_text_input form-control" name="shi" data-name="destination-city"> 
 									<option value=0>请选择市</option> 
 								</select> 
 							</div>
@@ -368,17 +345,7 @@
 	</div>
 } {
 	<script type="text/javascript">
-	/**
-		only one type of certification can be selected
-	**/
-		// $('input[type="radio"]').on('change', function() {
-		//    $('input[type="radio"]').not(this).prop('checked', false);
-		// });
 		var query_object;
-
-		$(function(){
-
-		});
 
 		/**swap image one way & two way**/
         $(function(){
@@ -390,21 +357,11 @@
 	        });
     	});
 			
-		/** 驾驶员行驶证图片上传**/
-	    $("#driver-image-upload").fileinput({
-		    uploadUrl: "/file-upload-batch/2",
-		    allowedFileExtensions: ["jpg", "png", "gif"],
-		    minImageWidth: 50,
-		    minImageHeight: 50
-    	});
 
-	    /** 驾驶员驾驶证图片上传**/
-	    $("#driver-road-image").fileinput({
-		    uploadUrl: "/file-upload-batch/2",
-		    allowedFileExtensions: ["jpg", "png", "gif"],
-		    minImageWidth: 50,
-		    minImageHeight: 50
-    	});
+        /** 驾驶员行驶证图片上传**/
+		var drive_image = new fileUpload($("#driver-image-upload"));
+		/** 驾驶员驾驶证图片上传**/
+		var road_image = new fileUpload($("#driver-road-image"));
 
 	    /**省市选择**/
 		cities = new Object(); 
@@ -509,6 +466,7 @@
 			var i, ii; 
 
 			pv=province.value; 
+
 			cv=city.value; 
 			city.length=1; 
 
@@ -567,6 +525,18 @@
 			var driver_insurance = $('input[name="insurance"]:checked').val();
 			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"));
 
+			var driver_images_arr = drive_image.queryFileNames();
+			if (driver_images_arr.length != 1) {
+				alert("请上传并仅仅上传一张图片");
+				result &= false;
+			}
+
+			var road_image_arr = road_image.queryFileNames();
+			if (road_image_arr.length != 1) {
+				alert("请上传并仅仅上传一张图片");
+				result &= false;
+			}
+
 			if (Boolean(result)) {
 				query_object = new Object();
 				query_object['driver_name'] = driver_name;
@@ -575,6 +545,8 @@
 				query_object['capacity'] = Number(driver_capacity);
 				query_object['vehicle_length'] = Number(driver_vehicle_length);
 				query_object['insurance'] = Number(driver_insurance);
+				query_object['driver_image'] = driver_images_arr[0];
+				query_object['road_image'] = road_image_arr[0];
 			};
 
 			return Boolean(result);
@@ -597,16 +569,16 @@
 			var lines_lst = [];
 			$.each($('.driver-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
 
 				var destination_province = $(this).find('select[data-name="destination-province"]').val();
-				result &= validate($(this).find('select[name="destination_province"]'), (typeof(destination_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="destination_province"]'), (typeof(destination_province) != "undefined"));
 
 				var destination_city = $(this).find('select[data-name="destination-city"]').val();
-				result &= validate($(this).find('select[name="destination_city"]'), (typeof(destination_city) != "undefined"));		
+				result &= validate($(this).find('select[data-name="destination_city"]'), (typeof(destination_city) != "undefined"));		
 
 				if (Boolean(result)) {
 					var tmp = new Object();

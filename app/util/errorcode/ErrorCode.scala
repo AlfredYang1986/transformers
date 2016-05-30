@@ -18,6 +18,11 @@ object ErrorCode {
   		new ErrorNode("input driver name", -8, "请输入司机姓名"),
   		new ErrorNode("input driver secial id", -9, "请输入司机身份证号"),
   		new ErrorNode("input driver phone", -10, "请输入司机手机号"),
+  		new ErrorNode("upload file error", -11, "上传照片失败"),
+  		new ErrorNode("input business image", -12, "上传工商营业执照"),
+  		new ErrorNode("input road image", -13, "上传运营许可证"),
+  		new ErrorNode("input drive image", -14, "上传驾驶员行驶证"),
+  		new ErrorNode("input drive road image", -15, "上传驾驶员驾驶证"),
 
   		new ErrorNode("not implement", -998, "还没有实现"),
   		new ErrorNode("unknown error", -999, "unknown error")
