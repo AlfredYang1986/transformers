@@ -9,7 +9,7 @@ import play.api.libs.Files.TemporaryFile
 
 import util.errorcode.ErrorCode
 import com.mongodb.casbah.Imports._
-import module.auth.AuthModule.authCheckUser
+//import module.auth.AuthModule.authCheckUser
 
 object requestArgsQuery extends Controller {
   def requestArgs(request : Request[AnyContent])(func : JsValue => JsValue) : Result = {
@@ -22,11 +22,15 @@ object requestArgsQuery extends Controller {
   		}  		   
 	}
   
-  	def requestGetRequestArgs(request :Request[AnyContent])(auth : String => Option[(String, Int)])(func : (String, JsValue) => JsValue)(bNeedApproved : Boolean) : Result = {
+  	def requestGetRequestArgs(request :Request[AnyContent])(auth : String => Option[(String, String, Int, Int)])(func : (String, String, JsValue) => JsValue)(basicStatus : Int)(basicAuth : Int) : Result = {
   	   try {
   	     request.body.asJson.map { x => 
   	         request.headers.get("Authorization").map (auth(_)).getOrElse(None) match {
-  	           case Some((user_id, status)) => Ok(authCheckUser(user_id)(x)(func))
+  	           case Some((open_id, user_id, status, auth)) => { 
+  	                if (status < basicStatus) Ok(ErrorCode.errorToJson("auth status error"))
+  	                else if (auth < basicAuth) Ok(ErrorCode.errorToJson("auth error"))
+  	                else Ok(func(open_id, user_id, x))
+  	           }
   	           case None => Ok(ErrorCode.errorToJson("email not exist"))
   	         }
   	     }.getOrElse(BadRequest)

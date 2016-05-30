@@ -27,6 +27,7 @@
         <link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet">
         <!-- Custom CSS -->
         <link href="@routes.Assets.at("stylesheets/sb-admin-2.css")" rel="stylesheet">
+        <script src="@routes.Assets.at("javascripts/cookie-manager.js")"></script>
 
         <style type="text/css">
             object,
@@ -110,7 +111,8 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li></li>
-                            <li><a href="login.html"><i class=""></i> Logout</a>
+                            <li>
+                                <a onclick="adminLogout()"><i class=""></i> Logout</a>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -131,16 +133,16 @@
                                 <a href=""><i class="fa fa-files-o fa-fw"></i> 审核通过<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/admin/company/pass">公司</a>
+                                        <a href="/admin/profiles/company/approved">公司</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/industry/pass">厂家</a>
+                                        <a href="/admin/profiles/industry/approved">厂家</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/specialway/pass">专线</a>
+                                        <a href="/admin/profiles/specialway/approved">专线</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/driver/pass">驾驶员</a>
+                                        <a href="/admin/profiles/driver/approved">驾驶员</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -150,16 +152,16 @@
                                 <a href=""><i class="fa fa-files-o fa-fw"></i> 审核失败<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/admin/company/faild">公司</a>
+                                        <a href="/admin/profiles/company/rejected">公司</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/industry/faild">厂家</a>
+                                        <a href="/admin/profiles/industry/rejected">厂家</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/specialway/faild">专线</a>
+                                        <a href="/admin/profiles/specialway/rejected">专线</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/driver/faild">驾驶员</a>
+                                        <a href="/admin/profiles/driver/rejected">驾驶员</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -169,16 +171,16 @@
                                 <a href=""><i class="fa fa-files-o fa-fw"></i> 在审核中<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="/admin/company/certificating">公司</a>
+                                        <a href="/admin/profiles/company/progress">公司</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/industry/certificating">厂家</a>
+                                        <a href="/admin/profiles/industry/progress">厂家</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/specialway/certificating">专线</a>
+                                        <a href="/admin/profiles/specialway/progress">专线</a>
                                     </li>
                                     <li>
-                                        <a href="/admin/driver/certificating">驾驶员</a>
+                                        <a href="/admin/profiles/driver/progress">驾驶员</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

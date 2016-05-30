@@ -23,7 +23,10 @@ object ErrorCode {
   		new ErrorNode("input road image", -13, "上传运营许可证"),
   		new ErrorNode("input drive image", -14, "上传驾驶员行驶证"),
   		new ErrorNode("input drive road image", -15, "上传驾驶员驾驶证"),
-
+  		new ErrorNode("user not exist", -16, "用户不存在或者密码不正确"),
+  		
+  		new ErrorNode("auth error", -996, "所在用户组没有访问权限"),
+  		new ErrorNode("auth status error", -997, "没有通过授权"),
   		new ErrorNode("not implement", -998, "还没有实现"),
   		new ErrorNode("unknown error", -999, "unknown error")
   	)
