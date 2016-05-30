@@ -35,7 +35,8 @@
 							<div class="modal-content">
 							<div class="modal-header home-login-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-								<i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+								<!-- <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i> -->
+								&times;
 								</button>
 								<h3 class="modal-title" style="text-align:center" id="myModalLabel">					
 								工商营业执照上传
@@ -43,7 +44,7 @@
 							</div>
 
 							<div class="modal-body">
-								<input id="register-business-image" name="register-business-image[]" type="file" multiple=true class="file-loading">
+								<input id="register-business-image" name="register-business-image[]" type="file" multiple=false class="file-loading">
 							</div>
 
 							</div><!-- /.modal-content -->
@@ -610,6 +611,8 @@
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
+
+			$("input[type=file][name=baz]").fileinput($("#replacement").remove());
 		});
 
 
