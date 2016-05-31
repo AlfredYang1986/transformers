@@ -636,6 +636,8 @@
 
 		function getIndexInfo() {
 			var result = true;
+
+/**
 			var company_name = $('input[data-name="company-name"]').val();
 			result &= validate($('input[data-name="company-name"]'), hasInput(company_name));
 
@@ -651,6 +653,79 @@
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
 			var company_phone_no = $('input[data-name="company-phone-no"]').val();
 			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
+
+**/
+
+			var company_name = $('input[data-name="company-name"]').val();
+			var regCompName = /([\u4e00-\u9fa5a]+)|([a-zA-z'. ]*)/; 
+			if (company_name.length == 0){ 
+		        alert("必须输入企业名字");  
+		        return false; 
+		    } else if(regCompName.test(company_name) === false) {
+		    	alert("不要乱造公司名字！");
+		    	return false;
+		    }
+
+
+			var legal_person = $('input[data-name="legal-person"]').val();
+			var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+			if (legal_person.length == 0){ 
+		        alert("必须输入姓名");  
+		        return false; 
+		    } else if(regNameL.test(legal_person) === false) {
+		    	alert("你的名字不对！写中文名！别乱打！");
+		    	return false;
+		    }
+
+
+			var legal_person_id = $('input[data-name="legal-person-id"]').val();
+			var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+			if (legal_person_id.length == 0){ 
+		        alert("必须输入身份证号码");  
+		        return false; 
+		    } else if(regIDL.test(legal_person_id) === false) {
+		    	alert("身份证号码不对！");
+		    	return false;
+		    }
+
+			var company_reg_address = $('input[data-name="reg-address"]').val();
+			var regCPAD = /^[0-9]*$/;
+			var regCPADD =/^[A-Za-z]+$/;
+			if(company_reg_address.length == 0){
+				alert("必须输入地址");
+				return false;
+			} else if(regCPAD.test(company_reg_address) === true) {
+				alert("地址输入有误");
+				return false;
+			} else if(regCPADD.text(company_reg_address) === true) {
+				alert("地址输入有误");
+				return false;
+			}
+
+
+			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
+			var regIDLD = /^[0-9]*$/; 
+			if(regIDLD.test(company_phone_dir) === false) {
+		    	alert("区号需要是数字");
+		    	return false;
+		    }
+
+
+			var company_phone_no = $('input[data-name="company-phone-no"]').val();
+			if (company_phone_no.length == 0){ 
+		        alert("必须输入手机号");  
+		        return false; 
+		    } else if(!(/^1[3|4|5|7|8]\d{9}$/.test(company_phone_no))) {
+		    	alert("手机号不对！");
+		    	return false;
+		    }
+			
+			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
+			var regIDLDS = /^[0-9]*$/; 
+			if(regIDLDS.test(company_phone_dir) === false) {
+		    	alert("区号需要是数字");
+		    	return false;
+		    }
 
 			var company_type = $('input[name="company-type"]:checked').val();
 			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"));
@@ -668,8 +743,17 @@
 			}
 
 			var cell_phone = $('input[data-name="cell-phone"]').val();
-			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone));
+			if (cell_phone.length == 0){ 
+		        alert("必须输入手机号");  
+		        return false; 
+		    } else if(!(/^1[3|4|5|7|8]\d{9}$/.test(cell_phone))) {
+		    	alert("手机号不对！");
+		    	return false;
+		    }
 
+/**			
+			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone));
+**/
 			var code = $('input[data-name="code"]').val();
 			result &= validate($('input[data-name="code"]'), hasInput(code));
 
@@ -730,10 +814,14 @@
 			result &= getCompanylines();
 
 			var company_web = $('input[data-name="company-web"]').val();
+
 			var company_fax = $('input[data-name="company-fax"]').val();
-			var company_email = $('input[data-name="company-email"]').val();
+
+			var company_email = $('input[data-name="company-email"]').val();	 
+
+/*
 			result &= validate($('input[data-name="company-email"]'), hasInput(company_email));
-			
+*/
 			if (Boolean(result)) {
 				query_object['company_business'] = Number(company_field);
 				query_object['company_web'] = company_web;
@@ -749,8 +837,10 @@
 			var industry_web = $('input[data-name="industry-web"]').val();
 			var industry_fax = $('input[data-name="industry-fax"]').val();
 			var industry_email = $('input[data-name="industry-email"]').val();
+
+/**			
 			result &= validate($('input[data-name="industry-email"]'), hasInput(industry_email));
-			
+**/
 			if (Boolean(result)) {
 				query_object['industry_web'] = industry_web;
 				query_object['industry_fax'] = industry_fax;
@@ -840,9 +930,12 @@
 
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();
+
 			var special_email = $('input[data-name="specialway-email"]').val();
+
+/**
 			result &= validate($('input[data-name="specialway-email"]'), hasInput(special_email));
-			
+			**/
 			if (Boolean(result)) {
 				query_object['special_web'] = special_web;
 				query_object['special_fax'] = special_fax;

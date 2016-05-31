@@ -473,7 +473,7 @@
 		function hasInput(str) {
 			var result = (typeof(str) == "string") && (str != "");
 			return result;
-		}
+		}	
 
 		function validate(ele, result) {
 			if (result) $(ele).removeClass('validate-error');
@@ -491,6 +491,7 @@
 
 		function getDriverCommonInfo() {
 			var result = true;
+/**
 			var driver_name = $('input[data-name="driver-name"]').val();
 			result &= validate($('input[data-name="driver-name"]'), hasInput(driver_name));
 
@@ -509,18 +510,70 @@
 			result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length));
 			result &= validate_number($('input[data-name="vehicle-length"]'), driver_phone_no);
 
+**/
+
+			var driver_name = $('input[data-name="driver-name"]').val();
+			var regName = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+			if (driver_name.length == 0){ 
+		        alert("必须输入姓名");  
+		        return false; 
+		    } else if(regName.test(driver_name) === false) {
+		    	alert("你的名字不对！写中文名！别乱打！");
+		    	return false;
+		    }
+
+
+			var driver_secial_id = $('input[data-name="driver-secial-id"]').val();
+			var regID = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+			if (driver_secial_id.length == 0){ 
+		        alert("必须输入身份证号码");  
+		        return false; 
+		    } else if(regID.test(driver_secial_id) === false) {
+		    	alert("身份证号码不对！");
+		    	return false;
+		    }
+
+
+
+			var driver_phone_no = $('input[data-name="phone-no"]').val();
+			if (driver_phone_no.length == 0){ 
+		        alert("必须输入手机号");  
+		        return false; 
+		    } else if(!(/^1[3|4|5|7|8]\d{9}$/.test(driver_phone_no))) {
+		    	alert("手机号不对！");
+		    	return false;
+		    }
+
+			var driver_capacity = $('input[data-name="capacity"]').val();
+			if (driver_capacity.length == 0) {
+				alert("必输输入载重");
+				return false;
+			} else if (driver_capacity.length > 3) {
+				alert("请输入正确的载重吨位");
+				return false;
+			}
+
+			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
+			if (driver_vehicle_length.length == 0) {
+				alert("必须输入车长");
+				return false;
+			} else if (driver_vehicle_length.length > 2) {
+				alert("请输入正确的车长");
+				return false;
+			}
+
 			var driver_insurance = $('input[name="insurance"]:checked').val();
 			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"));
 
 			var driver_images_arr = drive_image.queryFileNames();
 			if (driver_images_arr.length != 1) {
-				alert("请上传并仅仅上传一张图片");
+				alert("驾驶员行驶证图片上传有误，请有且仅上传一张图片");
 				result &= false;
-			}
+			} 
 
 			var road_image_arr = road_image.queryFileNames();
 			if (road_image_arr.length != 1) {
-				alert("请上传并仅仅上传一张图片");
+				alert("驾驶员驾驶证图片上传有误，请有且仅上传一张图片");
 				result &= false;
 			}
 
