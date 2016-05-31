@@ -97,7 +97,7 @@ object AuthModule {
           
         } catch {
           
-          case ex : Exception => {println("indicate exception");ErrorCode.errorToJson(ex.getMessage)}
+          case ex : Exception => {println("indicate exception");println(ex.getMessage); ErrorCode.errorToJson(ex.getMessage)}
         }
     }
   
@@ -118,7 +118,7 @@ object AuthModule {
             }
         } catch {
 //          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
-          case ex : Exception => {println("reg code exception");ErrorCode.errorToJson(ex.getMessage)}
+          case ex : Exception => {println("reg code exception");println(ex.getMessage); ErrorCode.errorToJson(ex.getMessage)}
         }
     }
   

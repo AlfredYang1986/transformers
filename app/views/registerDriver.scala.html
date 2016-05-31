@@ -61,24 +61,11 @@
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
-						<div class="col-sm-2">
-							<select class="form-control" disabled>
-								<option value="china">中国大陆&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+86</option>
-							</select>
-						</div>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="principal-phone-no" placeholder="请输入您的手机号码">
-						</div>
-					</div>	
-
-					<div class="form-group">
-						<span class=" col-sm-1 control-label"></span>
-						<label for="verifiable-code" class="col-sm-2 control-label" ></label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="verifiable-code" placeholder="在此输入验证码" >
+							<input type="text" class="form-control" data-name="code" placeholder="在此输入验证码" >
 						</div>
 						<div class="col-sm-2 verifiable-code-btn">
-							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn">获取动态验证码</button>
+							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn" onclick="sendCode()">获取动态验证码</button>
 						</div>
 					</div>
 
@@ -537,16 +524,22 @@
 				result &= false;
 			}
 
+			var code = $('input[data-name="code"]').val();
+			result &= validate($('input[data-name="code"]'), hasInput(code));
+
 			if (Boolean(result)) {
 				query_object = new Object();
 				query_object['driver_name'] = driver_name;
 				query_object['driver_secial_id'] = driver_secial_id;
 				query_object['phone_no'] = driver_phone_no;
+				query_object['cell_phone'] = driver_phone_no;
 				query_object['capacity'] = Number(driver_capacity);
 				query_object['vehicle_length'] = Number(driver_vehicle_length);
 				query_object['insurance'] = Number(driver_insurance);
 				query_object['driver_image'] = driver_images_arr[0];
 				query_object['road_image'] = road_image_arr[0];
+				query_object['company_type'] = 0;
+				query_object['code'] = code;
 			};
 
 			return Boolean(result);
@@ -620,6 +613,32 @@
 		            }
 		        });
 			}
+		}
+
+		function sendCode() {
+			var cell_phone = $('input[data-name="phone-no"]').val();
+
+			var tmp = new Object();
+			tmp['cell_phone'] = cell_phone;
+
+			$.ajax({
+	            url: "/auth/send/code",
+	            type: 'POST',
+	            dataType: 'json',
+	            contentType: 'application/json, charset=utf-8',
+	            data: JSON.stringify(tmp),
+	            cache: false,
+	            success: function (data) {
+	                if (data.status == "ok") {                                          
+	                     alert("发送成功");
+	                } else {
+	                    alert(data.error.message);
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                alert("请检查您的输入");
+	            }
+	        });
 		}
 
 	</script>
