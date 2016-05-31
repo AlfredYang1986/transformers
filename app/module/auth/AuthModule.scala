@@ -14,6 +14,7 @@ import util.dao._data_connection
 import util.errorcode.ErrorCode
 import com.mongodb.casbah.Imports._
 import module.sercurity.Sercurity
+import module.sms.smsModule
 
 import java.util.Date
 
@@ -75,6 +76,50 @@ object insuranceStatus {  // driver insurance indicate of driver insurance
 sealed abstract class insuranceStatusDefines(val t : Int, val des : String)
 
 object AuthModule {
+ 
+    def indicateValidateCheck(data : JsValue) : JsValue = {
+        
+        try {
+            val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
+   
+            val indicate = if (company_type == registerTypes.driver.t) (data \ "phone_no").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
+                           else (data \ (company_type match {
+                                    case registerTypes.company.t => "company_email"
+                                    case registerTypes.industry.t => "industry_email"
+                                    case registerTypes.specialway.t => "special_email"
+                                })).asOpt[String].map (x => x).getOrElse(throw new Exception("wrong email"))
+
+            
+            (from db() in "user_profile" where ("user_lst.indicate" -> indicate) select (x => x)).toList match {
+                case Nil => toJson(Map("status" -> "ok", "result"-> "success"))
+                case _ => throw new Exception("duplicate phone or email")
+            }
+          
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
+    }
+  
+    def regCodeCheck(data : JsValue) : JsValue = {
+        try {
+            val cell_phone = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong cell phone"))
+            val code = (data \ "code").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong code"))
+            val validate = Sercurity.getTimeSpanWith10Minutes
+            
+            (from db() where ("cell_phone" -> cell_phone) select (x => x)).toList match {
+              case Nil => throw new Exception("wrong cell phone")
+              case head :: Nil => {
+                  if (head.getAs[String]("code").get != code) throw new Exception("wrong code")
+                  else if (head.getAs[String]("validate").get != validate) throw new Exception("not validate code")
+                  else toJson(Map("status" -> "ok", "result" -> "code is validate"))
+              }
+              case _ => throw new Exception("wrong cell phone")
+            }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
+    }
+  
     def register(data : JsValue) : JsValue = {
         val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
 
@@ -193,31 +238,38 @@ object AuthModule {
             x += "pwd" -> "Passw0rd"
             x += "screen_name" -> "company master"
         }
-       
-        val common = MongoDBObject.newBuilder.result
-        val (common_result, common_error) = commonRegisterImpl(common)
-        if (!common_result) ErrorCode.errorToJson(common_error)
+      
+        val v_indicate = indicateValidateCheck(data)
+        val v_reg = regCodeCheck(data)
+        
+        if ((v_indicate \ "status").asOpt[String].get == "error") v_indicate
+        else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
         else {
-            val detail = MongoDBObject.newBuilder.result
-            val (detail_result, detail_error) = company_type match {
-              case company.t => companyRegisterImpl(detail)
-              case industry.t => industryRegisterImpl(detail)
-              case specialway.t => spicalwayRegisterImpl(detail)
-              case _ => ???
-            }
-            
-            if (!detail_result) ErrorCode.errorToJson(detail_error)
-            else {
-               common += "detail" -> detail
-               val user_lst = MongoDBList.newBuilder
-               val company_master = MongoDBObject.newBuilder.result
-               createBasicAccount(company_master, company_type)
-               user_lst += company_master
-               common += "user_lst" -> user_lst.result
-               
-               _data_connection.getCollection("user_profile") += common
-               toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
-            }
+          val common = MongoDBObject.newBuilder.result
+          val (common_result, common_error) = commonRegisterImpl(common)
+          if (!common_result) ErrorCode.errorToJson(common_error)
+          else {
+              val detail = MongoDBObject.newBuilder.result
+              val (detail_result, detail_error) = company_type match {
+                case company.t => companyRegisterImpl(detail)
+                case industry.t => industryRegisterImpl(detail)
+                case specialway.t => spicalwayRegisterImpl(detail)
+                case _ => ???
+              }
+              
+              if (!detail_result) ErrorCode.errorToJson(detail_error)
+              else {
+                 common += "detail" -> detail
+                 val user_lst = MongoDBList.newBuilder
+                 val company_master = MongoDBObject.newBuilder.result
+                 createBasicAccount(company_master, company_type)
+                 user_lst += company_master
+                 common += "user_lst" -> user_lst.result
+                 
+                 _data_connection.getCollection("user_profile") += common
+                 toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
+              }
+          }
         }
     }
     
@@ -238,49 +290,56 @@ object AuthModule {
         }
       
         try {
-            val x = MongoDBObject.newBuilder
-            val vehicle = MongoDBList.newBuilder
-            (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter =>
-                  vehicle += iter
-            }
-            x += "vehicle" -> vehicle.result 
+            val v_indicate = indicateValidateCheck(data)
+            val v_reg = regCodeCheck(data)
             
-            val lines = MongoDBList.newBuilder
-            (data \ "driver_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
-                  val line = MongoDBObject.newBuilder
-                  (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
-                  (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
-                  (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
-                  (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
-                  lines += line.result
+            if ((v_indicate \ "status").asOpt[String].get == "error") v_indicate
+            else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
+            else {
+                val x = MongoDBObject.newBuilder
+                val vehicle = MongoDBList.newBuilder
+                (data \ "vehicle").asOpt[List[String]].getOrElse(Nil).foreach { iter =>
+                      vehicle += iter
+                }
+                x += "vehicle" -> vehicle.result 
+                
+                val lines = MongoDBList.newBuilder
+                (data \ "driver_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
+                      val line = MongoDBObject.newBuilder
+                      (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
+                      (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
+                      (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
+                      (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
+                      lines += line.result
+                }
+                x += "driver_lines" -> lines.result
+               
+                import insuranceStatus._
+                val driver_secial_id = (data \ "driver_secial_id").asOpt[String].map (tmp => tmp).getOrElse(throw new Exception("input driver secial id"))
+                x += "driver_secial_id" -> driver_secial_id
+                (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
+    //            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
+                (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
+                (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> tmp.asInstanceOf[Number]).getOrElse(x += "vehicle_length" -> 0)
+                (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
+                (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
+                (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))
+                (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input drive road image"))
+                x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
+                x += "open_id" -> Sercurity.md5Hash(driver_secial_id + Sercurity.getTimeSpanWithMillSeconds)
+                x += "type" -> registerTypes.driver.t.asInstanceOf[Number]
+                x += "date" -> new Date().getTime.asInstanceOf[Number]
+               
+                val user_lst = MongoDBList.newBuilder
+                val company_master = MongoDBObject.newBuilder.result
+                createBasicAccount(company_master)
+                user_lst += company_master
+                x += "user_lst" -> user_lst.result
+                
+                _data_connection.getCollection("user_profile") += x.result
+        
+                toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
             }
-            x += "driver_lines" -> lines.result
-           
-            import insuranceStatus._
-            val driver_secial_id = (data \ "driver_secial_id").asOpt[String].map (tmp => tmp).getOrElse(throw new Exception("input driver secial id"))
-            x += "driver_secial_id" -> driver_secial_id
-            (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
-//            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
-            (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
-            (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> tmp.asInstanceOf[Number]).getOrElse(x += "vehicle_length" -> 0)
-            (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
-            (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
-            (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))
-            (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input drive road image"))
-            x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
-            x += "open_id" -> Sercurity.md5Hash(driver_secial_id + Sercurity.getTimeSpanWithMillSeconds)
-            x += "type" -> registerTypes.driver.t.asInstanceOf[Number]
-            x += "date" -> new Date().getTime.asInstanceOf[Number]
-           
-            val user_lst = MongoDBList.newBuilder
-            val company_master = MongoDBObject.newBuilder.result
-            createBasicAccount(company_master)
-            user_lst += company_master
-            x += "user_lst" -> user_lst.result
-            
-            _data_connection.getCollection("user_profile") += x.result
-    
-            toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
         } catch {
             case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
@@ -482,6 +541,36 @@ object AuthModule {
                   case head :: Nil => toJson(userResult(head.asInstanceOf[BasicDBObject]))
                   case _ => ???
         })
+        
+    def sendCode(data : JsValue) : JsValue = {
+        val phoneNo = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse("")
+        
+        if (phoneNo.isEmpty) ErrorCode.errorToJson("wrong cell phone")
+        else {
+            val code = scala.util.Random.nextInt(9000) + 1000
+            
+            (from db() in "reg" where ("cell_phone" -> phoneNo) select (x => x)).toList match {
+              case Nil => {
+                  val builder = MongoDBObject.newBuilder
+                  builder += "cell_phone" -> phoneNo
+                  builder += "code" -> code.toString
+                  builder += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  
+                  _data_connection.getCollection("reg") += builder.result
+              }
+              case head :: Nil => {
+                  head += "code" -> code.toString
+                  head += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  
+                  _data_connection.getCollection("reg").update(DBObject("cell_phone" -> phoneNo), head)
+              }
+            }
+           
+            import play.api.Play.current
+            smsModule().sendSMS(phoneNo, code.toString)
+            toJson(Map("status" -> "ok", "result" -> "send sms message success"))
+        }
+    }
     
     def updateProfile(open_id : String, user_id : String, data : JsValue) : JsValue = {
         (from db() in "users" where ("user_id" -> user_id) select (x => x)).toList match {

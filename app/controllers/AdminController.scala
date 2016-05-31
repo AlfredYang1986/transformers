@@ -63,8 +63,6 @@ object AdminController extends Controller {
                   case "ok" => (reVal \ "result").asOpt[List[JsValue]].get
                   case "error" => { println(1233); throw new Exception((reVal \ "error" \ "message").asOpt[String].get)}
                 }
-                
-                println(result)
 
                 if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) Ok(views.html.admin_profiles((user \ "token").asOpt[String].get)(result)(kt))
 //              else Redirect("/admin/login")

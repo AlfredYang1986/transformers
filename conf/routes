@@ -29,7 +29,8 @@ GET 	/admin/profiles/:k/:s			controllers.AdminController.profiles(k, s, p="0", t
 POST	/auth/register					controllers.AuthController.register
 POST	/auth/driver/register			controllers.AuthController.driverRegister
 POST	/auth/login						controllers.AuthController.login
-POST	/auth/admin/login				controllers.AuthController.login
+POST	/auth/admin/login				controllers.AuthController.admainLogin
+POST	/auth/send/code					controllers.AuthController.sendCode
 
 # files
 POST	/file/upload					controllers.FileController.upload
