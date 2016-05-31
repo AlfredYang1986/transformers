@@ -667,6 +667,12 @@
 				result &= false;
 			}
 
+			var cell_phone = $('input[data-name="cell-phone"]').val();
+			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone));
+
+			var code = $('input[data-name="code"]').val();
+			result &= validate($('input[data-name="code"]'), hasInput(code));
+
 			if (Boolean(result)) {
 				query_object = new Object();
 				query_object['company_type'] = Number(company_type);
@@ -679,6 +685,8 @@
         		query_object['phone_sep'] = company_phone_sep;
         		query_object['business_image'] = business_images[0];
         		query_object['road_image'] = road_image_arr[0];
+        		query_object['cell_phone'] = cell_phone;
+        		query_object['code'] = code;
 			}
 
 			return Boolean(result);

@@ -96,7 +96,8 @@ object AuthModule {
             }
           
         } catch {
-          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+          
+          case ex : Exception => {println("indicate exception");ErrorCode.errorToJson(ex.getMessage)}
         }
     }
   
@@ -106,7 +107,7 @@ object AuthModule {
             val code = (data \ "code").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong code"))
             val validate = Sercurity.getTimeSpanWith10Minutes
             
-            (from db() where ("cell_phone" -> cell_phone) select (x => x)).toList match {
+            (from db() in "reg" where ("cell_phone" -> cell_phone) select (x => x)).toList match {
               case Nil => throw new Exception("wrong cell phone")
               case head :: Nil => {
                   if (head.getAs[String]("code").get != code) throw new Exception("wrong code")
@@ -116,7 +117,8 @@ object AuthModule {
               case _ => throw new Exception("wrong cell phone")
             }
         } catch {
-          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+//          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+          case ex : Exception => {println("reg code exception");ErrorCode.errorToJson(ex.getMessage)}
         }
     }
   
