@@ -112,8 +112,6 @@
 	background-image: none !important;
 	color: white;
 	border-radius: 0px !important;
-	width: 400px;
-	min-width: 250px;
 }
 
 .road-license-btn {
@@ -168,8 +166,6 @@
 .admin-login-cell {
 	background-image: none !important;
 	background-color: rgba(255, 255, 255, 0.5) !important; 
-	width: 560px;
-	height: 280px;
 	margin: 400px auto;
 }
 
