@@ -68,6 +68,13 @@ object businessTypes {  // company business indicate of company business
 
 sealed abstract class businessTypesDefines(val t : Int, val des : String)
 
+object occationStatus {  // driver insurance indicate of driver insurance
+    case object everyday extends occationStatusDefines(0, "每天发车")
+    case object everyotherday extends occationStatusDefines(1, "隔天发车")
+}
+
+sealed abstract class occationStatusDefines(val t : Int, val des : String)
+
 object insuranceStatus {  // driver insurance indicate of driver insurance
     case object insuranced extends insuranceStatusDefines(0, "已购买")
     case object not_insuranced extends insuranceStatusDefines(1, "未购买")
@@ -130,7 +137,7 @@ object AuthModule {
                 val company_name = (data \ "company_name").asOpt[String].map (tmp => tmp).getOrElse(throw new Exception("input company name"))
                 x += "company_name" -> company_name
 //                (data \ "company_name").asOpt[String].map (tmp => x += "company_name" -> tmp).getOrElse(throw new Exception("input company name"))
-                (data \ "legal_person").asOpt[String].map (tmp => x += "legal_person" -> tmp).getOrElse(throw new Exception("input legal person"))
+                (data \ "legal_person").asOpt[String].map {tmp => x += "legal_person" -> tmp; x += "cell_phone_owner" -> tmp}.getOrElse(throw new Exception("input legal person"))
                 (data \ "legal_person_id").asOpt[String].map (tmp => x += "legal_person_id" -> tmp).getOrElse(throw new Exception("input legal person id"))
                 (data \ "address").asOpt[String].map (tmp => x += "address" -> tmp).getOrElse(throw new Exception("input company reg address"))
                 (data \ "phone_dir").asOpt[String].map (tmp => x += "phone_dir" -> tmp).getOrElse(x += "phone_dir" -> "")
@@ -138,6 +145,8 @@ object AuthModule {
                 (data \ "phone_sep").asOpt[String].map (tmp => x += "phone_sep" -> tmp).getOrElse(x += "phone_sep" -> "")
                 (data \ "business_image").asOpt[String].map (tmp => x += "business_image" -> tmp).getOrElse(throw new Exception("input business image"))
                 (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input road image"))
+                (data \ "cell_phone").asOpt[String].map (tmp => x += "cell_phone" -> tmp).getOrElse(throw new Exception("wrong cell phone"))
+//                (data \ "cell_phone_owner").asOpt[String].map (tmp => x += "cell_phone_owner" -> tmp).getOrElse(throw new Exception("input legal person"))
                 x += "type" -> company_type.asInstanceOf[Number]
                 x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
                 x += "open_id" -> module.sercurity.Sercurity.md5Hash(company_name + Sercurity.getTimeSpanWithMillSeconds)
@@ -213,6 +222,7 @@ object AuthModule {
                 }
                 x += "vehicle" -> vehicle.result 
                 
+                (data \ "special_occation").asOpt[Int].map (tmp => x += "special_occation" -> tmp.asInstanceOf[Number]).getOrElse("special_occation" -> occationStatus.everyday.t)
                 (data \ "special_web").asOpt[String].map (tmp => x += "special_web" -> tmp).getOrElse("special_web" -> "")
                 (data \ "special_fax").asOpt[String].map (tmp => x += "special_fax" -> tmp).getOrElse("special_web" -> "")
                 (data \ "special_email").asOpt[String].map (tmp => x += "special_email" -> tmp).getOrElse(throw new Exception("input company email"))
@@ -388,6 +398,8 @@ object AuthModule {
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
+                "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
                 
                 "company_business" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[Number]("company_business").get.intValue match {
                   case businessTypes.car.t => businessTypes.car.des
@@ -417,6 +429,8 @@ object AuthModule {
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
+                "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
                 
                 "industry_web" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("industry_web").get),
                 "industry_fax" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("industry_fax").get),
@@ -436,8 +450,11 @@ object AuthModule {
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
+                "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
+                "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
                 
                 "vehicle" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
+                "special_occation" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[Number]("special_occation").map (x => x.intValue).getOrElse(occationStatus.everyday.t)),
                 "special_web" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("special_web").get),
                 "special_fax" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("special_fax").get),
                 "special_email" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("special_email").get),
