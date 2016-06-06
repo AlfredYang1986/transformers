@@ -90,7 +90,7 @@
 							<div class="alert alert-danger" role="alert">
 							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  	<span class="sr-only">Error:</span>
-							  	请填写法定代表人身份证
+							  	请填写有效的法定代表人身份证
 							</div>
 						</div>
 					</div>	  
@@ -197,6 +197,18 @@
 							<input type="text" class="form-control" data-name="principal-name">
 						</div>
 					</div>
+
+					<div class="form-group" style="display: none;" data-name='people-name-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的姓名
+							</div>
+						</div>
+					</div> 
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -522,43 +534,39 @@
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">仓库地址</label>
 						
-						<div class="special-storage"> 
-							<div class="form-group ">
-							<!-- 
-							<div class="col-sm-offset-3 col-sm-2"> -->
-							<!--现在不新增仓库地址时，是对其的，但是新增后，不对其。
-								如果把第一个div改成上面那个，一开始的不对其，新增后的对其-->
-								<div class="col-sm-2"> 
-									<select class="form-control" data-name='province'>
-										<option selected disabled>请选择省区</option>
-										<option value="浙江省">浙江省</option>
-									</select>
-								</div>
-
-								<div class="col-sm-2">
-									<select class="form-control" data-name='city'>
-										<option selected disabled>请选择市区</option>
-										<option value="杭州市">杭州市</option>
-									</select>
-								</div>
-
-								<div class="col-sm-2">
-									<select class="form-control" data-name='distract'>
-										<option selected disabled>请选择市区</option>
-										<option value="杭州市">杭州市</option>
-									</select>
-								</div>
-
-							</div>
-
-							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-7">
-									<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="填写详细地址"></textarea>
-								</div>
-								<button class="btn btn-sm btn-primary" style="margin-left: 5px !important; background: #008bdc !important;" onclick="deleteRoute('special-storage', $(this), 5)">删除</button>
-							</div>
+					<fieldset class="special-storage-lst">
+						<div class="special-storage" style="min-height: 40px !important;"> 
 							
+							<div class="col-sm-2" style="padding-right: 0px !important"> 
+								<select class="form-control" data-name='province'>
+									<option selected disabled>请选择区</option>
+									<option value="浙江省">浙江省</option>
+								</select>
+							</div>
+
+							<div class="col-sm-2" style="padding-right: 0px !important">
+								<select class="form-control" data-name='city'>
+									<option selected disabled>请选择市</option>
+									<option value="杭州市">杭州市</option>
+								</select>
+							</div>
+
+							<div class="col-sm-2" style="padding-right: 0px !important">
+								<select class="form-control" data-name='distract'>
+									<option selected disabled>请选择区</option>
+									<option value="杭州市">杭州市</option>
+								</select>
+							</div>
+
+						
+
+							<div class="col-sm-12" style="margin-top: 5px;">
+								<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="填写详细地址"></textarea>
+							</div>
+							<button class="btn btn-sm btn-primary" style="margin-left: 5px !important; background: #008bdc !important;" onclick="deleteRoute('special-storage', $(this), 5)">删除</button>
+					
 						</div>
+					</fieldset>
 					</div>
 
 					<div class="form-group">
@@ -568,6 +576,18 @@
 						</div>
 					</div>									
 				
+					<div class="form-group" style="display: none;" data-name='special-storage-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	至少选择一个完整的仓库地址
+							</div>
+						</div>
+					</div>	
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">主营线路</label>
@@ -577,14 +597,14 @@
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-province">
-										<option selected disabled>请选择省区</option>
+										<option selected disabled>请选择省</option>
 										<option value="浙江省">浙江省</option>
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city">
-										<option selected disabled>请选择市区</option>
+										<option selected disabled>请选择市</option>
 										<option value="杭州市">杭州市</option>
 									</select>
 								</div>
@@ -595,14 +615,14 @@
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-province">
-										<option selected disabled>请选择省区</option>
+										<option selected disabled>请选择省</option>
 										<option value="浙江省">浙江省</option>
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city">
-										<option selected disabled>请选择市区</option>
+										<option selected disabled>请选择市</option>
 										<option value="杭州市">杭州市</option>
 									</select>
 								</div>
@@ -618,6 +638,18 @@
 							<button  data-name="special-line-add" type="button" class="btn col-sm-7" onclick="addRoute('special-line', $(this), 5)">新增主营路线</button>
 						</div>
 					</div>
+
+					<div class="form-group" style="display: none;" data-name='special-line-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	至少选择一个完整的主营路线
+							</div>
+						</div>
+					</div>	
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -635,6 +667,18 @@
 							</label>
 						</div>						
 						
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='special-way-time-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请选择发车时效
+							</div>
+						</div>
 					</div>	
 
 					<div class="form-group">
@@ -720,7 +764,19 @@
 								</label>
 							</div>	
 						</div>
-					</div>	
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='special-field-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请至少选择一个拥有车型
+							</div>
+						</div>
+					</div> 	
 
 					<div class="form-group">
 						<span class="col-sm-1 control-label"></span>
@@ -773,12 +829,14 @@
 } {
 	<script type="text/javascript">
 		var query_object;
-		
+	/**	
 		$(function(){
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
 		});
+	**/
+
 		/**swap image one way & two way**/
         
         $(".img-swap").click(function(){
@@ -862,6 +920,11 @@
 			var road_image_arr = road_image.queryFileNames();
 			result &= validate(road_image.getElement(), road_image_arr.length == 1, 'div[data-name="road-image-error"]');
 
+
+			var principal_person = $('input[data-name="principal-name"]').val();
+			var regNamePL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+			result &= validate($('input[data-name="principal-name"]'), hasInput(principal_person) && regNamePL.test(principal_person), 'div[data-name="people-name-error"]');
+			
 			var cell_phone = $('input[data-name="cell-phone"]').val();
 			var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
 			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone) && cell_phone_reg.test(cell_phone), 'div[data-name="cell-phone-error"]');
@@ -957,6 +1020,24 @@
 			return Boolean(result);
 		}
 
+		function getSpecialWayVechile() {
+
+			var result = false;
+			var field_lst = [];
+			$.each($('input[name="vehicle"]:checked'), function(index, value) {
+				field_lst.push($(this).val());
+			});
+
+			if (field_lst.length > 0) {
+				result = true;
+				query_object['company_business'] = field_lst;
+			}
+
+			validate($('input[name="vehicle"]'), result, 'div[data-name="special-field-error"]');
+			return result;
+
+		}
+
 		function getIndustryInfo() {
 			var result = true;
 			var industry_web = $('input[data-name="industry-web"]').val();
@@ -1001,6 +1082,12 @@
 					lines_lst.push(tmp);
 				};
 			});
+
+			var final_result = lines_lst.length > 0;
+			if(final_result) {
+				query_object['special_lines']=lines_lst;
+			}
+			validate($(),final_result,'div[data-name="special-line-error"]');
 			query_object['special_lines'] = lines_lst;
 			return Boolean(result);
 		}
@@ -1027,6 +1114,13 @@
 					storage_lst.push(tmp);
 				};
 			});
+
+			var final_result = lines_lst.length > 0;
+			if(final_result) {
+				query_object['special_lines']=lines_lst;
+			}
+			validate($(),final_result,'div[data-name="special-storage-error"]');
+
 			query_object['special_storage'] = storage_lst;
 			return Boolean(result);
 		}
@@ -1047,7 +1141,7 @@
 			var result = true;
 
 			var special_occation = $('input[name="occation"]:checked').val();
-			result &= validate($('input[name="occation"]'), (typeof(special_occation) != "undefined"));
+			result &= validate($('input[name="occation"]'), (typeof(special_occation) != "undefined"),'div[data-name="special-way-time-error"]');
 
 			result &= getSpecialwayStorage();
 			result &= getSpecialwaylines();

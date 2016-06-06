@@ -17,9 +17,21 @@
 				
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
-						<label for="company-name" class="col-sm-2 control-label">姓名</label>
+						<label for="driver-name" class="col-sm-2 control-label">姓名</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="driver-name">
+						</div>
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='driver-name-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请输入有效的驾驶员姓名
+							</div>
 						</div>
 					</div>
 
@@ -31,6 +43,18 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='driver-id-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请输入有效的身份证号码
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="business-license" class="col-sm-2 control-label">驾驶员行驶证</label>
@@ -39,11 +63,35 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='driver-image-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请上传一张有效清晰的驾驶员行驶证
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="business-license" class="col-sm-2 control-label">驾驶员驾驶证</label>
 						<div class="col-sm-9 business-license-btn">
 							<input id="driver-road-image" name="driver-road-image" type="file" multiple=true class="file-loading">
+						</div>
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='driver-road-image-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请上传一张有效清晰的驾驶员驾驶证照片
+							</div>
 						</div>
 					</div>
 
@@ -60,6 +108,18 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='driver-cellphone-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的手机号码
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
@@ -68,6 +128,18 @@
 						</div>
 						<div class="col-sm-2 verifiable-code-btn">
 							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn" onclick="sendCode()">获取动态验证码</button>
+						</div>
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='code-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的动态验证码
+							</div>
 						</div>
 					</div>
 
@@ -154,13 +226,37 @@
 								</label>
 							</div>	
 						</div>
-					</div>	
+					</div>					
+
+					<div class="form-group" style="display: none;" data-name='driver-own-vehicle-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请选择拥有车型
+							</div>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="legal-person" class="col-sm-2 control-label">载重</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="capacity" placeholder="吨">
+						</div>
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='driver-weight-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的载重
+							</div>
 						</div>
 					</div>
 
@@ -172,12 +268,26 @@
 						</div>				
 					</div>			  
 
+					<div class="form-group" style="display: none;" data-name='driver-length-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的车长
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="col-sm-1 control-label"></span>
 						<label for="principal-phone-no" class="col-sm-2 control-label">常用路线</label>
-						<div class="driver-line">
 
-							<div class="col-sm-2">
+						<fieldset class="driver-line-lst">
+						<div class="driver-line" style="min-height: 40px !important">
+
+							<div class="col-sm-2" style="padding-right: 0px !important">
 
 								<select name="sheng" id="to_cn" onchange="set_city(this, document.getElementById('city'));" class="login_text_input form-control" data-name="origin-province"> 
 									<option value=0>请选择省</option> 
@@ -220,7 +330,7 @@
 
 							</div>
 
-							<div class="col-sm-2">
+							<div class="col-sm-2" style="padding-right: 0px !important">
 								<select id="city" class="login_text_input form-control" name="shi" data-name="origin-city"> 
 									<option value=0>请选择市</option> 
 								</select> 
@@ -230,7 +340,7 @@
 								<img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
 							</div>
 
-							<div class="col-sm-2">
+							<div class="col-sm-2" style="padding-right: 0px !important">
 								<select name="sheng" id="to_cn_2" onchange="set_city_sec(this, document.getElementById('city_2'));" class="login_text_input form-control" data-name="destination-province"> 
 									<option value=0>请选择省</option> 
 									<option value=台湾>台湾</option> 
@@ -271,20 +381,22 @@
 								</select>
 							</div>
 
-							<div class="col-sm-2">
+							<div class="col-sm-2" style="padding-right: 0px !important">
 								<select id="city_2" class="login_text_input form-control" name="shi" data-name="destination-city"> 
 									<option value=0>请选择市</option> 
 								</select> 
 							</div>
+							<button class="btn btn-sm btn-primary" style="margin-left: 20px !important; background: #008bdc !important;" onclick="deleteRoute('driver-line', $(this), 5)">删除</button> 
 
 						</div>
+					</fieldset>
 					</div>		
 
 					<div class="form-group">
 						<span class="col-sm-1 control-label"></span>
 						<label for="" class="col-sm-3 control-label"></label>
 						<div class="business-license-btn">
-							<button type="button" class="btn col-sm-7" data-toggle="modal" data-target="newroute">常用路线添加</button>
+							<button  data-name="driver-line-add" type="button" class="btn col-sm-7" onclick="addRoute('driver-line', $(this), 5)">新增常用路线</button>
 						</div>
 					</div>	
 
@@ -349,16 +461,6 @@
 	            $(this).attr("src", src);
 	        });
     	});
-
-		$("#driver-image-upload").fileinput({
-		    language: "ca",
-		    uploadUrl: "",
-		});
-
-		$("#driver-road-image").fileinput({
-		    language: "ca",
-		    uploadUrl: "",
-		});
 
         /** 驾驶员行驶证图片上传**/
 		var drive_image = new fileUpload($("#driver-image-upload"));
@@ -489,9 +591,15 @@
 			return result;
 		}	
 
-		function validate(ele, result) {
+		function validate(ele, result, name) {
 			if (result) $(ele).removeClass('validate-error');
 			else $(ele).addClass('validate-error');
+
+			if (name) {
+				if (result) $(String(name)).css({"display": "none"});
+				else $(String(name)).css({"display": "block"});
+			}
+
 			return result;
 		}
 
@@ -505,92 +613,38 @@
 
 		function getDriverCommonInfo() {
 			var result = true;
-/**
-			var driver_name = $('input[data-name="driver-name"]').val();
-			result &= validate($('input[data-name="driver-name"]'), hasInput(driver_name));
-
-			var driver_secial_id = $('input[data-name="driver-secial-id"]').val();
-			result &= validate($('input[data-name="driver-secial-id"]'), hasInput(driver_secial_id));
-
-			var driver_phone_no = $('input[data-name="phone-no"]').val();
-			result &= validate($('input[data-name="phone-no"]'), hasInput(driver_phone_no));
-			result &= validate_number($('input[data-name="phone-no"]'), driver_phone_no);
-
-			var driver_capacity = $('input[data-name="capacity"]').val();
-			result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity));
-			result &= validate_number($('input[data-name="capacity"]'), driver_capacity);
-
-			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
-			result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length));
-			result &= validate_number($('input[data-name="vehicle-length"]'), driver_phone_no);
-
-**/
 
 			var driver_name = $('input[data-name="driver-name"]').val();
-			var regName = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
-			if (driver_name.length == 0){ 
-		        alert("必须输入姓名");  
-		        return false; 
-		    } else if(regName.test(driver_name) === false) {
-		    	alert("你的名字不对！写中文名！别乱打！");
-		    	return false;
-		    }
-
+			var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+			result &= validate($('input[data-name="driver-name"]'), hasInput(driver_name) && regNameL.test(driver_name), 'div[data-name="driver-name-error"]');
 
 			var driver_secial_id = $('input[data-name="driver-secial-id"]').val();
-			var regID = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
-			if (driver_secial_id.length == 0){ 
-		        alert("必须输入身份证号码");  
-		        return false; 
-		    } else if(regID.test(driver_secial_id) === false) {
-		    	alert("身份证号码不对！");
-		    	return false;
-		    }
-
-			var driver_phone_no = $('input[data-name="phone-no"]').val();
-			if (driver_phone_no.length == 0){ 
-		        alert("必须输入手机号");  
-		        return false; 
-		    } else if(!(/^1[3|4|5|7|8]\d{9}$/.test(driver_phone_no))) {
-		    	alert("手机号不对！");
-		    	return false;
-		    }
-
-			var driver_capacity = $('input[data-name="capacity"]').val();
-			if (driver_capacity.length == 0) {
-				alert("必输输入载重");
-				return false;
-			} else if (driver_capacity.length > 3) {
-				alert("请输入正确的载重吨位");
-				return false;
-			}
-
-			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
-			if (driver_vehicle_length.length == 0) {
-				alert("必须输入车长");
-				return false;
-			} else if (driver_vehicle_length.length > 2) {
-				alert("请输入正确的车长");
-				return false;
-			}
-
-			var driver_insurance = $('input[name="insurance"]:checked').val();
-			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"));
+			var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+			result &= validate($('input[data-name="driver-secial-id"]'), hasInput(driver_secial_id) && regIDL.test(driver_secial_id), 'div[data-name="driver-id-error"]');
 
 			var driver_images_arr = drive_image.queryFileNames();
-			if (driver_images_arr.length != 1) {
-				alert("驾驶员行驶证图片上传有误，请有且仅上传一张图片");
-				result &= false;
-			} 
+			result &= validate(drive_image.getElement(), driver_images_arr.length == 1, 'div[data-name="driver-image-error"]');
 
 			var road_image_arr = road_image.queryFileNames();
-			if (road_image_arr.length != 1) {
-				alert("驾驶员驾驶证图片上传有误，请有且仅上传一张图片");
-				result &= false;
-			}
+			result &= validate(road_image.getElement(), road_image_arr.length == 1, 'div[data-name="driver-road-image-error"]');
+
+			var driver_phone_no = $('input[data-name="phone-no"]').val();
+			var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+			result &= validate($('input[data-name="phone-no"]'), hasInput(driver_phone_no) && cell_phone_reg.test(driver_phone_no), 'div[data-name="driver-cellphone-error"]');
 
 			var code = $('input[data-name="code"]').val();
-			result &= validate($('input[data-name="code"]'), hasInput(code));
+			result &= validate($('input[data-name="code"]'), hasInput(code), 'div[data-name="code-error"]');
+
+			var driver_capacity = $('input[data-name="capacity"]').val();
+			var capacityReg = /^[0-9]*$/;
+			result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity) && capacityReg.test(driver_capacity), 'div[data-name="driver-weight-error"]');	
+			var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
+			var vehicleLengthReg = /^[0-9]*$/;
+			result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length) && vehicleLengthReg.test(driver_vehicle_length), 'div[data-name="driver-length-error"]');
+
+			var driver_type = $('input[name="vehicle"]:checked').val();
+			result &= validate($('input[name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="driver-own-vehicle-error"]');
+
 
 			if (Boolean(result)) {
 				query_object = new Object();
