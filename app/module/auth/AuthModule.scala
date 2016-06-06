@@ -104,7 +104,7 @@ object AuthModule {
           
         } catch {
           
-          case ex : Exception => {println("indicate exception");println(ex.getMessage); ErrorCode.errorToJson(ex.getMessage)}
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
   
@@ -124,8 +124,7 @@ object AuthModule {
               case _ => throw new Exception("wrong cell phone")
             }
         } catch {
-//          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
-          case ex : Exception => {println("reg code exception");println(ex.getMessage); ErrorCode.errorToJson(ex.getMessage)}
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
   
