@@ -8,6 +8,7 @@ function fileUpload(ele) {
 	this.preview_map = new Object();
 
 	$(this.element).fileinput({
+		language: "ca",
 	    uploadUrl: "/file/upload",
 	    allowedFileExtensions: ["jpg", "png", "gif"],
 	    minImageWidth: 50,
@@ -38,4 +39,8 @@ fileUpload.prototype.queryFileNames = function() {
 		result.push(value);	    
 	});
 	return result;
+}
+
+fileUpload.prototype.getElement = function() {
+	return this.element;
 }

@@ -24,17 +24,4 @@ object RegisterController extends Controller {
     def registerComplete = Action {
         Ok(views.html.registerComplete("test"))
     }
-    
-    /**
-     * driver contract
-     */
-    def registerDriverContract = Action {
-        Ok(views.html.registerDriverContract("test"))
-    }
-    /**
-     * company contract
-     */
-    def registerCompanyContract = Action {
-        Ok(views.html.registerCompanyContract("test"))
-    }
 }

@@ -168,8 +168,14 @@ object AuthModule {
                       lines += line.result
                 }
                 x += "company_lines" -> lines.result
-              
-                (data \ "company_business").asOpt[Int].map (tmp => x += "company_business" -> tmp.asInstanceOf[Number]).getOrElse(throw new Exception("input company business"))
+             
+                val business_field = MongoDBList.newBuilder
+                (data \ "company_business").asOpt[List[String]].map { iter =>
+                    business_field += iter
+                }.getOrElse(throw new Exception("input company business"))
+                x += "company_business" -> business_field.result
+                
+//                (data \ "company_business").asOpt[Int].map (tmp => x += "company_business" -> tmp.asInstanceOf[Number]).getOrElse(throw new Exception("input company business"))
                 (data \ "company_web").asOpt[String].map (tmp => x += "company_web" -> tmp).getOrElse("")
                 (data \ "company_fax").asOpt[String].map (tmp => x += "company_fax" -> tmp).getOrElse("")
                 (data \ "company_email").asOpt[String].map (tmp => x += "company_email" -> tmp).getOrElse(throw new Exception("input company email"))
@@ -239,13 +245,13 @@ object AuthModule {
               case company.t => "company_email"
               case industry.t => "industry_email"
               case specialway.t => "special_email"
-            })).asOpt[String].get
+            })).asOpt[String].map (x => x).getOrElse("")
 
             val user_id = Sercurity.md5Hash(name + email + Sercurity.getTimeSpanWithMillSeconds)
             x += "user_id" -> user_id
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
             x += "auth" -> authTypes.companyMaster.t.asInstanceOf[Number]
-            x += "indicate" -> email
+            x += "indicate" -> name
             x += "pwd" -> "Passw0rd"
             x += "screen_name" -> "company master"
         }
@@ -400,12 +406,7 @@ object AuthModule {
                 "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
                 "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
                 
-                "company_business" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[Number]("company_business").get.intValue match {
-                  case businessTypes.car.t => businessTypes.car.des
-                  case businessTypes.plane.t => businessTypes.plane.des
-                  case businessTypes.ship.t => businessTypes.ship.des
-                  case businessTypes.train.t => businessTypes.train.des
-                }),
+                "company_business" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("company_business").get.toList.asInstanceOf[List[String]]),
                 "company_web" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("company_web").get),
                 "company_fax" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("company_fax").get),
                 "company_email" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("company_email").get),
@@ -562,10 +563,12 @@ object AuthModule {
         
     def sendCode(data : JsValue) : JsValue = {
         val phoneNo = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse("")
-        
+       
         if (phoneNo.isEmpty) ErrorCode.errorToJson("wrong cell phone")
+        else if ((from db() in "user_profile" where ($or("phone_no" -> phoneNo, "cell_phone" -> phoneNo)) select (x => x)).toList.length > 0) ErrorCode.errorToJson("duplicate phone or email")
         else {
-            val code = scala.util.Random.nextInt(9000) + 1000
+//            val code = scala.util.Random.nextInt(9000) + 1000
+            val code = "1111"
             
             (from db() in "reg" where ("cell_phone" -> phoneNo) select (x => x)).toList match {
               case Nil => {
@@ -584,8 +587,8 @@ object AuthModule {
               }
             }
            
-            import play.api.Play.current
-            smsModule().sendSMS(phoneNo, code.toString)
+//            import play.api.Play.current
+//            smsModule().sendSMS(phoneNo, code.toString)
             toJson(Map("status" -> "ok", "result" -> "send sms message success"))
         }
     }

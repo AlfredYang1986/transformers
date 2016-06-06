@@ -23,11 +23,35 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='company-name-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请输入有效的公司名
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="business-license" class="col-sm-2 control-label">工商营业执照上传</label>
 						<div class="col-sm-9 business-license-btn">
 							<input id="register-business-image" type="file" multiple=true class="file-loading">
+						</div>
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='register-business-image-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请上传一张有效清晰的工商营业执照照片
+							</div>
 						</div>
 					</div>
 
@@ -39,13 +63,37 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='legal-person-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写法定代表人
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name='legal-person-id'>
 						</div>
-					</div>			  
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='legal-person-id-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写法定代表人身份证
+							</div>
+						</div>
+					</div>	  
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -55,13 +103,37 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='road-image-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请上传一张有效清晰的道路运输许可证照片
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" data-name="reg-address" data-target="company-reg-address">
 						</div>
-					</div>	
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='reg-address-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的企业注册地址
+							</div>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -80,7 +152,43 @@
 						<div class="col-sm-2">
 							<input type="text" class="form-control" data-name="company-phone-sep" placeholder="分机">
 						</div>
-					</div>			  		  
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='company-phone-dir-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的区号
+							</div>
+						</div>
+					</div>  
+
+					<div class="form-group" style="display: none;" data-name='company-phone-no-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的办公室电话
+							</div>
+						</div>
+					</div> 
+
+					<div class="form-group" style="display: none;" data-name='company-phone-sep-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的办公室分机号
+							</div>
+						</div>
+					</div>    
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -103,6 +211,18 @@
 						</div>
 					</div>
 
+					<div class="form-group" style="display: none;" data-name='cell-phone-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的手机号
+							</div>
+						</div>
+					</div>    
+
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="verifiable-code" class="col-sm-2 control-label" >动态验证码</label>
@@ -112,7 +232,19 @@
 						<div class="col-sm-2 verifiable-code-btn">
 							<button type="button" class="btn" data-toggle="modal" data-target="verifiable-code-btn" onclick="sendCode()">获取动态验证码</button>
 						</div>
-					</div>		  
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='code-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的动态验证码
+							</div>
+						</div>
+					</div> 
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -135,17 +267,25 @@
 								<input name='company-type' type="radio" value=3> 专线
 							</label>
 						</div>
-						
 					</div>
 
-
-
+					<div class="form-group" style="display: none;" data-name='company-type-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请选择公司注册类型
+							</div>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox" style="text-align: center;">
 								<label>
-									<input type="checkbox" checked="true"><a href="/register/company/contract" target="_blank">注册视为认同《易聚货会员服务协议》</a>
+									<input type="checkbox" checked="true"><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
 							</div>
 						</div>
@@ -180,25 +320,25 @@
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=0> 公路
+								<input name="field" type="checkbox" value="公路"> 公路
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=1> 铁路
+								<input name="field" type="checkbox" value="铁路"> 铁路
 							</label>
 						</div>						
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=2> 船运
+								<input name="field" type="checkbox" value="船运"> 船运
 							</label>
 						</div>
 
 						<div class="col-sm-2 checkbox">
 							<label>
-								<input name="field" type="checkbox" value=3> 航空
+								<input name="field" type="checkbox" value="航空"> 航空
 							</label>
 						</div>							
 						
@@ -283,7 +423,7 @@
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox" style="text-align: center;">
 								<label>
-									<input type="checkbox" checked><a href="/register/company/contract" target="_blank">注册视为认同《易聚货会员服务协议》</a>
+									<input type="checkbox" checked><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
 							</div>
 						</div>
@@ -334,7 +474,7 @@
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox" style="text-align: center;">
 								<label>
-									<input type="checkbox" checked="true"><a href="/register/company/contract" target="_blank">注册视为认同《易聚货会员服务协议》</a>
+									<input type="checkbox" checked="true"><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
 							</div>
 						</div>
@@ -613,13 +753,12 @@
 } {
 	<script type="text/javascript">
 		var query_object;
-/**
+		
 		$(function(){
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
 		});
-**/
 		/**swap image one way & two way**/
         
         $(".img-swap").click(function(){
@@ -629,25 +768,20 @@
             $(this).attr("src", src);
         });
 
-		$("#register-business-image").fileinput({
-		    language: "ca",
-		    uploadUrl: "",
-		});
-
-		$("#road-image").fileinput({
-		    language: "ca",
-		    uploadUrl: "",
-		});
-
-
 		/** 工商营业执照图片上传**/
 		var register_business_image = new fileUpload($("#register-business-image"));
 		/** 道路许可证图片上传**/
 		var road_image = new fileUpload($("#road-image"));
 
-		function validate(ele, result) {
+		function validate(ele, result, name) {
 			if (result) $(ele).removeClass('validate-error');
 			else $(ele).addClass('validate-error');
+
+			if (name) {
+				if (result) $(String(name)).css({"display": "none"});
+				else $(String(name)).css({"display": "block"});
+			}
+
 			return result;
 		}
 
@@ -671,126 +805,49 @@
 		function getIndexInfo() {
 			var result = true;
 
-/**
 			var company_name = $('input[data-name="company-name"]').val();
-			result &= validate($('input[data-name="company-name"]'), hasInput(company_name));
-
-			var legal_person = $('input[data-name="legal-person"]').val();
-			result &= validate($('input[data-name="legal-person"]'), hasInput(legal_person));
-
-			var legal_person_id = $('input[data-name="legal-person-id"]').val();
-			result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id));
-
-			var company_reg_address = $('input[data-name="reg-address"]').val();
-			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address));
-
-			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
-			var company_phone_no = $('input[data-name="company-phone-no"]').val();
-			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
-
-**/
-
-			var company_name = $('input[data-name="company-name"]').val();
-			var regCompName = /([\u4e00-\u9fa5a]+)|([a-zA-z'. ]*)/; 
-			if (company_name.length == 0){ 
-		        alert("必须输入企业名字");  
-		        return false; 
-		    } else if(regCompName.test(company_name) === false) {
-		    	alert("不要乱造公司名字！");
-		    	return false;
-		    }
-
+			var regCompName = /([\u4e00-\u9fa5a]+)|([a-zA-z'. ]*)/;
+			result &= validate($('input[data-name="company-name"]'), hasInput(company_name) && regCompName.test(company_name), 'div[data-name="company-name-error"]');
 
 			var legal_person = $('input[data-name="legal-person"]').val();
 			var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
-			if (legal_person.length == 0){ 
-		        alert("必须输入姓名");  
-		        return false; 
-		    } else if(regNameL.test(legal_person) === false) {
-		    	alert("你的名字不对！写中文名！别乱打！");
-		    	return false;
-		    }
-
+			result &= validate($('input[data-name="legal-person"]'), hasInput(legal_person) && regNameL.test(legal_person), 'div[data-name="legal-person-error"]');
 
 			var legal_person_id = $('input[data-name="legal-person-id"]').val();
 			var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
-			if (legal_person_id.length == 0){ 
-		        alert("必须输入身份证号码");  
-		        return false; 
-		    } else if(regIDL.test(legal_person_id) === false) {
-		    	alert("身份证号码不对！");
-		    	return false;
-		    }
+			result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id) && regIDL.test(legal_person_id), 'div[data-name="legal-person-id-error"]');
 
 			var company_reg_address = $('input[data-name="reg-address"]').val();
 			var regCPAD = /^[0-9]*$/;
 			var regCPADD =/^[A-Za-z]+$/;
-			if(company_reg_address.length == 0){
-				alert("必须输入地址");
-				return false;
-			} else if(regCPAD.test(company_reg_address) === true) {
-				alert("地址输入有误");
-				return false;
-			} else if(regCPADD.test(company_reg_address) === true) {
-				alert("地址输入有误");
-				return false;
-			}
-
+			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !regCPAD.test(company_reg_address) && !regCPADD.test(company_reg_address), 'div[data-name="reg-address-error"]');
 
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
-			var regIDLD = /^[0-9]*$/; 
-			if(regIDLD.test(company_phone_dir) === false) {
-		    	alert("区号需要是数字");
-		    	return false;
-		    }
-
+			var regIDLD = /^[0-9]*$/;
+			result &= validate($('input[data-name="company-phone-dir"]'), regIDLD.test(company_phone_dir), 'div[data-name="company-phone-dir-error"]');
 
 			var company_phone_no = $('input[data-name="company-phone-no"]').val();
-			if (company_phone_no.length == 0){ 
-		        alert("必须输入公司电话");  
-		        return false; 
-		    } 
-		    // else if(!(/^1[3|4|5|7|8]\d{9}$/.test(company_phone_no))) {
-		    // 	alert("公司电话不对！");
-		    // 	return false;
-		    // }
+			result &= validate($('input[data-name="company-phone-no"]'), hasInput(company_phone_no), 'div[data-name="company-phone-no-error"]');			
 			
 			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
 			var regIDLDS = /^[0-9]*$/; 
-			if(regIDLDS.test(company_phone_dir) === false) {
-		    	alert("区号需要是数字");
-		    	return false;
-		    }
+			result &= validate($('input[data-name="company-phone-sep"]'), regIDLDS.test(company_phone_dir), 'div[data-name="company-phone-sep-error"]');
 
 			var company_type = $('input[name="company-type"]:checked').val();
-			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"));
+			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"), 'div[data-name="company-type-error"]');
 
 			var business_images = register_business_image.queryFileNames();
-			if (business_images.length != 1) {
-				alert("请上传并仅仅上传一张图片");
-				result &= false;
-			}
+			result &= validate(register_business_image.getElement(), business_images.length == 1, 'div[data-name="register-business-image-error"]');
 
 			var road_image_arr = road_image.queryFileNames();
-			if (road_image_arr.length != 1) {
-				alert("请上传并仅仅上传一张图片");
-				result &= false;
-			}
+			result &= validate(road_image.getElement(), road_image_arr.length == 1, 'div[data-name="road-image-error"]');
 
 			var cell_phone = $('input[data-name="cell-phone"]').val();
-			if (cell_phone.length == 0){ 
-		        alert("必须输入手机号");  
-		        return false; 
-		    } else if(!(/^1[3|4|5|7|8]\d{9}$/.test(cell_phone))) {
-		    	alert("手机号不对！");
-		    	return false;
-		    }
+			var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone) && cell_phone_reg.test(cell_phone), 'div[data-name="cell-phone-error"]');
 
-/**			
-			result &= validate($('input[data-name="cell-phone"]'), hasInput(cell_phone));
-**/
 			var code = $('input[data-name="code"]').val();
-			result &= validate($('input[data-name="code"]'), hasInput(code));
+			result &= validate($('input[data-name="code"]'), hasInput(code), 'div[data-name="code-error"]');
 
 			if (Boolean(result)) {
 				query_object = new Object();
@@ -812,20 +869,20 @@
 		}
 
 		function getCompanylines() {
-			var result = true;
 			var lines_lst = [];
 			$.each($('.company-line'), function( index, value ) {
+				var result = true;
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), (origin_province != null));
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), (origin_city != null));
 
 				var destination_province = $(this).find('select[data-name="destination-province"]').val();
-				result &= validate($(this).find('select[data-name="destination-province"]'), (typeof(destination_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="destination-province"]'), (destination_province != null));
 
 				var destination_city = $(this).find('select[data-name="destination-city"]').val();
-				result &= validate($(this).find('select[data-name="destination-city"]'), (typeof(destination_city) != "undefined"));		
+				result &= validate($(this).find('select[data-name="destination-city"]'), (destination_city != null));
 
 				if (Boolean(result)) {
 					var tmp = new Object();
@@ -837,28 +894,40 @@
 					lines_lst.push(tmp);
 				};
 			});
-			query_object['company_lines'] = lines_lst;
-			return Boolean(result);
+			var final_result = lines_lst.length > 0;
+			if (final_result) {
+				query_object['company_lines'] = lines_lst;
+			}
+
+			return Boolean(final_result);
+		}
+
+		function getCompanyBusinessInfo() {
+			var result = false;
+			var field_lst = [];
+			$.each($('input[name="field"]:checked'), function(index, value) {
+				field_lst.push($(this).val());
+			});
+
+			if (field_lst.length > 0) {
+				result = true;
+				query_object['company_business'] = field_lst;
+			}
+
+			return result;
 		}
 
 		function getCompanyInfo() {
 			var result = true;
-			var company_field = $('input[name="field"]:checked').val();
-			result &= validate($('input[name="field"]'), (typeof(company_field) != "undefined"));
 
+			result &= getCompanyBusinessInfo();
 			result &= getCompanylines();
 
 			var company_web = $('input[data-name="company-web"]').val();
-
 			var company_fax = $('input[data-name="company-fax"]').val();
-
 			var company_email = $('input[data-name="company-email"]').val();	 
 
-/*
-			result &= validate($('input[data-name="company-email"]'), hasInput(company_email));
-*/
 			if (Boolean(result)) {
-				query_object['company_business'] = Number(company_field);
 				query_object['company_web'] = company_web;
 				query_object['company_fax'] = company_fax;
 				query_object['company_email'] = company_email;
@@ -965,7 +1034,6 @@
 
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();
-
 			var special_email = $('input[data-name="specialway-email"]').val();
 
 /**
