@@ -170,9 +170,9 @@ object AuthModule {
                 x += "company_lines" -> lines.result
              
                 val business_field = MongoDBList.newBuilder
-                (data \ "company_business").asOpt[List[String]].map { iter =>
+                (data \ "company_business").asOpt[List[String]].map { lst => lst.map { iter =>
                     business_field += iter
-                }.getOrElse(throw new Exception("input company business"))
+                }}.getOrElse(throw new Exception("input company business"))
                 x += "company_business" -> business_field.result
                 
 //                (data \ "company_business").asOpt[Int].map (tmp => x += "company_business" -> tmp.asInstanceOf[Number]).getOrElse(throw new Exception("input company business"))

@@ -137,9 +137,10 @@
                                                         <div class="form-group">
                                                             <label for="certificate-type" class="col-sm-2 control-label">业务领域</label>
                                                             <div class="col-sm-8">
-                                                                <label type="text" class="control-label" id="certificate-type">
-                                                                    {(x._1 \ "company_business").asOpt[String].get}
-                                                                </label>
+                                                            {(x._1 \ "company_business").asOpt[List[String]].get map {iter =>
+                                                                <label type="text" class="control-label" id="certificate-type">{iter}</label>
+                                                                <br/>
+                                                            }}
                                                             </div>
                                                         </div> 
 

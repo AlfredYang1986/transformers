@@ -323,26 +323,34 @@
 								<input name="field" type="checkbox" value="公路"> 公路
 							</label>
 						</div>
-
 						<div class="col-sm-2 checkbox">
 							<label>
 								<input name="field" type="checkbox" value="铁路"> 铁路
 							</label>
 						</div>						
-
 						<div class="col-sm-2 checkbox">
 							<label>
 								<input name="field" type="checkbox" value="船运"> 船运
 							</label>
 						</div>
-
 						<div class="col-sm-2 checkbox">
 							<label>
 								<input name="field" type="checkbox" value="航空"> 航空
 							</label>
 						</div>							
-						
-					</div>				
+					</div>
+
+					<div class="form-group" style="display: none;" data-name='field-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请至少选择一个业务领域
+							</div>
+						</div>
+					</div> 	
 
 					<div class="form-group" >
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -392,7 +400,19 @@
 						<div class="col-sm-offset-4 col-sm-8 business-license-btn">
 							<button data-name="company-line-add" onclick="addRoute('company-line', $(this), 6)" type="button" class="btn col-sm-7">新增主营路线</button>
 						</div>
-					</div>									
+					</div>	
+
+					<div class="form-group" style="display: none;" data-name='company-line-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-8">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	至少选择一个完整的主营路线
+							</div>
+						</div>
+					</div>								
 
 					<div class="form-group">
 						<span class="col-sm-1 control-label"></span>
@@ -898,7 +918,7 @@
 			if (final_result) {
 				query_object['company_lines'] = lines_lst;
 			}
-
+			validate($(), final_result, 'div[data-name="company-line-error"]');
 			return Boolean(final_result);
 		}
 
@@ -914,6 +934,7 @@
 				query_object['company_business'] = field_lst;
 			}
 
+			validate($('input[name="field"]'), result, 'div[data-name="field-error"]');
 			return result;
 		}
 
