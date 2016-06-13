@@ -1,3 +1,4 @@
+@(cities : List[play.api.libs.json.JsValue])
 
 @main("机构注册") {
     <script src="@routes.Assets.at("javascripts/routes-manager.js")"></script>
@@ -19,7 +20,7 @@
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="company-name" class="col-sm-2 control-label">企业全称</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" data-name='company-name'>
+							<input type="text" class="form-control" data-name='company-name' />
 						</div>
 					</div>
 
@@ -39,7 +40,7 @@
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="business-license" class="col-sm-2 control-label">工商营业执照上传</label>
 						<div class="col-sm-9 business-license-btn">
-							<input id="register-business-image" type="file" multiple=true class="file-loading">
+							<input id="register-business-image" type="file" multiple=true class="file-loading" />
 						</div>
 					</div>
 
@@ -371,16 +372,20 @@
 						<fieldset class="company-line-lst" >
 							<div class="company-line" style="min-height: 40px !important">
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="origin-province">
+									<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
 										<option selected disabled>请选择省区</option>
-										<option value="浙江省">浙江省</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="origin-city">
-										<option selected disabled>请选择市区</option>
-										<option value="杭州市">杭州市</option>
+									<select class="form-control" data-name="origin-city" data-index="1">
+										<option selected disabled data-filter="choice" >请选择市区</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
 									</select>
 								</div>
 
@@ -389,16 +394,20 @@
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="destination-province">
-										<option selected disabled>请选择省区</option>
-										<option value="浙江省">浙江省</option>
+									<select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+										<option selected disabled data-filter="choice" >请选择省区</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="destination-city">
-										<option selected disabled>请选择市区</option>
-										<option value="杭州市">杭州市</option>
+									<select class="form-control" data-name="destination-city" data-index="3">
+										<option selected disabled data-filter="choice" >请选择市区</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
 									</select>
 								</div>
 								<button class="btn btn-sm btn-primary" style="margin-left: 5px !important; background: #008bdc !important;" onclick="deleteRoute('company-line', $(this), 6)">删除</button> 
@@ -537,17 +546,21 @@
 					<fieldset class="special-storage-lst">
 						<div class="special-storage" style="min-height: 40px !important;"> 
 							
-							<div class="col-sm-2" style="padding-right: 0px !important"> 
-								<select class="form-control" data-name='province'>
-									<option selected disabled>请选择区</option>
-									<option value="浙江省">浙江省</option>
+							<div class="col-sm-2" style="padding-right: 0px !important">
+								<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+									<option selected disabled>请选择省区</option>
+									@{cities map { iter => 
+										<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+									}};
 								</select>
 							</div>
 
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name='city'>
-									<option selected disabled>请选择市</option>
-									<option value="杭州市">杭州市</option>
+								<select class="form-control" data-name="origin-city" data-index="1">
+									<option selected disabled data-filter="choice" >请选择市区</option>
+									@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+									}}};
 								</select>
 							</div>
 
@@ -557,8 +570,6 @@
 									<option value="杭州市">杭州市</option>
 								</select>
 							</div>
-
-						
 
 							<div class="col-sm-12" style="margin-top: 5px;">
 								<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="填写详细地址"></textarea>
@@ -596,34 +607,42 @@
 							<div class="special-line" style="min-height: 40px !important">
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="origin-province">
-										<option selected disabled>请选择省</option>
-										<option value="浙江省">浙江省</option>
+									<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+										<option selected disabled>请选择省区</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="origin-city">
-										<option selected disabled>请选择市</option>
-										<option value="杭州市">杭州市</option>
+									<select class="form-control" data-name="origin-city" data-index="1">
+										<option selected disabled data-filter="choice" >请选择市区</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
 									</select>
 								</div>
 
-								<div class="col-sm-1" style="text-align:center; vertical-">
+								<div class="col-sm-1" style="text-align:center;">
 									<img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="destination-province">
-										<option selected disabled>请选择省</option>
-										<option value="浙江省">浙江省</option>
+									<select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+										<option selected disabled data-filter="choice" >请选择省区</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="destination-city">
-										<option selected disabled>请选择市</option>
-										<option value="杭州市">杭州市</option>
+									<select class="form-control" data-name="destination-city" data-index="3">
+										<option selected disabled data-filter="choice" >请选择市区</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
 									</select>
 								</div>
 								<button class="btn btn-sm btn-primary" style="margin-left: 20px !important; background: #008bdc !important;" onclick="deleteRoute('special-line', $(this), 5)">删除</button> 
@@ -829,13 +848,12 @@
 } {
 	<script type="text/javascript">
 		var query_object;
-	/**	
+
 		$(function(){
 			$('#company-step').hide();
 			$('#industry-step').hide();
 			$('#spical-step').hide();
 		});
-	**/
 
 		/**swap image one way & two way**/
         
@@ -1230,5 +1248,12 @@
 	        });
 		}
 
+		function cityChanges(ele, container, index) {
+			var a = Number($(ele).attr("data-index"));
+			var province = $(ele).val();
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+		}
 	</script>
 }
