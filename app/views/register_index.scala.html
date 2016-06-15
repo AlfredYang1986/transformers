@@ -1161,9 +1161,16 @@
 			var special_occation = $('input[name="occation"]:checked').val();
 			result &= validate($('input[name="occation"]'), (typeof(special_occation) != "undefined"),'div[data-name="special-way-time-error"]');
 
+
+			var driver_type = $('input[name="vehicle"]:checked').val();
+			result &= validate($('input[name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="special-field-error"]');
+
 			result &= getSpecialwayStorage();
 			result &= getSpecialwaylines();
-			result &= getSpecialwayVehicle();
+		/**	
+			result &= getSpecialwayVehicle(); **/
+
+
 
 			var special_web = $('input[data-name="specialway-web"]').val();
 			var special_fax = $('input[data-name="specialway-fax"]').val();
