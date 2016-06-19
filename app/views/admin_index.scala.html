@@ -13,7 +13,44 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-horizontal" style="margin-top: 40px;">
-                
+ 
+                     <div class="form-group">
+                        <label for="principal-phone-no" class="col-sm-1 control-label">行驶路线</label>
+
+                        <fieldset class="driver-line-lst">
+                        <div class="driver-line" style="min-height: 40px !important">
+
+                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="origin-province" data-index="0">
+                                    <option selected disabled>请选择省</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="origin-city" data-index="1">
+                                    <option selected disabled data-filter="choice" >请选择市</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-1" style="text-align:center;">
+                                <img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
+                            </div>
+
+                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="destination-province" data-index="2">
+                                    <option selected disabled>请选择省</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="destination-city" data-index="3">
+                                    <option selected disabled data-filter="choice" >请选择市</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    </div> 
+
                     <div class="form-group">
                         <label for="certificate-type" class="col-sm-1 control-label" >车型</label>
 
@@ -228,6 +265,12 @@
                         </div>              
                     </div>  
 
+                    <div class="form-group">
+                        <label for="legal-person-id" class="col-sm-1 control-label">吨位</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" data-name="vehicle-t" placeholder="元/吨(t)">
+                        </div>              
+                    </div> 
 
                     <div class="form-group">
                         <label for="legal-person" class="col-sm-1 control-label">方位</label>
@@ -236,12 +279,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="legal-person-id" class="col-sm-1 control-label">吨数</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" data-name="vehicle-t" placeholder="元/吨(t)">
-                        </div>              
-                    </div>            
+           
 
                     <div class="form-group">
                         <label for="principal-phone-no" class="col-sm-1 control-label">发车时间</label>
@@ -279,44 +317,6 @@
                             </div>
 
                         </div>
-                    </div> 
-
-
-                    <div class="form-group">
-                        <label for="principal-phone-no" class="col-sm-1 control-label">行驶路线</label>
-
-                        <fieldset class="driver-line-lst">
-                        <div class="driver-line" style="min-height: 40px !important">
-
-                            <div class="col-sm-2" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-province" data-index="0">
-                                    <option selected disabled>请选择省</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-2" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >请选择市</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="text-align:center;">
-                                <img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
-                            </div>
-
-                            <div class="col-sm-2" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-province" data-index="2">
-                                    <option selected disabled>请选择省</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-2" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >请选择市</option>
-                                </select>
-                            </div>
-                        </div>
-                    </fieldset>
                     </div>      
 
                     <div class="form-group">
