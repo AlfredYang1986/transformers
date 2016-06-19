@@ -391,4 +391,13 @@ table.dataTable thead .sorting:after {
     left: 10px;
 }
 
+.car-send-btn {
+    text-align: center;
+    background-image: none !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid #008bdc;
+    font-size: 15px;       
+}
+
+
 
