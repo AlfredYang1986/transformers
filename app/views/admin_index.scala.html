@@ -52,6 +52,45 @@
                     </div> 
 
                     <div class="form-group">
+                        <label for="principal-phone-no" class="col-sm-1 control-label">发车时间</label>
+
+                        <div class="driver-line" style="min-height: 40px !important">
+
+                            <div class="col-sm-1" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="origin-province" data-index="0">
+                                    <option selected disabled>年份</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-1" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="origin-city" data-index="1">
+                                    <option selected disabled data-filter="choice" >月份</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-1" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="destination-province" data-index="2">
+                                    <option selected disabled data-filter="choice" >日期</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-1" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="destination-city" data-index="3">
+                                    <option selected disabled data-filter="choice" >小时</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-1" style="padding-right: 0px !important">
+                                <select class="form-control" data-name="destination-city" data-index="3">
+                                    <option selected disabled data-filter="choice" >分钟</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div> 
+
+
+                    <div class="form-group">
                         <label for="certificate-type" class="col-sm-1 control-label" >车型</label>
 
                         <div class="col-sm-9">
@@ -268,56 +307,16 @@
                     <div class="form-group">
                         <label for="legal-person-id" class="col-sm-1 control-label">吨位</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" data-name="vehicle-t" placeholder="元/吨(t)">
+                            <input type="text" class="form-control" data-name="vehicle-t" placeholder="元/吨">
                         </div>              
                     </div> 
 
                     <div class="form-group">
                         <label for="legal-person" class="col-sm-1 control-label">方位</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" data-name="item-capacity" placeholder="元/立方(m³)">
+                            <input type="text" class="form-control" data-name="item-capacity" placeholder="元/立方">
                         </div>
-                    </div>
-
-           
-
-                    <div class="form-group">
-                        <label for="principal-phone-no" class="col-sm-1 control-label">发车时间</label>
-
-                        <div class="driver-line" style="min-height: 40px !important">
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-province" data-index="0">
-                                    <option selected disabled>年份</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >月份</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-province" data-index="2">
-                                    <option selected disabled data-filter="choice" >日期</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >小时</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >分钟</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>      
+                    </div>     
 
                     <div class="form-group">
                         <label for="certificate-type" class="col-sm-1 control-label" >其他备注</label>
