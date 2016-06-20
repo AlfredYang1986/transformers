@@ -29,6 +29,11 @@ GET 	/admin/profiles/:k/:s/:p/:t		controllers.AdminController.profiles(k, s, p, 
 GET 	/admin/profiles/:k/:s/:p		controllers.AdminController.profiles(k, s, p, t="")
 GET 	/admin/profiles/:k/:s			controllers.AdminController.profiles(k, s, p="0", t="")
 
+GET		/admin/send/car  				controllers.AdminController.adminSendCar
+GET		/admin/sent/car  				controllers.AdminController.adminHaveSentCar
+GET		/admin/car/history				controllers.AdminController.adminCarHistory
+GET 	/admin/setting					controllers.AdminController.adminSetting
+
 # auth 
 POST	/auth/register					controllers.AuthController.register
 POST	/auth/driver/register			controllers.AuthController.driverRegister

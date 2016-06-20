@@ -74,4 +74,21 @@ object AdminController extends Controller {
             
         }    
     }
+
+    def adminSendCar = Action {
+        Ok(views.html.adminSendCar())
+    }
+
+    def adminHaveSentCar = Action {
+        Ok(views.html.adminHaveSentCar())
+    }
+
+    def adminCarHistory = Action {
+        Ok(views.html.adminCarHistory())
+    }
+
+    def adminSetting = Action {
+        Ok(views.html.adminSetting())
+    }
+
 }

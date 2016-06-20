@@ -1,0 +1,207 @@
+@admin_main("分账号管理") {
+    
+} {
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">分账号管理</h3>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="">
+                                <thead>
+                                    <tr>
+                                        <th>运营者姓名</th>
+                                        <th>手机授权账号信息</th>
+                                        <th><button class="btn btn-default" data-toggle="modal" data-target="#additional-account">添加分账号</button></th>
+                                    </tr>
+                                </thead>
+
+        <!-- Home Page User Login dialog -->
+        <div class="modal fade" id="additional-account" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header home-login-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+                    </button>
+                    <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                    <h3 class="modal-title home-login-title" id="myModalLabel">                 
+                        分账号添加
+                    </h3>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label">手机号码</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" data-name="indicate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label">身份证号码</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" data-name="indicate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label">输入新密码</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" data-name="indicate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label">再次输入密码</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" data-name="indicate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label">权限</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="radio">
+                                    <label>
+                                        <input data-name="pwd-save" type="radio"> 审核管理员
+                                    </label>
+                                </div>
+                                                            
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="radio">
+                                    <label>
+                                        <input data-name="pwd-save" type="radio"> 福利车管理员
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                        <div style="text-align:center;">
+                        <button class="btn btn-default col-sm-offset-3 col-sm-8" style="font-size: 15px; background-color: none !important; background-image: none !important; border: 1px solid #008bdc">
+                            添&nbsp;&nbsp;&nbsp;加
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+        </div>
+
+
+                                <tbody>
+                               
+                                    <tr class="odd gradeX">
+                                        <td>
+                                        主账号不可删除
+                                        </td>
+                                        <td>
+                                        13857102787
+                                        </td>
+                                        <td>
+                                            <button id="show_detail" class="btn btn-default" >设置信息</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr id="car_info" class="gradeX" style="display: none">
+                                        
+                                            <td>
+                                                <div class="container">
+                                                    <div class="form-horizontal" role="form">
+
+                                                        <div class="form-group">
+                                                            <label for="company-name" class="col-sm-2 control-label">身份证号码</label>
+
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="business-license" class="col-sm-2 control-label">输入原始密码</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="legal-person" class="col-sm-2 control-label">输入新密码</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="legal-person-id" class="col-sm-2 control-label">再次输入新密码</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                            </div>
+                                                        </div>            
+
+                                                    </div>
+                                                </div>
+
+                                            </td>
+
+                                     <td>
+                                        </td>
+
+                                        <td>
+                                            <button id="" class="btn btn-default">修改</button><br/><br/>
+                                            <button id="" class="btn btn-default">保存</button><br/><br/>
+                                            <button id="" class="btn btn-default">删除</button><br/><br/>
+                                            <button id="hide_detail" class="btn btn-default">收起</button>
+                                        </td>
+                                    </tr>
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+} {
+    <script type="text/javascript">
+        $(function(){
+            
+
+        });
+
+    $("#hide_detail").click(function(){
+        $("#car_info").hide(500);
+    });
+    $("#show_detail").click(function(){
+        $("#car_info").show(500);
+    });
+
+    </script>
+}
