@@ -21,7 +21,7 @@
                                     <tr>
                                         <th>运营者姓名</th>
                                         <th>手机授权账号信息</th>
-                                        <th><button class="btn btn-default" data-toggle="modal" data-target="#additional-account">添加分账号</button></th>
+                                        <th><button class="btn btn-default car-send-btn" data-toggle="modal" data-target="#additional-account">添加分账号</button></th>
                                     </tr>
                                 </thead>
 
@@ -84,16 +84,16 @@
                             <div class="col-sm-4">
                                 <div class="radio">
                                     <label>
-                                        <input data-name="pwd-save" type="radio"> 审核管理员
+                                        <input data-name="pwd-save" type="radio"> 审核员
                                     </label>
                                 </div>
                                                             
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 col-sm-offset-1">
                                 <div class="radio">
                                     <label>
-                                        <input data-name="pwd-save" type="radio"> 福利车管理员
+                                        <input data-name="pwd-save" type="radio"> 福利车调度员
                                     </label>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                         13857102787
                                         </td>
                                         <td>
-                                            <button id="show_detail" class="btn btn-default" >设置信息</button>
+                                            <button id="show_detail" class="btn btn-default car-send-btn" >设置信息</button>
                                         </td>
                                     </tr>
 
@@ -141,21 +141,21 @@
                                                         <div class="form-group">
                                                             <label for="business-license" class="col-sm-2 control-label">输入原始密码</label>
                                                             <div class="col-sm-10">
-                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="legal-person" class="col-sm-2 control-label">输入新密码</label>
                                                             <div class="col-sm-10">
-                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="legal-person-id" class="col-sm-2 control-label">再次输入新密码</label>
                                                             <div class="col-sm-10">
-                                                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
                                                             </div>
                                                         </div>            
 
@@ -168,10 +168,10 @@
                                         </td>
 
                                         <td>
-                                            <button id="" class="btn btn-default">修改</button><br/><br/>
-                                            <button id="" class="btn btn-default">保存</button><br/><br/>
-                                            <button id="" class="btn btn-default">删除</button><br/><br/>
-                                            <button id="hide_detail" class="btn btn-default">收起</button>
+                                            <button id="modify-btn" class="btn btn-default car-send-btn">修改</button><br/><br/>
+                                            <button id="save-btn" disabled="true" class="btn btn-default car-send-btn">保存</button><br/><br/>
+                                            <button id="delete-btn" class="btn btn-default car-send-btn">删除</button><br/><br/>
+                                            <button id="hide_detail" class="btn btn-default car-send-btn">收起</button>
                                         </td>
                                     </tr>
 
@@ -201,6 +201,15 @@
     });
     $("#show_detail").click(function(){
         $("#car_info").show(500);
+    });
+
+    $("#modify-btn").click(function(){
+        $("#save-btn").attr("disabled", false);
+        this.prop("disabled", true);
+    });
+
+    $("#save-btn").click(function(){
+        this.prop("disabled", true);
     });
 
     </script>
