@@ -34,12 +34,24 @@ GET		/admin/sent/car  				controllers.AdminController.adminHaveSentCar
 GET		/admin/car/history				controllers.AdminController.adminCarHistory
 GET 	/admin/setting					controllers.AdminController.adminSetting
 
+# driver login pages
+GET		/driver/index  					controllers.DriverController.driverLoginIndex
+GET		/driver/account/followed		controllers.DriverController.driverLoginAccountFollowedCompany
+GET		/driver/account/normalinfo		controllers.DriverController.driverLoginAccountNormalInfo
+GET		/driver/account/password		controllers.DriverController.driverLoginAccountPsw
+GET		/driver/accouunt/validated		controllers.DriverController.driverLoginAccountValidateInfo
+GET		/driver/recruitment				controllers.DriverController.driverLoginRecruitment
+GET		/driver/search/company			controllers.DriverController.driverLoginSearchCompany
+GET		/driver/search/department		controllers.DriverController.driverLoginSearchDepartment
+GET		/driver/search/specialway		controllers.DriverController.driverLoginSearchSpecialWay
+
 # auth 
 POST	/auth/register					controllers.AuthController.register
 POST	/auth/driver/register			controllers.AuthController.driverRegister
 POST	/auth/login						controllers.AuthController.login
 POST	/auth/admin/login				controllers.AuthController.admainLogin
 POST	/auth/send/code					controllers.AuthController.sendCode
+
 
 # files
 POST	/file/upload					controllers.FileController.upload

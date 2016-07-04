@@ -1,0 +1,294 @@
+@(title: String)(include: Html)(content: Html)(scripts: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>@title</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="keywords">
+        <meta name="description" content="description">
+        
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
+        <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <!-- MetisMenu CSS -->
+        <link href="@routes.Assets.at("metisMenu/dist/metisMenu.min.css")" rel="stylesheet">
+        <!-- DataTables CSS -->
+        <link href="@routes.Assets.at("datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css")" rel="stylesheet">
+        <!-- DataTables Responsive CSS -->
+        <link href="@routes.Assets.at("datatables-responsive/css/dataTables.responsive.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="@routes.Assets.at("stylesheets/sb-admin-2.css")" rel="stylesheet">
+        <script src="@routes.Assets.at("javascripts/cookie-manager.js")"></script>
+
+        <style type="text/css">
+            object,
+            embed {
+                -webkit-animation-duration: .001s;
+                -webkit-animation-name: playerInserted;
+                -ms-animation-duration: .001s;
+                -ms-animation-name: playerInserted;
+                -o-animation-duration: .001s;
+                -o-animation-name: playerInserted;
+                animation-duration: .001s;
+                animation-name: playerInserted;
+            }
+            
+            -webkit-keyframes playerInserted {
+                from {
+                    opacity: 0.99;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            -ms-keyframes playerInserted {
+                from {
+                    opacity: 0.99;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            -o-keyframes playerInserted {
+                from {
+                    opacity: 0.99;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+            
+            keyframes playerInserted {
+                from {
+                    opacity: 0.99;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            html,body{padding:0; margin:0;}
+            input,button,select,textarea{outline:none} textarea{resize:none}
+        </style>
+
+        @include
+    </head>
+
+    <body>
+
+    <div id="loading">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+
+    <div id="page-wrapper">
+        <div id="page-header" class="bg-gradient-9">
+        
+            <div id="mobile-navigation">
+                <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button>
+                <a href="index.html" class="logo-content-small" title="MonarchUI"></a>
+            </div>
+
+            <div id="header-logo" class="logo-bg">
+
+                <a href="index.html" class="logo-content-big" title="MonarchUI">
+                    Elogco <i>易聚货</i>
+                    <span>驾驶员</span>
+                </a>
+
+                <a href="index.html" class="logo-content-small" title="MonarchUI">
+                    Elogco <i>易聚货</i>
+                    <span>驾驶员</span>
+                </a>
+
+                <a id="close-sidebar" href="#" title="Close sidebar">
+                    <i class="glyph-icon icon-angle-left"></i>
+                </a>
+
+            </div>
+
+            <div id="header-nav-left">    
+                <div class="user-account-btn dropdown">
+
+                    <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
+                        <img width="28" src="../../assets/image-resources/gravatar.jpg" alt="Profile image">
+                        <span>驾驶员设置</span>
+                        <i class="glyph-icon icon-angle-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu float-left">
+                        <div class="box-sm">
+                            <div class="login-box clearfix">
+                                <div class="user-info">
+                                    <span>
+                                        <i>接单状态调整</i>
+                                    </span>
+                                </div>
+
+                                <div class="pad5A button-pane button-pane-alt text-center">
+                                    <a href="#" class="btn display-block font-normal bg-blue">
+                                        <i class="glyph-icon icon-power-off"></i>
+                                        已接单
+                                    </a>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <div class="pad5A button-pane button-pane-alt text-center">
+                                    <a href="#" class="btn display-block font-normal bg-gray-alt">
+                                        <i class="glyph-icon icon-power-off"></i>
+                                        未接单
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="login-box clearfix">
+                                <div class="user-info">
+                                    <span>
+                                        <i>退出账户</i>
+                                    </span>
+                                </div>
+
+                                <div class="pad5A button-pane button-pane-alt text-center">
+                                    <a href="#" class="btn display-block font-normal btn-danger">
+                                        <i class="glyph-icon icon-power-off"></i>
+                                        退出
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- #header-nav-left -->
+
+            <!-- #header-nav-right -->
+            <div id="header-nav-right">
+            
+            </div><!-- #header-nav-right -->
+
+         </div>
+
+        <div id="page-sidebar">
+            <div class="scroll-sidebar">
+                
+                <ul id="sidebar-menu">
+
+                    <li class="header"><span>搜索栏目</span></li>
+
+                    <li>
+                        <a href="driver_company_search.html">
+                            <i class="glyph-icon icon-home"></i>
+                            <span>按公司搜货源</span>
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="driver_department_search.html">
+                            <i class="glyph-icon icon-flag"></i>
+                            <span>按起运地搜货源</span>
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="driver_special_way_search.html">
+                            <i class="glyph-icon icon-road"></i>
+                            <span>专线合作车辆搜索</span>
+                        </a>
+                    </li>
+
+                    <li class="header"><span>信息列表</span></li>
+
+                    <li>
+                        <a href="driver_recruitment.html">
+                            <i class="glyph-icon icon-list-alt"></i>
+                            <span>其他信息</span>
+                        </a>
+                    </li>
+
+                    <li class="header"><span>账户管理</span></li>
+
+                    <li>
+                        <a href="driver_validate_info.html">
+                            <i class="glyph-icon icon-lock"></i>
+                            <span>认证资料</span>
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="driver_normal_info.html">
+                            <i class="glyph-icon icon-bookmark"></i>
+                            <span>详情资料</span>
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="driver_account_psw.html">
+                            <i class="glyph-icon icon-edit"></i>
+                            <span>修改密码</span>
+                        </a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="driver_followed_company.html">
+                            <i class="glyph-icon icon-star"></i>
+                            <span>公司收藏夹</span>
+                        </a>
+                    </li>
+
+                </ul><!-- #sidebar-menu -->
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    @content
+    <script src="@routes.Assets.at("metisMenu/dist/metisMenu.min.js")"></script>
+    <script src="@routes.Assets.at("datatables/media/js/jquery.dataTables.min.js")"></script>
+    <script src="@routes.Assets.at("datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/sb-admin-2.js")"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+
+    @scripts
+
+    </body>
+
+</html>
