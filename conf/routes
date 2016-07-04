@@ -36,14 +36,7 @@ GET 	/admin/setting					controllers.AdminController.adminSetting
 
 # driver login pages
 GET		/driver/index  					controllers.DriverController.driverLoginIndex
-GET		/driver/account/followed		controllers.DriverController.driverLoginAccountFollowedCompany
-GET		/driver/account/normalinfo		controllers.DriverController.driverLoginAccountNormalInfo
-GET		/driver/account/password		controllers.DriverController.driverLoginAccountPsw
-GET		/driver/accouunt/validated		controllers.DriverController.driverLoginAccountValidateInfo
-GET		/driver/recruitment				controllers.DriverController.driverLoginRecruitment
-GET		/driver/search/company			controllers.DriverController.driverLoginSearchCompany
-GET		/driver/search/department		controllers.DriverController.driverLoginSearchDepartment
-GET		/driver/search/specialway		controllers.DriverController.driverLoginSearchSpecialWay
+
 
 # auth 
 POST	/auth/register					controllers.AuthController.register
