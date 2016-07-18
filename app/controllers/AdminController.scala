@@ -61,7 +61,7 @@ object AdminController extends Controller {
                 
                 val result = (reVal \ "status").asOpt[String].get match {
                   case "ok" => (reVal \ "result").asOpt[List[JsValue]].get
-                  case "error" => { println(1233); throw new Exception((reVal \ "error" \ "message").asOpt[String].get)}
+                  case "error" => throw new Exception((reVal \ "error" \ "message").asOpt[String].get)
                 }
 
                 if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) Ok(views.html.admin_profiles((user \ "token").asOpt[String].get)(result)(kt))

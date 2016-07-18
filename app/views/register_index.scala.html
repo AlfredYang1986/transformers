@@ -556,7 +556,7 @@
 							</div>
 
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="origin-city" data-index="1">
+								<select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
 									<option selected disabled data-filter="choice" >请选择市区</option>
 									@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 										<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
@@ -565,8 +565,12 @@
 							</div>
 
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name='distract'>
-									<option selected disabled>请选择区</option>
+								<select class="form-control" data-name='origin-district' data-index='2'>
+									<option selected disabled data-filter="choice" >请选择区</option>
+									@{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+										(inner \ "districts").asOpt[List[String]].get map { x => 
+										<option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+									}}}};
 								</select>
 							</div>
 
@@ -1260,6 +1264,14 @@
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+		}
+
+		function districtChanges(ele, container, index) {
+			var a = Number($(ele).attr("data-index"));
+			var city = $(ele).val();
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
 		}
 	</script>
 }

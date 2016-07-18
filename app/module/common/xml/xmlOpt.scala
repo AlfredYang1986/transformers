@@ -10,22 +10,11 @@ object xmlOpt {
     lazy val doc_cities = xml.XML.loadFile("resource/city_defines.xml")
     
     val allCities : List[JsValue] =
-        ((doc_cities \ "province") map (x => 
+        ((doc_cities \ "province") map ( x => 
             toJson(Map("province" -> toJson((x \ "@name").text),
-                       "cities" -> toJson((x \ "city" \\ "@name") map (y => y.text)))))).toList
+                       "cities" -> toJson((x \ "city") map (y => y \ "@name") map (y => y.text)),
+                       "city_ditails" -> toJson((x \ "city") map ( c => 
+                           Map("city" -> toJson((c \ "@name").text),
+                               "districts" -> toJson((c \ "district") map (d => (d \ "@name")) map (z => (z.text))))
+                       )))))).toList
 }
-
-
-/**
-object xmlOpt {
-    lazy val doc_cities = xml.XML.loadFile("resource/city_defines.xml")
-    
-    val allCities : List[JsValue] =
-        ((doc_cities \ "province") map (x => 
-            toJson(Map("province" -> toJson((x \ "@name").text),
-                       "cities" -> toJson((x \ "city" \\ "@name") map (y => y.text)),
-                       "district" -> toJson((x \ "city" \ "district" \\ "@name") map(z => (y.text).text)))))).toList
-}
-
-**/
-
