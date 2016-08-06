@@ -36,6 +36,7 @@ GET 	/admin/setting					controllers.AdminController.adminSetting
 
 # driver login pages
 GET		/driver/index  					controllers.DriverController.driverLoginIndex
+GET		/driver/account/psw  			controllers.DriverController.driverLoginAccountPsw
 
 
 # auth 
