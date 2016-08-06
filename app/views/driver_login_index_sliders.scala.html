@@ -1,6 +1,6 @@
-@(message: String)
+@(title: String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
 
-@driver_login_index_sliders("易聚货驾驶员平台")  {
+@driver_login_index_main("易聚货驾驶员平台")  {
     
 } {
     <ul id="sidebar-menu">
@@ -80,19 +80,8 @@
     </ul><!-- #sidebar-menu -->  
 } {
 
-    <div id="page-content-wrapper">
-        <div id="page-content">
-            <div class="container">
-            	driver index
-
-            </div>
-        </div>
-    </div>
+    @content
 
 } {
-	<script type="text/javascript">
-		$(function(){
-			$('li[data-current="index"]').addClass("active");
-		});
-	</script>
+    @scripts
 }

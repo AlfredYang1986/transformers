@@ -1,4 +1,4 @@
-@(title: String)(include: Html)(content: Html)(scripts: Html)
+@(title: String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -288,7 +288,7 @@
                 <div class="user-account-btn dropdown">
 
                     <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
-                        <img width="28" src="../../assets/image-resources/gravatar.jpg" alt="Profile image">
+                        <img width="28" src="@routes.Assets.at("images/gravatar.jpg")" alt="Profile image">
                         <span>驾驶员设置</span>
                         <i class="glyph-icon icon-angle-down"></i>
                     </a>
@@ -348,89 +348,11 @@
 
         <div id="page-sidebar">
             <div class="scroll-sidebar">
-                
-                <ul id="sidebar-menu">
-
-                    <li class="header"><span>搜索栏目</span></li>
-
-                    <li>
-                        <a href="driver_company_search.html">
-                            <i class="glyph-icon icon-home"></i>
-                            <span>按公司搜货源</span>
-                        </a>
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="driver_department_search.html">
-                            <i class="glyph-icon icon-flag"></i>
-                            <span>按起运地搜货源</span>
-                        </a>
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="driver_special_way_search.html">
-                            <i class="glyph-icon icon-road"></i>
-                            <span>专线合作车辆搜索</span>
-                        </a>
-                    </li>
-
-                    <li class="header"><span>信息列表</span></li>
-
-                    <li>
-                        <a href="driver_recruitment.html">
-                            <i class="glyph-icon icon-list-alt"></i>
-                            <span>其他信息</span>
-                        </a>
-                    </li>
-
-                    <li class="header"><span>账户管理</span></li>
-
-                    <li>
-                        <a href="driver_validate_info.html">
-                            <i class="glyph-icon icon-lock"></i>
-                            <span>认证资料</span>
-                        </a>
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="driver_normal_info.html">
-                            <i class="glyph-icon icon-bookmark"></i>
-                            <span>详情资料</span>
-                        </a>
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="driver_account_psw.html">
-                            <i class="glyph-icon icon-edit"></i>
-                            <span>修改密码</span>
-                        </a>
-                    </li>
-
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="driver_followed_company.html">
-                            <i class="glyph-icon icon-star"></i>
-                            <span>公司收藏夹</span>
-                        </a>
-                    </li>
-
-                </ul><!-- #sidebar-menu -->
+                @siders
             </div>
         </div>
 
     </div>
-
-
-
 
     @content
 
