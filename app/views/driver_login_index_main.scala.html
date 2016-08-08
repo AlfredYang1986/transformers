@@ -190,6 +190,8 @@
         <!-- Theme switcher -->
         <script src="@routes.Assets.at("widgets/theme-switcher/themeswitcher.js")"></script>
 
+        <script src="@routes.Assets.at("widgets/accordion-ui/accordion.js")"></script>
+
 
         <style type="text/css">
             object,
@@ -263,17 +265,17 @@
 
             <div id="mobile-navigation">
                 <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button>
-                <a href="index.html" class="logo-content-small" title="MonarchUI"></a>
+                <a href="/driver/index" class="logo-content-small" title="MonarchUI"></a>
             </div>
 
             <div id="header-logo" class="logo-bg">
 
-                <a href="index.html" class="logo-content-big" title="MonarchUI">
+                <a href="/driver/index" class="logo-content-big" title="MonarchUI">
                     Elogco <i>易聚货</i>
                     <span>驾驶员</span>
                 </a>
 
-                <a href="index.html" class="logo-content-small" title="MonarchUI">
+                <a href="/driver/index" class="logo-content-small" title="MonarchUI">
                     Elogco <i>易聚货</i>
                     <span>驾驶员</span>
                 </a>
@@ -361,6 +363,23 @@
                 $('#loading').fadeOut( 400, "linear" );
             }, 300);
         });
+
+        /* jQuery UI Accordion */
+
+        $(function() { "use strict";
+            $(".accordion").accordion({
+                heightStyle: "content"
+            });
+        });
+
+        $(function() { "use strict";
+            $("#accordion-hover")
+                    .accordion({
+                        event: 'mouseover',
+                        heightStyle: 'auto'
+                    });
+        });
+        
     </script>
 
     @scripts

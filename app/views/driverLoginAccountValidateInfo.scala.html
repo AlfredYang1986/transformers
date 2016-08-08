@@ -1,0 +1,70 @@
+@(message: String)
+
+@driver_login_index_sliders("易聚货驾驶员平台")  {
+    
+} {
+
+    <div id="page-content-wrapper">
+        <div id="page-content">
+            <div class="container">
+
+                <div id="page-title">
+                    <h2>认证资料</h2>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-body">
+                        <h3 class="title-hero">
+                            #修改如下资料需要提供给易聚货管理员进行审核并通过才能修改
+                        </h3>
+                        <div class="example-box-wrapper">
+                            <form class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">驾驶员姓名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="" placeholder="林恩">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">身份证</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="" placeholder="123456789123456798">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">行驶证</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="" placeholder="123456789123456789">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">驾驶证</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" id="" placeholder="123456789123456789">
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-center">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important">
+                                        提交审核
+                                    </button>
+                                </div>              
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+} {
+	<script type="text/javascript">
+		$(function(){
+			$('li[data-current="index"]').addClass("active");
+		});
+	</script>
+}
