@@ -33,9 +33,7 @@
         <link href="@routes.Assets.at("stylesheets/helpers/utils.css")" rel="stylesheet">
         <link href="@routes.Assets.at("stylesheets/helpers/colors.css")" rel="stylesheet">
 
-        <!-- Admin responsive -->
-        <link href="@routes.Assets.at("stylesheets/helpers/responsive-elements.css")" rel="stylesheet">
-        <link href="@routes.Assets.at("stylesheets/helpers/admin-responsive.css")" rel="stylesheet">
+
 
         <!-- ELEMENTS -->
         <link href="@routes.Assets.at("stylesheets/elements/badges.css")" rel="stylesheet">
@@ -84,6 +82,7 @@
         <link href="@routes.Assets.at("widgets/input-switch/inputswitch.css")" rel="stylesheet">
         <link href="@routes.Assets.at("widgets/input-switch/inputswitch-alt.css")" rel="stylesheet">
         <link href="@routes.Assets.at("widgets/ionrangeslider/ionrangeslider.css")" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("widgets/jcrop/jcrop.css")">
         <link href="@routes.Assets.at("widgets/jgrowl-notifications/jgrowl.css")" rel="stylesheet">
         <link href="@routes.Assets.at("widgets/loading-bar/loadingbar.css")" rel="stylesheet">
         <link href="@routes.Assets.at("widgets/maps/vector-maps/vectormaps.css")" rel="stylesheet">
@@ -125,72 +124,78 @@
 
         <!-- Admin theme -->
         <link href="@routes.Assets.at("stylesheets/admin/layout.css")" rel="stylesheet">
-        <link href="@routes.Assets.at("stylesheets/admin/color-schemes/default.css")" rel="stylesheet">    
+        <link href="@routes.Assets.at("stylesheets/admin/color-schemes/default.css")" rel="stylesheet"> 
+
+        <!-- Admin responsive -->
+        <link href="@routes.Assets.at("stylesheets/helpers/responsive-elements.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("stylesheets/helpers/admin-responsive.css")" rel="stylesheet">
 
         <!-- Components theme -->
         <link href="@routes.Assets.at("stylesheets/components/default.css")" rel="stylesheet"> 
         <link href="@routes.Assets.at("stylesheets/components/border-radius.css")" rel="stylesheet"> 
 
 
-        <!-- JS Core 
+        <!--  JS Core  -->
         <script src="@routes.Assets.at("javascripts/js-core/jquery-core.js")"></script>
         <script src="@routes.Assets.at("javascripts/js-core/jquery-ui-core.js")"></script>
         <script src="@routes.Assets.at("javascripts/js-core/jquery-ui-widget.js")"></script>
         <script src="@routes.Assets.at("javascripts/js-core/jquery-ui-mouse.js")"></script>
-        <script src="@routes.Assets.at("javascripts/js-core/jquery-ui-position.js")"></script>-->
-
-
+        <script src="@routes.Assets.at("javascripts/js-core/jquery-ui-position.js")"></script>
         <!--<script type="text/javascript" src="../../assets/js-core/transition.js"></script>-->
         <script src="@routes.Assets.at("javascripts/js-core/jquery-cookie.js")"></script>
         <script src="@routes.Assets.at("javascripts/js-core/modernizr.js")"></script>
 
-
-
         <!--<link rel="stylesheet" type="text/css" href="../../assets/widgets/wizard/wizard.css">-->
-        <script src="@routes.Assets.at("widgets/wizard/wizard.js")"></script>
-        <script src="@routes.Assets.at("widgets/wizard/wizard-demo.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/wizard/wizard.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/wizard/wizard-demo.js")"></script>
 
         <!-- Boostrap Tabs -->
-        <script src="@routes.Assets.at("widgets/tabs/tabs.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/tabs/tabs.js")"></script>
 
         <!-- Bootstrap Progress Bar -->
-        <script src="@routes.Assets.at("widgets/progressbar/progressbar.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/progressbar/progressbar.js")"></script>
 
         <!-- Superclick -->
-        <script src="@routes.Assets.at("widgets/superclick/superclick.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/superclick/superclick.js")"></script>
 
         <!-- Input switch alternate -->
-        <script src="@routes.Assets.at("widgets/input-switch/inputswitch-alt.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/input-switch/inputswitch-alt.js")"></script>
 
         <!-- Slim scroll -->
-        <script src="@routes.Assets.at("widgets/slimscroll/slimscroll.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/slimscroll/slimscroll.js")"></script>
 
         <!-- Slidebars -->
-        <script src="@routes.Assets.at("widgets/slidebars/slidebars.js")"></script>
-        <script src="@routes.Assets.at("widgets/slidebars/slidebars-demo.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/slidebars/slidebars.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/slidebars/slidebars-demo.js")"></script>
 
         <!-- PieGage -->
-        <script src="@routes.Assets.at("widgets/charts/piegage/piegage.js")"></script>
-        <script src="@routes.Assets.at("widgets/charts/piegage/piegage-demo.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/charts/piegage/piegage.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/charts/piegage/piegage-demo.js")"></script>
 
         <!-- Screenfull -->
-        <script src="@routes.Assets.at("widgets/screenfull/screenfull.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/screenfull/screenfull.js")"></script>
 
         <!-- Content box -->
-        <script src="@routes.Assets.at("widgets/content-box/contentbox.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/content-box/contentbox.js")"></script>
 
         <!-- Overlay -->
-        <script src="@routes.Assets.at("widgets/overlay/overlay.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/overlay/overlay.js")"></script>
 
         <!-- Widgets init for demo -->
-        <script src="@routes.Assets.at("javascripts/js-init/widgets-init.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/js-init/widgets-init.js")"></script>
 
         <!-- Theme layout -->
-        <script src="@routes.Assets.at("javascripts/admin/layout.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/admin/layout.js")"></script>
         <!-- Theme switcher -->
-        <script src="@routes.Assets.at("widgets/theme-switcher/themeswitcher.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/theme-switcher/themeswitcher.js")"></script>
 
-        <script src="@routes.Assets.at("widgets/accordion-ui/accordion.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("widgets/accordion-ui/accordion.js")"></script>
+
+        <!-- Bootstrap Tooltip -->
+        <script type="text/javascript" src="@routes.Assets.at("widgets/tooltip/tooltip.js")"></script>
+        <!-- Bootstrap Popover -->
+        <script type="text/javascript" src="@routes.Assets.at("widgets/popover/popover.js")"></script>
+
 
 
         <style type="text/css">
