@@ -1,0 +1,157 @@
+@(title: String)(include: Html)(content: Html)(scripts: Html)
+
+@sw_login_index_main("易聚货专线")  {
+    
+} {
+    <ul id="sidebar-menu">
+
+    <li class="header"><span>发布信息</span></li>
+
+    <li>
+        <a href="/specialway/sendproduct">
+            <i class="glyph-icon icon-share"></i>
+            <span>发布货源信息</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/sendinfo">
+            <i class="glyph-icon icon-share-alt"></i>
+            <span>发布其他信息</span>
+        </a>
+    </li>
+
+    <li class="header"><span>已发布信息</span></li>
+
+    <li>
+        <a href="/specialway/sentproduct">
+            <i class="glyph-icon icon-list"></i>
+            <span>已发布货源信息</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/sentinfo">
+            <i class="glyph-icon icon-list"></i>
+            <span>已发布其他信息</span>
+        </a>
+    </li>
+
+    <li class="header"><span>已完成信息</span></li>
+
+    <li>
+        <a href="/specialway/completeproduct">
+            <i class="glyph-icon icon-check"></i>
+            <span>已完成货源信息</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/completeinfo">
+            <i class="glyph-icon icon-check"></i>
+            <span>已完成其他信息</span>
+        </a>
+    </li>
+
+    <li class="header"><span>信息列表</span></li>
+
+    <li>
+        <a href="/specialway/driverlist">
+            <i class="glyph-icon icon-list-alt"></i>
+            <span>车源信息搜索</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/specialwaylist">
+            <i class="glyph-icon icon-road"></i>
+            <span>专线信息搜索</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/companylist">
+            <i class="glyph-icon icon-tasks"></i>
+            <span>其他公司货源信息搜索</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="/specialway/recruitment">
+            <i class="glyph-icon icon-list-alt"></i>
+            <span>其他信息</span>
+        </a>
+    </li>
+
+    <li class="header"><span>账户管理</span></li>
+
+    <li>
+        <a href="/specialway/account/validateinfo">
+            <i class="glyph-icon icon-lock"></i>
+            <span>认证资料</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/account/normalinfo">
+            <i class="glyph-icon icon-bookmark"></i>
+            <span>公司资料</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/account/people">
+            <i class="glyph-icon icon-magnet"></i>
+            <span>调度信息管理</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/account/extra">
+            <i class="glyph-icon icon-user"></i>
+            <span>分账号管理</span>
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="/specialway/account/psw">
+            <i class="glyph-icon icon-edit"></i>
+            <span>修改密码</span>
+        </a>
+    </li>
+
+    <li class="header"><span>易聚货平台福利</span></li>
+
+    <li>
+        <a href="/specialway/rewards">
+            <i class="glyph-icon icon-bullhorn"></i>
+            <span>平台福利车</span>
+        </a>
+    </li>
+
+    </ul><!-- #sidebar-menu -->
+} {
+
+    @content
+
+} {
+    @scripts
+}

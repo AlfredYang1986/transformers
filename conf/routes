@@ -65,6 +65,25 @@ GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginS
 GET		/company/specialwaylist    		controllers.CompanyIndustryController.ciLoginSpecialWayList
 GET		/company/rewards    			controllers.CompanyIndustryController.ciLoginRewards
 
+# special way login pages
+GET		/specialway/index               controllers.SpecialWayController.swLoginIndex
+GET		/specialway/account/extra       controllers.SpecialWayController.swLoginAccountExtra
+GET		/specialway/account/normalinfo  controllers.SpecialWayController.swLoginAccountNormalInfo
+GET		/specialway/account/people      controllers.SpecialWayController.swLoginAccountPeople
+GET		/specialway/account/psw    		controllers.SpecialWayController.swLoginAccountPsw
+GET		/specialway/account/validateinfo controllers.SpecialWayController.swLoginAccountValidateInfo
+GET		/specialway/companylist         controllers.SpecialWayController.swLoginCompanyList
+GET		/specialway/completeinfo        controllers.SpecialWayController.swLoginCompleteInfo
+GET		/specialway/completeproduct     controllers.SpecialWayController.swLoginCompleteProduct
+GET		/specialway/driverlist        	controllers.SpecialWayController.swLoginDriverList
+GET		/specialway/recruitment        	controllers.SpecialWayController.swLoginRecruitment
+GET		/specialway/sendinfo        	controllers.SpecialWayController.swLoginSendInfo
+GET		/specialway/sendproduct     	controllers.SpecialWayController.swLoginSendProduct
+GET		/specialway/sentinfo        	controllers.SpecialWayController.swLoginSentInfo
+GET		/specialway/sentproduct     	controllers.SpecialWayController.swLoginSentProduct
+GET		/specialway/specialwaylist  	controllers.SpecialWayController.swLoginSpecialWayList
+GET		/specialway/rewards    			controllers.SpecialWayController.swLoginRewards
+
 # auth 
 POST	/auth/register					controllers.AuthController.register
 POST	/auth/driver/register			controllers.AuthController.driverRegister
