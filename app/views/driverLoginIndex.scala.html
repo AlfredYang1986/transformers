@@ -1,4 +1,4 @@
-@(message: String)
+@(companies : List[play.api.libs.json.JsValue])
 
 @driver_login_index_sliders("易聚货驾驶员平台")  {
     
@@ -18,10 +18,11 @@
                     公司列表
                 </div>
 
+                @{ companies map { iter => 
                 <div class="panel">
                     <div class="panel-body">
                         <h4 class="title-hero">
-                        澳深科技有限公司 <a href="" class="" style="color:#008bdc"><i class="glyph-icon icon-star"></i>收藏</a>
+                        { (iter \ "company_name").asOpt[String].get } <a href="" class="" style="color:#008bdc"><i class="glyph-icon icon-star"></i>收藏</a>
                         </h4>
                         <div class="example-box-wrapper">
                             <div id="followed_1">
@@ -39,31 +40,86 @@
                                                         <label for="certificate-type" class="col-sm-2 control-label">业务领悟</label>
                                                         <div class="col-sm-8">
                                                             <div class="col-sm-4">
-                                                                <label type='text' class="control-label">公路</label> 
+                                                                <label type='text' class="control-label">
+                                                                { (iter \ "company_business").asOpt[List[String]].get map { x => 
+                                                                    {x + " "} 
+                                                                }}
+                                                                </label> 
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="certificate-type" class="col-sm-2 control-label">营业范围</label>
-                                                            <div class="col-sm-8">
-                                                            <div class="col-sm-4">
-                                                                <label type='text' class="control-label">浙江 杭州 --> 北京 北京 </label> 
-                                                            </div>
-                                                        </div>
+                                                            {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
+                                                                (iter \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                                    <div class="col-sm-8">
+                                                                    <div class="col-sm-4">
+                                                                        <label type='text' class="control-label"> 
+                                                                            {(x \ "origin_province").asOpt[String].get + " " + 
+                                                                            (x \ "origin_city").asOpt[String].get + " --> " + 
+                                                                            (x \ "destination_province").asOpt[String].get + " " +
+                                                                            (x \ "destination_city").asOpt[String].get}
+                                                                        </label> 
+                                                                    </div>
+                                                                    </div>
+                                                                }
+
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.industry.t) { 
+
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.specialway.t) { 
+                                                                (iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                                    <div class="col-sm-8">
+                                                                    <div class="col-sm-4">
+                                                                        <label type='text' class="control-label"> 
+                                                                            {(x \ "origin_province").asOpt[String].get + " " + 
+                                                                            (x \ "origin_city").asOpt[String].get + " --> " + 
+                                                                            (x \ "destination_province").asOpt[String].get + " " +
+                                                                            (x \ "destination_city").asOpt[String].get}
+                                                                        </label> 
+                                                                    </div>
+                                                                    </div>
+                                                                }
+                                                            }}
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司官网</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">www.aushen.com.au</label>
+                                                            {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "company_web").asOpt[String].get}
+                                                                </label>
+
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.industry.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "industry_web").asOpt[String].get}
+                                                                </label>
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.specialway.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "special_web").asOpt[String].get}
+                                                                </label>
+                                                            }}
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司传真</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">123456789445</label>
+                                                            {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "company_fax").asOpt[String].get}
+                                                                </label>
+
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.industry.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "industry_fax").asOpt[String].get}
+                                                                </label>
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.specialway.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "special_fax").asOpt[String].get}
+                                                                </label>
+                                                            }}
                                                         </div>
                                                     </div>
 
@@ -77,7 +133,20 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司邮箱</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">aushentechnology.com.au</label>
+                                                            {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "company_email").asOpt[String].get}
+                                                                </label>
+
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.industry.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "industry_email").asOpt[String].get}
+                                                                </label>
+                                                            } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.specialway.t) { 
+                                                                <label type="text" class="control-label col-sm-6">
+                                                                    {(iter \ "special_email").asOpt[String].get}
+                                                                </label>
+                                                            }}
                                                         </div>
                                                     </div>
 
@@ -384,6 +453,8 @@
                         </div>
                     </div>
                 </div>
+                }}
+
             </div>
         </div>
     </div>

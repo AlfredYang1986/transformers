@@ -3,13 +3,20 @@ package controllers
 import play.api._
 import play.api.mvc._
 
+import play.api.libs.json.Json
+import play.api.libs.json.Json.{toJson}
+import play.api.libs.json.JsValue
+
+import module.driverOpt.driverSearchModule
+
 object DriverController extends Controller {
   
     /**
      * Driver Login Page
      */
     def driverLoginIndex = Action {
-        Ok(views.html.driverLoginIndex("Your new application is ready."))
+        val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
+        Ok(views.html.driverLoginIndex(com_lst))
     }
 
     /**
