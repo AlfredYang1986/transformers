@@ -87,7 +87,10 @@
 	            data: JSON.stringify(query_object),
 	            cache: false,
 	            success: function (data) {
-	                if (data.status == "ok") {                                          
+	                if (data.status == "ok") {
+
+	                	$("div[data-result='company']").remove();
+
 	                     var html = data2html(data.result);
 	                     $("div[data-result='container']").add(html).appendTo($("div[data-result='container']"));
 	                } else {
@@ -101,183 +104,239 @@
 		}
 
 		function data2html(data) {
-			var index = $("div[data-result='company']").length * 2;
-			var html = "<div class=\“panel\" data-result='company' id=\"accordion\">";
-			html += "<div class=\"panel-body\">"
-			html += "<h5 class=\"title-hero\">"
-			html += "澳深科技有限公司 <a href=\"\" class=\"\" style=\"color:#008bdc\"><i class=\"glyph-icon icon-star\"></i>收藏</a></h5>"
-			html += "<div class=\"example-box-wrapper\">"
-			html += "<div id=\"form-wizard-1\">"
-			html += "<ul class='nav nav-pills'><li><a href=" + "#tab" + index + " data-toggle=\"tab\">公司信息</a></li><li><a href=" + "#tab" + (index + 1) + " data-toggle=\"tab\">当天货源</a></li></ul>"
 
-			html += "<div class=\"tab-content\">"
-			
-			html += "<div class=\"tab-pane\" id=" + "tab" + index + ">"
-			html += "<div class=\"content-box\">"
-			html += "<div class=\"content-box-wrapper\">"
+			var count = data.length;
+			var html = "";
+			for (var i = 0; i < data.length; ++i) {
+				var tmp = data[i];
 
-			html += "<div class=\"form-horizontal bordered-row\" role=\"form\">"
+				var index = ($("div[data-result='company']").length + i)* 2;
+				html += "<div class=\“panel\" data-result='company' id=\"accordion\">";
+				html += "<div class=\"panel-body\">"
+				html += "<h5 class=\"title-hero\">"
+				html += tmp["company_name"]+ " ";
+				html += "<button onclick='collectCompany(\"" + tmp["open_id"] + "\")' class=\"btn-link\" style=\"color:#008bdc\"><i class=\"glyph-icon icon-star\"></i>收藏</button></h5>"
+				html += "<div class=\"example-box-wrapper\">"
+				html += "<div id=\"form-wizard-1\">"
+				html += "<ul class='nav nav-pills'><li><a href=" + "#tab" + index + " data-toggle=\"tab\">公司信息</a></li><li><a href=" + "#tab" + (index + 1) + " data-toggle=\"tab\">当天货源</a></li></ul>"
 
-			html += "<div class=\"form-group\">"
-			html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">业务领域</label>"
-			html += "<div class=\"col-sm-8\"><div class=\"col-sm-4\">"
-            html += "<label type='text' class=\"control-label\">公路</label>" 
-            html += "</div></div></div>"
+				html += "<div class=\"tab-content\">"
+				
+				html += "<div class=\"tab-pane\" id=" + "tab" + index + ">"
+				html += "<div class=\"content-box\">"
+				html += "<div class=\"content-box-wrapper\">"
 
-            html += "<div class=\"form-group\">"
-            html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">营业范围</label>"
-            html += "<div class=\"col-sm-8\"><div class=\"col-sm-4\">"
-            html += "<label type='text' class=\"control-label\">浙江 杭州 --> 北京 北京 </label>"
-            html += "</div></div></div>"
+				html += "<div class=\"form-horizontal bordered-row\" role=\"form\">"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">公司官网</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label col-sm-6\">www.aushen.com.au</label>"
-            html += "</div></div>"
+				html += "<div class=\"form-group\">"
+				html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">业务领域</label>"
+				html += "<div class=\"col-sm-8\"><div class=\"col-sm-4\">"
+	            html += "<label type='text' class=\"control-label\">" 
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">公司传真</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label col-sm-6\">123456789445</label>"
-            html += "</div></div>"
+	            if (tmp["company_business"] != undefined) {
+	            	for (var j = 0; j < tmp["company_business"].length; j++) {
+	   					html += tmp["company_business"][j] + " ";
+	            	}
+	            }
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">公司介绍</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label col-sm-6\">This is the introduction of the company.</label>"
-            html += "</div></div>"
+	            html += "</label>" 
+	            html += "</div></div></div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">公司邮箱</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label col-sm-6\">aushentechnology.com.au</label>"
-            html += "</div></div>"
+	            html += "<div class=\"form-group\">"
+	            html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">营业范围</label>"
+	            html += "<div class=\"col-sm-8\"><div class=\"col-sm-4\">"
 
-            html += "</div>";
+	            var ct = tmp["type"];
+	            if (ct == 1) {
+	            	var lines = tmp["company_lines"];
+	            	for (var j = 0; j < lines.length; j++) {
+	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "-->" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
+	            	}
 
-			html += "</div>";
-			html += "</div>";
-			html += "</div>";
-			
-			html += "<div class=\"tab-pane\" id=" + "tab" + (index + 1) + ">"
-			html += "<div class=\"content-box\">"
-			html += "<div class=\"content-box-wrapper\">当天货源数目："
-			
-			html += "<div class=\"panel\"><div class=\"panel-body\">"
+	            } else if (ct == 2) {
 
-			html += "<h3 class=\"title-hero\"></h3>"
+	            } else if (ct == 3) {
+	            	var lines = tmp["special_lines"];
+	            	for (var j = 0; j < lines.length; j++) {
+	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "-->" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
+	            	}
+	            }
+	            html += "</div></div></div>"
 
-			html += "<div class=\"example-box-wrapper\"><div class=\"row\"><div class=\"col-sm-12\"><div class=\"row\">"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">公司官网</label>"
+	            html += "<div class=\"col-sm-6\">"
 
-			html += "<div class=\"col-sm-6\" style=\"font-size:15px\">"
-            html += "浙江杭州->北京北京"
-            html += "</div>"
+	            if (ct == 1) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["company_web"] + "</label>"
+	            } else if (ct == 2) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["industry_web"] + "</label>"
+	            } else if (ct == 3) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["special_web"] + "</label>"
+	            }
+	            html += "</div></div>"
 
-            html += "<div class=\"col-sm-4\" style=\"font-size:15px\">"
-            html += "货物名称  /  吨位  / 体积 (传入数据)"
-            html += "</div>"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">公司传真</label>"
+	            html += "<div class=\"col-sm-6\">"
 
-            html += "<button type=\"button\" class=\"btn btn-info mrg20B col-sm-2 col-xs-12\" data-toggle=\"collapse\" data-target=\"#depart-view\" style=\"font-size:15px\">"
-            html += "查看详情"
-            html += "</button>"
+	            if (ct == 1) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["company_fax"] + "</label>"
+	            } else if (ct == 2) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["industry_fax"] + "</label>"
+	            } else if (ct == 3) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["special_fax"] + "</label>"
+	            }
+	            html += "</div></div>"
 
-			html += "</div>"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">公司介绍</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label col-sm-6\">This is the introduction of the company.</label>"
+	            html += "</div></div>"
 
-			html += "<div id=\"depart-view\" class=\"collapse\">"
-			html += "<div class=\"panel\"><div class=\"panel-body\"><div class=\"form-horizontal bordered-row\" role=\"form\">"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">公司邮箱</label>"
+	            html += "<div class=\"col-sm-6\">"
 
-			html += "<div class=\"form-group\">"
-			html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">起运地</label>"
-			html += "<div class=\"col-sm-8\">"
-			html += "<div class=\"col-sm-4\">"
-			html += "<label type='text' class=\"control-label\">浙江 杭州 </label>"
-			html += "</div></div></div>"
+	            if (ct == 1) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["company_email"] + "</label>"
+	            } else if (ct == 2) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["industry_email"] + "</label>"
+	            } else if (ct == 3) {
+	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["special_email"] + "</label>"
+	            }
+	            html += "</div></div>"
 
-			html += "<div class=\"form-group\">"
-            html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">目的地</label>"
-            html += "<div class=\"col-sm-8\">"
-            html += "<div class=\"col-sm-4\">"
-            html += "<label type='text' class=\"control-label\">北京 北京 </label>"
-            html += "</div><div>"
-            html += "<button type=\"button\" class=\"btn btn-info mrg5A col-sm-3 col-xs-12\">导航</button>"
-            html += "</div></div></div>"
+	            html += "</div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">需求吨位</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">12</label>"
-            html += "</div></div>"
+				html += "</div>"
+				html += "</div>"
+				html += "</div>"
+				
+				html += "<div class=\"tab-pane\" id=" + "tab" + (index + 1) + ">"
+				html += "<div class=\"content-box\">"
+				html += "<div class=\"content-box-wrapper\">当天货源数目："
+				
+				html += "<div class=\"panel\"><div class=\"panel-body\">"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">需求体积</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">12</label>"
-            html += "</div></div>"
+				html += "<h3 class=\"title-hero\"></h3>"
 
-			html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">需求车型</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">平板车</label>"
-            html += "</div></div>"
+				html += "<div class=\"example-box-wrapper\"><div class=\"row\"><div class=\"col-sm-12\"><div class=\"row\">"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">需求车长</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">11米</label>"
-            html += "</div></div>"
+				html += "<div class=\"col-sm-6\" style=\"font-size:15px\">"
+	            html += "浙江杭州->北京北京"
+	            html += "</div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">货物名称</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">什么</label>"
-            html += "</div></div>"
+	            html += "<div class=\"col-sm-4\" style=\"font-size:15px\">"
+	            html += "货物名称  /  吨位  / 体积 (传入数据)"
+	            html += "</div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">时效需求</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">马上</label>"
-            html += "</div></div>"
+	            html += "<button type=\"button\" class=\"btn btn-info mrg20B col-sm-2 col-xs-12\" data-toggle=\"collapse\" data-target=\"#depart-view\" style=\"font-size:15px\">"
+	            html += "查看详情"
+	            html += "</button>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">其他备注</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">林恩</label>"
-            html += "</div></div>"
+				html += "</div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">所属公司</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">澳深科技有限公司</label>"
-            html += "</div></div>"
+				html += "<div id=\"depart-view\" class=\"collapse\">"
+				html += "<div class=\"panel\"><div class=\"panel-body\"><div class=\"form-horizontal bordered-row\" role=\"form\">"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">联系人</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">林恩</label>"
-            html += "</div></div>"
+				html += "<div class=\"form-group\">"
+				html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">起运地</label>"
+				html += "<div class=\"col-sm-8\">"
+				html += "<div class=\"col-sm-4\">"
+				html += "<label type='text' class=\"control-label\">浙江 杭州 </label>"
+				html += "</div></div></div>"
 
-            html += "<div class=\"form-group\">"
-            html += "<label class=\"col-sm-2 control-label\">联系人电话</label>"
-            html += "<div class=\"col-sm-6\">"
-            html += "<label type=\"text\" class=\"control-label\">13857102787</label>"
-            html += "</div></div>"
+				html += "<div class=\"form-group\">"
+	            html += "<label for=\"certificate-type\" class=\"col-sm-2 control-label\">目的地</label>"
+	            html += "<div class=\"col-sm-8\">"
+	            html += "<div class=\"col-sm-4\">"
+	            html += "<label type='text' class=\"control-label\">北京 北京 </label>"
+	            html += "</div><div>"
+	            html += "<button type=\"button\" class=\"btn btn-info mrg5A col-sm-3 col-xs-12\">导航</button>"
+	            html += "</div></div></div>"
 
-			html += "</div></div></div></div>"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">需求吨位</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">12</label>"
+	            html += "</div></div>"
 
-			html += "</div></div></div>"
-			html += "</div></div>"
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">需求体积</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">12</label>"
+	            html += "</div></div>"
 
-			html += "</div>"
-			html += "</div>"
-			html += "</div>"
-			html += "</div>";
+				html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">需求车型</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">平板车</label>"
+	            html += "</div></div>"
 
-			html += "</div>";
-			html += "</div>";
-			html += "</div>";
-			html += "</div>";
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">需求车长</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">11米</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">货物名称</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">什么</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">时效需求</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">马上</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">其他备注</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">林恩</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">所属公司</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">澳深科技有限公司</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">联系人</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">林恩</label>"
+	            html += "</div></div>"
+
+	            html += "<div class=\"form-group\">"
+	            html += "<label class=\"col-sm-2 control-label\">联系人电话</label>"
+	            html += "<div class=\"col-sm-6\">"
+	            html += "<label type=\"text\" class=\"control-label\">13857102787</label>"
+	            html += "</div></div>"
+
+				html += "</div></div></div></div>"
+
+				html += "</div></div></div>"
+				html += "</div></div>"
+
+				html += "</div>"
+				html += "</div>"
+				html += "</div>"
+				html += "</div>";
+
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+				html += "</div>";
+			}
 			return html;
+		}
+
+		function collectCompany(open_id) {
+			alert(open_id);
 		}
 	</script>
 }
