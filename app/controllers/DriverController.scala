@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.libs.json.Json
 import play.api.libs.json.Json.{toJson}
 import play.api.libs.json.JsValue
+import controllers.common.requestArgsQuery._
 
 import module.driverOpt.driverSearchModule
 
@@ -58,7 +59,7 @@ object DriverController extends Controller {
      * Driver Search Company
      */
     def driverLoginSearchCompany = Action {
-        Ok(views.html.driverLoginSearchCompany("Your new application is ready."))
+        Ok(views.html.driverLoginSearchCompany())
     }
 
     /**
@@ -76,4 +77,5 @@ object DriverController extends Controller {
         Ok(views.html.driverLoginSearchSpecialWay("Your new application is ready."))
     }
 
+    def driverSearchCompany = Action (request => requestArgs(request)(driverSearchModule.queryCompany))
 }

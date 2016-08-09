@@ -45,6 +45,8 @@ GET		/driver/search/company          controllers.DriverController.driverLoginSea
 GET		/driver/search/department       controllers.DriverController.driverLoginSearchDepartment
 GET		/driver/search/specialway       controllers.DriverController.driverLoginSearchSpecialWay
 
+POST	/data/driver/search/company		controllers.DriverController.driverSearchCompany
+
 # company industry login pages
 GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex
 GET		/company/account/extra          controllers.CompanyIndustryController.ciLoginAccountExtra
