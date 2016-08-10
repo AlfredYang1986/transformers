@@ -3,13 +3,21 @@ package controllers
 import play.api._
 import play.api.mvc._
 
+import play.api.libs.json.Json
+import play.api.libs.json.Json.{toJson}
+import play.api.libs.json.JsValue
+import controllers.common.requestArgsQuery._
+
+import module.companyOpt.companySearchModule
+
 object CompanyIndustryController extends Controller {
   
     /**
      * Company Login Page
      */
     def ciLoginIndex = Action {
-        Ok(views.html.ciLoginIndex("Your new application is ready."))
+        val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
+        Ok(views.html.ciLoginIndex(dir_lst))
     }
 
     /**

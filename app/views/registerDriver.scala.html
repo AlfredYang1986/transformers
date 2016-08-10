@@ -361,6 +361,18 @@
 						
 					</div>	  
 
+					<div class="form-group" style="display: none;" data-name='driver-insurance-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的车长
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<div class="checkbox" style="text-align: center;">
@@ -510,6 +522,8 @@
 			var driver_type = $('input[name="vehicle"]:checked').val();
 			result &= validate($('input[name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="driver-own-vehicle-error"]');
 
+			var driver_insurance = $('input[name="insurance"]:checked').val();
+			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"), 'div[data-name="driver-insurance-error"]');
 
 			if (Boolean(result)) {
 				query_object = new Object();
