@@ -377,7 +377,7 @@ object AuthModule {
                 "type" -> toJson(x.getAs[Number]("type").get.intValue),
                 "date" -> toJson(x.getAs[Number]("date").get.longValue),
                 "capacity" -> toJson(x.getAs[Number]("capacity").get.intValue),
-                "vehicle_length" -> toJson(x.getAs[Number]("vehicle_length").get.intValue),
+                "vehicle_length" -> toJson(x.getAs[Number]("vehicle_length").get.floatValue),
                 "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "driver_image" -> toJson(x.getAs[String]("driver_image").get),
