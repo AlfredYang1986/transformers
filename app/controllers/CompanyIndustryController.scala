@@ -9,6 +9,7 @@ import play.api.libs.json.JsValue
 import controllers.common.requestArgsQuery._
 
 import module.companyOpt.companySearchModule
+import module.common.xml.xmlOpt
 
 object CompanyIndustryController extends Controller {
   
@@ -88,7 +89,7 @@ object CompanyIndustryController extends Controller {
      * Company Login Page
      */
     def ciLoginDriverList = Action {
-        Ok(views.html.ciLoginDriverList("Your new application is ready."))
+        Ok(views.html.ciLoginDriverList(xmlOpt.allCities))
     }
 
     /**
@@ -140,5 +141,5 @@ object CompanyIndustryController extends Controller {
         Ok(views.html.ciLoginRewards("Your new application is ready."))
     }
 
-
+    def companySearchDriver = Action (request => requestArgs(request)(companySearchModule.queryDrivers))
 }

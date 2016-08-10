@@ -67,7 +67,7 @@ GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginS
 GET		/company/specialwaylist    		controllers.CompanyIndustryController.ciLoginSpecialWayList
 GET		/company/rewards    			controllers.CompanyIndustryController.ciLoginRewards
 
-POST	/data/company/search/driver		controllers.DriverController.driverSearchCompany
+POST	/data/company/search/driver		controllers.CompanyIndustryController.companySearchDriver
 
 # special way login pages
 GET		/specialway/index               controllers.SpecialWayController.swLoginIndex
