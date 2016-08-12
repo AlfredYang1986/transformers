@@ -20,6 +20,8 @@ import java.util.Date
 
 import module.auth.registerTypes
 import module.auth.AuthModule
+import module.sercurity.Sercurity
+import play.api.mvc.Security
 
 object companySearchModule {
     def queryDrivers(data : JsValue) : JsValue = {
@@ -76,5 +78,28 @@ object companySearchModule {
         
         toJson(Map("status" -> toJson("ok"), "result" -> toJson(
             (from db() in "user_profile" where conditions select (AuthModule.detailResult(_))).toList)))
+    }
+    
+    def pushInfo(data : JsValue) : JsValue = {
+        try {
+            val builder = MongoDBObject.newBuilder
+            val title = (data \ "title").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "title" -> title 
+            builder += "content" -> (data \ "content").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "contact" -> (data \ "contact").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "phone_no" -> (data \ "phone_no").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+           
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "open_id" -> open_id
+            builder += "user_id" -> (data \ "user_id").asOpt[String].map (x => x).getOrElse("")
+            builder += "date" -> new Date().getTime
+            
+            builder += "info_id" -> Sercurity.md5Hash(Sercurity.getTimeSpanWithMillSeconds + title + open_id)
+           
+            _data_connection.getCollection("info") += builder.result
+            toJson(Map("status" -> toJson("ok"), "result" -> toJson("success")))
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
     }
 }

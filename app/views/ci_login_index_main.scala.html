@@ -324,10 +324,10 @@
                                 </div>
 
                             <div class="pad5A button-pane button-pane-alt text-center">
-                                <a href="#" class="btn display-block font-normal btn-danger">
+                                <button onclick="logout()" class="btn display-block font-normal btn-danger">
                                     <i class="glyph-icon icon-power-off"></i>
                                     退出
-                                </a>
+                                </button>
                             </div>
 
                             </div>
@@ -360,9 +360,37 @@
             setTimeout(function() {
                 $('#loading').fadeOut( 400, "linear" );
             }, 300);
-        });
+        });        
+    </script>
 
-        
+    <script type="text/javascript">
+        function setCookie(cname,cvalue,expiredays) {
+            var exp  = new Date();
+            exp.setTime(exp.getTime() + expiredays*24*60*60*1000);
+            document.cookie = cname + "="+ escape(cvalue) + ";expires=" + exp.toGMTString()+";path="+"/";
+        }
+
+        function clearCookie(name) {  
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            document.cookie= name + "=''"+";expires="+exp.toGMTString()+";path="+"/";
+        }
+
+        function logout() {
+            clearCookie('user_id');
+            clearCookie('token');
+            clearCookie('screen_name');
+            clearCookie('type')
+            location.href = "/index";   
+        };
+
+        function adminLogout() {
+            clearCookie('user_id');
+            clearCookie('token');
+            clearCookie('screen_name');
+            clearCookie('type')
+            location.href = "/admin/login";                 
+        }
     </script>
 
     @scripts

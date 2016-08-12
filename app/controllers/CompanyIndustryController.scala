@@ -131,8 +131,24 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginSendInfo = Action {
-        Ok(views.html.ciLoginSendInfo("Your new application is ready."))
+    def ciLoginSendInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.ciLoginSendInfo(token)(open_id)(name))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -145,8 +161,8 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginSentInfo = Action {
-        Ok(views.html.ciLoginSentInfo("Your new application is ready."))
+    def ciLoginSentInfo = Action { 
+        Ok(views.html.ciLoginSentInfo(""))
     }
 
     /**
@@ -171,4 +187,5 @@ object CompanyIndustryController extends Controller {
     }
 
     def companySearchDriver = Action (request => requestArgs(request)(companySearchModule.queryDrivers))
+    def companyInfoPush = Action (request => requestArgs(request)(companySearchModule.pushInfo))
 }
