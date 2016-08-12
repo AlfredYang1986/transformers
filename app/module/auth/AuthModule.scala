@@ -565,6 +565,14 @@ object AuthModule {
                   case _ => ???
         })
         
+    def queryInstanceWithToken(token : String) : JsValue = 
+        (from db() in "user_profile" where ("user_lst.token" -> token)
+            select (x => x)).toList match { 
+                  case Nil => ErrorCode.errorToJson("user not exist")
+                  case head :: Nil => toJson(detailResult(head))
+                  case _ => ???
+        }
+        
     def sendCode(data : JsValue) : JsValue = {
         val phoneNo = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse("")
        

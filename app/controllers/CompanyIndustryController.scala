@@ -26,9 +26,14 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+           
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
               val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
-              Ok(views.html.ciLoginIndex(dir_lst))
+              Ok(views.html.ciLoginIndex(dir_lst)(token)(open_id)(name))
             }
             else Redirect("/index")
         }

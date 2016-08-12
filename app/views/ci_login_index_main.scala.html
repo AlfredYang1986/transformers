@@ -1,4 +1,4 @@
-@(title: String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
+@(title: String)(name : String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -309,7 +309,7 @@
                 <div class="user-account-btn dropdown">
                     <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
                         <img width="28" src="@routes.Assets.at("images/gravatar.jpg")" alt="Profile image">
-                        <span>账户设置</span>
+                        <span>@{name}</span>
                         <i class="glyph-icon icon-angle-down"></i>
                     </a>
 
