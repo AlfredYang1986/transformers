@@ -35,20 +35,23 @@ GET		/admin/car/history				controllers.AdminController.adminCarHistory
 GET 	/admin/setting					controllers.AdminController.adminSetting
 
 # driver login pages
-GET		/driver/index  					controllers.DriverController.driverLoginIndex
+GET		/driver/index/:t  				controllers.DriverController.driverLoginIndex(t)
+GET		/driver/index  					controllers.DriverController.driverLoginIndex(t="")
 GET		/driver/account/psw  			controllers.DriverController.driverLoginAccountPsw
 GET		/driver/account/normalinfo		controllers.DriverController.driverLoginAccountNormalInfo
 GET		/driver/account/validateinfo	controllers.DriverController.driverLoginAccountValidateInfo
 GET		/driver/account/followed		controllers.DriverController.driverLoginAccountFollowedCompany
 GET		/driver/recruitment				controllers.DriverController.driverLoginRecruitment
-GET		/driver/search/company          controllers.DriverController.driverLoginSearchCompany
+GET		/driver/search/company/:t       controllers.DriverController.driverLoginSearchCompany(t)
+GET		/driver/search/company          controllers.DriverController.driverLoginSearchCompany(t="")
 GET		/driver/search/department       controllers.DriverController.driverLoginSearchDepartment
 GET		/driver/search/specialway       controllers.DriverController.driverLoginSearchSpecialWay
 
 POST	/data/driver/search/company		controllers.DriverController.driverSearchCompany
 
 # company industry login pages
-GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex
+GET		/company/index/:t               controllers.CompanyIndustryController.ciLoginIndex(t)
+GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex(t="")
 GET		/company/account/extra          controllers.CompanyIndustryController.ciLoginAccountExtra
 GET		/company/account/normalinfo     controllers.CompanyIndustryController.ciLoginAccountNormalInfo
 GET		/company/account/people         controllers.CompanyIndustryController.ciLoginAccountPeople
@@ -58,7 +61,8 @@ GET		/company/account/validateinfo   controllers.CompanyIndustryController.ciLog
 GET		/company/companylist            controllers.CompanyIndustryController.ciLoginCompanyList
 GET		/company/completeinfo           controllers.CompanyIndustryController.ciLoginCompleteInfo
 GET		/company/completeproduct        controllers.CompanyIndustryController.ciLoginCompleteProduct
-GET		/company/driverlist        		controllers.CompanyIndustryController.ciLoginDriverList
+GET		/company/driverlist/:t        	controllers.CompanyIndustryController.ciLoginDriverList(t)
+GET		/company/driverlist				controllers.CompanyIndustryController.ciLoginDriverList(t="")
 GET		/company/recruitment        	controllers.CompanyIndustryController.ciLoginRecruitment
 GET		/company/sendinfo        		controllers.CompanyIndustryController.ciLoginSendInfo
 GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct

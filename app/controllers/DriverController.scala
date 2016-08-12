@@ -9,15 +9,28 @@ import play.api.libs.json.JsValue
 import controllers.common.requestArgsQuery._
 
 import module.driverOpt.driverSearchModule
+import module.auth.AuthModule
+import module.auth.authTypes
 
 object DriverController extends Controller {
   
     /**
      * Driver Login Page
      */
-    def driverLoginIndex = Action {
-        val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
-        Ok(views.html.driverLoginIndex(com_lst))
+    def driverLoginIndex(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
+                val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.driverLoginIndex(com_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -58,8 +71,19 @@ object DriverController extends Controller {
     /**
      * Driver Search Company
      */
-    def driverLoginSearchCompany = Action {
-        Ok(views.html.driverLoginSearchCompany())
+    def driverLoginSearchCompany(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
+                Ok(views.html.driverLoginSearchCompany())
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

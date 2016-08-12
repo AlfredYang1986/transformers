@@ -10,15 +10,28 @@ import controllers.common.requestArgsQuery._
 
 import module.companyOpt.companySearchModule
 import module.common.xml.xmlOpt
+import module.auth.AuthModule
+import module.auth.authTypes
 
 object CompanyIndustryController extends Controller {
   
     /**
      * Company Login Page
      */
-    def ciLoginIndex = Action {
-        val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
-        Ok(views.html.ciLoginIndex(dir_lst))
+    def ciLoginIndex(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+              val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
+              Ok(views.html.ciLoginIndex(dir_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -88,8 +101,19 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginDriverList = Action {
-        Ok(views.html.ciLoginDriverList(xmlOpt.allCities))
+    def ciLoginDriverList(t : String) = Action { request => 
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.ciLoginDriverList(xmlOpt.allCities))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

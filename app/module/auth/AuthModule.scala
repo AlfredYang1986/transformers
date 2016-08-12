@@ -503,14 +503,18 @@ object AuthModule {
      
         if (indicate == "" || pwd == "") ErrorCode.errorToJson("error input")
         else {
-            toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                ((from db() in "user_profile" where ("user_lst" $elemMatch($and("indicate" $eq indicate, "pwd" $eq pwd))) 
-                    select (x => x.getAs[MongoDBList]("user_lst").get)).toList.flatten.filter
-                        (x => x.asInstanceOf[BasicDBObject].get("indicate") == indicate && x.asInstanceOf[BasicDBObject].get("pwd") == pwd)) match {
-                  case Nil => ErrorCode.errorToJson("user not exist")
-                  case head :: Nil => toJson(userResult(head.asInstanceOf[BasicDBObject]))
-                  case _ => ???
-            })))
+            try {
+                toJson(Map("status" -> toJson("ok"), "result" -> toJson(
+                    ((from db() in "user_profile" where ("user_lst" $elemMatch($and("indicate" $eq indicate, "pwd" $eq pwd))) 
+                        select (x => x.getAs[MongoDBList]("user_lst").get)).toList.flatten.filter
+                            (x => x.asInstanceOf[BasicDBObject].get("indicate") == indicate && x.asInstanceOf[BasicDBObject].get("pwd") == pwd)) match {
+                      case Nil => throw new Exception("user not exist")
+                      case head :: Nil => toJson(userResult(head.asInstanceOf[BasicDBObject]))
+                      case _ => ???
+                })))
+            } catch {
+              case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+            }
         }
     }
     

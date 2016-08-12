@@ -256,7 +256,6 @@
 			function login() {
 				var indicate = $('input[data-name="indicate"]').val();
 				var pwd = $('input[data-name="pwd"]').val();
-				alert("login");
 
 				var login_object = new Object();
 		        login_object['indicate'] = indicate;
@@ -270,11 +269,20 @@
 		            cache: false,
 		            success: function (data) {
 		                if (data.status == "ok") {
-		                     alert("登录成功");
 		                     setCookie('user_id', data.result.user_id, 1);
 		                     setCookie('token', data.result.token, 1);
 		                     setCookie('screen_name', data.result.screen_name, 1);
-		                     location.href = "/";
+		                     setCookie('auth', data.result.auth, 1);
+
+		                     if (data.result.auth > 100) {
+		                     	alert("请去admin登陆");
+		                     } else if (data.result.auth > 10) {
+		                     	location.href = "/company/index";
+		                     } else if (data.result.auth > 0) {
+		                     	location.href = "/driver/index";
+		                     } else {
+		                     	alert("游客登陆");
+		                     }
 		                } else {
 		                    alert(data.error.message);
 		                }
@@ -285,6 +293,37 @@
 		        });
 			}
 		</script>
+
+        <script type="text/javascript">
+	        function setCookie(cname,cvalue,expiredays) {
+	            var exp  = new Date();
+	            exp.setTime(exp.getTime() + expiredays*24*60*60*1000);
+	            document.cookie = cname + "="+ escape(cvalue) + ";expires=" + exp.toGMTString()+";path="+"/";
+	        }
+
+	        function clearCookie(name) {  
+	            var exp = new Date();
+	            exp.setTime(exp.getTime() - 1);
+	            document.cookie= name + "=''"+";expires="+exp.toGMTString()+";path="+"/";
+	        }
+
+	        function logout() {
+	            clearCookie('user_id');
+	            clearCookie('token');
+	            clearCookie('screen_name');
+	            clearCookie('auth')
+	            location.href = "/index";   
+	        };
+
+	        function adminLogout() {
+	            clearCookie('user_id');
+	            clearCookie('token');
+	            clearCookie('screen_name');
+	            clearCookie('auth')
+	            location.href = "/admin/login"; 	        	
+	        }
+        </script>
+
         @scripts
     </body>
 </html>
