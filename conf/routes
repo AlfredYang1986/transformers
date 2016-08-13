@@ -67,13 +67,17 @@ GET		/company/recruitment        	controllers.CompanyIndustryController.ciLoginR
 GET		/company/sendinfo/:t        	controllers.CompanyIndustryController.ciLoginSendInfo(t)
 GET		/company/sendinfo        		controllers.CompanyIndustryController.ciLoginSendInfo(t="")
 GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct
-GET		/company/sentinfo        		controllers.CompanyIndustryController.ciLoginSentInfo
+GET		/company/sentinfo/:t        	controllers.CompanyIndustryController.ciLoginSentInfo(t)
+GET		/company/sentinfo        		controllers.CompanyIndustryController.ciLoginSentInfo(t="")
 GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginSentProduct
 GET		/company/specialwaylist    		controllers.CompanyIndustryController.ciLoginSpecialWayList
 GET		/company/rewards    			controllers.CompanyIndustryController.ciLoginRewards
 
 POST	/data/company/search/driver		controllers.CompanyIndustryController.companySearchDriver
 POST	/data/company/info/push			controllers.CompanyIndustryController.companyInfoPush
+POST	/data/company/info/update		controllers.CompanyIndustryController.companyInfoUpdate
+POST	/data/company/info/pop			controllers.CompanyIndustryController.companyInfoPop
+POST	/data/company/info/query		controllers.CompanyIndustryController.companyInfoQuery
 
 # special way login pages
 GET		/specialway/index               controllers.SpecialWayController.swLoginIndex

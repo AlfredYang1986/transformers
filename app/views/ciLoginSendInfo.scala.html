@@ -153,8 +153,8 @@
             result &= validate('input[data-input="phone-no"]', hasInput(phone_no), 'div[data-name="phone-no-error"]');
 
             var query_object = new Object();
-            query_object['token'] = "{@token}";
-            query_object['open_id'] = "{@open_id}";
+            query_object['token'] = "@{token}";
+            query_object['open_id'] = "@{open_id}";
             query_object['title'] = title;
             query_object['contact'] = contact;
             query_object['content'] = content;
@@ -171,6 +171,7 @@
                     success: function (data) {
                         if (data.status == "ok") {
                             alert("success");
+                            location.href = "/company/sentInfo"
                         } else {
                             alert(data.error.message);
                         }

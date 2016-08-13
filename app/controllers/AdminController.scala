@@ -16,7 +16,6 @@ object AdminController extends Controller {
         Ok(views.html.admin_login())
     }  
   
-  
     def index(t : String) = Action { request =>
         var token = t
         if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")

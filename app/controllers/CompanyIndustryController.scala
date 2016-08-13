@@ -161,8 +161,26 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginSentInfo = Action { 
-        Ok(views.html.ciLoginSentInfo(""))
+    def ciLoginSentInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            val infos = (companySearchModule.queryInfo(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].get
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.ciLoginSentInfo(token)(open_id)(name)(infos))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -188,4 +206,7 @@ object CompanyIndustryController extends Controller {
 
     def companySearchDriver = Action (request => requestArgs(request)(companySearchModule.queryDrivers))
     def companyInfoPush = Action (request => requestArgs(request)(companySearchModule.pushInfo))
+    def companyInfoUpdate = Action (request => requestArgs(request)(companySearchModule.updateInfo))
+    def companyInfoPop = Action (request => requestArgs(request)(companySearchModule.popInfo))
+    def companyInfoQuery = Action (request => requestArgs(request)(companySearchModule.popInfo))
 }
