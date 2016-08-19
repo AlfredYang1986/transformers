@@ -1,433 +1,562 @@
-@(message: String)
+@(cities : List[play.api.libs.json.JsValue])(token : String)(open_id : String)(company_name : String)(pdns : List[String])(contacts : List[play.api.libs.json.JsValue])
 
-@ci_login_index_sliders("易聚货公司厂家平台")("") {
+@ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
     
 } {
 
 <div id="page-content-wrapper">
     <div id="page-content">
         <div class="container">
-
-    <div id="page-title">
-        <h2>发布货源</h2>
-    </div>
-
-    <div class="panel">
-        <div class="panel-body">
-            <h3 class="title-hero">
-            可以加文案
-            </h3>
-            <div class="example-box-wrapper">
-                <div class="form-horizontal bordered-row">
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">起运地</label>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>浙江省</option>
-                                    </select>   
-                                </div>
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>杭州市</option>
-                                    </select>   
-                                </div>
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>江干区</option>
-                                    </select>   
-                                </div>
-                            </div>          
-                            <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">目的地</label>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>浙江省</option>
-                                    </select>   
-                                </div>
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>杭州市</option>
-                                    </select>   
-                                </div>
-                                <div class="col-sm-3">
-                                    <select class="form-control">
-                                        <option selected>江干区</option>
-                                    </select>   
-                                </div>
-                            </div>          
-                            <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">吨位</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="吨">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">体积</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="" placeholder="立方米">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">需求车型</label>
-                        <div class="col-sm-8">
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="平板车"> 平板车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="高栏车"> 高栏车
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="厢式车"> 厢式车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="半挂车"> 半挂车
-                                </label>
-                            </div>
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="高地板"> 高低板
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="起重车"> 起重车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="牵引车"> 牵引车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="罐式车"> 罐式车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="特种车"> 特种车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="危险品车"> 危险品车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">需求车长</label>
-                        <div class="col-sm-8">
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="four-p-two"> 4.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="four-p-five"> 4.5米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="five"> 5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="six-p-two"> 6.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="six-p-nine"> 6.9米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="seven-p-two"> 7.2米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="seven-p-seven"> 7.7米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="seven-p-eight"> 7.8米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="eight-p-two"> 8.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="eight-p-six"> 8.6米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="eight-p-seven"> 8.7米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="nine-p-six"> 9.6米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="eleven-p-seven"> 11.7米
-                                </label>
-                            </div>
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="twelve-p-five"> 12.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="thirdteen"> 13米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="third-p-five"> 13.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="fourthteen"> 14米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="sixteen"> 16米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="seventeen"> 17米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="seventeen-five"> 17.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 checkbox">
-                                <label>
-                                    <input name="vehicle-length" type="checkbox" value="eightteen"> 18米
-                                </label>
-                            </div> 
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <label class="col-sm-2 control-label">货物名称</label>
-
-                        <div class="col-sm-8">
-
-                            <div class="row">
-                                <div class="col-sm-8">
-                                <select class="form-control">
-                                    <optgroup label="常用货物名称">
-                                        <option selected="">货物名称选择</option>                                       
-                                        <option>名称1</option>
-                                        <option>名称2</option>
-                                        <option>名称3</option>
-                                        <option>名称4</option>                                            
-                                    </optgroup>
-                                </select>
-                                </div>
-                                <div class="col-sm-4">
-                                <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#name-collapse" style="border: 1px solid #008bdc">
-                                    添加其他货物名称
-                                </button>
-                                </div>
-                            </div>
-
-                            <div class="row  collapse" id="name-collapse" style="margin-top:10px">
-                                <div class="col-sm-8">
-                                    <input type="text" name="others" class="form-control">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input name="save" type="checkbox" checked="true" value="save" style="margin-top:10px"> 并保存至常用货物名称
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">时效需求</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">其他备注</label>
-                        <div class="col-sm-8">
-                            <textarea type="text" class="form-control" rows="3" style="resize: none;"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="row">
-                        <label class="col-sm-2 control-label">联系人</label>
-
-                        <div class="col-sm-8">
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                <select class="form-control">
-                                    <optgroup label="常用联系人">
-                                        <option selected="">林恩</option>                                       
-                                        <option>赵钱</option>
-                                        <option>孙李</option>
-                                        <option>周吴</option>
-                                        <option>郑王</option>                                            
-                                    </optgroup>
-                                </select>
-                                </div>
-                            </div>
-
-                        </div>
-                        </div>
-
-                        <div class="row" style="margin-top:10px">
-                        <label class="col-sm-2 control-label">联系人电话</label>
-                        <div class="col-sm-8">
-
-                            <div class="row">
-                                <div class="col-sm-8">
-                                <select class="form-control">
-                                    <optgroup label="常用联系人电话">
-                                        <option selected="">13857102787</option>                                       
-                                        <option>13857102787</option>
-                                        <option>13857102787</option>
-                                        <option>13857102787</option>
-                                        <option>13857102787</option>                                            
-                                    </optgroup>
-                                </select>
-                                </div>
-                                <div class="col-sm-4">
-                                <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#phone-collapse" style="border: 1px solid #008bdc">
-                                    添加常用调度员
-                                </button>
-                                </div>
-                            </div>
-
-                            <div class="row  collapse" id="phone-collapse" style="margin-top:10px">
-
-                                <div class="col-sm-12">
-                                    <input type="text" name="otherpeople" class="form-control" placeholder="输入调度员姓名">
-                                </div>
-
-                                <div class="col-sm-8" style="margin-top:10px">
-                                    <input type="text" name="otherphone" class="form-control" placeholder="输入调度员联系电话">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <input name="save" type="checkbox" value="save" checked="true" style="margin-top:20px" > 并保存调度员至调度信息管理
-                                </div>
-
-                            </div>
-
-                        </div>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group text-center">
-                        <label class="col-sm-2 control-label"></label>
-                        <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important">
-                            发布
-                        </button>
-                    </div>
-
-                </div>
-
+            <div id="page-title">
+                <h2>发布货源</h2>
             </div>
-        </div>
-    </div>
 
+            <div class="panel">
+                <div class="panel-body">
+                    <h3 class="title-hero">
+                    可以加文案
+                    </h3>
+                    <div class="example-box-wrapper">
+                        <div class="form-horizontal bordered-row">
 
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">起运地</label>
+                                <div class="col-sm-8" data-name="origin">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                                                <option selected disabled>请选择省区</option>
+                                                @{cities map { iter => 
+                                                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                }};
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
+                                                <option selected disabled data-filter="choice" >请选择市区</option>
+                                                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                }}};
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name='origin-district' data-index='2'>
+                                                <option selected disabled data-filter="choice" >请选择区</option>
+                                                @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                    (inner \ "districts").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+                                                }}}};
+                                            </select>
+                                        </div>
+                                    </div>          
+                                    <textarea type="text" class="form-control" placeholder="详细地址" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"></textarea>
+                                </div>
+                            </div>
 
+                            <div class="form-group" style="display: none;" data-name='origin-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请输入有效的起运地
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">目的地</label>
+                                <div class="col-sm-8">
+                                    <div class="row" data-name="destination">
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name="destination-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                                                <option selected disabled>请选择省区</option>
+                                                @{cities map { iter => 
+                                                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                }};
+                                            </select> 
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name="destination-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
+                                                <option selected disabled data-filter="choice" >请选择市区</option>
+                                                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                }}};
+                                            </select> 
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" data-name='destination-district' data-index='2'>
+                                                <option selected disabled data-filter="choice" >请选择区</option>
+                                                @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                    (inner \ "districts").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+                                                }}}};
+                                            </select> 
+                                        </div>
+                                    </div>          
+                                    <textarea type="text" class="form-control" placeholder="详细地址" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='destination-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请输入有效的目的地
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">吨位</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-name="weight" placeholder="吨">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='weight-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请输入有效的吨位(数字)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">体积</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-name="volume" placeholder="立方米">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='volume-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请输入有效的体积(数字)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-name="vehicle-container">
+                                <label class="col-sm-2 control-label">需求车型</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="平板车"> 平板车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="高栏车"> 高栏车
+                                        </label>
+                                    </div>                      
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="厢式车"> 厢式车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="半挂车"> 半挂车
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="高地板"> 高低板
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="起重车"> 起重车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="牵引车"> 牵引车 </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="仓棚车"> 仓棚车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="罐式车"> 罐式车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="特种车"> 特种车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="危险品车"> 危险品车
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="保温冷藏"> 保温冷藏
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle" value="集装箱车"> 集装箱车
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='vehicle-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择有效的车型
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-name="vehicle-length-container">
+                                <label class="col-sm-2 control-label">需求车长</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="4.2"> 4.2米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="4.5"> 4.5米
+                                        </label>
+                                    </div>                      
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="5"> 5米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="6.2"> 6.2米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="6.9"> 6.9米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="7.2"> 7.2米
+                                        </label>
+                                    </div>                      
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="7.7"> 7.7米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="7.8"> 7.8米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="8.2"> 8.2米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="8.6"> 8.6米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="8.7"> 8.7米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="9.6"> 9.6米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="11.7"> 11.7米
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="12.5"> 12.5米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="13"> 13米
+                                        </label>
+                                    </div>                      
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="13.5"> 13.5米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="14"> 14米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="16"> 16米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="17"> 17米
+                                        </label>
+                                    </div>                      
+                                    
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="17.5"> 17.5米
+                                        </label>
+                                    </div>
+
+                                    <div class="col-sm-2 checkbox">
+                                        <label>
+                                            <input type="checkbox" data-name="vehicle-length" value="18"> 18米
+                                        </label>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='vehicle-length-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择有效的车长
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-name="product-name-container">
+
+                                <label class="col-sm-2 control-label">货物名称</label>
+
+                                <div class="col-sm-8">
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                        <select class="form-control" data-name="product-name">
+                                            <optgroup label="常用货物名称">
+                                                <option disabled selected>货物名称选择</option>
+                                                @{ pdns map { iter =>
+                                                    <option>{iter}</option>    
+                                                }}                                  
+                                            </optgroup>
+                                        </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                        <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#name-collapse" style="border: 1px solid #008bdc">
+                                            添加其他货物名称
+                                        </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row  collapse" id="name-collapse" style="margin-top:10px">
+                                        <div class="col-sm-8">
+                                            <input type="text" data-name="product-name-input" class="form-control">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input data-name="product-name-save" type="checkbox" checked="true" style="margin-top:10px"> 并保存至常用货物名称
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='product-name-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的货物名称信息
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时效需求</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  data-name='date-requirement' class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='date-requirement-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的失效需求
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">其他备注</label>
+                                <div class="col-sm-8">
+                                    <textarea type="text" class="form-control" rows="3" data-name='notes' style="resize: none;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='notes-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的备注信息
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-name="contact-container">
+                                <div class="row">
+                                    <label class="col-sm-2 control-label">联系人</label>
+
+                                    <div class="col-sm-8">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                            <select class="form-control" data-name="contact-name" onchange="contactNameChange()">
+                                                <optgroup label="常用联系人">
+                                                    @{ contacts map { iter =>
+                                                        <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
+                                                    }}                                           
+                                                </optgroup>
+                                            </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:10px">
+                                    <label class="col-sm-2 control-label">联系人电话</label>
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                            <select class="form-control" data-name="contact-phone" onchange="contactPhoneChange()">
+                                                <optgroup label="常用联系人电话" editable>
+                                                    @{ contacts map { iter =>
+                                                        <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
+                                                    }}                                            
+                                                </optgroup>
+                                            </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#phone-collapse" style="border: 1px solid #008bdc">
+                                                添加常用调度员
+                                            </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row  collapse" id="phone-collapse" style="margin-top:10px">
+
+                                            <div class="col-sm-12">
+                                                <input type="text" data-name="contact-name-input" class="form-control" placeholder="输入调度员姓名">
+                                            </div>
+
+                                            <div class="col-sm-8" style="margin-top:10px">
+                                                <input type="text" data-name="contact-phone-input" class="form-control" placeholder="输入调度员联系电话">
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <input data-name="contact-save" type="checkbox" value="save" checked="true" style="margin-top:20px" > 并保存调度员至调度信息管理
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='contact-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的联系人信息
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <label class="col-sm-2 control-label"></label>
+                                <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" onclick="pushProduct()" style="margin-right:20px !important">
+                                    发布
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -437,5 +566,209 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function contactNameChange() {
+            var t = $('select[data-name="contact-name"]').val();
+            $('option[data-ct-name="' + t + '"]').attr("selected", true);
+        }
+
+        function contactPhoneChange() {
+            var t = $('select[data-name="contact-phone"]').val();
+            $('option[data-ct-phone="' + t + '"]').attr("selected", true);
+        }
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function districtChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var city = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
+        }
+
+        function pushProduct() {
+            var result = true;
+
+            var origin_province = $('select[data-name="origin-province"]').val();
+            var origin_city = $('select[data-name="origin-city"]').val();
+            var origin_district = $('select[data-name="origin-district"]').val();
+            var origin_address = $('textarea[data-name="origin-address"]').val();
+
+            result &= validate($('div[data-name="origin"]'), 
+                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined) && hasInput(origin_address),
+                        'div[data-name="origin-error"]');
+
+            var destination_province = $('select[data-name="destination-province"]').val();
+            var destination_city = $('select[data-name="destination-city"]').val();
+            var destination_district = $('select[data-name="destination-district"]').val();
+            var destination_address = $('textarea[data-name="destination-address"]').val();
+
+            result &= validate($('div[data-name="destination"]'), 
+                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined) && hasInput(destination_address),
+                        'div[data-name="destination-error"]');
+
+            var weight = $('input[data-name="weight"]').val();
+
+            result &= validate($('input[data-name="weight"]'),
+                        hasInput(weight) && !isNaN(Number(weight)),
+                        'div[data-name="weight-error"]');
+
+            var volume = $('input[data-name="volume"]').val();
+
+            result &= validate($('div[data-name="volume"]'),
+                        hasInput(volume) && !isNaN(Number(volume)),
+                        'div[data-name="volume-error"]');
+
+            var vehicle_lst = $('input[data-name="vehicle"]:checked');
+
+            result &= validate($('div[data-name="vehicle-container"]'),
+                        vehicle_lst.length > 0,
+                        'div[data-name="vehicle-error"]');
+
+            var vehicle_length_lst = $('input[data-name="vehicle-length"]:checked');
+
+            result &= validate($('div[data-name="vehicle-length-container"]'),
+                        vehicle_length_lst.length > 0,
+                        'div[data-name="vehicle-length-error"]');
+
+            var product_name = "";
+            var product_name_save = 0;
+            if($('#name-collapse').hasClass("in")) {
+                product_name = $('input[data-name="product-name-input"]').val();
+                if ($('input[data-name="product-name-save"]').is(':checked')) 
+                    product_name_save = 1;
+                else
+                    product_name_save = 0;
+            }else{
+                product_name = $('select[data-name="product-name"]').val();
+                product_name_save = 0;
+            }
+
+            result &= validate($('div[data-name="product-name-container"]'),
+                        hasInput(product_name),
+                        'div[data-name="product-name-error"]');
+
+            var date_requirement = $('input[data-name="date-requirement"]').val();
+
+            result &= validate($('input[data-name="date-requirement"]'),
+                        hasInput(date_requirement),
+                        'div[data-name="date-requirement-error"]');
+
+            var notes = $('input[data-name="notes"]').val();
+            if (notes == undefined) {
+                notes = "";
+            }
+
+            var contact_name = "";
+            var contact_phone = "";
+            var contact_save = 0;
+            if($('#phone-collapse').hasClass("in")) {
+                contact_name = $('input[data-name="contact-name-input"]').val();
+                contact_phone = $('input[data-name="contact-phone-input"]').val();
+                if ($('input[data-name="contact-save"]').is(':checked')) 
+                    contact_save = 1;
+                else
+                    contact_save = 0;
+            } else {
+                contact_name = $('select[data-name="contact-name"]').val();
+                contact_phone = $('select[data-name="contact-phone"]').val();
+                contact_save = 0;
+            }
+
+            result &= validate($('div[data-name="contact-container"]'),
+                        hasInput(contact_name) && hasInput(contact_phone),
+                        'div[data-name="contact-error"]');
+
+            if (result) {
+                var query_object = new Object();
+
+                var origin = new Object();
+                origin['origin_province'] = origin_province;
+                origin['origin_city'] = origin_city;
+                origin['origin_district'] = origin_district;
+                origin['origin_address'] = origin_address;
+
+                query_object['origin'] = origin;
+
+                var destination = new Object();
+                destination['destination_province'] = destination_province;
+                destination['destination_city'] = destination_city;
+                destination['destination_district'] = destination_district;
+                destination['destination_address'] = destination_address;
+
+                query_object['destination'] = destination;
+
+                query_object['weight'] = Number(weight);
+                query_object['volume'] = Number(volume);
+
+                var vehicle_str_lst = [];
+                $.each(vehicle_lst, function(index, value){
+                    vehicle_str_lst.push($(this).val());
+                });
+                query_object['vehicle'] = vehicle_str_lst;
+
+                var vehicle_length_number_lst = [];
+                $.each(vehicle_length_lst, function(index, value){
+                    vehicle_length_number_lst.push(Number($(this).val()));
+                });
+                query_object['vehicle_length'] = vehicle_length_number_lst;
+
+                query_object['product_name_save'] = product_name_save;
+                query_object['product_name'] = product_name;
+
+                query_object['notes'] = notes;
+                query_object['date_requirement'] = date_requirement;
+
+                query_object['contact_name'] = contact_name;
+                query_object['contact_phone'] = contact_phone;
+                query_object['contact_save'] = contact_save;
+
+                query_object['open_id'] = "@open_id";
+                
+                $.ajax({
+                    url: "/data/company/product/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                        //     alert("注册成功审核！");
+                             alert(data);
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
     </script>
 }

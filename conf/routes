@@ -54,8 +54,10 @@ GET		/company/index/:t               controllers.CompanyIndustryController.ciLog
 GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex(t="")
 GET		/company/account/extra          controllers.CompanyIndustryController.ciLoginAccountExtra
 GET		/company/account/normalinfo     controllers.CompanyIndustryController.ciLoginAccountNormalInfo
-GET		/company/account/people         controllers.CompanyIndustryController.ciLoginAccountPeople
-GET		/company/account/productname    controllers.CompanyIndustryController.ciLoginAccountProductName
+GET		/company/account/people/:t      controllers.CompanyIndustryController.ciLoginAccountPeople(t)
+GET		/company/account/people         controllers.CompanyIndustryController.ciLoginAccountPeople(t="")
+GET		/company/account/productname/:t controllers.CompanyIndustryController.ciLoginAccountProductName(t)
+GET		/company/account/productname    controllers.CompanyIndustryController.ciLoginAccountProductName(t="")
 GET		/company/account/psw    		controllers.CompanyIndustryController.ciLoginAccountPsw
 GET		/company/account/validateinfo   controllers.CompanyIndustryController.ciLoginAccountValidateInfo
 GET		/company/companylist            controllers.CompanyIndustryController.ciLoginCompanyList
@@ -66,7 +68,8 @@ GET		/company/driverlist				controllers.CompanyIndustryController.ciLoginDriverL
 GET		/company/recruitment        	controllers.CompanyIndustryController.ciLoginRecruitment
 GET		/company/sendinfo/:t        	controllers.CompanyIndustryController.ciLoginSendInfo(t)
 GET		/company/sendinfo        		controllers.CompanyIndustryController.ciLoginSendInfo(t="")
-GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct
+GET		/company/sendproduct/:t       	controllers.CompanyIndustryController.ciLoginSendProduct(t)
+GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct(t="")
 GET		/company/sentinfo/:t        	controllers.CompanyIndustryController.ciLoginSentInfo(t)
 GET		/company/sentinfo        		controllers.CompanyIndustryController.ciLoginSentInfo(t="")
 GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginSentProduct
@@ -78,6 +81,18 @@ POST	/data/company/info/push			controllers.CompanyIndustryController.companyInfo
 POST	/data/company/info/update		controllers.CompanyIndustryController.companyInfoUpdate
 POST	/data/company/info/pop			controllers.CompanyIndustryController.companyInfoPop
 POST	/data/company/info/query		controllers.CompanyIndustryController.companyInfoQuery
+POST	/data/company/product/push		controllers.CompanyIndustryController.companyProductPush
+POST	/data/company/product/update	controllers.CompanyIndustryController.companyProductUpdate
+POST	/data/company/product/pop		controllers.CompanyIndustryController.companyProductPop
+POST	/data/company/product/query		controllers.CompanyIndustryController.companyProductQuery
+POST	/data/company/config/pn/push	controllers.CompanyIndustryController.companyProductNamePush
+POST	/data/company/config/pn/pop		controllers.CompanyIndustryController.companyProductNamePop
+POST	/data/company/config/pn/update	controllers.CompanyIndustryController.companyProductNameUpdate
+# POST	/data/company/config/pn/query	controllers.CompanyIndustryController.companyProductNameQuery
+POST	/data/company/config/ct/push 	controllers.CompanyIndustryController.companyContactPush
+POST	/data/company/config/ct/pop 	controllers.CompanyIndustryController.companyContactPop
+POST	/data/company/config/ct/update	controllers.CompanyIndustryController.companyContactUpdate
+# POST	/data/company/config/ct/query 	controllers.CompanyIndustryController.companyContactQuery
 
 # special way login pages
 GET		/specialway/index               controllers.SpecialWayController.swLoginIndex

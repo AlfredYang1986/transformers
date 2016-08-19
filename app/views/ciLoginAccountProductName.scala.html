@@ -1,53 +1,51 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name : String)(pdns : List[String])
 
-@ci_login_index_sliders("易聚货公司厂家平台")("") {
+@ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
     
 } {
 
 <div id="page-content-wrapper">
     <div id="page-content">
         <div class="container">
+            <div id="page-title">
+                <h2>货物信息管理</h2>
+            </div>
 
-        <div id="page-title">
-            <h2>货物信息管理</h2>
-        </div>
-
-        <div class="panel">
-            <div class="panel-body">
-                <div class="example-box-wrapper">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row">
-
-                                <div class="form-horizontal bordered-row">
-                                    <div class="form-group">
-                                        <label class="col-sm-4 control-label">货物名称可在发布货源页面中直接使用</label>
-                                        <div class="col-sm-5 col-sm-offset-1">
-                                        <button type="button" class="col-sm-2 col-xs-12 form-control" data-toggle="collapse" data-target="#add-new" style="font-size:15px; border:1px solid #008bdc">
-                                    添加货物名称
-                                </button>
-                                        </div>
-                                    </div>              
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="example-box-wrapper">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">货物名称可在发布货源页面中直接使用</label>
+                                            <div class="col-sm-5 col-sm-offset-1">
+                                            <button type="button" class="col-sm-2 col-xs-12 form-control" data-toggle="collapse" data-target="#add-new" style="font-size:15px; border:1px solid #008bdc">
+                                                添加货物名称
+                                            </button>
+                                            </div>
+                                        </div>              
+                                    </div>
                                 </div>
 
-                            </div>
-
-                            <div id="add-new" class="collapse">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <div class="form-horizontal bordered-row">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">货物名称</label>
-                                                <div class="col-sm-8">
-                                                    <input type="text" class="form-control">
+                                <div id="add-new" class="collapse">
+                                    <div class="panel">
+                                        <div class="panel-body">
+                                            <div class="form-horizontal bordered-row">
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">货物名称</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" data-name="pdn-input">
+                                                    </div>
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <label class="col-sm-2 control-label"></label>
+                                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" onclick="pushPDN()" style="margin-right:20px !important">
+                                                        添加货物名称
+                                                    </button>
+                                                </div>              
                                             </div>
-                                            <div class="form-group text-center">
-                                                <label class="col-sm-2 control-label"></label>
-                                                <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important">
-                                                    添加货物名称
-                                                </button>
-                                            </div>              
                                         </div>
                                     </div>
                                 </div>
@@ -56,63 +54,35 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-
-        <div class="panel">
-            <div class="panel-body">
-                <div class="example-box-wrapper">
-                    <div class="form-horizontal bordered-row">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">货物名称</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="" placeholder="品名1">
+            @{ pdns map { iter =>
+            <div class="panel" data-name={iter}>
+                <div class="panel-body">
+                    <div class="example-box-wrapper">
+                        <div class="form-horizontal bordered-row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">货物名称</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-name={iter} value={iter} placeholder={iter} />
+                                </div>
                             </div>
+             
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-4 col-sm-offset-1">
+                                    <button class="form-control" style="border: 1px solid #008bdc" onclick={"updatePdn(\"" + {iter} + "\")"}>保存</button> 
+                                </div>
+                                
+                                <div class="col-sm-3 col-sm-offset-1">
+                                    <button class="form-control" style="border: none; color:#848484;" onclick={"popPdn(\"" + {iter} + "\")"}><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                </div>
+                            </div>
+
                         </div>
-         
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-4 col-sm-offset-1">
-                                <button class="form-control" style="border: 1px solid #008bdc">保存</button> 
-                            </div>
-                            
-                            <div class="col-sm-3 col-sm-offset-1">
-                                <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-body">
-                <div class="example-box-wrapper">
-                    <div class="form-horizontal bordered-row">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">货物名称</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="" placeholder="品名2">
-                            </div>
-                        </div>
-                         <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-4 col-sm-offset-1">
-                                <button class="form-control" style="border: 1px solid #008bdc">保存</button> 
-                            </div>
-                            
-                            <div class="col-sm-3 col-sm-offset-1">
-                                <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
-                            </div>
-                        </div>             
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
+            }}
         </div>
     </div>
 </div>
@@ -122,5 +92,91 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function pushPDN() {
+            var pdn = $('input[data-name="pdn-input"]').val();
+            if (pdn != undefined && pdn != "") {
+                var query_object = new Object();
+                query_object['pdn'] = pdn;
+                query_object['open_id'] = "@open_id";
+
+                $.ajax({
+                    url: "/data/company/config/pn/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        function popPdn(iter) {
+            var pdn = $('input[data-name="' + iter + '"]').val();
+            if (pdn != undefined && pdn != "") {
+                var query_object = new Object();
+                query_object['pdn'] = pdn;
+                query_object['open_id'] = "@open_id";
+
+                $.ajax({
+                    url: "/data/company/config/pn/pop",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            $('div[data-name="' + iter + '"]').remove();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        function updatePdn(old) {
+            var pdn = $('input[data-name="' + old + '"]').val();
+            if (pdn != undefined && pdn != "" && pdn != old) {
+                var query_object = new Object();
+                query_object['pdn'] = pdn;
+                query_object['old'] = old;
+                query_object['open_id'] = "@open_id";
+
+                $.ajax({
+                    url: "/data/company/config/pn/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            alert("修改商品命成功")
+                            location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
     </script>
 } 
