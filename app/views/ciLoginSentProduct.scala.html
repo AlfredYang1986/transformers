@@ -1,4 +1,4 @@
-@(token : String)(open_id : String)(company_name: String)(pdns : List[String])(contacts : List[play.api.libs.json.JsValue])
+@(token : String)(open_id : String)(company_name: String)(pdns : List[String])(contacts : List[play.api.libs.json.JsValue])(products : List[play.api.libs.json.JsValue])(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
 @ci_login_index_sliders("易聚货公司厂家平台")(company_name)  {
     
@@ -21,6 +21,10 @@
                                 
                             </h3>
 
+                            @{ (products zipWithIndex) map { tmp =>
+                                val iter = tmp._1
+                                val index = tmp._2
+                                val product_id = (iter \ "product_id").asOpt[String].get
                             <div class="example-box-wrapper">
                                 <div class="row">
 
@@ -28,25 +32,40 @@
 
                                         <div class="row">
 
-                                        <div class="col-sm-4" style="font-size:15px">
-                                            <label>2016年6月30日</label>
-                                        </div>
-              
-                                        <div class="col-sm-4" style="font-size:15px">
-                                            <label>浙江杭州 --> 北京北京</label>
+                                            <div class="col-sm-4" style="font-size:15px">
+                                                <label>
+                                                    { 
+                                                        (iter \ "date" \ "year").asOpt[Int].get + "年" + (iter \ "date" \ "month").asOpt[Int].get + "月" + (iter \ "date" \ "day").asOpt[Int].get + "日"
+                                                    }
+                                                </label>
+                                            </div>
+                  
+                                            <div class="col-sm-4" style="font-size:15px">
+                                                <label>
+                                                    {
+                                                        (iter \ "origin" \ "province").asOpt[String].get + " " + 
+                                                        (iter \ "origin" \ "city").asOpt[String].get + " --> " + 
+                                                        (iter \ "destination" \ "province").asOpt[String].get + " " +
+                                                        (iter \ "destination" \ "city").asOpt[String].get
+                                                    }
+                                                </label>
+                                            </div>
+
+                                            <div class="col-sm-2" style="font-size:15px">
+                                                <label>
+                                                    {
+                                                        (iter \ "product_name").asOpt[String].get
+                                                    }
+                                                </label>
+                                            </div>
+
+                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#" + product_id} style="font-size:15px">
+                                                查看详情
+                                            </button>
+
                                         </div>
 
-                                        <div class="col-sm-2" style="font-size:15px">
-                                            <label>货物名称</label>
-                                        </div>
-
-                                        <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#depart-view" style="font-size:15px">
-                                            查看详情
-                                        </button>
-
-                                        </div>
-
-                                        <div id="depart-view" class="collapse">
+                                        <div id={product_id} class="collapse">
 
                                             <div class="panel">
 
@@ -58,22 +77,42 @@
                                                             <div class="col-sm-8">
                                                                 <div class="row">
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control">
-                                                                            <option selected>浙江省</option>
+                                                                        <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                            @{cities map { p => 
+                                                                                if ({(p \ "province").asOpt[String].get}.equals((iter \ "origin" \ "province").asOpt[String].get)) {
+                                                                                    <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                                                } else {
+                                                                                    <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                                                }
+                                                                            }};
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                                            @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                                if (x.equals((iter \ "origin" \ "city").asOpt[String].get)) {
+                                                                                    <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                                                } else {
+                                                                                    <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                                                }
+                                                                            }}};
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
                                                                         <select class="form-control">
-                                                                            <option selected>杭州市</option>
-                                                                        </select>   
-                                                                    </div>
-                                                                    <div class="col-sm-3">
-                                                                        <select class="form-control">
-                                                                            <option selected>江干区</option>
+                                                                            @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                                                (inner \ "districts").asOpt[List[String]].get map { x => 
+
+                                                                                if (x.equals((iter \ "origin" \ "district").asOpt[String].get)) {
+                                                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                                                } else {
+                                                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+                                                                                }
+                                                                            }}}};
                                                                         </select>   
                                                                     </div>
                                                                 </div>          
-                                                                <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;"></textarea>
+                                                                <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
@@ -83,248 +122,85 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-3">
                                                                         <select class="form-control">
-                                                                            <option selected>浙江省</option>
+                                                                            @{cities map { p => 
+                                                                                if ({(p \ "province").asOpt[String].get}.equals((iter \ "destination" \ "province").asOpt[String].get)) {
+                                                                                    <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                                                } else {
+                                                                                    <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                                                }
+                                                                            }};
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
                                                                         <select class="form-control">
-                                                                            <option selected>杭州市</option>
+                                                                            @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                                if (x.equals((iter \ "destination" \ "city").asOpt[String].get)) {
+                                                                                    <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                                                } else {
+                                                                                    <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                                                }
+                                                                            }}};
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
                                                                         <select class="form-control">
-                                                                            <option selected>江干区</option>
+                                                                            @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                                                (inner \ "districts").asOpt[List[String]].get map { x => 
+
+                                                                                if (x.equals((iter \ "destination" \ "district").asOpt[String].get)) {
+                                                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                                                } else {
+                                                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+                                                                                }
+                                                                            }}}};
                                                                         </select>   
                                                                     </div>
                                                                 </div>          
-                                                                <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;"></textarea>
+                                                                <textarea type="text" class="form-control" placeholder="详细地址" rows="4" style="resize: none; margin-top:10px">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">吨位</label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" class="form-control" id="" placeholder="吨">
+                                                                <input type="text" class="form-control" data-name="weight" placeholder="吨" value={(iter \ "weight").asOpt[Float].get.toString} />
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">体积</label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" class="form-control" id="" placeholder="立方米">
+                                                                <input type="text" class="form-control" date-name="volume" placeholder="立方米" value={(iter \ "volume").asOpt[Float].get.toString} />
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">需求车型</label>
                                                             <div class="col-sm-8">
+                                                                { (vc \ "vehicle").asOpt[List[String]].get map { x =>
                                                                 <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="平板车"> 平板车
-                                                                    </label>
+                                                                    {if ( (iter \ "vehicle").asOpt[List[String]].get.contains(x) ) {
+                                                                        <label><input data-name="vehicle" type="checkbox" value={x} checked="" /> {x} </label>
+                                                                    } else {
+                                                                        <label><input data-name="vehicle" type="checkbox" value={x} /> {x} </label>
+                                                                    }}
                                                                 </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="高栏车"> 高栏车
-                                                                    </label>
-                                                                </div>                      
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="厢式车"> 厢式车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="半挂车"> 半挂车
-                                                                    </label>
-                                                                </div>
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="高地板"> 高低板
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="起重车"> 起重车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="牵引车"> 牵引车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="罐式车"> 罐式车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="特种车"> 特种车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="危险品车"> 危险品车
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
-                                                                    </label>
-                                                                </div>
+                                                                }}
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">需求车长</label>
                                                             <div class="col-sm-8">
+                                                                { (vc \ "vehicle_length").asOpt[List[Double]].get map { x =>
                                                                 <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="four-p-two"> 4.2米
-                                                                    </label>
+                                                                    {if ( (iter \ "vehicle_length").asOpt[List[Double]].get.filter(y => x - y < 0.0001) ) {
+                                                                        <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
+                                                                    } else {
+                                                                        <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                                    }}
                                                                 </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="four-p-five"> 4.5米
-                                                                    </label>
-                                                                </div>                      
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="five"> 5米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="six-p-two"> 6.2米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="six-p-nine"> 6.9米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="seven-p-two"> 7.2米
-                                                                    </label>
-                                                                </div>                      
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="seven-p-seven"> 7.7米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="seven-p-eight"> 7.8米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="eight-p-two"> 8.2米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="eight-p-six"> 8.6米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="eight-p-seven"> 8.7米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="nine-p-six"> 9.6米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="eleven-p-seven"> 11.7米
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="twelve-p-five"> 12.5米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="thirdteen"> 13米
-                                                                    </label>
-                                                                </div>                      
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="third-p-five"> 13.5米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="fourthteen"> 14米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="sixteen"> 16米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="seventeen"> 17米
-                                                                    </label>
-                                                                </div>                      
-                                                                
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="seventeen-five"> 17.5米
-                                                                    </label>
-                                                                </div>
-
-                                                                <div class="col-sm-2 checkbox">
-                                                                    <label>
-                                                                        <input name="vehicle-length" type="checkbox" value="eightteen"> 18米
-                                                                    </label>
-                                                                </div> 
+                                                                }}
                                                             </div>
                                                         </div>
 
@@ -353,10 +229,10 @@
 
                                                                 <div class="row  collapse" id="name-collapse" style="margin-top:10px">
                                                                     <div class="col-sm-8">
-                                                                        <input type="text" name="others" class="form-control">
+                                                                        <input type="text" name="others" class="form-control" />
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <input name="save" type="checkbox" checked="true" value="save" style="margin-top:10px"> 并保存至常用货物名称
+                                                                        <input name="save" type="checkbox" checked="true" value="save" style="margin-top:10px" /> 并保存至常用货物名称
                                                                     </div>
                                                                 </div>
 
@@ -366,14 +242,14 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">时效需求</label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" data-name="date-requirement" class="form-control" value={(iter \ "date_requirement").asOpt[String].get} />
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">其他备注</label>
                                                             <div class="col-sm-8">
-                                                                <textarea type="text" class="form-control" rows="3" style="resize: none;"></textarea>
+                                                                <textarea type="text" class="form-control" rows="3" style="resize: none;">{(iter \ "notes").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
@@ -423,15 +299,15 @@
                                                                 <div class="row  collapse" id="phone-collapse" style="margin-top:10px">
 
                                                                     <div class="col-sm-12">
-                                                                        <input type="text" name="otherpeople" class="form-control" placeholder="输入调度员姓名">
+                                                                        <input type="text" name="otherpeople" class="form-control" placeholder="输入调度员姓名" /> 
                                                                     </div>
                               
                                                                     <div class="col-sm-8" style="margin-top:10px">
-                                                                        <input type="text" name="otherphone" class="form-control" placeholder="输入调度员联系电话">
+                                                                        <input type="text" name="otherphone" class="form-control" placeholder="输入调度员联系电话" />
                                                                     </div>
 
                                                                     <div class="col-sm-4">
-                                                                        <input name="save" type="checkbox" value="save" checked="true" style="margin-top:20px" > 并保存调度员至调度信息管理
+                                                                        <input name="save" type="checkbox" value="save" checked="true" style="margin-top:20px" /> 并保存调度员至调度信息管理
                                                                     </div>
 
                                                                 </div>
@@ -454,16 +330,14 @@
                                                                 <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                            }}
                         </div>
                     </div>
                 </div>
@@ -486,6 +360,22 @@
         function contactPhoneChange() {
             var t = $('select[data-name="contact-phone"]').val();
             $('option[data-ct-phone="' + t + '"]').attr("selected", true);
+        }
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function districtChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var city = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
         }
     </script>
 }

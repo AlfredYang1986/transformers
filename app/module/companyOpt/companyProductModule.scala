@@ -255,8 +255,13 @@ object companyProductModule {
         }
         
         try {
-            toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                (from db() where "products" where conditions select (product2JsValue(_))).toList)))
+            conditions match {
+              case None => throw new Exception("wrong input")
+              case Some(x) => 
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson(
+                      (from db() in "products" where x select (product2JsValue(_))).toList)))
+            }
+          
         } catch {
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
@@ -265,22 +270,31 @@ object companyProductModule {
     def product2JsValue(x : MongoDBObject) : JsValue = {
         val origin = x.getAs[MongoDBObject]("origin").get
         val destination = x.getAs[MongoDBObject]("destination").get
-        toJson(Map("data_requirement" -> toJson(x.getAs[String]("data_requirement").get),
+        val date = Calendar.getInstance
+        date.setTimeInMillis(x.getAs[Number]("date").get.longValue)
+        toJson(Map("date_requirement" -> toJson(x.getAs[String]("date_requirement").get),
                    "open_id" -> toJson(x.getAs[String]("open_id").get),
                    "product_name" -> toJson(x.getAs[String]("product_name").get),
                    "product_id" -> toJson(x.getAs[String]("product_id").get),
                    "contact_name" -> toJson(x.getAs[String]("contact_name").get),
                    "contact_phone" -> toJson(x.getAs[String]("contact_phone").get),
+                   "notes" -> toJson(x.getAs[String]("notes").get),
                    "weight" -> toJson(x.getAs[Number]("weight").get.floatValue),
                    "volume" -> toJson(x.getAs[Number]("volume").get.floatValue),
+                   "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
+                   "vehicle_length" -> toJson(x.getAs[MongoDBList]("vehicle_length").get.toList.asInstanceOf[List[Double]]),
+                   "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
+                                        "month" -> date.get(Calendar.MONTH),
+                                        "day" -> date.get(Calendar.DAY_OF_MONTH))),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
-                   "orgin" -> toJson(Map("province" -> toJson(origin.getAs[String]("province").get),
+                   "origin" -> toJson(Map("province" -> toJson(origin.getAs[String]("province").get),
                                          "city" -> toJson(origin.getAs[String]("city").get),
                                          "district" -> toJson(origin.getAs[String]("district").get),
                                          "address" -> toJson(origin.getAs[String]("address").get))),
                    "destination" -> toJson(Map("province" -> toJson(destination.getAs[String]("province").get),
                                                "city" -> toJson(destination.getAs[String]("city").get),
                                                "district" -> toJson(destination.getAs[String]("district").get),
-                                               "address" -> toJson(destination.getAs[String]("address").get)))))
+                                               "address" -> toJson(destination.getAs[String]("address").get)
+                                               ))))
     }  
 }

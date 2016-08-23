@@ -12,6 +12,7 @@ import module.companyOpt.{ companySearchModule, companyInfoModule, companyProduc
 import module.common.xml.xmlOpt
 import module.auth.AuthModule
 import module.auth.authTypes
+import module.system.config.ConfigModule
 
 object CompanyIndustryController extends Controller {
   
@@ -242,8 +243,30 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginSentProduct = Action {
-        Ok(views.html.ciLoginSentProduct("Your new application is ready."))
+    def ciLoginSentProduct(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
+            val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            
+            val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            val vc = ConfigModule.configAllVehicles
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.ciLoginSentProduct(token)(open_id)(name)(pdns)(contacts)(products)(xmlOpt.allCities)(vc))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

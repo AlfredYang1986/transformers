@@ -7,6 +7,7 @@ import util.errorcode.ErrorCode
 
 import play.api.GlobalSettings
 import module.auth.AuthModule
+import module.system.config.ConfigModule
 
 //import akka.actor.{Actor, Props}
 //import play.api.libs.concurrent.Akka
@@ -17,6 +18,9 @@ object Global extends GlobalSettings {
     override def onStart(application : Application) = {
         if (!_data_connection.isExisted("user_profile")) {
             AuthModule.adminMasterCreate
+        }
+        if (!_data_connection.isExisted("system_config")) {
+            ConfigModule.configVehicleInit
         }
     }
 }

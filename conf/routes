@@ -72,7 +72,8 @@ GET		/company/sendproduct/:t       	controllers.CompanyIndustryController.ciLogi
 GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct(t="")
 GET		/company/sentinfo/:t        	controllers.CompanyIndustryController.ciLoginSentInfo(t)
 GET		/company/sentinfo        		controllers.CompanyIndustryController.ciLoginSentInfo(t="")
-GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginSentProduct
+GET		/company/sentproduct/:t       	controllers.CompanyIndustryController.ciLoginSentProduct(t)
+GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginSentProduct(t="")
 GET		/company/specialwaylist    		controllers.CompanyIndustryController.ciLoginSpecialWayList
 GET		/company/rewards    			controllers.CompanyIndustryController.ciLoginRewards
 
