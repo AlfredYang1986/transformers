@@ -243,6 +243,18 @@
 	padding-top: 30px;
 }
 
+.footer-setting {
+	margin-top: 20px;
+}
+
+.footer-margin-right {
+	margin-right: 20px;
+}
+
+.footer-color {
+	color:#FFFFFF;
+}
+
 /* the image of user experience in home page */
 
 .carousel,

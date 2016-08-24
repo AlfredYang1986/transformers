@@ -17,6 +17,7 @@
 		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
 		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet">
 
 		<style type="text/css">
         	object,
@@ -228,6 +229,38 @@
 
         @content
 
+		<div class="home-footer">    
+
+			<div class="col-sm-12" style="margin-top:30px">
+
+				<div class="col-sm-3 col-sm-offset-3">
+					<div class="col-sm-12">
+						<p class="footer-color"><i class="fa fa-home fa-lg" aria-hidden="true" style="margin-right:20px"></i>浙江省杭州市临平区</p>
+					</div>
+					<div class="col-sm-12 footer-setting">
+						<p class="footer-color"><i class="fa fa-internet-explorer fa-lg footer-margin-right" aria-hidden="true"></i>www.elogco.com</p>
+					</div>
+					<div class="col-sm-12 footer-setting">
+						<p class="footer-color"><i class="fa fa-phone-square fa-lg footer-margin-right" aria-hidden="true"></i>400-123123</p>
+					</div>
+					<div class="col-sm-12 footer-setting">
+						<p class="footer-color"><i class="fa fa-envelope fa-lg footer-margin-right" aria-hidden="true"></i>adminelogco.com</p>
+					</div>
+					<div class="col-sm-12 footer-setting">
+						<p class="footer-color"><i class="fa fa-weixin fa-lg footer-margin-right" aria-hidden="true"></i>hz_hskj</p>
+					</div>
+				</div>
+
+				<div class="con-sm-5 col-sm-offset-1">
+
+					<img style="width:200px; height:200px" src="@routes.Assets.at("images/weixin_public.jpg")">
+<!--
+					<p class="footer-color" style="margin-top:10px">扫一扫，关注我们</p>
+-->				
+				</div>
+			</div>
+		</div>  
+<!--
 	    <div class="home-footer">
 			<table class="home-footer-table">
 				<tr>
@@ -243,7 +276,7 @@
 				</tr>
 			</table>
 		</div>
-
+-->
 		<script type="text/javascript">
 			function regCompanyTaped() {
 				location.href = "/register/company";
