@@ -141,16 +141,19 @@
             var result = true;
 
             var title = $('input[data-input="title"]').val();
-            result &= validate('input[data-input="title"]', hasInput(title), 'div[data-name="title-error"]');
+            var regTitle = /^.{3,30}$/;
+            result &= validate('input[data-input="title"]', hasInput(title) && regTitle.test(title), 'div[data-name="title-error"]');
 
             var content = $('.note-editable').html();
             result &= validate('.note-editor', hasInput(content), 'div[data-name="content-error"]');
 
             var contact = $('input[data-input="contact"]').val();
-            result &= validate('input[data-input="contact"]', hasInput(contact), 'div[data-name="contact-error"]');
+            var regName = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+            result &= validate('input[data-input="contact"]', hasInput(contact) && regName.text(contact), 'div[data-name="contact-error"]');
 
             var phone_no = $('input[data-input="phone-no"]').val();
-            result &= validate('input[data-input="phone-no"]', hasInput(phone_no), 'div[data-name="phone-no-error"]');
+            var regPhone = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate('input[data-input="phone-no"]', hasInput(phone_no) && regPhone.text(phone_no), 'div[data-name="phone-no-error"]');
 
             var query_object = new Object();
             query_object['token'] = "@{token}";
