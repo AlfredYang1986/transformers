@@ -53,7 +53,8 @@ POST	/data/driver/search/company		controllers.DriverController.driverSearchCompa
 GET		/company/index/:t               controllers.CompanyIndustryController.ciLoginIndex(t)
 GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex(t="")
 GET		/company/account/extra          controllers.CompanyIndustryController.ciLoginAccountExtra
-GET		/company/account/normalinfo     controllers.CompanyIndustryController.ciLoginAccountNormalInfo
+GET		/company/account/normalinfo/:t  controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t)
+GET		/company/account/normalinfo		controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t="")
 GET		/company/account/people/:t      controllers.CompanyIndustryController.ciLoginAccountPeople(t)
 GET		/company/account/people         controllers.CompanyIndustryController.ciLoginAccountPeople(t="")
 GET		/company/account/productname/:t controllers.CompanyIndustryController.ciLoginAccountProductName(t)
@@ -120,6 +121,7 @@ POST	/auth/driver/register			controllers.AuthController.driverRegister
 POST	/auth/login						controllers.AuthController.login
 POST	/auth/admin/login				controllers.AuthController.admainLogin
 POST	/auth/send/code					controllers.AuthController.sendCode
+POST	/auth/update					controllers.AuthController.update
 
 
 # files

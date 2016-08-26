@@ -405,6 +405,7 @@ object AuthModule {
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
                 "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
                 "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
+                "description" -> toJson(x.getAs[String]("description").map (x => x).getOrElse("")),
                 
                 "company_business" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("company_business").get.toList.asInstanceOf[List[String]]),
                 "company_web" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("company_web").get),
@@ -431,6 +432,7 @@ object AuthModule {
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
                 "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
                 "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
+                "description" -> toJson(x.getAs[String]("description").map (x => x).getOrElse("")),
                 
                 "industry_web" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("industry_web").get),
                 "industry_fax" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[String]("industry_fax").get),
@@ -452,6 +454,7 @@ object AuthModule {
                 "phone_sep" -> toJson(x.getAs[String]("phone_sep").get),
                 "cell_phone" -> toJson(x.getAs[String]("cell_phone").map (x => x).getOrElse("")),
                 "cell_phone_owner" -> toJson(x.getAs[String]("cell_phone_owner").map (x => x).getOrElse("")),
+                "description" -> toJson(x.getAs[String]("description").map (x => x).getOrElse("")),
                 
                 "vehicle" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
                 "special_occation" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[Number]("special_occation").map (x => x.intValue).getOrElse(occationStatus.everyday.t)),
@@ -605,7 +608,60 @@ object AuthModule {
         }
     }
     
-    def updateProfile(open_id : String, user_id : String, data : JsValue) : JsValue = {
+    def updateProfile(data : JsValue) : JsValue = {
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                  (data \ "legal_person").asOpt[String].map (x => head += "legal_person" -> x).getOrElse(Unit)
+                  (data \ "cell_phone").asOpt[String].map (x => head += "cell_phone" -> x).getOrElse(Unit)
+                  (data \ "description").asOpt[String].map (x => head += "description" -> x).getOrElse(Unit)
+
+                  val lines = MongoDBList.newBuilder
+                  var bChangeLines = false
+                  (data \ "lines").asOpt[List[JsValue]].map { lst => bChangeLines = true; lst foreach { x =>
+                      val lb = MongoDBObject.newBuilder
+                      lb += "origin_province" -> (x \ "origin_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      lb += "origin_city" -> (x \ "origin_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      lb += "destination_province" -> (x \ "destination_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      lb += "destination_city" -> (x \ "destination_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      lines += lb.result
+                  }}.getOrElse(Unit)
+                  
+                  val detail = head.getAs[MongoDBObject]("detail").get
+                  head.getAs[Number]("type").get.intValue match {
+                    case registerTypes.company.t => {
+                        if (bChangeLines) detail += "company_lines" -> lines.result
+                        else Unit
+                        (data \ "web").asOpt[String].map (x => detail += "company_web" -> x).getOrElse(Unit)
+                        (data \ "email").asOpt[String].map (x => detail += "company_email" -> x).getOrElse(Unit)
+                        (data \ "fax").asOpt[String].map (x => detail += "company_fax" -> x).getOrElse(Unit)
+                    }
+                    case registerTypes.industry.t => {
+                        (data \ "web").asOpt[String].map (x => detail += "industry_web" -> x).getOrElse(Unit)
+                        (data \ "email").asOpt[String].map (x => detail += "industry_email" -> x).getOrElse(Unit)
+                        (data \ "fax").asOpt[String].map (x => detail += "industry_fax" -> x).getOrElse(Unit) 
+                    }
+                    case registerTypes.specialway.t => {
+                        (data \ "web").asOpt[String].map (x => detail += "special_web" -> x).getOrElse(Unit)
+                        (data \ "email").asOpt[String].map (x => detail += "special_email" -> x).getOrElse(Unit)
+                        (data \ "fax").asOpt[String].map (x => detail += "special_fax" -> x).getOrElse(Unit)
+                    }
+                  }
+                  head += "detail" -> detail
+                  
+                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson("success")))
+              }
+              case _ => throw new Exception("wrong input")
+            }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
+    }
+    
+    def updatePwd(open_id : String, user_id : String, data : JsValue) : JsValue = {
         (from db() in "users" where ("user_id" -> user_id) select (x => x)).toList match {
           case head :: Nil => {
               (data \ "pwd").asOpt[String].map { x => 
@@ -613,14 +669,7 @@ object AuthModule {
                  val email = head.getAs[String]("email").get
                  head += "token" -> Sercurity.md5Hash(email + x) 
               }.getOrElse(Unit)
-//              (data \ "name").asOpt[String].map (x => head += "name" -> x).getOrElse(Unit)
-//              (data \ "register_id").asOpt[String].map (x => head += "register_id" -> x).getOrElse(Unit)
-//              (data \ "id_type").asOpt[Int].map (x => head += "id_type" -> x.asInstanceOf[Number]).getOrElse(Unit)
-//              (data \ "status").asOpt[Int].map (x => head += "status" -> x.asInstanceOf[Number]).getOrElse(Unit)
-//              (data \ "approved_date").asOpt[Long].map (x => head += "approved_date" -> x.asInstanceOf[Number]).getOrElse(Unit)
-              
               _data_connection.getCollection("users").update(DBObject("user_id" -> user_id), head)
-
               toJson(Map("status" -> toJson("ok"), "result" -> toJson(this.detailResult(head))))
           }
           case Nil => ErrorCode.errorToJson("email not exist") 

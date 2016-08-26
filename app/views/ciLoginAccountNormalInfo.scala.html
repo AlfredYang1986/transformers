@@ -1,120 +1,258 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name : String)(company : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])
 
-@ci_login_index_sliders("易聚货公司厂家平台")("") {
+@ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
     
 } {
-
     <div id="page-content-wrapper">
         <div id="page-content">
             <div class="container">
 
-            <div id="page-title">
-                <h2>公司资料</h2>
-            </div>
+                <div id="page-title">
+                    <h2>公司资料</h2>
+                </div>
 
-            <div class="panel">
-                <div class="panel-body">
-                    <h3 class="title-hero">
-                        #可以添加文案
-                    </h3>
-                    <div class="example-box-wrapper">
-                        <div class="form-horizontal bordered-row">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">业务领域</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="公路">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">营业范围</label>
-                                <div class="col-sm-2">
-                                    <select class="form-control">
-                                        <option selected>浙江省</option>
-                                    </select> 
-                                </div>
-                                <div class="col-sm-2">
-                                    <select class="form-control">
-                                        <option selected>杭州市</option>
-                                    </select> 
-                                </div>
-                                <div class="col-sm-1">
-                                    <label>--></label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <select class="form-control">
-                                        <option selected>浙江省</option>
-                                    </select> 
-                                </div>
-                                <div class="col-sm-2">
-                                    <select class="form-control">
-                                        <option selected>杭州市</option>
-                                    </select> 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">公司官网</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="www.aushentechnology.com.au">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">公司传真</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="123456789123456789">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">公司介绍</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="澳大利亚维多利亚墨尔本">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">公司邮箱</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="123456789123456789">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">负责人</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="物流公司">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">负责人电话</label>
-                                <div class="col-sm-8">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" placeholder="12345678910">
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-top:10px">
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control"> 
-                                        </div>
-                                        
-                                        <div class="col-sm-4">
-                                            <button class="form-control" style="border: 1px solid #008bdc">获取动态验证码</button>
-                                        </div>
+                <div class="panel">
+                    <div class="panel-body">
+                        <h3 class="title-hero">
+                            #可以添加文案
+                        </h3>
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">业务领域</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" value=@{(company \ "company_business").asOpt[List[String]].get} />
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group text-center">
-                                <label class="col-sm-2 control-label"></label>
-                                <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important">
-                                    保存
-                                </button>
-                            </div>              
+                                @{
+                                    val lines = (company \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].map (x => x).getOrElse(Nil)
+                                    lines map { iter => 
+                                    <div class="form-group company-line" >
+                                        <label class="col-sm-2 control-label">营业范围</label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                @{cities map { p => 
+                                                    if ({(p \ "province").asOpt[String].get}.equals((iter \ "origin_province").asOpt[String].get)) {
+                                                        <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                    } else {
+                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                    }
+                                                }};
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if ((iter \ "origin_city").asOpt[String].get.startsWith(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else {
+                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                    }
+                                                }}};
+                                            </select>  
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>--></label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                @{cities map { p => 
+                                                    if ({(p \ "province").asOpt[String].get}.equals((iter \ "destination_province").asOpt[String].get)) {
+                                                        <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                    } else {
+                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                    }
+                                                }};
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" data-name="destination-city" data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if ((iter \ "destination_city").asOpt[String].get.startsWith(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else {
+                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                    }
+                                                }}};
+                                            </select>  
+                                        </div>
+                                    </div>
+                                    }
+                                }
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">公司官网</label>
+                                    <div class="col-sm-8">
+                                        @{
+                                            val t = (company \ "type").asOpt[Int].get
+                                            if (t == 1) {
+                                                <input type="text" data-name="web" class="form-control" value={(company \ "company_web").asOpt[String].get} />
+                                            } else if (t == 2) {
+                                                <input type="text" data-name="web" class="form-control" value={(company \ "industry_web").asOpt[String].get} />
+                                            } else if (t == 3) {
+                                                <input type="text" data-name="web" class="form-control" value={(company \ "special_web").asOpt[String].get} />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='web-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司官网
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">公司传真</label>
+                                    <div class="col-sm-8">
+                                        @{
+                                            val t = (company \ "type").asOpt[Int].get
+                                            if (t == 1) {
+                                                <input type="text" data-name="fax" class="form-control" value={(company \ "company_fax").asOpt[String].get} />
+                                            } else if (t == 2) {
+                                                <input type="text" data-name="fax" class="form-control" value={(company \ "industry_fax").asOpt[String].get} />
+                                            } else if (t == 3) {
+                                                <input type="text" data-name="fax" class="form-control" value={(company \ "special_fax").asOpt[String].get} />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='fax-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司传真
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">公司介绍</label>
+                                    <div class="col-sm-8">
+                                        @{
+                                        <input type="text" data-name="description" class="form-control" value={(company \ "description").asOpt[String].get} />
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='description-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司介绍
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">公司邮箱</label>
+                                    <div class="col-sm-8">
+                                        @{
+                                            val t = (company \ "type").asOpt[Int].get
+                                            if (t == 1) {
+                                                <input type="text" data-name="email" class="form-control" value={(company \ "company_email").asOpt[String].get} />
+                                            } else if (t == 2) {
+                                                <input type="text" data-name="email" class="form-control" value={(company \ "industry_email").asOpt[String].get} />
+                                            } else if (t == 3) {
+                                                <input type="text" date-name="email" class="form-control" value={(company \ "special_email").asOpt[String].get} />
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='fax-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司邮箱
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">负责人</label>
+                                    <div class="col-sm-8">
+                                        @{
+                                        <input type="text" data-name="legal_person" class="form-control" value={(company \ "legal_person").asOpt[String].get} />
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='legal-person-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司法人
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">负责人电话</label>
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                            @{
+                                                <input type="text" data-name="cell_phone" class="form-control" value={(company \ "cell_phone").asOpt[String].get} />
+                                            }
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin-top:10px">
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control"> 
+                                            </div>
+                                            
+                                            <div class="col-sm-4">
+                                                <button class="form-control" data-name="cell_code" style="border: 1px solid #008bdc">获取动态验证码</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='cell-phone-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写公司法人电话
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div class="form-group text-center">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateCompanyInfo()">
+                                        保存
+                                    </button>
+                                </div>              
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
             </div>
         </div>
     </div>
@@ -124,5 +262,128 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function districtChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var city = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
+        }
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function getCompanylines(query_object) {
+            var lines_lst = [];
+            $.each($('.company-line'), function( index, value ) {
+                var result = true;
+                var origin_province = $(this).find('select[data-name="origin-province"]').val();
+                result &= validate($(this).find('select[data-name="origin-province"]'), (origin_province != null));
+
+                var origin_city = $(this).find('select[data-name="origin-city"]').val();
+                result &= validate($(this).find('select[data-name="origin-city"]'), (origin_city != null));
+
+                var destination_province = $(this).find('select[data-name="destination-province"]').val();
+                result &= validate($(this).find('select[data-name="destination-province"]'), (destination_province != null));
+
+                var destination_city = $(this).find('select[data-name="destination-city"]').val();
+                result &= validate($(this).find('select[data-name="destination-city"]'), (destination_city != null));
+
+                if (Boolean(result)) {
+                    var tmp = new Object();
+                    tmp['origin_province'] = origin_province;
+                    tmp['origin_city'] = origin_city;
+                    tmp['destination_province'] = destination_province;
+                    tmp['destination_city'] = destination_city;
+
+                    lines_lst.push(tmp);
+                };
+            });
+            var final_result = lines_lst.length > 0;
+            if (final_result) {
+                query_object['lines'] = lines_lst;
+            }
+            validate($(), final_result, 'div[data-name="company-line-error"]');
+            return Boolean(final_result);
+        }
+
+        function updateCompanyInfo() {
+            var result = true;
+            var query_object = new Object();
+            result &= getCompanylines(query_object);
+            
+            var description = $('input[data-name="description"]').val();
+            result &= validate($('input[data-name="description"]'), hasInput(description), 'div[data-name="description-error"]');
+
+            var web = $('input[data-name="web"]').val();
+            result &= validate($('input[data-name="web"]'), hasInput(web), 'div[data-name="web-error"]');
+
+            var fax = $('input[data-name="fax"]').val();
+            result &= validate($('input[data-name="fax"]'), hasInput(fax), 'div[data-name="fax-error"]');
+
+            var email = $('input[data-name="email"]').val();
+            result &= validate($('input[data-name="email"]'), hasInput(email), 'div[data-name="email-error"]');
+
+            var legal_person = $('input[data-name="legal_person"]').val();
+            result &= validate($('input[data-name="legal_person"]'), hasInput(legal_person), 'div[data-name="legal-person-error"]');
+
+            var cell_phone = $('input[data-name="cell_phone"]').val();
+            result &= validate($('input[data-name="cell_phone"]'), hasInput(cell_phone), 'div[data-name="cell-phone-error"]');
+
+            if (result) {
+
+                query_object["description"] = description;
+                query_object["web"] = web;
+                query_object["fax"] = fax;
+                query_object["email"] = email;
+                query_object["legal_person"] = legal_person;
+                query_object["cell_phone"] = cell_phone;
+                query_object["open_id"] = "@{open_id}";
+
+                $.ajax({
+                    url: "/auth/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             alert("更新用户信息成功！");
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+
+        }
     </script>
 } 
