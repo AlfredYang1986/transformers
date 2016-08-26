@@ -54,7 +54,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='origin-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -100,7 +99,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='destination-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -119,7 +117,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='weight-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -138,7 +135,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='volume-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -232,7 +228,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='vehicle-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -374,7 +369,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='vehicle-length-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -422,7 +416,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='product-name-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -441,7 +434,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='date-requirement-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -460,7 +452,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='notes-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -534,7 +525,6 @@
                             </div>
 
                             <div class="form-group" style="display: none;" data-name='contact-error'>
-                                <span class="col-sm-2 control-label"></span>
                                 <label for="company-name" class="col-sm-2 control-label"></label>
                                 <div class="col-sm-8">
                                     <div class="alert alert-danger" role="alert">
@@ -622,6 +612,7 @@
                         (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined) && hasInput(origin_address),
                         'div[data-name="origin-error"]');
 
+
             var destination_province = $('select[data-name="destination-province"]').val();
             var destination_city = $('select[data-name="destination-city"]').val();
             var destination_district = $('select[data-name="destination-district"]').val();
@@ -631,11 +622,14 @@
                         (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined) && hasInput(destination_address),
                         'div[data-name="destination-error"]');
 
+
+
             var weight = $('input[data-name="weight"]').val();
 
             result &= validate($('input[data-name="weight"]'),
                         hasInput(weight) && !isNaN(Number(weight)),
                         'div[data-name="weight-error"]');
+
 
             var volume = $('input[data-name="volume"]').val();
 
@@ -643,17 +637,20 @@
                         hasInput(volume) && !isNaN(Number(volume)),
                         'div[data-name="volume-error"]');
 
+
             var vehicle_lst = $('input[data-name="vehicle"]:checked');
 
             result &= validate($('div[data-name="vehicle-container"]'),
                         vehicle_lst.length > 0,
                         'div[data-name="vehicle-error"]');
 
+
             var vehicle_length_lst = $('input[data-name="vehicle-length"]:checked');
 
             result &= validate($('div[data-name="vehicle-length-container"]'),
                         vehicle_length_lst.length > 0,
                         'div[data-name="vehicle-length-error"]');
+
 
             var product_name = "";
             var product_name_save = 0;
@@ -672,11 +669,13 @@
                         hasInput(product_name),
                         'div[data-name="product-name-error"]');
 
+
             var date_requirement = $('input[data-name="date-requirement"]').val();
 
             result &= validate($('input[data-name="date-requirement"]'),
                         hasInput(date_requirement),
                         'div[data-name="date-requirement-error"]');
+
 
             var notes = $('input[data-name="notes"]').val();
             if (notes == undefined) {
