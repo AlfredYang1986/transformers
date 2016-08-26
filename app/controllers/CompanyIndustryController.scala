@@ -59,19 +59,15 @@ object CompanyIndustryController extends Controller {
         else {
             val user = AuthModule.queryUserWithToken(token)
             val company = AuthModule.queryInstanceWithToken(token)
-            println(company)
 
             val open_id = (company \ "open_id").asOpt[String].get
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
                 Ok(views.html.ciLoginAccountNormalInfo(token)(open_id)(name)(company)(xmlOpt.allCities))
-//                Ok(views.html.ciLoginAccountPeople(token)(open_id)(name)(contacts))
             }
             else Redirect("/index")
         }
-      
-      
     }
 
     /**
