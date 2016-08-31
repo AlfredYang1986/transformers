@@ -35,93 +35,94 @@ GET		/admin/car/history				controllers.AdminController.adminCarHistory
 GET 	/admin/setting					controllers.AdminController.adminSetting
 
 # driver login pages
-GET		/driver/index/:t  				controllers.DriverController.driverLoginIndex(t)
-GET		/driver/index  					controllers.DriverController.driverLoginIndex(t="")
-GET		/driver/account/psw  			controllers.DriverController.driverLoginAccountPsw
-GET		/driver/account/normalinfo		controllers.DriverController.driverLoginAccountNormalInfo
-GET		/driver/account/validateinfo	controllers.DriverController.driverLoginAccountValidateInfo
-GET		/driver/account/followed		controllers.DriverController.driverLoginAccountFollowedCompany
-GET		/driver/recruitment				controllers.DriverController.driverLoginRecruitment
-GET		/driver/search/company/:t       controllers.DriverController.driverLoginSearchCompany(t)
-GET		/driver/search/company          controllers.DriverController.driverLoginSearchCompany(t="")
-GET		/driver/search/department       controllers.DriverController.driverLoginSearchDepartment
-GET		/driver/search/specialway       controllers.DriverController.driverLoginSearchSpecialWay
+GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)
+GET		/driver/index  													controllers.DriverController.driverLoginIndex(t="")
+GET		/driver/account/psw  											controllers.DriverController.driverLoginAccountPsw
+GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo
+GET		/driver/account/validateinfo									controllers.DriverController.driverLoginAccountValidateInfo
+GET		/driver/account/followed										controllers.DriverController.driverLoginAccountFollowedCompany
+GET		/driver/recruitment												controllers.DriverController.driverLoginRecruitment
+GET		/driver/search/company/:t       								controllers.DriverController.driverLoginSearchCompany(t)
+GET		/driver/search/company          								controllers.DriverController.driverLoginSearchCompany(t="")
+GET		/driver/search/department       								controllers.DriverController.driverLoginSearchDepartment
+GET		/driver/search/specialway       								controllers.DriverController.driverLoginSearchSpecialWay
 
-POST	/data/driver/search/company		controllers.DriverController.driverSearchCompany
+POST	/data/driver/search/company										controllers.DriverController.driverSearchCompany
 
 # company industry login pages
-GET		/company/index/:t               controllers.CompanyIndustryController.ciLoginIndex(t)
-GET		/company/index                  controllers.CompanyIndustryController.ciLoginIndex(t="")
-GET		/company/account/extra          controllers.CompanyIndustryController.ciLoginAccountExtra
-GET		/company/account/normalinfo/:t  controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t)
-GET		/company/account/normalinfo		controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t="")
-GET		/company/account/people/:t      controllers.CompanyIndustryController.ciLoginAccountPeople(t)
-GET		/company/account/people         controllers.CompanyIndustryController.ciLoginAccountPeople(t="")
-GET		/company/account/productname/:t controllers.CompanyIndustryController.ciLoginAccountProductName(t)
-GET		/company/account/productname    controllers.CompanyIndustryController.ciLoginAccountProductName(t="")
-GET		/company/account/psw    		controllers.CompanyIndustryController.ciLoginAccountPsw
-GET		/company/account/validateinfo   controllers.CompanyIndustryController.ciLoginAccountValidateInfo
-GET		/company/companylist            controllers.CompanyIndustryController.ciLoginCompanyList
-GET		/company/completeinfo           controllers.CompanyIndustryController.ciLoginCompleteInfo
-GET		/company/completeproduct        controllers.CompanyIndustryController.ciLoginCompleteProduct
-GET		/company/driverlist/:t        	controllers.CompanyIndustryController.ciLoginDriverList(t)
-GET		/company/driverlist				controllers.CompanyIndustryController.ciLoginDriverList(t="")
-GET		/company/recruitment        	controllers.CompanyIndustryController.ciLoginRecruitment
-GET		/company/sendinfo/:t        	controllers.CompanyIndustryController.ciLoginSendInfo(t)
-GET		/company/sendinfo        		controllers.CompanyIndustryController.ciLoginSendInfo(t="")
-GET		/company/sendproduct/:t       	controllers.CompanyIndustryController.ciLoginSendProduct(t)
-GET		/company/sendproduct       		controllers.CompanyIndustryController.ciLoginSendProduct(t="")
-GET		/company/sentinfo/:t        	controllers.CompanyIndustryController.ciLoginSentInfo(t)
-GET		/company/sentinfo        		controllers.CompanyIndustryController.ciLoginSentInfo(t="")
-GET		/company/sentproduct/:t       	controllers.CompanyIndustryController.ciLoginSentProduct(t)
-GET		/company/sentproduct       		controllers.CompanyIndustryController.ciLoginSentProduct(t="")
-GET		/company/specialwaylist    		controllers.CompanyIndustryController.ciLoginSpecialWayList
-GET		/company/rewards    			controllers.CompanyIndustryController.ciLoginRewards
+GET		/company/index/:t               								controllers.CompanyIndustryController.ciLoginIndex(t)
+GET		/company/index                  								controllers.CompanyIndustryController.ciLoginIndex(t="")
+GET		/company/account/extra          								controllers.CompanyIndustryController.ciLoginAccountExtra
+GET		/company/account/normalinfo/:t  								controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t)
+GET		/company/account/normalinfo										controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t="")
+GET		/company/account/people/:t      								controllers.CompanyIndustryController.ciLoginAccountPeople(t)
+GET		/company/account/people         								controllers.CompanyIndustryController.ciLoginAccountPeople(t="")
+GET		/company/account/productname/:t 								controllers.CompanyIndustryController.ciLoginAccountProductName(t)
+GET		/company/account/productname    								controllers.CompanyIndustryController.ciLoginAccountProductName(t="")
+GET		/company/account/psw    										controllers.CompanyIndustryController.ciLoginAccountPsw
+GET		/company/account/validateinfo/:t 								controllers.CompanyIndustryController.ciLoginAccountValidateInfo(t)
+GET		/company/account/validateinfo   								controllers.CompanyIndustryController.ciLoginAccountValidateInfo(t="")
+GET		/company/companylist            								controllers.CompanyIndustryController.ciLoginCompanyList
+GET		/company/completeinfo           								controllers.CompanyIndustryController.ciLoginCompleteInfo
+GET		/company/completeproduct        								controllers.CompanyIndustryController.ciLoginCompleteProduct
+GET		/company/driverlist/:t        									controllers.CompanyIndustryController.ciLoginDriverList(t)
+GET		/company/driverlist												controllers.CompanyIndustryController.ciLoginDriverList(t="")
+GET		/company/recruitment        									controllers.CompanyIndustryController.ciLoginRecruitment
+GET		/company/sendinfo/:t        									controllers.CompanyIndustryController.ciLoginSendInfo(t)
+GET		/company/sendinfo        										controllers.CompanyIndustryController.ciLoginSendInfo(t="")
+GET		/company/sendproduct/:t       									controllers.CompanyIndustryController.ciLoginSendProduct(t)
+GET		/company/sendproduct       										controllers.CompanyIndustryController.ciLoginSendProduct(t="")
+GET		/company/sentinfo/:t        									controllers.CompanyIndustryController.ciLoginSentInfo(t)
+GET		/company/sentinfo        										controllers.CompanyIndustryController.ciLoginSentInfo(t="")
+GET		/company/sentproduct/:t       									controllers.CompanyIndustryController.ciLoginSentProduct(t)
+GET		/company/sentproduct       										controllers.CompanyIndustryController.ciLoginSentProduct(t="")
+GET		/company/specialwaylist    										controllers.CompanyIndustryController.ciLoginSpecialWayList
+GET		/company/rewards    											controllers.CompanyIndustryController.ciLoginRewards
 
-POST	/data/company/search/driver		controllers.CompanyIndustryController.companySearchDriver
-POST	/data/company/info/push			controllers.CompanyIndustryController.companyInfoPush
-POST	/data/company/info/update		controllers.CompanyIndustryController.companyInfoUpdate
-POST	/data/company/info/pop			controllers.CompanyIndustryController.companyInfoPop
-POST	/data/company/info/query		controllers.CompanyIndustryController.companyInfoQuery
-POST	/data/company/product/push		controllers.CompanyIndustryController.companyProductPush
-POST	/data/company/product/update	controllers.CompanyIndustryController.companyProductUpdate
-POST	/data/company/product/pop		controllers.CompanyIndustryController.companyProductPop
-POST	/data/company/product/query		controllers.CompanyIndustryController.companyProductQuery
-POST	/data/company/config/pn/push	controllers.CompanyIndustryController.companyProductNamePush
-POST	/data/company/config/pn/pop		controllers.CompanyIndustryController.companyProductNamePop
-POST	/data/company/config/pn/update	controllers.CompanyIndustryController.companyProductNameUpdate
-# POST	/data/company/config/pn/query	controllers.CompanyIndustryController.companyProductNameQuery
-POST	/data/company/config/ct/push 	controllers.CompanyIndustryController.companyContactPush
-POST	/data/company/config/ct/pop 	controllers.CompanyIndustryController.companyContactPop
-POST	/data/company/config/ct/update	controllers.CompanyIndustryController.companyContactUpdate
-# POST	/data/company/config/ct/query 	controllers.CompanyIndustryController.companyContactQuery
+POST	/data/company/search/driver										controllers.CompanyIndustryController.companySearchDriver
+POST	/data/company/info/push											controllers.CompanyIndustryController.companyInfoPush
+POST	/data/company/info/update										controllers.CompanyIndustryController.companyInfoUpdate
+POST	/data/company/info/pop											controllers.CompanyIndustryController.companyInfoPop
+POST	/data/company/info/query										controllers.CompanyIndustryController.companyInfoQuery
+POST	/data/company/product/push										controllers.CompanyIndustryController.companyProductPush
+POST	/data/company/product/update									controllers.CompanyIndustryController.companyProductUpdate
+POST	/data/company/product/pop										controllers.CompanyIndustryController.companyProductPop
+POST	/data/company/product/query										controllers.CompanyIndustryController.companyProductQuery
+POST	/data/company/config/pn/push									controllers.CompanyIndustryController.companyProductNamePush
+POST	/data/company/config/pn/pop										controllers.CompanyIndustryController.companyProductNamePop
+POST	/data/company/config/pn/update									controllers.CompanyIndustryController.companyProductNameUpdate
+# POST	/data/company/config/pn/query									controllers.CompanyIndustryController.companyProductNameQuery
+POST	/data/company/config/ct/push 									controllers.CompanyIndustryController.companyContactPush
+POST	/data/company/config/ct/pop 									controllers.CompanyIndustryController.companyContactPop
+POST	/data/company/config/ct/update									controllers.CompanyIndustryController.companyContactUpdate
+# POST	/data/company/config/ct/query 									controllers.CompanyIndustryController.companyContactQuery
 
 # special way login pages
-GET		/specialway/index               controllers.SpecialWayController.swLoginIndex
-GET		/specialway/account/extra       controllers.SpecialWayController.swLoginAccountExtra
-GET		/specialway/account/normalinfo  controllers.SpecialWayController.swLoginAccountNormalInfo
-GET		/specialway/account/people      controllers.SpecialWayController.swLoginAccountPeople
-GET		/specialway/account/psw    		controllers.SpecialWayController.swLoginAccountPsw
-GET		/specialway/account/validateinfo controllers.SpecialWayController.swLoginAccountValidateInfo
-GET		/specialway/companylist         controllers.SpecialWayController.swLoginCompanyList
-GET		/specialway/completeinfo        controllers.SpecialWayController.swLoginCompleteInfo
-GET		/specialway/completeproduct     controllers.SpecialWayController.swLoginCompleteProduct
-GET		/specialway/driverlist        	controllers.SpecialWayController.swLoginDriverList
-GET		/specialway/recruitment        	controllers.SpecialWayController.swLoginRecruitment
-GET		/specialway/sendinfo        	controllers.SpecialWayController.swLoginSendInfo
-GET		/specialway/sendproduct     	controllers.SpecialWayController.swLoginSendProduct
-GET		/specialway/sentinfo        	controllers.SpecialWayController.swLoginSentInfo
-GET		/specialway/sentproduct     	controllers.SpecialWayController.swLoginSentProduct
-GET		/specialway/specialwaylist  	controllers.SpecialWayController.swLoginSpecialWayList
-GET		/specialway/rewards    			controllers.SpecialWayController.swLoginRewards
+GET		/specialway/index               								controllers.SpecialWayController.swLoginIndex
+GET		/specialway/account/extra       								controllers.SpecialWayController.swLoginAccountExtra
+GET		/specialway/account/normalinfo  								controllers.SpecialWayController.swLoginAccountNormalInfo
+GET		/specialway/account/people      								controllers.SpecialWayController.swLoginAccountPeople
+GET		/specialway/account/psw    										controllers.SpecialWayController.swLoginAccountPsw
+GET		/specialway/account/validateinfo 								controllers.SpecialWayController.swLoginAccountValidateInfo
+GET		/specialway/companylist         								controllers.SpecialWayController.swLoginCompanyList
+GET		/specialway/completeinfo        								controllers.SpecialWayController.swLoginCompleteInfo
+GET		/specialway/completeproduct     								controllers.SpecialWayController.swLoginCompleteProduct
+GET		/specialway/driverlist        									controllers.SpecialWayController.swLoginDriverList
+GET		/specialway/recruitment        									controllers.SpecialWayController.swLoginRecruitment
+GET		/specialway/sendinfo        									controllers.SpecialWayController.swLoginSendInfo
+GET		/specialway/sendproduct     									controllers.SpecialWayController.swLoginSendProduct
+GET		/specialway/sentinfo        									controllers.SpecialWayController.swLoginSentInfo
+GET		/specialway/sentproduct     									controllers.SpecialWayController.swLoginSentProduct
+GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLoginSpecialWayList
+GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards
 
 # auth 
-POST	/auth/register					controllers.AuthController.register
-POST	/auth/driver/register			controllers.AuthController.driverRegister
-POST	/auth/login						controllers.AuthController.login
-POST	/auth/admin/login				controllers.AuthController.admainLogin
-POST	/auth/send/code					controllers.AuthController.sendCode
-POST	/auth/update					controllers.AuthController.update
+POST	/auth/register													controllers.AuthController.register
+POST	/auth/driver/register											controllers.AuthController.driverRegister
+POST	/auth/login														controllers.AuthController.login
+POST	/auth/admin/login												controllers.AuthController.admainLogin
+POST	/auth/send/code													controllers.AuthController.sendCode
+POST	/auth/update													controllers.AuthController.update
 
 
 # files

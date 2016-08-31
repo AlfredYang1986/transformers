@@ -131,8 +131,24 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginAccountValidateInfo = Action {
-        Ok(views.html.ciLoginAccountValidateInfo("Your new application is ready."))
+    def ciLoginAccountValidateInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.ciLoginAccountValidateInfo(token)(open_id)(name)(company)(xmlOpt.allCities))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
