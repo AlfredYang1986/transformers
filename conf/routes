@@ -52,7 +52,8 @@ POST	/data/driver/search/company										controllers.DriverController.driverSea
 # company industry login pages
 GET		/company/index/:t               								controllers.CompanyIndustryController.ciLoginIndex(t)
 GET		/company/index                  								controllers.CompanyIndustryController.ciLoginIndex(t="")
-GET		/company/account/extra          								controllers.CompanyIndustryController.ciLoginAccountExtra
+GET		/company/account/extra/:t          								controllers.CompanyIndustryController.ciLoginAccountExtra(t)
+GET		/company/account/extra          								controllers.CompanyIndustryController.ciLoginAccountExtra(t="")
 GET		/company/account/normalinfo/:t  								controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t)
 GET		/company/account/normalinfo										controllers.CompanyIndustryController.ciLoginAccountNormalInfo(t="")
 GET		/company/account/people/:t      								controllers.CompanyIndustryController.ciLoginAccountPeople(t)

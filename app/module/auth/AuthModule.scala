@@ -361,7 +361,36 @@ object AuthModule {
             case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
-   
+    
+    def queryUserLstWithOpenID(open_id : String) : List[JsValue] =
+        ((from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+            case head :: Nil => userlst(head)
+            case Nil => Nil 
+            case _ => ???
+        })
+  
+    def userlst(x : MongoDBObject) : List[JsValue] = {
+//        val user_lst = x.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]].filter (x => (x.get("auth").asInstanceOf[Number].intValue) < authTypes.companyMaster.t)
+        val user_lst = x.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]//.filter (x => (x.get("auth").asInstanceOf[Number].intValue) < authTypes.companyMaster.t)
+        user_lst map { x => 
+            toJson(Map("screen_name" -> toJson(x.getAs[String]("screen_name").get),
+                       "user_id" -> toJson(x.getAs[String]("user_id").get),
+                       "social_id" -> toJson(x.getAs[String]("social_id").map (y => y).getOrElse("")),
+                       "phone" -> toJson(x.getAs[String]("phone").map (y => y).getOrElse(""))))}
+    }
+    
+    def pushSubuser(data : JsValue) : JsValue = {
+        null 
+    }
+    
+    def popSubuser(data : JsValue) : JsValue = {
+        null
+    }
+    
+    def updateSubuser(data : JsValue) : JsValue = {
+        null
+    }
+    
     def userResult(x : MongoDBObject) : JsValue =
         toJson(Map("user_id" -> toJson(x.getAs[String]("user_id").get),
                    "token" -> toJson(x.getAs[String]("token").get),
