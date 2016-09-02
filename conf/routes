@@ -59,7 +59,8 @@ GET		/company/account/people/:t      								controllers.CompanyIndustryControll
 GET		/company/account/people         								controllers.CompanyIndustryController.ciLoginAccountPeople(t="")
 GET		/company/account/productname/:t 								controllers.CompanyIndustryController.ciLoginAccountProductName(t)
 GET		/company/account/productname    								controllers.CompanyIndustryController.ciLoginAccountProductName(t="")
-GET		/company/account/psw    										controllers.CompanyIndustryController.ciLoginAccountPsw
+GET		/company/account/psw/:t   										controllers.CompanyIndustryController.ciLoginAccountPsw(t)
+GET		/company/account/psw    										controllers.CompanyIndustryController.ciLoginAccountPsw(t="")
 GET		/company/account/validateinfo/:t 								controllers.CompanyIndustryController.ciLoginAccountValidateInfo(t)
 GET		/company/account/validateinfo   								controllers.CompanyIndustryController.ciLoginAccountValidateInfo(t="")
 GET		/company/companylist            								controllers.CompanyIndustryController.ciLoginCompanyList
@@ -123,6 +124,7 @@ POST	/auth/login														controllers.AuthController.login
 POST	/auth/admin/login												controllers.AuthController.admainLogin
 POST	/auth/send/code													controllers.AuthController.sendCode
 POST	/auth/update													controllers.AuthController.update
+POST	/auth/pwd/reset													controllers.AuthController.changePwd
 
 
 # files

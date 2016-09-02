@@ -661,19 +661,31 @@ object AuthModule {
         }
     }
     
-    def updatePwd(open_id : String, user_id : String, data : JsValue) : JsValue = {
-        (from db() in "users" where ("user_id" -> user_id) select (x => x)).toList match {
-          case head :: Nil => {
-              (data \ "pwd").asOpt[String].map { x => 
-                 head += "pwd" -> x 
-                 val email = head.getAs[String]("email").get
-                 head += "token" -> Sercurity.md5Hash(email + x) 
-              }.getOrElse(Unit)
-              _data_connection.getCollection("users").update(DBObject("user_id" -> user_id), head)
-              toJson(Map("status" -> toJson("ok"), "result" -> toJson(this.detailResult(head))))
-          }
-          case Nil => ErrorCode.errorToJson("email not exist") 
-          case _ => ErrorCode.errorToJson("email not exist") 
+    def updatePwd(data : JsValue) : JsValue = {
+//    def updatePwd(open_id : String, user_id : String, data : JsValue) : JsValue = {
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val token = (data \ "token").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val old = (data \ "old").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val pwd = (data \ "pwd").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                  val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                  val user = user_lst.filter (x => token.equals(x.get("token"))).head
+                  
+                  if (old.equals(user.get("pwd"))) user += "pwd" -> pwd
+                  else throw new Exception("wrong input")
+                  head += "user_lst" -> (user :: (user_lst.filterNot (x => token.equals(x.get("token")))))
+                  
+                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson(this.detailResult(head))))
+              }
+              case Nil => throw new Exception("email not exist")
+              case _ => throw new Exception("email not exist") 
+            }
+        
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
     
