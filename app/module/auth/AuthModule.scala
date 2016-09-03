@@ -376,19 +376,91 @@ object AuthModule {
             toJson(Map("screen_name" -> toJson(x.getAs[String]("screen_name").get),
                        "user_id" -> toJson(x.getAs[String]("user_id").get),
                        "social_id" -> toJson(x.getAs[String]("social_id").map (y => y).getOrElse("")),
-                       "phone" -> toJson(x.getAs[String]("phone").map (y => y).getOrElse(""))))}
+                       "phone" -> toJson(x.getAs[String]("indicate").map (y => y).getOrElse(""))))}
     }
     
     def pushSubuser(data : JsValue) : JsValue = {
-        null 
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val indicate = (data \ "phone").asOpt[String].map(x => x).getOrElse(throw new Exception("wrong input"))
+            val name = (data \ "screen_name").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+        
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                 val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                 user_lst.filter (x => indicate.equals(x.get("indicate"))) match  {
+                   case Nil => {
+                       val builder = MongoDBObject.newBuilder
+                       val user_id = Sercurity.md5Hash(name + Sercurity.getTimeSpanWithMillSeconds)
+                       builder += "indicate" -> indicate
+                       builder += "user_id" -> user_id
+                       builder += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
+                       builder += "screen_name" -> name
+                       builder += "auth" -> authTypes.companyOthers.t
+                       builder += "pwd" -> (data \ "pwd").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                       builder += "social_id" -> (data \ "social_id").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                       
+                       head += "user_lst" -> (builder.result :: user_lst)
+                       _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                       toJson(Map("status" -> "ok", "result" -> "success"))
+                   }
+                   case _ => throw new Exception("user existing")
+                 }
+              }
+              case _ => throw new Exception("not existing")
+            }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
     }
     
     def popSubuser(data : JsValue) : JsValue = {
-        null
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+//            val token = (data \ "token").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val user_id = (data \ "user_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+           
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                 val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                 head += "user_lst" -> user_lst.filter (x => user_id.equals(x.get("user_id")))
+                 _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                 toJson(Map("status" -> "ok", "result" -> "success"))
+              }
+              case _ => throw new Exception("not existing")
+            }
+        } catch {
+          case ex : Exception => throw new Exception(ex.getMessage)
+        }
     }
     
     def updateSubuser(data : JsValue) : JsValue = {
-        null
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val user_id = (data \ "user_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                 val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                 user_lst.filter (x => user_id.equals(x.get("user_id"))) match  {
+                   case user :: Nil => {
+                       (data \ "screen_name").asOpt[String].map (x => user += "screen_name" -> x).getOrElse(Unit)
+                       (data \ "phone").asOpt[String].map (x => user += "indicate" -> x).getOrElse(Unit)
+                       (data \ "social_id").asOpt[String].map (x => user += "social_id" -> x).getOrElse(Unit)
+                    
+                       head += "user_lst" -> (user :: (user_lst.filterNot (x => user_id.equals(x.get("user_id")))))
+                       _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                       toJson(Map("status" -> "ok", "result" -> "success"))
+                   }
+                   case _ => throw new Exception("user existing")
+                 }
+              }
+              case _ => throw new Exception("not existing")
+            }
+            
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
     }
     
     def userResult(x : MongoDBObject) : JsValue =

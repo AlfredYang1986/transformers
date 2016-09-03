@@ -16,4 +16,8 @@ object AuthController extends Controller {
 	def admainLogin = Action (request => requestArgs(request)(AuthModule.adminLogin))
 //  def changePwd = Action (request => requestGetRequestArgs(request)(AuthModule.authCheck)(AuthModule.updatePwd)(authStatus.statusBase.t)(authTypes.notAuth.t))
   def changePwd = Action (request => requestArgs(request)(AuthModule.updatePwd))
+
+  def pushSubuser = Action (request => requestArgs(request)(AuthModule.pushSubuser))
+  def popSubuser = Action (request => requestArgs(request)(AuthModule.popSubuser))
+  def updateSubuser = Action (request => requestArgs(request)(AuthModule.updateSubuser))
 }

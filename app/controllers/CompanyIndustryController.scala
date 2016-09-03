@@ -57,7 +57,6 @@ object CompanyIndustryController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
            
             val user_lst = AuthModule.queryUserLstWithOpenID(open_id)
-            println(user_lst)
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
                 Ok(views.html.ciLoginAccountExtra(token)(open_id)(name)(user_lst))

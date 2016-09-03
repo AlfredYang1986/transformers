@@ -126,6 +126,9 @@ POST	/auth/admin/login												controllers.AuthController.admainLogin
 POST	/auth/send/code													controllers.AuthController.sendCode
 POST	/auth/update													controllers.AuthController.update
 POST	/auth/pwd/reset													controllers.AuthController.changePwd
+POST	/auth/sub/push													controllers.AuthController.pushSubuser
+POST	/auth/sub/pop													controllers.AuthController.popSubuser
+POST	/auth/sub/update												controllers.AuthController.updateSubuser
 
 
 # files

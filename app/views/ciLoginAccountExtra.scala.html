@@ -22,7 +22,7 @@
                             <div class="col-sm-12">
                                 <div class="row">
 
-                                    <form class="form-horizontal bordered-row">
+                                    <div class="form-horizontal bordered-row">
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">添加时请注意分账号没有修改公司信息权限</label>
                                             <div class="col-sm-5 col-sm-offset-1">
@@ -31,42 +31,42 @@
                                             </button>
                                             </div>
                                         </div>              
-                                    </form>
+                                    </div>
 
                                 </div>
 
                                 <div id="add-new" class="collapse">
                                     <div class="panel">
                                         <div class="panel-body">
-                                            <form class="form-horizontal bordered-row">
+                                            <div class="form-horizontal bordered-row">
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">运营者姓名</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="screen-name-input" class="form-control" /> 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">身份证号码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="social-id-input" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">手机授权账号信息</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="phone-input" class="form-control" />
                                                     </div>
                                                 </div>                                    
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">输入登陆密码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="password" data-name="pwd" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">再次输入登陆密码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="password" data-name="pwd2" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-center">
@@ -75,7 +75,7 @@
                                                         提交分账号
                                                     </button>
                                                 </div>              
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,12 +135,49 @@
 		});
 
         function pushSubuser() {
+            var screen_name = $('input[data-name="screen-name-input"]').val();
+            var phone = $('input[data-name="phone-input"]').val();
+            var social_id = $('input[data-name="social-id-input"]').val();
+            var pwd = $('input[data-name="pwd"]').val();
 
+            var pwd2 = $('input[data-name="pwd2"]').val();
+
+            if (pwd != pwd2) {
+                alert("两次输入密码不一致");
+            } else {
+                var query_object = new Object();
+
+                query_object["screen_name"] = screen_name;
+                query_object["phone"] = phone;
+                query_object["pwd"] = pwd;
+                query_object["open_id"] = "@{open_id}";
+                query_object["social_id"] = social_id;
+
+                $.ajax({
+                    url: "/auth/sub/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
         }
 
         function updateSubuser(index, user_id) {
             alert(user_id)
             alert(index)
+
         }
 
         function popSubuser(index, user_id) {
