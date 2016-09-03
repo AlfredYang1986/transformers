@@ -117,7 +117,7 @@
                                     </div>
                                     
                                     <div class="col-sm-3 col-sm-offset-1">
-                                        <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E" oonclick={"popSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} ></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                        <button class="form-control" style="border: none; color:#848484;" onclick={"popSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} ><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
                                     </div>
                                 </div>               
                             </div>
@@ -175,13 +175,62 @@
         }
 
         function updateSubuser(index, user_id) {
-            alert(user_id)
-            alert(index)
+            var screen_name = $('input[data-name="screen-name-' + index + '"]').val();
+            var phone = $('input[data-name="phone-' + index + '"]').val();
+            // var social_id = $('input[data-name="social-id-' index + '"]').val();
 
+            var query_object = new Object();
+
+            query_object["screen_name"] = screen_name;
+            query_object["user_id"] = user_id;
+            query_object["phone"] = phone;;
+            query_object["open_id"] = "@{open_id}";
+            // query_object["social_id"] = social_id;
+
+            $.ajax({
+                url: "/auth/sub/update",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
         }
 
         function popSubuser(index, user_id) {
+            var query_object = new Object();
 
+            query_object["open_id"] = "@{open_id}";
+            query_object["user_id"] = user_id;
+
+            $.ajax({
+                url: "/auth/sub/pop",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            }); 
         }
 	</script>
 }

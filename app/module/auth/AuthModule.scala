@@ -423,7 +423,7 @@ object AuthModule {
             (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
               case head :: Nil => {
                  val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
-                 head += "user_lst" -> user_lst.filter (x => user_id.equals(x.get("user_id")))
+                 head += "user_lst" -> user_lst.filterNot (x => user_id.equals(x.get("user_id")))
                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
                  toJson(Map("status" -> "ok", "result" -> "success"))
               }
