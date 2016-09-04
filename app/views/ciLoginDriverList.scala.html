@@ -62,8 +62,9 @@
                                                             }}};
                                                         </select>   
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <label>--></label>
+
+                                                    <div class="col-sm-1 text-center">
+                                                        <label><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></label>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
@@ -458,7 +459,7 @@
                 html += "<div class=\"col-sm-4\" style=\"font-size:15px\">"
                 var line = tmp["driver_lines"][0];
                 html += "<label type='text' class=\"control-label\">"
-                html += line["origin_province"] + " " + line["origin_city"] + " --> " + line["destination_province"] + " " + line["destination_city"]
+                html += line["origin_province"] + " " + line["origin_city"] + " <i class=\"fa fa-long-arrow-right\" aria-hidden=\"true\"></i> " + line["destination_province"] + " " + line["destination_city"]
                 html += "</label>"
                 html += "</div>"
 
@@ -511,7 +512,7 @@
                 for (var j = 0; j < lines.length; j++) {
                     var line = lines[j];
                     html += "<label type='text' class=\"control-label\">"
-                    html += line["origin_province"] + " " + line["origin_city"] + " --> " + line["destination_province"] + " " + line["destination_city"]
+                    html += line["origin_province"] + " " + line["origin_city"] + " <i class=\"fa fa-long-arrow-right\" aria-hidden=\"true\"></i> " + line["destination_province"] + " " + line["destination_city"]
                     html += "</label>"
                 }
                 html += "</div></div>"

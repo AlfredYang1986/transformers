@@ -30,6 +30,7 @@
                                                         (head \ "origin_province").asOpt[String].get + " " + (head \ "origin_city").asOpt[String].get + " --> " + (head \ "destination_province").asOpt[String].get + " " + (head \ "destination_city").asOpt[String].get
                                                     }</label>
                                                 </div>
+                                            
 
                                                 <div class="col-sm-4" style="font-size:15px">
                                                     <label>{ (iter \ "vehicle").asOpt[List[String]].get.head } / { (iter \ "vehicle_length").asOpt[Int].get }米</label>
