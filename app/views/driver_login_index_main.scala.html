@@ -1,4 +1,4 @@
-@(title: String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
+@(title: String)(name : String)(include: Html)(siders : Html)(content: Html)(scripts: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -299,7 +299,7 @@
 
                     <a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
                         <img width="28" src="@routes.Assets.at("images/account-img.jpeg")" alt="Profile image">
-                        <span>驾驶员设置</span>
+                        <span> @{name}</span>
                         <i class="glyph-icon icon-angle-down"></i>
                     </a>
 
