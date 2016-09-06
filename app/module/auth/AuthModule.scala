@@ -711,7 +711,6 @@ object AuthModule {
     
     def updateDriverProfile(data : JsValue) : JsValue = {
         try {
-          println(data)
             val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))  
             
             (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
@@ -720,6 +719,8 @@ object AuthModule {
                   (data \ "capacity").asOpt[Int].map (x => head += "capacity" -> x.asInstanceOf[Number]).getOrElse(Unit)
                   (data \ "vehicle").asOpt[List[String]].map (x => head += "vehicle" -> x).getOrElse(Unit)
                   (data \ "vehicle_length").asOpt[List[Float]].map (x => head += "vehicle_length" -> x).getOrElse(Unit)
+                  (data \ "driver_name").asOpt[String].map (x => head += "driver_name" -> x).getOrElse(Unit)
+                  (data \ "driver_social_id").asOpt[String].map (x => head += "driver_social_id" -> x).getOrElse(Unit)
                   
                   _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
                   toJson(Map("status" -> "ok", "result" -> "success"))

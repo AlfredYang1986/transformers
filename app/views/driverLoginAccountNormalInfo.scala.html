@@ -377,8 +377,6 @@
 
                 query_object['open_id'] = "@{open_id}";
 
-                alert(query_object);
-
                 $.ajax({
                     url: "/auth/driver/update",
                     type: 'POST',
@@ -387,9 +385,7 @@
                     data: JSON.stringify(query_object),
                     cache: false,
                     success: function (data) {
-                        if (data.status == "ok") {                                          
-                        //     alert("注册成功审核！");
-                             alert(data);
+                        if (data.status == "ok") { 
                              location.reload();
                         } else {
                             alert(data.error.message);

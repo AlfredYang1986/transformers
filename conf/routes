@@ -40,7 +40,8 @@ GET		/driver/index  													controllers.DriverController.driverLoginIndex(t
 GET		/driver/account/psw  											controllers.DriverController.driverLoginAccountPsw
 GET		/driver/account/normalinfo/:t									controllers.DriverController.driverLoginAccountNormalInfo(t)
 GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo(t="")
-GET		/driver/account/validateinfo									controllers.DriverController.driverLoginAccountValidateInfo
+GET		/driver/account/validateinfo/:t									controllers.DriverController.driverLoginAccountValidateInfo(t)
+GET		/driver/account/validateinfo									controllers.DriverController.driverLoginAccountValidateInfo(t="")
 GET		/driver/account/followed										controllers.DriverController.driverLoginAccountFollowedCompany
 GET		/driver/recruitment/:t											controllers.DriverController.driverLoginRecruitment(t)
 GET		/driver/recruitment												controllers.DriverController.driverLoginRecruitment(t="")

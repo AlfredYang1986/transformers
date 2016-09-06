@@ -1,6 +1,6 @@
-@(message: String)
+@(token : String)(open_id : String)(screen_name : String)(driver : play.api.libs.json.JsValue)
 
-@driver_login_index_sliders("易聚货驾驶员平台")("") {
+@driver_login_index_sliders("易聚货驾驶员平台")(screen_name) {
     
 } {
 
@@ -18,19 +18,43 @@
                             #修改以下资料需要重新提交审核，易聚货管理员审核通过后才能生效
                         </h3>
                         <div class="example-box-wrapper">
-                            <form class="form-horizontal bordered-row">
+                            <div class="form-horizontal bordered-row">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">驾驶员姓名</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="林恩">
+                                        <input type="text" class="form-control" data-name="screen-name" value=@screen_name />
                                     </div>
                                 </div>
+
+                                <div class="form-group" style="display: none;" data-name='screen-name-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写有效的人名
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">身份证</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="123456789123456798">
+                                        <input type="text" class="form-control" data-name="social-id" value=@{(driver \ "driver_secial_id").asOpt[String].get} />
                                     </div>
                                 </div>
+
+                                <div class="form-group" style="display: none;" data-name='social-id-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写有效的身份证
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">行驶证</label>
                                     <div class="col-sm-6 business-license-btn">
@@ -57,17 +81,14 @@
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important">
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateValidateInfo()">
                                         提交审核
                                     </button>
                                 </div>              
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </div>
@@ -81,5 +102,63 @@
         var drive_image = new fileUpload($("#driver-image-upload"));
         /** 驾驶员驾驶证图片上传**/
         var road_image = new fileUpload($("#driver-road-image"));
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function updateValidateInfo() {
+            var screen_name = $('input[data-name="screen-name"]').val();
+            var social_id = $('input[data-name="social-id"]').val();
+
+            var result = true;
+            
+            result &= validate($('div[data-name="screen-name"]'),
+                        hasInput(screen_name),
+                        'div[data-name="screen-name-error"]');
+
+            result &= validate($('div[data-name="social-id"]'),
+                        vehicle_lst.length > 0,
+                        'div[data-name="social-id-error"]');
+
+            if (result) {
+                var query_object = new Object();
+
+                query_object["driver_name"] = screen_name;
+                query_object["driver_secial_id"] = social_id;
+
+                $.ajax({
+                    url: "/auth/driver/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 	</script>
 }
