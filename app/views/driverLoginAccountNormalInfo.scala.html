@@ -1,21 +1,19 @@
-@(message: String)
+@(token : String)(open_id : String)(screen_name : String)(driver : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
-@driver_login_index_sliders("易聚货驾驶员平台")("") {
+@driver_login_index_sliders("易聚货驾驶员平台")(screen_name) {
     
 } {
 
     <div id="page-content-wrapper">
         <div id="page-content">
             <div class="container">
-
                 <div id="page-title">
                     <h2>详细资料</h2>
                 </div>
-
                 <div class="panel">
                     <div class="panel-body">
                         <h3 class="title-hero">
-                        *如需修改相关信息，修改后点击保存即可
+                            *如需修改相关信息，修改后点击保存即可
                         </h3>
 
                         <div class="example-box-wrapper">
@@ -24,102 +22,55 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">更改绑定手机号</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control col-sm-3" id="" placeholder="13857102787">
-                                        <label class="col-sm-3 col-xs-12">*更改后，登录账号自动变更为新的手机号码，请慎重更改</label>
+                                        <input type="text" class="form-control col-sm-3" data-name="phone-no" value=@{(driver \ "phone_no").asOpt[String].get} >
                                     </div>
-                                    
+                                    <label class="col-sm-3 col-xs-12">*更改后，登录账号自动变更为新的手机号码，请慎重更改</label>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"></label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control col-sm-3" id="" placeholder="输入动态验证码">
+                                        <input type="text" class="form-control col-sm-3" data-name="phone-code" placeholder="输入动态验证码">
                                         <button class="col-sm-3 btn bg-blue col-xs-12" style="margin-right:20px !important">
                                         获取动态验证码
                                         </button>
                                     </div>
+                                </div>
 
-                                </div>                            
+                                <div class="form-group" style="display: none;" data-name='phone-no-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写有效的电话号码
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">车型</label>
+
                                     <div class="col-sm-6">
+                                        @{(vc \ "vehicle").asOpt[List[String]].get map { x =>
                                         <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="平板车"> 平板车
-                                            </label>
+                                            {if ((driver \ "vehicle").asOpt[List[String]].get.contains(x) ) {
+                                                <label><input data-name="vehicle" type="checkbox" value={x} checked="" /> {x} </label>
+                                            } else {
+                                                <label><input data-name="vehicle" type="checkbox" value={x} /> {x} </label>
+                                            }}
                                         </div>
+                                        }}
+                                    </div>
+                                </div>
 
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="高栏车"> 高栏车
-                                            </label>
-                                        </div>                      
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="厢式车"> 厢式车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="半挂车"> 半挂车
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="高地板"> 高低板
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="起重车"> 起重车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="牵引车"> 牵引车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="罐式车"> 罐式车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="特种车"> 特种车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="危险品车"> 危险品车
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
-                                            </label>
+                                <div class="form-group" style="display: none;" data-name='vehicle-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择有效的车型
                                         </div>
                                     </div>
                                 </div>
@@ -127,192 +78,182 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">车长</label>
                                     <div class="col-sm-6">
+                                        @{(vc \ "vehicle_length").asOpt[List[Double]].get map { x =>
                                         <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="four-p-two"> 4.2米
-                                            </label>
+                                            {
+                                            val y = (driver \ "vehicle_length").asOpt[List[Float]].get
+                                            y.filter(v => x - v < 0.0001 && x - v > - 0.0001) match {
+                                                case Nil => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                case _ => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
+                                            }}
                                         </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="four-p-five"> 4.5米
-                                            </label>
-                                        </div>                      
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="five"> 5米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="six-p-two"> 6.2米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="six-p-nine"> 6.9米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="seven-p-two"> 7.2米
-                                            </label>
-                                        </div>                      
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="seven-p-seven"> 7.7米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="seven-p-eight"> 7.8米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="eight-p-two"> 8.2米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="eight-p-six"> 8.6米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="eight-p-seven"> 8.7米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="nine-p-six"> 9.6米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="eleven-p-seven"> 11.7米
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="twelve-p-five"> 12.5米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="thirdteen"> 13米
-                                            </label>
-                                        </div>                      
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="third-p-five"> 13.5米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="fourthteen"> 14米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="sixteen"> 16米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="seventeen"> 17米
-                                            </label>
-                                        </div>                      
-                                        
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="seventeen-five"> 17.5米
-                                            </label>
-                                        </div>
-
-                                        <div class="col-sm-2 checkbox">
-                                            <label>
-                                                <input name="vehicle-length" type="checkbox" value="eightteen"> 18米
-                                            </label>
-                                        </div> 
+                                        }}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">载重</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="12">
+                                        <input type="text" class="form-control" data-name="capacity" value=@{(driver \ "capacity").asOpt[Int].get} >
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style="display: none;" data-name='capacity-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择有效的载重
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @{ ((driver \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.toList zipWithIndex) map { iter_index => 
+                                val iter = iter_index._1
+                                val index = iter_index._2
+                                <div class="form-group driver-lines" data-name={"index-" + index}>
                                     <label class="col-sm-3 control-label">常跑路线</label>
 
                                     <div class="col-sm-9">
                                         <div class="row">
                                             <div class="col-sm-2">
-                                                <select class="form-control">
-                                                    <option selected>浙江省</option>
-                                                </select>   
+                                                {
+                                                val tmp = (iter \ "origin_province").asOpt[String].get
+                                                <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                    {cities map { p => 
+                                                        if (tmp.equals((p \ "province").asOpt[String].get)) {
+                                                            <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                        } else {
+                                                            <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                        }
+                                                    }};
+                                                </select>
+                                                }
                                             </div>
 
                                             <div class="col-sm-2">
-                                                <select class="form-control">
-                                                    <option selected>杭州市</option>
-                                                </select>   
+                                                {
+                                                val tmp = (iter \ "origin_city").asOpt[String].get
+                                                <select class="form-control" data-name="origin-city" data-index="1" >
+                                                    {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                        if (tmp.equals(x)) {
+                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                        } else {
+                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                        }
+                                                    }}};
+                                                </select>
+                                                }
                                             </div>
 
                                             <div class="col-sm-1" style="text-align:center;">
-                                                ^</br>
-                                                I</br>
-                                                V</br>
-                                                <!--
-                                                    <img  src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap">
-                                                -->
+                                                <!-- <img src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap" > -->
                                             </div>
 
                                             <div class="col-sm-2">
-                                                <select class="form-control">
-                                                    <option selected>北京</option>
-
-                                                </select>   
+                                                {
+                                                val tmp = (iter \ "destination_province").asOpt[String].get
+                                                <select class="form-control" data-name="origin-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                    {cities map { p => 
+                                                        if (tmp.equals((p \ "province").asOpt[String].get)) {
+                                                            <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
+                                                        } else {
+                                                            <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                        }
+                                                    }};
+                                                </select>
+                                                } 
                                             </div>
 
                                             <div class="col-sm-2">
-                                                <select class="form-control">
-                                                    <option selected>北京</option>
-
-                                                </select>   
-                                            </div>                                                                            
-                                        </div> 
-
-                                        <button class="col-sm-3 btn bg-blue col-xs-12" style="margin-right:20px !important">
-                                        新增路线
-                                        </button>         
+                                                {
+                                                val tmp = (iter \ "destination_city").asOpt[String].get
+                                                <select class="form-control" data-name="origin-city" data-index="3" >
+                                                    {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                        if (tmp.equals(x)) {
+                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                        } else {
+                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                        }
+                                                    }}};
+                                                </select>
+                                                }
+                                            </div>      
+                                            <div class="form-group text-center">
+                                                <button class="btn bg-blue" style="margin-right:20px !important" onclick={"removeDriveLine(" + index + ")"}>
+                                                    删除
+                                                </button>
+                                            </div>          
+                                        </div>
                                     </div>
+                                </div>
+                                }}
 
+                                <div class="row collapse" id="new-line-collapse" style="margin-top:10px">
+                                    <label class="col-sm-3 control-label">新添路线</label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                    @{cities map { p => 
+                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                    }};
+                                                </select>
+                                            </div>
 
+                                            <div class="col-sm-2">
+                                                <select class="form-control" data-name="origin-city" data-index="1" >
+                                                    @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                    }}};
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-1" style="text-align:center;">
+                                                <!-- <img src="@routes.Assets.at("images/arrow/oneway.png")" class="img-swap" > -->
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <select class="form-control" data-name="origin-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                    @{cities map { p => 
+                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                    }};
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <select class="form-control" data-name="origin-city" data-index="3" >
+                                                    @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                    }}};
+                                                </select>
+                                            </div>                                                                            
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important">
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" data-toggle="collapse" href="#new-line-collapse">
+                                        新增路线
+                                    </button>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='driver-line-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择有效的航线
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-center">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateDriver()">
                                         保存
                                     </button>
                                 </div>
@@ -320,8 +261,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -331,5 +270,136 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function removeDriveLine(index) {
+            $('div[data-name="index-' + index + '"]').remove();
+        }
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function driverLines() {
+            var lst = [];
+            $.each($('div.driver-lines'), function(){
+                var line = new Object();
+                line["origin_province"] = $(this).find('selected[data-name="origin-province"]').val();
+                line["origin_city"] = $(this).find('selected[data-name="origin-city"]').val();
+                line["destination_province"] = $(this).find('selected[data-name="destination-province"]').val();
+                line["destination_city"] = $(this).find('selected[data-name="destination_city"]').val();
+                lst.push(line);
+            });
+
+            if ($('#new-line-collapse').hasClass('in')) {
+                var line = new Object();
+                line["origin_province"] = $('#new-line-collapse').find('selected[data-name="origin-province"]').val();
+                line["origin_city"] = $('#new-line-collapse').find('selected[data-name="origin-city"]').val();
+                line["destination_province"] = $('#new-line-collapse').find('selected[data-name="destination-province"]').val();
+                line["destination_city"] = $('#new-line-collapse').find('selected[data-name="destination_city"]').val();
+                lst.push(line);
+            }
+            return lst;
+        }
+
+        function updateDriver() {
+            var result = true;
+
+            var phone_no = $('input[data-name="phone-no"]').val();
+
+            result &= validate($('div[data-name="phone-no"]'),
+                        hasInput(phone_no),
+                        'div[data-name="phone-no-error"]');
+                        
+            var vehicle_lst = $('input[data-name="vehicle"]:checked');
+
+            result &= validate($('div[data-name="vehicle-container"]'),
+                        vehicle_lst.length > 0,
+                        'div[data-name="vehicle-error"]');
+
+            var vehicle_length_lst = $('input[data-name="vehicle-length"]:checked');
+
+            result &= validate($('div[data-name="vehicle-length-container"]'),
+                        vehicle_length_lst.length > 0,
+                        'div[data-name="vehicle-length-error"]');
+
+            var lines = driverLines();
+
+            result &= validate($('div[data-name="vehicle-length-container"]'),
+                        lines.length > 0,
+                        'div[data-name="driver-line-error"]');
+
+            var capacity = $('input[data-name="capacity"]').val();
+
+            result &= validate($('div[data-name="capacity"]'),
+                        hasInput(capacity),
+                        'div[data-name="capacity-error"]');
+
+            if (result) {
+                var query_object = new Object();
+
+                query_object["phone_no"] = phone_no;
+                query_object["capacity"] = Number(capacity);
+
+                var vehicle_str_lst = [];
+                $.each(vehicle_lst, function(index, value){
+                    vehicle_str_lst.push($(this).val());
+                });
+                query_object['vehicle'] = vehicle_str_lst;
+
+                var vehicle_length_number_lst = [];
+                $.each(vehicle_length_lst, function(index, value){
+                    vehicle_length_number_lst.push(Number($(this).val()));
+                });
+                query_object['vehicle_length'] = vehicle_length_number_lst;
+
+                query_object['driver_lines'] = lines;
+
+                query_object['open_id'] = "@{open_id}";
+
+                alert(query_object);
+
+                $.ajax({
+                    url: "/auth/driver/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                        //     alert("注册成功审核！");
+                             alert(data);
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 	</script>
 }

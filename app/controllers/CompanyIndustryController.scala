@@ -274,8 +274,10 @@ object CompanyIndustryController extends Controller {
             val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
             val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
            
+            val vc = ConfigModule.configAllVehicles
+            
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts))
+                Ok(views.html.ciLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts)(vc))
             }
             else Redirect("/index")
         }        

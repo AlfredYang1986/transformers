@@ -478,7 +478,7 @@ object AuthModule {
                 "type" -> toJson(x.getAs[Number]("type").get.intValue),
                 "date" -> toJson(x.getAs[Number]("date").get.longValue),
                 "capacity" -> toJson(x.getAs[Number]("capacity").get.intValue),
-                "vehicle_length" -> toJson(x.getAs[Number]("vehicle_length").get.floatValue),
+                "vehicle_length" -> x.getAs[List[Number]]("vehicle_length").map (x => toJson(x.toList.map (y => y.floatValue))).getOrElse(toJson(x.getAs[Number]("vehicle_length").get.floatValue)),
                 "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "driver_image" -> toJson(x.getAs[String]("driver_image").get),
@@ -706,6 +706,28 @@ object AuthModule {
 //            import play.api.Play.current
 //            smsModule().sendSMS(phoneNo, code.toString)
             toJson(Map("status" -> "ok", "result" -> "send sms message success"))
+        }
+    }
+    
+    def updateDriverProfile(data : JsValue) : JsValue = {
+        try {
+          println(data)
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))  
+            
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                  (data \ "phone_no").asOpt[String].map {x => head += "phone_no" -> x}.getOrElse(Unit) 
+                  (data \ "capacity").asOpt[Int].map (x => head += "capacity" -> x.asInstanceOf[Number]).getOrElse(Unit)
+                  (data \ "vehicle").asOpt[List[String]].map (x => head += "vehicle" -> x).getOrElse(Unit)
+                  (data \ "vehicle_length").asOpt[List[Float]].map (x => head += "vehicle_length" -> x).getOrElse(Unit)
+                  
+                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                  toJson(Map("status" -> "ok", "result" -> "success"))
+              }
+              case _ => ???
+            }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
     

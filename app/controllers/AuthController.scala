@@ -9,7 +9,6 @@ import module.auth.authTypes
 
 object AuthController extends Controller {
 	def register = Action (request => requestArgs(request)(AuthModule.register))
-	def driverRegister = Action (request => requestArgs(request)(AuthModule.driverRegister))
 	def sendCode = Action (request => requestArgs(request)(AuthModule.sendCode))
 	def login = Action (request => requestArgs(request)(AuthModule.login))
 	def update = Action (request => requestArgs(request)(AuthModule.updateProfile))
@@ -20,4 +19,7 @@ object AuthController extends Controller {
   def pushSubuser = Action (request => requestArgs(request)(AuthModule.pushSubuser))
   def popSubuser = Action (request => requestArgs(request)(AuthModule.popSubuser))
   def updateSubuser = Action (request => requestArgs(request)(AuthModule.updateSubuser))
+  
+	def driverRegister = Action (request => requestArgs(request)(AuthModule.driverRegister))
+  def driverUpdate = Action (request => requestArgs(request)(AuthModule.updateDriverProfile))
 }

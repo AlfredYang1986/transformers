@@ -38,7 +38,8 @@ GET 	/admin/setting					controllers.AdminController.adminSetting
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)
 GET		/driver/index  													controllers.DriverController.driverLoginIndex(t="")
 GET		/driver/account/psw  											controllers.DriverController.driverLoginAccountPsw
-GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo
+GET		/driver/account/normalinfo/:t									controllers.DriverController.driverLoginAccountNormalInfo(t)
+GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo(t="")
 GET		/driver/account/validateinfo									controllers.DriverController.driverLoginAccountValidateInfo
 GET		/driver/account/followed										controllers.DriverController.driverLoginAccountFollowedCompany
 GET		/driver/recruitment/:t											controllers.DriverController.driverLoginRecruitment(t)
@@ -126,6 +127,7 @@ POST	/auth/login														controllers.AuthController.login
 POST	/auth/admin/login												controllers.AuthController.admainLogin
 POST	/auth/send/code													controllers.AuthController.sendCode
 POST	/auth/update													controllers.AuthController.update
+POST	/auth/driver/update												controllers.AuthController.driverUpdate
 POST	/auth/pwd/reset													controllers.AuthController.changePwd
 POST	/auth/sub/push													controllers.AuthController.pushSubuser
 POST	/auth/sub/pop													controllers.AuthController.popSubuser
