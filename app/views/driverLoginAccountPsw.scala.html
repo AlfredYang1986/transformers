@@ -1,6 +1,6 @@
-@(message: String)
+@(token : String)(open_id : String)(screen_name : String)
 
-@driver_login_index_sliders("易聚货驾驶员平台")("") {
+@driver_login_index_sliders("易聚货驾驶员平台")(screen_name) {
     
 } {
 
@@ -21,25 +21,25 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">输入旧密码</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="输入旧密码">
+                                        <input type="password" class="form-control" data-name="old" placeholder="输入旧密码" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">输入新密码</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="输入新密码">
+                                        <input type="password" class="form-control" data-name="pwd" placeholder="输入新密码" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">再次输入新密码</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="再次输入新密码">
+                                        <input type="password" class="form-control" data-name="pwd1" placeholder="再次输入新密码" />
                                     </div>
                                 </div>
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important">
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateDriverPwd()">
                                         保存
                                     </button>
                                 </div>             
@@ -57,5 +57,42 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function updateDriverPwd() {
+            var old = $('input[data-name="old"]').val();
+
+            var pwd = $('input[data-name="pwd"]').val();
+            var pwd1 = $('input[data-name="pwd1"]').val();
+
+            if (pwd != pwd1) {
+                alert("两次输入的密码不一致");
+            } else {
+                var query_object = new Object();
+
+                query_object["open_id"] = "@{open_id}";
+                query_object["token"] = "@{token}";
+                query_object["pwd"] = pwd;
+                query_object["old"] = old;
+
+                $.ajax({
+                    url: "/auth/pwd/reset",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 	</script>
 }

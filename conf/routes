@@ -37,7 +37,8 @@ GET 	/admin/setting					controllers.AdminController.adminSetting
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)
 GET		/driver/index  													controllers.DriverController.driverLoginIndex(t="")
-GET		/driver/account/psw  											controllers.DriverController.driverLoginAccountPsw
+GET		/driver/account/psw/:t  										controllers.DriverController.driverLoginAccountPsw(t)
+GET		/driver/account/psw  											controllers.DriverController.driverLoginAccountPsw(t="")
 GET		/driver/account/normalinfo/:t									controllers.DriverController.driverLoginAccountNormalInfo(t)
 GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo(t="")
 GET		/driver/account/validateinfo/:t									controllers.DriverController.driverLoginAccountValidateInfo(t)

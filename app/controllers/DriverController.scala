@@ -45,8 +45,24 @@ object DriverController extends Controller {
     /**
      * Driver Account Password
      */
-    def driverLoginAccountPsw = Action {
-    	Ok(views.html.driverLoginAccountPsw("Your new application is ready."))
+    def driverLoginAccountPsw(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val driver = AuthModule.queryInstanceWithToken(token)
+            
+            val open_id = (driver \ "open_id").asOpt[String].get
+            val name = (driver \ "driver_name").asOpt[String].get
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
+                Ok(views.html.driverLoginAccountPsw(token)(open_id)(name))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
