@@ -79,11 +79,9 @@ object driverFollowModule {
                   val following_lst = head.getAs[MongoDBList]("followings").get.toList.asInstanceOf[List[String]]
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(following_lst)))
               }
-              case Nil => 
+              case Nil => toJson(Map("status" -> toJson("ok"), "result" -> toJson(List[String]())))
               case _ => throw new Exception("not existing")
             }
-          
-            null
         } catch {
           case ex : Exception => throw new Exception(ex.getMessage)
         }

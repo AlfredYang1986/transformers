@@ -1,5 +1,6 @@
+@(token : String)(open_id : String)(screen_name : String)(following_lst : List[String])
 
-@driver_login_index_sliders("易聚货驾驶员平台")("") {
+@driver_login_index_sliders("易聚货驾驶员平台")(screen_name) {
     
 } {
 
@@ -67,8 +68,16 @@
         </div>
     </div>
 
+    <div>
+    	@{ following_lst map { iter =>
+    		<div data-name="followings" style="display: none;">{iter}</div>	
+    	}}
+    </div>
+
 } {
 	<script type="text/javascript">
+		var ft = [];
+		
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
@@ -105,6 +114,11 @@
 
 		function data2html(data) {
 
+			var ft = [];
+			$.each($('div[data-name="followings"]'), function(index, item){
+				ft.push(item)
+			});
+
 			var count = data.length;
 			var html = "";
 			for (var i = 0; i < data.length; ++i) {
@@ -115,7 +129,19 @@
 				html += "<div class=\"panel-body\">"
 				html += "<h5 class=\"title-hero\">"
 				html += tmp["company_name"]+ " ";
-				html += "<button onclick='collectCompany(\"" + tmp["open_id"] + "\")' class=\"btn-link\" style=\"color:#008bdc\"><i class=\"glyph-icon icon-star\"></i>收藏</button></h5>"
+
+				var temp = [];
+				temp = $.grep(ft, function(val, key) {
+				    if(val == data["open_id"])
+				        return true;
+				}, false);
+
+				if (temp.length == 0) {
+					html += "<button onclick='collectCompany(\"" + tmp["open_id"] + "\")' class=\"btn-link\" style=\"color:#008bdc\"><i class=\"glyph-icon icon-star\"></i>收藏</button></h5>"
+				} else {
+					html += "<button onclick='unCollectCompany(\"" + tmp["open_id"] + "\")' class=\"btn-link\" style=\"color:#008bdc\"><i class=\"glyph-icon icon-star\"></i>已收藏</button></h5>"
+				}
+				
 				html += "<div class=\"example-box-wrapper\">"
 				html += "<div id=\"form-wizard-1\">"
 				html += "<ul class='nav nav-pills'><li><a href=" + "#tab" + index + " data-toggle=\"tab\">公司信息</a></li><li><a href=" + "#tab" + (index + 1) + " data-toggle=\"tab\">当天货源</a></li></ul>"
@@ -336,6 +362,12 @@
 		}
 
 		function collectCompany(open_id) {
+			alert("collect");
+			alert(open_id);
+		}
+
+		function unCollectCompany(open_id) {
+			alert("uncollect")
 			alert(open_id);
 		}
 	</script>

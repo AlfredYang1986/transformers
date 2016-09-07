@@ -8,7 +8,7 @@ import play.api.libs.json.Json.{toJson}
 import play.api.libs.json.JsValue
 import controllers.common.requestArgsQuery._
 
-import module.driverOpt.driverSearchModule
+import module.driverOpt.{ driverSearchModule, driverFollowModule }
 import module.auth.AuthModule
 import module.auth.authTypes
 
@@ -162,11 +162,13 @@ object DriverController extends Controller {
         val open_id = (driver \ "open_id").asOpt[String].get
         val name = (driver \ "driver_name").asOpt[String].get
         
+        val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
+        
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
-                Ok(views.html.driverLoginSearchCompany(token)(open_id)(name))
+                Ok(views.html.driverLoginSearchCompany(token)(open_id)(name)(following_lst))
             }
             else Redirect("/index")
         }
