@@ -3,36 +3,36 @@
 # ~~~~
 
 # Home page
-GET		/								controllers.Elogco.index
-GET     /index                      	controllers.Elogco.index
-GET		/company						controllers.Elogco.company
-GET		/business						controllers.Elogco.business
-GET		/recruit						controllers.Elogco.recruit
-GET		/help							controllers.Elogco.help
+GET		/																controllers.Elogco.index
+GET     /index                      									controllers.Elogco.index
+GET		/company														controllers.Elogco.company
+GET		/business														controllers.Elogco.business
+GET		/recruit														controllers.Elogco.recruit
+GET		/help															controllers.Elogco.help
 
 # register page
-GET     /register/company		        controllers.RegisterController.register
-GET		/register/driver				controllers.RegisterController.registerDriver
-GET		/register/complete				controllers.RegisterController.registerComplete
+GET     /register/company		        								controllers.RegisterController.register
+GET		/register/driver												controllers.RegisterController.registerDriver
+GET		/register/complete												controllers.RegisterController.registerComplete
 
 # contract
-GET		/contract/driver				controllers.ContractController.driverContract
-GET		/contract/contract				controllers.ContractController.companyContract
+GET		/contract/driver												controllers.ContractController.driverContract
+GET		/contract/contract												controllers.ContractController.companyContract
 
 # admin pages
-GET		/admin/login					controllers.AdminController.adminLogin
-GET		/admin							controllers.AdminController.adminLogin
-GET		/admin/index/:t					controllers.AdminController.index(t)
-GET		/admin/index					controllers.AdminController.index(t="")
+GET		/admin/login													controllers.AdminController.adminLogin
+GET		/admin															controllers.AdminController.adminLogin
+GET		/admin/index/:t													controllers.AdminController.index(t)
+GET		/admin/index													controllers.AdminController.index(t="")
 
-GET 	/admin/profiles/:k/:s/:p/:t		controllers.AdminController.profiles(k, s, p, t)
-GET 	/admin/profiles/:k/:s/:p		controllers.AdminController.profiles(k, s, p, t="")
-GET 	/admin/profiles/:k/:s			controllers.AdminController.profiles(k, s, p="0", t="")
+GET 	/admin/profiles/:k/:s/:p/:t										controllers.AdminController.profiles(k, s, p, t)
+GET 	/admin/profiles/:k/:s/:p										controllers.AdminController.profiles(k, s, p, t="")
+GET 	/admin/profiles/:k/:s											controllers.AdminController.profiles(k, s, p="0", t="")
 
-GET		/admin/send/car  				controllers.AdminController.adminSendCar
-GET		/admin/sent/car  				controllers.AdminController.adminHaveSentCar
-GET		/admin/car/history				controllers.AdminController.adminCarHistory
-GET 	/admin/setting					controllers.AdminController.adminSetting
+GET		/admin/send/car  												controllers.AdminController.adminSendCar
+GET		/admin/sent/car  												controllers.AdminController.adminHaveSentCar
+GET		/admin/car/history												controllers.AdminController.adminCarHistory
+GET 	/admin/setting													controllers.AdminController.adminSetting
 
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)
