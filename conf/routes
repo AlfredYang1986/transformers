@@ -77,7 +77,8 @@ GET		/company/completeinfo           								controllers.CompanyIndustryControll
 GET		/company/completeproduct        								controllers.CompanyIndustryController.ciLoginCompleteProduct
 GET		/company/driverlist/:t        									controllers.CompanyIndustryController.ciLoginDriverList(t)
 GET		/company/driverlist												controllers.CompanyIndustryController.ciLoginDriverList(t="")
-GET		/company/recruitment        									controllers.CompanyIndustryController.ciLoginRecruitment
+GET		/company/recruitment/:t        									controllers.CompanyIndustryController.ciLoginRecruitment(t)
+GET		/company/recruitment        									controllers.CompanyIndustryController.ciLoginRecruitment(t="")
 GET		/company/sendinfo/:t        									controllers.CompanyIndustryController.ciLoginSendInfo(t)
 GET		/company/sendinfo        										controllers.CompanyIndustryController.ciLoginSendInfo(t="")
 GET		/company/sendproduct/:t       									controllers.CompanyIndustryController.ciLoginSendProduct(t)
