@@ -43,7 +43,8 @@ GET		/driver/account/normalinfo/:t									controllers.DriverController.driverLo
 GET		/driver/account/normalinfo										controllers.DriverController.driverLoginAccountNormalInfo(t="")
 GET		/driver/account/validateinfo/:t									controllers.DriverController.driverLoginAccountValidateInfo(t)
 GET		/driver/account/validateinfo									controllers.DriverController.driverLoginAccountValidateInfo(t="")
-GET		/driver/account/followed										controllers.DriverController.driverLoginAccountFollowedCompany
+GET		/driver/account/followed/:t										controllers.DriverController.driverLoginAccountFollowedCompany(t)
+GET		/driver/account/followed										controllers.DriverController.driverLoginAccountFollowedCompany(t="")
 GET		/driver/recruitment/:t											controllers.DriverController.driverLoginRecruitment(t)
 GET		/driver/recruitment												controllers.DriverController.driverLoginRecruitment(t="")
 GET		/driver/search/company/:t       								controllers.DriverController.driverLoginSearchCompany(t)
