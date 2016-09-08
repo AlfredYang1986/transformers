@@ -9,6 +9,7 @@ import play.api.libs.json.JsValue
 import controllers.common.requestArgsQuery._
 
 import module.companyOpt.{ companySearchModule, companyInfoModule, companyProductModule, companyConfigModule } 
+import module.driverOpt.driverSearchModule
 import module.common.xml.xmlOpt
 import module.auth.AuthModule
 import module.auth.authTypes
@@ -189,8 +190,25 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginCompanyList = Action {
-        Ok(views.html.ciLoginCompanyList("Your new application is ready."))
+    def ciLoginCompanyList(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            val vc = ConfigModule.configAllVehicles
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val product_lst = (companyProductModule.queryProduct(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.ciLoginCompanyList(token)(open_id)(name)(xmlOpt.allCities)(vc)(product_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

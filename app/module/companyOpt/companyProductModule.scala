@@ -256,7 +256,9 @@ object companyProductModule {
         
         try {
             conditions match {
-              case None => throw new Exception("wrong input")
+              case None => 
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson(
+                      (from db() in "products" select (product2JsValue(_))).toList)))
               case Some(x) => 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
                       (from db() in "products" where x select (product2JsValue(_))).toList)))
