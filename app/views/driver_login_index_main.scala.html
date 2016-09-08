@@ -360,7 +360,7 @@
                                 </div>
 
                                 <div class="pad5A button-pane button-pane-alt text-center">
-                                    <a href="#" class="btn display-block font-normal btn-danger">
+                                    <a onclick="logout()" class="btn display-block font-normal btn-danger">
                                         <i class="glyph-icon icon-power-off"></i>
                                         退出
                                     </a>
@@ -395,6 +395,13 @@
             }, 300);
         });
 
+        function logout() {
+            clearCookie('user_id');
+            clearCookie('token');
+            clearCookie('screen_name');
+            clearCookie('type')
+            location.href = "/index";   
+        };
         
     </script>
 
