@@ -9,6 +9,7 @@ import play.api.libs.json.JsValue
 import controllers.common.requestArgsQuery._
 
 import module.driverOpt.{ driverSearchModule, driverFollowModule }
+import module.companyOpt.companyProductModule
 import module.auth.AuthModule
 import module.auth.authTypes
 
@@ -177,8 +178,28 @@ object DriverController extends Controller {
     /**
      * Driver Search Department
      */
-    def driverLoginSearchDepartment = Action {
-        Ok(views.html.driverLoginSearchDepartment("Your new application is ready."))
+    def driverLoginSearchDepartment(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        val user = AuthModule.queryUserWithToken(token)
+        val driver = AuthModule.queryInstanceWithToken(token)
+            
+        val open_id = (driver \ "open_id").asOpt[String].get
+        val name = (driver \ "driver_name").asOpt[String].get
+        
+        val vc = ConfigModule.configAllVehicles
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
+                val product_lst = (companyProductModule.queryProduct(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.driverLoginSearchDepartment(token)(open_id)(name)(xmlOpt.allCities)(vc)(product_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

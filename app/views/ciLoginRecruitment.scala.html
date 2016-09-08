@@ -33,7 +33,7 @@
                                                 {(iter \ "year").asOpt[Int].get}年{(iter \ "month").asOpt[Int].get}月{(iter \ "day").asOpt[Int].get}日
                                             </div>
                                             <div class="col-sm-6" style="font-size:15px">
-                                                公司专线发送的招聘标题
+                                                {(iter \ "title").asOpt[String].get}
                                             </div>    
 
                                             <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + index} style="font-size:15px" onclick={"showContent(" + index + ", \"" + {(iter \ "content").asOpt[String].get} + "\")"} >

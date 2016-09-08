@@ -48,7 +48,8 @@ GET		/driver/recruitment/:t											controllers.DriverController.driverLoginRe
 GET		/driver/recruitment												controllers.DriverController.driverLoginRecruitment(t="")
 GET		/driver/search/company/:t       								controllers.DriverController.driverLoginSearchCompany(t)
 GET		/driver/search/company          								controllers.DriverController.driverLoginSearchCompany(t="")
-GET		/driver/search/department       								controllers.DriverController.driverLoginSearchDepartment
+GET		/driver/search/department/:t       								controllers.DriverController.driverLoginSearchDepartment(t)
+GET		/driver/search/department       								controllers.DriverController.driverLoginSearchDepartment(t="")
 GET		/driver/search/specialway       								controllers.DriverController.driverLoginSearchSpecialWay
 
 POST	/data/driver/search/company										controllers.DriverController.driverSearchCompany
