@@ -163,6 +163,7 @@ object DriverController extends Controller {
         val name = (driver \ "driver_name").asOpt[String].get
         
         val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
+        println(following_lst)
         
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
@@ -181,7 +182,6 @@ object DriverController extends Controller {
         Ok(views.html.driverLoginSearchDepartment("Your new application is ready."))
     }
 
-
     /**
      * Driver Search Special Way
      */
@@ -190,4 +190,7 @@ object DriverController extends Controller {
     }
 
     def driverSearchCompany = Action (request => requestArgs(request)(driverSearchModule.queryCompany))
+    def driverPushCollection = Action (request => requestArgs(request)(driverFollowModule.driverFollowCompany))
+    def driverPopCollection = Action (request => requestArgs(request)(driverFollowModule.driverUnFollowCompany))
+    def driverQueryCollections = Action (request => requestArgs(request)(driverFollowModule.queryDriverFollowingLst)) 
 }

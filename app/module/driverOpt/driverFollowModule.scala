@@ -26,7 +26,7 @@ object driverFollowModule {
         try {
             val driver_open_id = (data \ "driver_open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             val target_open_id = (data \ "target_open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
-            
+           
             (from db() in "driver_company" where ("driver_open_id" -> driver_open_id) select (x => x)).toList match {
               case head :: Nil => {
                   val following_lst = head.getAs[MongoDBList]("followings").get.toList.asInstanceOf[List[String]]

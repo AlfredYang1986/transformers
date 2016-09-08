@@ -116,7 +116,7 @@
 
 			var ft = [];
 			$.each($('div[data-name="followings"]'), function(index, item){
-				ft.push(item)
+				ft.push(item.innerHTML);
 			});
 
 			var count = data.length;
@@ -132,7 +132,7 @@
 
 				var temp = [];
 				temp = $.grep(ft, function(val, key) {
-				    if(val == data["open_id"])
+				    if(val == tmp["open_id"])
 				        return true;
 				}, false);
 
@@ -362,13 +362,58 @@
 		}
 
 		function collectCompany(open_id) {
-			alert("collect");
-			alert(open_id);
+
+			var query_object = new Object();
+			query_object["target_open_id"] = open_id;
+			query_object["driver_open_id"] = "@{open_id}";
+
+			alert(query_object);
+
+			$.ajax({
+                url: "/data/driver/collect/push",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") { 
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
 		}
 
 		function unCollectCompany(open_id) {
-			alert("uncollect")
-			alert(open_id);
+			var query_object = new Object();
+			query_object["target_open_id"] = open_id;
+			query_object["driver_open_id"] = "@{open_id}";
+
+			alert(query_object);
+
+			$.ajax({
+                url: "/data/driver/collect/pop",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") { 
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
 		}
 	</script>
 }

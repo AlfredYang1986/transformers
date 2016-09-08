@@ -52,6 +52,9 @@ GET		/driver/search/department       								controllers.DriverController.driver
 GET		/driver/search/specialway       								controllers.DriverController.driverLoginSearchSpecialWay
 
 POST	/data/driver/search/company										controllers.DriverController.driverSearchCompany
+POST	/data/driver/collect/push										controllers.DriverController.driverPushCollection
+POST	/data/driver/collect/pop										controllers.DriverController.driverPopCollection
+POST	/data/driver/coloect/query										controllers.DriverController.driverQueryCollections
 
 # company industry login pages
 GET		/company/index/:t               								controllers.CompanyIndustryController.ciLoginIndex(t)
