@@ -163,7 +163,6 @@ object DriverController extends Controller {
         val name = (driver \ "driver_name").asOpt[String].get
         
         val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
-        println(following_lst)
         
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
