@@ -1,5 +1,6 @@
 @(token : String)(open_id : String)(screen_name : String)(following_lst : List[String])
 
+
 @driver_login_index_sliders("易聚货驾驶员平台")(screen_name) {
     
 } {
@@ -176,7 +177,7 @@
 	            if (ct == 1) {
 	            	var lines = tmp["company_lines"];
 	            	for (var j = 0; j < lines.length; j++) {
-	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "-->" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
+	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "<i class=\"fa fa-long-arrow-right\" aria-hidden=\"true\"></i>" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
 	            	}
 
 	            } else if (ct == 2) {
@@ -184,7 +185,7 @@
 	            } else if (ct == 3) {
 	            	var lines = tmp["special_lines"];
 	            	for (var j = 0; j < lines.length; j++) {
-	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "-->" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
+	            		html += "<label type='text' class=\"control-label\">" + lines[j]["origin_province"] + lines[j]["origin_city"]  + "<i class=\"fa fa-long-arrow-right\" aria-hidden=\"true\"></i>" + lines[j]["destination_province"] + lines[j]["destination_city"] + "</label>"
 	            	}
 	            }
 	            html += "</div></div></div>"

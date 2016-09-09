@@ -360,7 +360,11 @@
                                 </div>
 
                                 <div class="pad5A button-pane button-pane-alt text-center">
+<<<<<<< HEAD
                                     <button class="btn display-block font-normal btn-danger" onclick="logout()">
+=======
+                                    <a onclick="logout()" class="btn display-block font-normal btn-danger">
+>>>>>>> origin/master
                                         <i class="glyph-icon icon-power-off"></i>
                                         退出
                                     </button>
@@ -396,6 +400,7 @@
         });
     </script>
 
+<<<<<<< HEAD
     <script type="text/javascript">
         function setCookie(cname,cvalue,expiredays) {
             var exp  = new Date();
@@ -409,6 +414,8 @@
             document.cookie= name + "=''"+";expires="+exp.toGMTString()+";path="+"/";
         }
 
+=======
+>>>>>>> origin/master
         function logout() {
             clearCookie('user_id');
             clearCookie('token');
@@ -416,6 +423,7 @@
             clearCookie('type')
             location.href = "/index";   
         };
+<<<<<<< HEAD
 
         function adminLogout() {
             clearCookie('user_id');
@@ -424,6 +432,9 @@
             clearCookie('type')
             location.href = "/admin/login";                 
         }
+=======
+        
+>>>>>>> origin/master
     </script>
 
     @scripts
