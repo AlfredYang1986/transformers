@@ -83,7 +83,7 @@
                                             {
                                             (driver \ "vehicle_length").asOpt[List[Float]] match {
                                                 case None => {
-                                                    val v = (driver \ "vehicle_length")
+                                                    val v = (driver \ "vehicle_length").asOpt[Float].get
                                                     if (x - v < 0.0001 && x - v > - 0.0001) {
                                                         <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
                                                     } else {
