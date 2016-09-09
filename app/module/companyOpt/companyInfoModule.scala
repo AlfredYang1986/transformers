@@ -23,6 +23,14 @@ import module.auth.registerTypes
 import module.auth.AuthModule
 import module.sercurity.Sercurity
 
+
+object infoStatus {
+  object pushed extends infoStatusDefine(0, "pushed")
+  object complete extends infoStatusDefine(1, "complete")
+}
+
+sealed class infoStatusDefine(val t : Int, val des : String)
+
 object companyInfoModule {
     def pushInfo(data : JsValue) : JsValue =
         try {
@@ -37,6 +45,8 @@ object companyInfoModule {
             builder += "open_id" -> open_id
             builder += "user_id" -> (data \ "user_id").asOpt[String].map (x => x).getOrElse("")
             builder += "date" -> new Date().getTime
+            
+            builder += "status" -> infoStatus.pushed.t
             
             builder += "info_id" -> Sercurity.md5Hash(Sercurity.getTimeSpanWithMillSeconds + title + open_id)
            
@@ -56,6 +66,7 @@ object companyInfoModule {
                   (data \ "content").asOpt[String].map (x => head += "content" -> x).getOrElse(Unit)  
                   (data \ "contact").asOpt[String].map (x => head += "contact" -> x).getOrElse(Unit)  
                   (data \ "phone_no").asOpt[String].map (x => head += "phone_no" -> x).getOrElse(Unit)
+                  (data \ "status").asOpt[Int].map (x => head += "status" -> x.asInstanceOf[Number]).getOrElse(Unit)
                   
                   _data_connection.getCollection("info").update(DBObject("info_id" -> info_id), head)
                   toJson(Map("status" -> "ok", "result" -> "success"))
@@ -94,6 +105,10 @@ object companyInfoModule {
                 List("info_id", "title", "contact", "phone_no", "open_id") foreach { key => 
                     c  = conditionsAcc(c, (data \ key).asOpt[String].map (x => Some(key $eq x)).getOrElse(None))
                 }
+                
+                List("status") foreach { key =>
+                    c = conditionsAcc(c, (data \ key).asOpt[Int].map (x => Some(key $eq x)).getOrElse(None))
+                }
                 c
             }
           
@@ -118,6 +133,7 @@ object companyInfoModule {
                    "year" -> toJson(date.get(Calendar.YEAR)),
                    "month" -> toJson(date.get(Calendar.MONTH)),
                    "day" -> toJson(date.get(Calendar.DAY_OF_MONTH)),
+                   "status" -> toJson(x.getAs[Number]("status").map (x => x.intValue).getOrElse(infoStatus.pushed.t)),
                    "open_id" -> toJson(x.getAs[String]("open_id").get)))
     }  
 }

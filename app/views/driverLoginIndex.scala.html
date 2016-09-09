@@ -18,20 +18,22 @@
                     公司列表
                 </div>
 
-                @{ companies map { iter => 
+                @{ (companies zipWithIndex) map { item => 
+                val iter = item._1
+                val index = item._2
                 <div class="panel">
                     <div class="panel-body">
                         <h4 class="title-hero">
                         { (iter \ "company_name").asOpt[String].get } <a href="" class="" style="color:#008bdc"><i class="glyph-icon icon-star"></i>收藏</a>
                         </h4>
                         <div class="example-box-wrapper">
-                            <div id="followed_1">
-                                <a href="#tab1" data-toggle="tab" class="btn bg-blue" style="font-size:12px;">公司信息</a>
-                                <a href="#tab2" data-toggle="tab" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
+                            <div id={"followed_" + index}>
+                                <a href={"#tab1-" + index} data-toggle="tab" class="btn bg-blue" style="font-size:12px;">公司信息</a>
+                                <a href={"#tab2-" + index} data-toggle="tab" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
 
 
                                 <div class="tab-content">
-                                    <div class="tab-pane" id="tab1">
+                                    <div class="tab-pane" id={"tab1-" + index}>
                                         <div class="content-box">
                                             <div class="content-box-wrapper">
                                                 <div class="form-horizontal bordered-row" role="form">
@@ -156,7 +158,7 @@
                                         </div>
                                     </div>
 
-                                <div class="tab-pane" id="tab2">
+                                <div class="tab-pane" id={"tab2-" + index}>
                                     <div class="content-box">
                                         <div class="content-box-wrapper">
                                         当天货源数目:

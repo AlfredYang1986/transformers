@@ -145,11 +145,11 @@
 
             var contact = $('input[data-input="contact"]').val();
             var regName = /^[\u4e00-\u9fa5]{0,}$/; 
-            result &= validate('input[data-input="contact"]', hasInput(contact) && regName.text(contact), 'div[data-name="contact-error"]');
+            result &= validate('input[data-input="contact"]', hasInput(contact) && regName.test(contact), 'div[data-name="contact-error"]');
 
             var phone_no = $('input[data-input="phone-no"]').val();
             var regPhone = /^1[3|4|5|7|8]\d{9}$/;
-            result &= validate('input[data-input="phone-no"]', hasInput(phone_no) && regPhone.text(phone_no), 'div[data-name="phone-no-error"]');
+            result &= validate('input[data-input="phone-no"]', hasInput(phone_no) && regPhone.test(phone_no), 'div[data-name="phone-no-error"]');
 
             var query_object = new Object();
             query_object['token'] = "@{token}";
@@ -170,7 +170,7 @@
                     success: function (data) {
                         if (data.status == "ok") {
                             alert("success");
-                            location.href = "/company/sentInfo"
+                            location.href = "/company/sentinfo"
                         } else {
                             alert(data.error.message);
                         }

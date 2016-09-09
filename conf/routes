@@ -75,7 +75,8 @@ GET		/company/account/validateinfo/:t 								controllers.CompanyIndustryControl
 GET		/company/account/validateinfo   								controllers.CompanyIndustryController.ciLoginAccountValidateInfo(t="")
 GET		/company/companylist/:t            								controllers.CompanyIndustryController.ciLoginCompanyList(t)
 GET		/company/companylist            								controllers.CompanyIndustryController.ciLoginCompanyList(t="")
-GET		/company/completeinfo           								controllers.CompanyIndustryController.ciLoginCompleteInfo
+GET		/company/completeinfo/:t           								controllers.CompanyIndustryController.ciLoginCompleteInfo(t)
+GET		/company/completeinfo           								controllers.CompanyIndustryController.ciLoginCompleteInfo(t="")
 GET		/company/completeproduct        								controllers.CompanyIndustryController.ciLoginCompleteProduct
 GET		/company/driverlist/:t        									controllers.CompanyIndustryController.ciLoginDriverList(t)
 GET		/company/driverlist												controllers.CompanyIndustryController.ciLoginDriverList(t="")

@@ -75,7 +75,7 @@
                                                         <button onclick={"updateInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: 1px solid #008bdc">保存并发布</button> 
                                                     </div>                 
                                                     <div class="col-sm-2 col-sm-offset-1">
-                                                        <button class="form-control" style="border: 1px solid #008bdc">信息完成</button>
+                                                        <button class="form-control" style="border: 1px solid #008bdc" onclick={"completeInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"}>信息完成</button>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <button onclick={"deleteInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
@@ -105,8 +105,34 @@
             $('div[data-name="' + edit + '"]').find('.note-editable').html(html);
         }
 
+        function completeInfo(info_id) {
+            var query_object = new Object();
+            query_object['info_id'] = info_id;
+            query_object['status'] = 1;
+
+            $.ajax({
+                url: "/data/company/info/update",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {
+                        alert("success");
+                        location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
         function updateInfo(info_id) {
-            alert(info_id);
+
             var content = $('div[data-name="edit' + info_id + '"]').find('.note-editable').html();
             var title = $('div[data-title="' + info_id + '"]').val();
             var contact = $('div[data-contact="' + info_id + '"]').val();

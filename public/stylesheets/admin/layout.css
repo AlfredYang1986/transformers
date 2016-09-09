@@ -84,7 +84,7 @@
 #page-header .user-account-btn > a.user-profile span {
     margin-right: 10px;
     float: left;
-    width: 96px;
+    /*width: 96px;*/
 }
 #page-header .user-account-btn > a.user-profile .glyph-icon {
     width: 28px;

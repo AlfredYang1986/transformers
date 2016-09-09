@@ -1,6 +1,6 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name : String)(infos : List[play.api.libs.json.JsValue])
 
-@ci_login_index_sliders("易聚货公司厂家平台")("") {
+@ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
     
 } {
 
@@ -19,91 +19,109 @@
                                 #可以写文案
                             </h3>
 
+                            @{ infos map { iter => 
                             <div class="example-box-wrapper"> 
-                                                <div class="row">
+                                <div class="row">
+                                    <div class="col-sm-12">
 
-                        <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-4" style="font-size:15px">
+                                                <label>{(iter \ "year").asOpt[Int].get}年{(iter \ "month").asOpt[Int].get}月{(iter \ "day").asOpt[Int].get}日</label>
+                                            </div>
 
-                            <div class="row">
+                                            <div class="col-sm-6" style="font-size:15px">
+                                                <label>{(iter \ "title").asOpt[String].get}</label>
+                                            </div>
 
-                            <div class="col-sm-4" style="font-size:15px">
-                                <label>2016年6月30日</label>
-                            </div>
-  
-                            <div class="col-sm-6" style="font-size:15px">
-                                <label>这里显示的是该条信息的标题</label>
-                            </div>
+                                            <button type="button" onclick={"setDefault(\""+{"edit"+{(iter \ "info_id").asOpt[String].get}} + "\", \"" + {(iter \ "content").asOpt[String].get}+"\")"} class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#"+{(iter \ "info_id").asOpt[String].get}} style="font-size:15px">
+                                                查看详情
+                                            </button>
+                                        </div>   
+                                        
+                                        <div id={(iter \ "info_id").asOpt[String].get} class="collapse">
+                                            <div class="panel">
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal bordered-row">
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">标题</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" data-title={(iter \ "info_id").asOpt[String].get} value={(iter \ "title").asOpt[String].get} />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">正文</label>
+                                                            <div class="col-sm-8" data-name={"edit"+{(iter \ "info_id").asOpt[String].get}}>
+                                                                <div class="wysiwyg-editor"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">联系人</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" data-contact={(iter \ "info_id").asOpt[String].get} value={(iter \ "contact").asOpt[String].get} />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">联系人电话</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" data-phone={(iter \ "title").asOpt[String].get} value={(iter \ "phone_no").asOpt[String].get} />
+                                                            </div>
+                                                        </div>
 
-                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#depart-view" style="font-size:15px">
-                                查看详情
-                            </button>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">其他信息状态设置</label>
 
-                            </div>   
-                            <div id="depart-view" class="collapse">
-
-                                <div class="panel">
-
-                                    <div class="panel-body">
-                            <div class="form-horizontal bordered-row">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">标题</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" disabled="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">正文</label>
-                                    <div class="col-sm-8" style="pointer-events: none;">
-                                        <div class="wysiwyg-editor"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">联系人</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" disabled="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">联系人电话</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" disabled="true">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">其他信息状态设置</label>
-
-                                    <div class="col-sm-6 col-sm-offset-1">
-                                        <button class="form-control" style="border: 1px solid #008bdc;">重新发布信息</button> 
-                                    </div> 
-<!--
-                                    <div class="col-sm-3 col-sm-offset-1">
-                                        <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 彻底删除</button>
-                                    </div>
--->
-                                </div>  
-
+                                                            <div class="col-sm-6 col-sm-offset-1">
+                                                                <button class="form-control" style="border: 1px solid #008bdc;" onclick={"resetInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"}>重新发布信息</button> 
+                                                            </div> 
+                                                        </div>             
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                </div>
-                                </div>
                             </div>
+                            }}
                         </div>
                     </div>
-
-
-
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 } {
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function setDefault(edit, html) {
+            $('div[data-name="' + edit + '"]').find('.note-editable').html(html);
+        }
+
+        function resetInfo(info_id) {
+            var query_object = new Object();
+            query_object['info_id'] = info_id;
+            query_object['status'] = 0;
+
+            $.ajax({
+                url: "/data/company/info/update",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {
+                        alert("success");
+                        location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
     </script>
 }
