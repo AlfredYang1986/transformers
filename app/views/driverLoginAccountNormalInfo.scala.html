@@ -81,11 +81,23 @@
                                         @{(vc \ "vehicle_length").asOpt[List[Double]].get map { x =>
                                         <div class="col-sm-2 checkbox">
                                             {
-                                            val y = (driver \ "vehicle_length").asOpt[List[Float]].get
-                                            y.filter(v => x - v < 0.0001 && x - v > - 0.0001) match {
-                                                case Nil => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
-                                                case _ => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
-                                            }}
+                                            (driver \ "vehicle_length").asOpt[List[Float]] match {
+                                                case None => {
+                                                    val v = (driver \ "vehicle_length")
+                                                    if (x - v < 0.0001 && x - v > - 0.0001) {
+                                                        <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
+                                                    } else {
+                                                        <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                    }
+                                                }
+                                                case Some(y) => {
+                                                    y.filter(v => x - v < 0.0001 && x - v > - 0.0001) match {
+                                                        case Nil => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                        case _ => <label><input data-name="vehicle-length" type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
+                                                    }}
+                                                }
+                                            }
+                                            
                                         </div>
                                         }}
                                     </div>
