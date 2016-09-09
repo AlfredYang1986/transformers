@@ -568,7 +568,8 @@
                     success: function (data) {
                         if (data.status == "ok") {                                          
                         //     alert("注册成功审核！");
-                             alert(data);
+                             alert("success");
+                             location.href = "/company/sentproduct"
                         } else {
                             alert(data.error.message);
                         }

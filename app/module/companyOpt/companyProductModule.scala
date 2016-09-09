@@ -25,7 +25,7 @@ import module.sercurity.Sercurity
 
 object productStatus {  
     case object published extends productStatusDefines(0, "approved")
-    case object done extends productStatusDefines(0, "progress")
+    case object done extends productStatusDefines(1, "progress")
 }
 
 sealed abstract class productStatusDefines(val t : Int, val des : String)
@@ -111,7 +111,7 @@ object companyProductModule {
         try {
             val product_id = (data \ "product_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             
-            (from db() in "product" where ("product_id" -> product_id) select (x => x)).toList match {
+            (from db() in "products" where ("product_id" -> product_id) select (x => x)).toList match {
               case head :: Nil => {
                   (data \ "origin").asOpt[JsValue].map { x =>
                       val origin_builder = MongoDBObject.newBuilder
@@ -136,12 +136,12 @@ object companyProductModule {
                   (data \ "weight").asOpt[Float].map (x => head += "weight" -> x.asInstanceOf[Number]).getOrElse(Unit)
                   (data \ "volume").asOpt[Float].map (x => head += "volume" -> x.asInstanceOf[Number]).getOrElse(Unit)
                   
-                  (data \ "date_requirement").asOpt[String].map (x => "data_requirement" -> x).getOrElse(Unit)
-                  (data \ "notes").asOpt[String].map (x => "notes" -> x).getOrElse(Unit)
+                  (data \ "date_requirement").asOpt[String].map (x => head += "date_requirement" -> x).getOrElse(Unit)
+                  (data \ "notes").asOpt[String].map (x => head += "notes" -> x).getOrElse(Unit)
                  
-                  (data \ "status").asOpt[Int].map (x => "status" -> x.asInstanceOf[Number]).getOrElse(Unit)
+                  (data \ "status").asOpt[Int].map (x => head += "status" -> x.asInstanceOf[Number]).getOrElse(Unit)
       
-                  val open_id = head.getAs[String]("opend_id").get
+                  val open_id = head.getAs[String]("open_id").get
                   val product_name = (data \ "product_name").asOpt[String].map (x => Some(x)).getOrElse(None)
                   product_name match {
                     case Some(x) => {
@@ -204,12 +204,12 @@ object companyProductModule {
         
         def floatConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
           case None => None
-          case Some(x) => Some(key $eq value.asInstanceOf[Float])
+          case Some(x) => Some(key $eq x.asInstanceOf[Float])
         }
           
         def intConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
           case None => None
-          case Some(x) => Some(key $eq value.asInstanceOf[Int])
+          case Some(x) => Some(key $eq x.asInstanceOf[Int])
         }
         
         def ListConditions(key : String, value : String) : Option[DBObject] = {
@@ -230,18 +230,18 @@ object companyProductModule {
         
         def conditionsAcc(o : Option[DBObject], keys : List[String], func : (String, JsValue) => Option[DBObject]) : Option[DBObject] = keys match {
           case Nil => o
-          case head :: lst => 
-            val n =
-              o match {
-                case None => func(head, (data \ head))
-                case Some(x) => {
-                    func(head, (data \ head)) match {
-                      case None => o
-                      case Some(y) => Some($and(x, y))
+          case head :: lst => {
+            val n = o match {
+                        case None => func(head, (data \ head))
+                        case Some(x) => {
+                            func(head, (data \ head)) match {
+                              case None => o
+                              case Some(y) => Some($and(x, y))
+                            }
+                        }
                     }
-                }
-            }
             conditionsAcc(n, lst, func)
+            }
         }
         
         def conditions : Option[DBObject] = {
