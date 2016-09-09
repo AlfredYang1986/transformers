@@ -136,7 +136,6 @@ object DriverController extends Controller {
             val info_lst = (companyInfoModule.queryInfo(toJson("")) \ "result").asOpt[List[JsValue]].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
-                val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
                 Ok(views.html.driverLoginRecruitment(token)(open_id)(name)(info_lst))
             }
             else Redirect("/index")
