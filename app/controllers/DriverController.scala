@@ -35,10 +35,11 @@ object DriverController extends Controller {
             
             val open_id = (driver \ "open_id").asOpt[String].get
             val name = (driver \ "driver_name").asOpt[String].get
-            
+
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
                 val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.driverLoginIndex(com_lst)(token)(open_id)(name))
+                val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
+                Ok(views.html.driverLoginIndex(com_lst)(token)(open_id)(name)(following_lst))
             }
             else Redirect("/index")
         }
@@ -163,7 +164,7 @@ object DriverController extends Controller {
         else {
             val user = AuthModule.queryUserWithToken(token)
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
-                Ok(views.html.driverLoginAccountFollowedCompany(token)(open_id)(name)(cp))
+                Ok(views.html.driverLoginAccountFollowedCompany(token)(open_id)(name)(cp)(following_lst))
             }
             else Redirect("/index")
         }
@@ -189,7 +190,8 @@ object DriverController extends Controller {
         else {
             val user = AuthModule.queryUserWithToken(token)
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
-                Ok(views.html.driverLoginSearchCompany(token)(open_id)(name)(following_lst))
+                val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.driverLoginSearchCompany(token)(open_id)(name)(following_lst)(com_lst))
             }
             else Redirect("/index")
         }

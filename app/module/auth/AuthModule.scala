@@ -337,7 +337,7 @@ object AuthModule {
                 (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
     //            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
-                (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> (tmp.asInstanceOf[Number] :: Nil)).getOrElse(x += "vehicle_length" -> MongoDBList.newBuilder.result)
+                (data \ "vehicle_length").asOpt[List[Float]].map (tmp => x += "vehicle_length" -> tmp).getOrElse(x += "vehicle_length" -> MongoDBList.newBuilder.result)
                 (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
                 (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
                 (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))

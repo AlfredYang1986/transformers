@@ -1,4 +1,4 @@
-@(companies : List[play.api.libs.json.JsValue])(token : String)(open_id : String)(screen_name : String)
+@(companies : List[play.api.libs.json.JsValue])(token : String)(open_id : String)(screen_name : String)(following_lst : List[String])
 
 @driver_login_index_sliders("易聚货驾驶员平台")(screen_name)  {
     
@@ -21,15 +21,23 @@
                 @{ (companies zipWithIndex) map { item => 
                 val iter = item._1
                 val index = item._2
+                println(following_lst)
                 <div class="panel">
                     <div class="panel-body">
                         <h4 class="title-hero">
-                        { (iter \ "company_name").asOpt[String].get } <a href="" class="" style="color:#008bdc"><i class="glyph-icon icon-star"></i>收藏</a>
+                        { (iter \ "company_name").asOpt[String].get } 
+                        {
+                            if (following_lst.contains(open_id)) {
+                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"unCollectCompany(\"" + open_id + "\")"} ><i class="glyph-icon icon-star"></i>已收藏</button>
+                            } else {
+                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"collectCompany(\"" + open_id + "\")"} ><i class="glyph-icon icon-star"></i>收藏</button>
+                            }
+                        }
                         </h4>
                         <div class="example-box-wrapper">
                             <div id={"followed_" + index}>
-                                <a href={"#tab1-" + index} data-toggle="tab" class="btn bg-blue" style="font-size:12px;">公司信息</a>
-                                <a href={"#tab2-" + index} data-toggle="tab" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
+                                <a href={"#tab1-" + index} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;">公司信息</a>
+                                <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
 
 
                                 <div class="tab-content">
@@ -470,5 +478,56 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function collectCompany(open_id) {
+
+            var query_object = new Object();
+            query_object["target_open_id"] = open_id;
+            query_object["driver_open_id"] = "@{open_id}";
+
+            $.ajax({
+                url: "/data/driver/collect/push",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") { 
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function unCollectCompany(open_id) {
+            var query_object = new Object();
+            query_object["target_open_id"] = open_id;
+            query_object["driver_open_id"] = "@{open_id}";
+
+            $.ajax({
+                url: "/data/driver/collect/pop",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") { 
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
 	</script>
 }

@@ -83,7 +83,8 @@
                     cache: false,
                     success: function (data) {
                         if (data.status == "ok") {
-                             location.reload();
+                            alert("success");
+                            location.reload();
                         } else {
                             alert(data.error.message);
                         }

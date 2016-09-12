@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 
 import module.common.xml.xmlOpt
+import module.system.config.ConfigModule
 
 object RegisterController extends Controller {
     /**
@@ -17,7 +18,8 @@ object RegisterController extends Controller {
      * certificate Driver
      */
     def registerDriver = Action {
-        Ok(views.html.registerDriver(xmlOpt.allCities))
+        val vc = ConfigModule.configAllVehicles
+        Ok(views.html.registerDriver(xmlOpt.allCities)(vc))
     }
         
     /**
