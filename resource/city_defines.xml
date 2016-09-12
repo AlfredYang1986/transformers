@@ -1,12 +1,130 @@
 <options>
-	<province name="台湾">
-		<city name="台北" />
-		<city name="台南" />
-		<city name="其他" />
+
+	<province name="中国全境">
+		<city name="中国全境">
+			<district name="中国全境" />
+		</city>
 	</province>
 
-	<province name="马来西亚">
-		<city name="马来西亚" />
+	<province name="浙江省">
+		<city name="杭州">
+			<district name="上城区" />
+			<district name="下城区" />
+			<district name="江干区" />
+			<district name="拱墅区" />
+			<district name="西湖区" />
+			<district name="滨江区" />
+			<district name="萧山区" />
+			<district name="余杭区" />
+			<district name="桐庐县" />
+			<district name="淳安县" />
+			<district name="建德市" />
+			<district name="富阳区" />
+			<district name="临安市" />
+		</city>
+
+		<city name="湖州">
+			<district name="吴兴区" />
+			<district name="南浔区" />
+			<district name="德清县" />
+			<district name="长兴县" />
+			<district name="安吉县" />
+		</city>	
+
+		<city name="嘉兴">
+			<district name="南湖区" />
+			<district name="秀洲区" />
+			<district name="嘉善县" />
+			<district name="海盐县" />
+			<district name="海宁市" />
+			<district name="平湖市" />
+			<district name="桐乡市" />
+		</city>
+
+		<city name="舟山">
+			<district name="定海区" />
+			<district name="普陀区" />
+			<district name="岱山县" />
+			<district name="嵊泗县" />
+		</city>
+
+		<city name="宁波">
+			<district name="海曙区" />
+			<district name="江东区" />
+			<district name="江北区" />
+			<district name="北仑区" />
+			<district name="镇海区" />
+			<district name="鄞州区" />
+			<district name="象山县" />
+			<district name="宁海县" />
+			<district name="余姚市" />
+			<district name="慈溪市" />
+			<district name="奉化市" />
+		</city>
+
+		<city name="绍兴">
+			<district name="越城区" />
+			<district name="柯桥区" />
+			<district name="新昌县" />
+			<district name="诸暨市" />
+			<district name="上虞区" />
+			<district name="嵊州市" />
+		</city>
+
+		<city name="金华">
+			<district name="婺城区" />
+			<district name="金东区" />
+			<district name="武义县" />
+			<district name="浦江县" />
+			<district name="磐安县" />
+			<district name="兰溪市" />
+			<district name="义乌市" />
+			<district name="东阳市" />
+			<district name="永康市" />
+		</city>
+
+		<city name="台州">
+			<district name="椒江区" />
+			<district name="黄岩区" />
+			<district name="路桥区" />
+			<district name="玉环县" />
+			<district name="三门县" />
+			<district name="天台县" />
+			<district name="仙居县" />
+			<district name="温岭市" />
+			<district name="临海市" />
+		</city>
+
+		<city name="温州">
+			<district name="鹿城区" />
+			<district name="龙湾区" />
+			<district name="瓯海区" />
+			<district name="洞头区" />
+			<district name="永嘉县" />
+			<district name="平阳县" />
+			<district name="苍南县" />
+			<district name="文成县" />
+			<district name="泰顺县" />
+			<district name="瑞安市" />
+			<district name="乐清市" />
+		</city>
+
+		<city name="丽水">
+			<district name="莲都区" />
+			<district name="青田县" />
+			<district name="缙云县" />
+			<district name="遂昌县" />
+			<district name="松阳县" />
+		</city>
+
+		<city name="衢州">
+			<district name="柯城区" />
+			<district name="衢江区" />
+			<district name="常山县" />
+			<district name="开化县" />
+			<district name="龙游县" />
+			<district name="江山市" />
+		</city>
 	</province>
 
 	<province name="北京">
@@ -993,126 +1111,7 @@
 		</city>
 	</province>
 
-	<province name="浙江省">
-		<city name="杭州">
-			<district name="上城区" />
-			<district name="下城区" />
-			<district name="江干区" />
-			<district name="拱墅区" />
-			<district name="西湖区" />
-			<district name="滨江区" />
-			<district name="萧山区" />
-			<district name="余杭区" />
-			<district name="桐庐县" />
-			<district name="淳安县" />
-			<district name="建德市" />
-			<district name="富阳区" />
-			<district name="临安市" />
-		</city>
 
-		<city name="湖州">
-			<district name="吴兴区" />
-			<district name="南浔区" />
-			<district name="德清县" />
-			<district name="长兴县" />
-			<district name="安吉县" />
-		</city>	
-
-		<city name="嘉兴">
-			<district name="南湖区" />
-			<district name="秀洲区" />
-			<district name="嘉善县" />
-			<district name="海盐县" />
-			<district name="海宁市" />
-			<district name="平湖市" />
-			<district name="桐乡市" />
-		</city>
-
-		<city name="舟山">
-			<district name="定海区" />
-			<district name="普陀区" />
-			<district name="岱山县" />
-			<district name="嵊泗县" />
-		</city>
-
-		<city name="宁波">
-			<district name="海曙区" />
-			<district name="江东区" />
-			<district name="江北区" />
-			<district name="北仑区" />
-			<district name="镇海区" />
-			<district name="鄞州区" />
-			<district name="象山县" />
-			<district name="宁海县" />
-			<district name="余姚市" />
-			<district name="慈溪市" />
-			<district name="奉化市" />
-		</city>
-
-		<city name="绍兴">
-			<district name="越城区" />
-			<district name="柯桥区" />
-			<district name="新昌县" />
-			<district name="诸暨市" />
-			<district name="上虞区" />
-			<district name="嵊州市" />
-		</city>
-
-		<city name="金华">
-			<district name="婺城区" />
-			<district name="金东区" />
-			<district name="武义县" />
-			<district name="浦江县" />
-			<district name="磐安县" />
-			<district name="兰溪市" />
-			<district name="义乌市" />
-			<district name="东阳市" />
-			<district name="永康市" />
-		</city>
-
-		<city name="台州">
-			<district name="椒江区" />
-			<district name="黄岩区" />
-			<district name="路桥区" />
-			<district name="玉环县" />
-			<district name="三门县" />
-			<district name="天台县" />
-			<district name="仙居县" />
-			<district name="温岭市" />
-			<district name="临海市" />
-		</city>
-
-		<city name="温州">
-			<district name="鹿城区" />
-			<district name="龙湾区" />
-			<district name="瓯海区" />
-			<district name="洞头区" />
-			<district name="永嘉县" />
-			<district name="平阳县" />
-			<district name="苍南县" />
-			<district name="文成县" />
-			<district name="泰顺县" />
-			<district name="瑞安市" />
-			<district name="乐清市" />
-		</city>
-
-		<city name="丽水">
-			<district name="莲都区" />
-			<district name="青田县" />
-			<district name="缙云县" />
-			<district name="遂昌县" />
-			<district name="松阳县" />
-		</city>
-
-		<city name="衢州">
-			<district name="柯城区" />
-			<district name="衢江区" />
-			<district name="常山县" />
-			<district name="开化县" />
-			<district name="龙游县" />
-			<district name="江山市" />
-		</city>
-	</province>
 
 	<province name="安徽省">
 		<city name="合肥">
@@ -4254,4 +4253,9 @@
 		</city>
 	</province>
 
+	<province name="台湾">
+		<city name="台北" />
+		<city name="台南" />
+		<city name="其他" />
+	</province>
 </options>

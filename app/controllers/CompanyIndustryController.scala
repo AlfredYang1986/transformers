@@ -270,11 +270,20 @@ object CompanyIndustryController extends Controller {
         if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
         else Unit
         
+        val user = AuthModule.queryUserWithToken(token)
+        val company = AuthModule.queryInstanceWithToken(token)
+
+        val open_id = (company \ "open_id").asOpt[String].get
+        val name = (company \ "company_name").asOpt[String].get
+        val vc = ConfigModule.configAllVehicles
+        val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
+        val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+        
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
-            val user = AuthModule.queryUserWithToken(token)
+            val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginDriverList(xmlOpt.allCities))
+                Ok(views.html.ciLoginDriverList(token)(open_id)(name)(dir_lst)(xmlOpt.allCities)(vc))
             }
             else Redirect("/index")
         }
@@ -373,7 +382,7 @@ object CompanyIndustryController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].get
+                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
                 Ok(views.html.ciLoginSentInfo(token)(open_id)(name)(infos))
             }
             else Redirect("/index")
@@ -399,7 +408,7 @@ object CompanyIndustryController extends Controller {
             val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
             val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
             
-            val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> toJson(open_id), "status" ->toJson(0) ))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
             val vc = ConfigModule.configAllVehicles
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {

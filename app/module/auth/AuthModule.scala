@@ -337,7 +337,7 @@ object AuthModule {
                 (data \ "driver_name").asOpt[String].map (tmp => x += "driver_name" -> tmp).getOrElse(throw new Exception("input driver name"))
     //            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
-                (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> tmp.asInstanceOf[Number]).getOrElse(x += "vehicle_length" -> 0)
+                (data \ "vehicle_length").asOpt[Int].map (tmp => x += "vehicle_length" -> (tmp.asInstanceOf[Number] :: Nil)).getOrElse(x += "vehicle_length" -> MongoDBList.newBuilder.result)
                 (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
                 (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
                 (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))
@@ -376,6 +376,7 @@ object AuthModule {
             toJson(Map("screen_name" -> toJson(x.getAs[String]("screen_name").get),
                        "user_id" -> toJson(x.getAs[String]("user_id").get),
                        "social_id" -> toJson(x.getAs[String]("social_id").map (y => y).getOrElse("")),
+                       "auth" -> toJson(x.getAs[Number]("auth").map (y => y.intValue).getOrElse(0)),
                        "phone" -> toJson(x.getAs[String]("indicate").map (y => y).getOrElse(""))))}
     }
     
