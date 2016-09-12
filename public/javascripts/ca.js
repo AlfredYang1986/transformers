@@ -33,7 +33,7 @@
         msgFilePreviewAborted: 'Previsualització de l\'arxiu "{name}" cancel·lada.',
         msgFilePreviewError: 'S\'ha produït un error mentre es llegia el fitxer "{name}".',
         msgInvalidFileType: 'Tipus de fitxer no vàlid per a "{name}". Només arxius "{types}" són permesos.',
-        msgInvalidFileExtension: 'Extensió de fitxer no vàlid per a "{name}". Només arxius "{extensions}" són permesos.',
+        msgInvalidFileExtension: '上传图片"{name}"，格式错误，只能为如下格式"{extensions}" ',
         msgUploadAborted: 'La càrrega d\'arxius s\'ha cancel·lat',
         msgValidationError: 'Error de validació',
         msgLoading: 'Pujant fitxer {index} de {files} &hellip;',
