@@ -42,6 +42,10 @@ object authTypes {  // auth  indicate which account
     case object companyOthers extends authTypeDefines(11, "company others")
     case object companyMaster extends authTypeDefines(12, "company master")
     
+    case object speicalwayBase extends authTypeDefines(20, "speical base")
+    case object speicalwayOther extends authTypeDefines(21, "speical others")
+    case object speicalwayMaster extends authTypeDefines(22, "speical master")
+    
     case object adminBase extends authTypeDefines(100, "admin base")
     case object admin extends authTypeDefines(101, "admin")
     case object adminMaster extends authTypeDefines(102, "admin master")
@@ -205,6 +209,7 @@ object AuthModule {
                       val storage = MongoDBObject.newBuilder
                       (iter \ "province").asOpt[String].map (tmp => storage += "province" -> tmp).getOrElse(storage += "provice" -> "")
                       (iter \ "city").asOpt[String].map (tmp => storage += "city" -> tmp).getOrElse(storage += "city" -> "")
+                      (iter \ "district").asOpt[String].map (tmp => storage += "district" -> tmp).getOrElse(storage += "district" -> "")
                       (iter \ "address").asOpt[String].map (tmp => storage += "address" -> tmp).getOrElse(storage += "address" -> "")
                       lst += storage.result
                 }
@@ -250,7 +255,8 @@ object AuthModule {
             val user_id = Sercurity.md5Hash(name + email + Sercurity.getTimeSpanWithMillSeconds)
             x += "user_id" -> user_id
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
-            x += "auth" -> authTypes.companyMaster.t.asInstanceOf[Number]
+            x += "auth" -> (if (company_type == specialway.t) authTypes.speicalwayMaster.t.asInstanceOf[Number]
+                           else authTypes.companyMaster.t.asInstanceOf[Number])
             x += "indicate" -> name
             x += "pwd" -> "Passw0rd"
             x += "screen_name" -> "company master"
@@ -566,6 +572,7 @@ object AuthModule {
                 "special_storage" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("special_storage").get.toList.asInstanceOf[List[BasicDBObject]].map (tmp => 
                     toJson(Map("province" -> tmp.getAs[String]("province").get,
                                "city" -> tmp.getAs[String]("city").get,
+                               "district" -> tmp.getAs[String]("district").map (x => x).getOrElse(""),
                                "address" -> tmp.getAs[String]("address").get)))),
                 "special_lines" -> toJson(x.getAs[MongoDBObject]("detail").get.getAs[MongoDBList]("special_lines").get.toList.asInstanceOf[List[BasicDBObject]].map (tmp => 
                     toJson(Map("origin_province" -> tmp.getAs[String]("origin_province").get,
@@ -740,8 +747,14 @@ object AuthModule {
             (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
               case head :: Nil => {
                   (data \ "legal_person").asOpt[String].map (x => head += "legal_person" -> x).getOrElse(Unit)
+                  (data \ "legal_person_id").asOpt[String].map (x => head += "legal_person_id" -> x).getOrElse(Unit)
+                  (data \ "address").asOpt[String].map (x => head += "address" -> x).getOrElse(Unit)
+                  (data \ "phone_no").asOpt[String].map (x => head += "phone_no" -> x).getOrElse(Unit)
                   (data \ "cell_phone").asOpt[String].map (x => head += "cell_phone" -> x).getOrElse(Unit)
                   (data \ "description").asOpt[String].map (x => head += "description" -> x).getOrElse(Unit)
+                  
+                  (data \ "cell_phone_owner").asOpt[String].map (x => head += "cell_phone_owner" -> x).getOrElse(Unit)
+                  (data \ "cell_phone").asOpt[String].map (x => head += "cell_phone" -> x).getOrElse(Unit)
 
                   val lines = MongoDBList.newBuilder
                   var bChangeLines = false
@@ -772,6 +785,29 @@ object AuthModule {
                         (data \ "web").asOpt[String].map (x => detail += "special_web" -> x).getOrElse(Unit)
                         (data \ "email").asOpt[String].map (x => detail += "special_email" -> x).getOrElse(Unit)
                         (data \ "fax").asOpt[String].map (x => detail += "special_fax" -> x).getOrElse(Unit)
+                        
+                        (data \ "special_occation").asOpt[Int].map (x => head += "special_occation" -> x.asInstanceOf[Number]).getOrElse(Unit)
+                        (data \ "special_storage").asOpt[List[JsValue]].map { lst => 
+                            detail += "special_storage" -> (lst map { x =>
+                                val sb = MongoDBObject.newBuilder
+                                sb += "province" -> (x \ "province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                                sb += "city" -> (x \ "city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                                sb += "district" -> (x \ "district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                                sb += "address" -> (x \ "address").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                                sb.result
+                            })
+                        }.getOrElse(Unit)
+                        (data \ "special_lines").asOpt[List[JsValue]].map { lst =>
+                            detail += "special_lines" -> (lst map { x => 
+                                val sb = MongoDBObject.newBuilder
+                                sb += "origin_province" -> (x \ "origin_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input")) 
+                                sb += "origin_city" -> (x \ "origin_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input")) 
+                                sb += "destination_province" -> (x \ "destination_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input")) 
+                                sb += "destination_city" -> (x \ "destination_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input")) 
+                                sb.result
+                            })
+                        }.getOrElse(Unit)
+                        (data \ "vehicle").asOpt[List[String]].map (lst => detail += "vehicle" -> lst).getOrElse(Unit)
                     }
                   }
                   head += "detail" -> detail

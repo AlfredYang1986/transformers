@@ -1,10 +1,10 @@
-@(message: String)
+@(token: String)(open_id : String)(company_name : String)(user_lst : List[play.api.libs.json.JsValue])
 
-@sw_login_index_sliders("易聚货专线")  {
+@sw_login_index_sliders("易聚货专线")(company_name)  {
     
 } {
 
-    <div id="page-content-wrapper">
+      <div id="page-content-wrapper">
         <div id="page-content">
             <div class="container">
 
@@ -23,60 +23,60 @@
                             <div class="col-sm-12">
                                 <div class="row">
 
-                                    <form class="form-horizontal bordered-row">
+                                    <div class="form-horizontal bordered-row">
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">添加时请注意分账号没有修改公司信息权限</label>
                                             <div class="col-sm-5 col-sm-offset-1">
                                             <button type="button" class="col-sm-2 col-xs-12 form-control" data-toggle="collapse" data-target="#add-new" style="font-size:15px; border:1px solid #008bdc">
-                                        添加分账号
-                                    </button>
+                                                添加分账号
+                                            </button>
                                             </div>
                                         </div>              
-                                    </form>
+                                    </div>
 
                                 </div>
 
                                 <div id="add-new" class="collapse">
                                     <div class="panel">
                                         <div class="panel-body">
-                                            <form class="form-horizontal bordered-row">
+                                            <div class="form-horizontal bordered-row">
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">运营者姓名</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="screen-name-input" class="form-control" /> 
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">身份证号码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="social-id-input" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">手机授权账号信息</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" data-name="phone-input" class="form-control" />
                                                     </div>
                                                 </div>                                    
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">输入登陆密码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="password" data-name="pwd" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">再次输入登陆密码</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" class="form-control">
+                                                        <input type="password" data-name="pwd2" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-center">
                                                     <label class="col-sm-2 control-label"></label>
-                                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important">
+                                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="pushSubuser()">
                                                         提交分账号
                                                     </button>
                                                 </div>              
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -86,90 +86,158 @@
                 </div>
             </div>
 
-
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="example-box-wrapper">
-                        <form class="form-horizontal bordered-row">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">运营者姓名</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="张三">
+            @{ (user_lst zipWithIndex) map { x =>
+                val iter  = x._1
+                val index = x._2
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row" id={"user-lst-" + index}>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">运营者姓名</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" data-name={"screen-name-" + index} value={(iter \ "screen_name").asOpt[String].get} />
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">身份证号码</label>
+                                    <div class="col-sm-8">
+                                        <label class="form-control">{(iter \ "social_id").asOpt[String].get}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">手机授权账号信息</label>
+                                    <div class="col-sm-8">
+                                    {if ((iter \ "auth").asOpt[Int].get == 21) {
+                                        <input type="text" class="form-control" data-name={"phone-" + index} value={(iter \ "phone").asOpt[String].get} />
+                                    } else {
+                                        <input type="text" class="form-control" data-name={"phone-" + index} />
+                                    }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                        <button class="form-control" style="border: 1px solid #008bdc" onclick={"updateSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} >保存</button> 
+                                    </div>
+                                    {if ((iter \ "auth").asOpt[Int].get == 21) {
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                        <button class="form-control" style="border: none; color:#848484;" onclick={"popSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} ><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                    </div>
+                                    }}
+                                </div>               
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">身份证号码</label>
-                                <div class="col-sm-8">
-                                    <label class="form-control">123456789123456789</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">手机授权账号信息</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="12345678910">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-4 col-sm-offset-1">
-                                    <button class="form-control" style="border: 1px solid #008bdc">保存</button> 
-                                </div>
-                                
-                                <div class="col-sm-3 col-sm-offset-1">
-                                    <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
-                                </div>
-                            </div>               
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="example-box-wrapper">
-                        <form class="form-horizontal bordered-row">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">运营者姓名</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="李四">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">身份证号码</label>
-                                <div class="col-sm-8">
-                                    <label class="form-control">123456789123456789</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">手机授权账号信息</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="" placeholder="12345678910">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-4 col-sm-offset-1">
-                                    <button class="form-control" style="border: 1px solid #008bdc">保存</button> 
-                                </div>
-                                
-                                <div class="col-sm-3 col-sm-offset-1">
-                                    <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
-                                </div>
-                            </div>               
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
+            }}
             </div>
         </div>
-    </div>
+    </div>   
 
 } {
 	<script type="text/javascript">
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function pushSubuser() {
+            var screen_name = $('input[data-name="screen-name-input"]').val();
+            var phone = $('input[data-name="phone-input"]').val();
+            var social_id = $('input[data-name="social-id-input"]').val();
+            var pwd = $('input[data-name="pwd"]').val();
+
+            var pwd2 = $('input[data-name="pwd2"]').val();
+
+            if (pwd != pwd2) {
+                alert("两次输入密码不一致");
+            } else {
+                var query_object = new Object();
+
+                query_object["screen_name"] = screen_name;
+                query_object["phone"] = phone;
+                query_object["pwd"] = pwd;
+                query_object["open_id"] = "@{open_id}";
+                query_object["social_id"] = social_id;
+
+                $.ajax({
+                    url: "/auth/sub/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        function updateSubuser(index, user_id) {
+            var screen_name = $('input[data-name="screen-name-' + index + '"]').val();
+            var phone = $('input[data-name="phone-' + index + '"]').val();
+            // var social_id = $('input[data-name="social-id-' index + '"]').val();
+
+            var query_object = new Object();
+
+            query_object["screen_name"] = screen_name;
+            query_object["user_id"] = user_id;
+            query_object["phone"] = phone;;
+            query_object["open_id"] = "@{open_id}";
+            // query_object["social_id"] = social_id;
+
+            $.ajax({
+                url: "/auth/sub/update",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function popSubuser(index, user_id) {
+            var query_object = new Object();
+
+            query_object["open_id"] = "@{open_id}";
+            query_object["user_id"] = user_id;
+
+            $.ajax({
+                url: "/auth/sub/pop",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            }); 
+        }
 	</script>
 }

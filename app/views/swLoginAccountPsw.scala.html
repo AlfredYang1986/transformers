@@ -1,56 +1,52 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name : String)
 
-@sw_login_index_sliders("易聚货专线")  {
+@sw_login_index_sliders("易聚货专线")(company_name)  {
     
 } {
 
 <div id="page-content-wrapper">
     <div id="page-content">
         <div class="container">
+            <div id="page-title">
+                <h2>修改密码</h2>
+            </div>
 
-        <div id="page-title">
-            <h2>修改密码</h2>
-        </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <h3 class="title-hero">
+                    可以加文案
+                    </h3>
+                    <div class="example-box-wrapper">
+                        <div class="form-horizontal bordered-row">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">输入旧密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" data-name="old" placeholder="输入旧密码" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">输入新密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" data-name="new1" placeholder="输入新密码" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">再次输入新密码</label>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control" data-name="new2" placeholder="再次输入新密码" />
+                                </div>
+                            </div>
 
-        <div class="panel">
-            <div class="panel-body">
-                <h3 class="title-hero">
-                可以加文案
-                </h3>
-                <div class="example-box-wrapper">
-                    <div class="form-horizontal bordered-row">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">输入旧密码</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="" placeholder="输入旧密码">
-                            </div>
+                            <div class="form-group text-center">
+                                <label class="col-sm-2 control-label"></label>
+                                <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="resetPwd()">
+                                    保存
+                                </button>
+                            </div>             
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">输入新密码</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="" placeholder="输入新密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">再次输入新密码</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" id="" placeholder="再次输入新密码">
-                            </div>
-                        </div>
-
-                        <div class="form-group text-center">
-                            <label class="col-sm-2 control-label"></label>
-                            <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important">
-                                保存
-                            </button>
-                        </div>             
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
         </div>
     </div>
 </div>
@@ -60,5 +56,41 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function resetPwd() {
+            var old = $('input[data-name="old"]').val();
+            var new1 = $('input[data-name="new1"]').val();
+            var new2 = $('input[data-name="new2"]').val();
+
+            if (new1 != new2) {
+                alert("两次输入不一样");
+            } else {
+
+                var query_object = new Object();
+                query_object["old"] = old;
+                query_object["pwd"] = new1;
+                query_object["token"] = "@{token}";
+                query_object["open_id"] = "@{open_id}";
+
+                $.ajax({
+                    url: "/auth/pwd/reset",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             alert("修改成功");
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
     </script>
 }

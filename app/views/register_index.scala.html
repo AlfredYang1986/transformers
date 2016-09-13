@@ -547,8 +547,8 @@
 						<div class="special-storage" style="min-height: 40px !important;"> 
 							
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
-									<option selected disabled>请选择省区</option>
+								<select class="form-control" data-name="province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+									<option selected disabled>请选择省</option>
 									@{cities map { iter => 
 										<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
 									}};
@@ -556,7 +556,7 @@
 							</div>
 
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
+								<select class="form-control" data-name="city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
 									<option selected disabled data-filter="choice" >请选择市区</option>
 									@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 										<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
@@ -565,7 +565,7 @@
 							</div>
 
 							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name='origin-district' data-index='2'>
+								<select class="form-control" data-name='district' data-index='2'>
 									<option selected disabled data-filter="choice" >请选择区</option>
 									@{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
 										(inner \ "districts").asOpt[List[String]].get map { x => 
@@ -1118,31 +1118,34 @@
 			var storage_lst = [];
 			$.each($('.special-storage'), function( index, value ) {
 				var province = $(this).find('select[data-name="province"]').val();
-				result &= validate($(this).find('select[name="province"]'), (typeof(province) != "undefined"));
+				result &= validate($(this).find('select[data-name="province"]'), (typeof(province) != "undefined"));
 
 				var city = $(this).find('select[data-name="city"]').val();
-				result &= validate($(this).find('select[name="city"]'), (typeof(city) != "undefined"));
+				result &= validate($(this).find('select[data-name="city"]'), (typeof(city) != "undefined"));
+
+				var district = $(this).find('select[data-name="district"]').val();
+				result &= validate($(this).find('select[data-name="district"]'), (typeof(district) != "undefined"));
 
 				var address = $(this).find('textarea[data-name="address"]').val();
-				result &= validate($(this).find('select[name="city"]'), hasInput(address));
+				result &= validate($(this).find('select[data-name="address"]'), hasInput(address));
 
 				if (Boolean(result)) {
 					var tmp = new Object();
 					tmp['province'] = province;
 					tmp['city'] = city;
+					tmp['district'] = district;
 					tmp['address'] = address;
 
 					storage_lst.push(tmp);
 				};
 			});
 
-			var final_result = lines_lst.length > 0;
+			var final_result = storage_lst.length > 0;
 			if(final_result) {
-				query_object['special_lines']=lines_lst;
+				query_object['special_storage'] = storage_lst;
 			}
 			validate($(),final_result,'div[data-name="special-storage-error"]');
-
-			query_object['special_storage'] = storage_lst;
+			
 			return Boolean(result);
 		}
 
@@ -1170,8 +1173,7 @@
 
 			result &= getSpecialwayStorage();
 			result &= getSpecialwaylines();
-		/**	
-			result &= getSpecialwayVehicle(); **/
+			result &= getSpecialwayVehicle();
 
 
 

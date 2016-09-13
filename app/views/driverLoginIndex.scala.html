@@ -140,7 +140,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司介绍</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">This is the introduction of the company.</label>
+                                                            <label type="text" class="control-label col-sm-6">{(iter \ "description").asOpt[String].get}</label>
                                                         </div>
                                                     </div>
 

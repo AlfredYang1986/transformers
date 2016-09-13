@@ -309,6 +309,8 @@
 
 		                     if (data.result.auth > 100) {
 		                     	alert("请去admin登陆");
+		                     } else if (data.result.auth > 20) {
+		                     	location.href = "/specialway/index";
 		                     } else if (data.result.auth > 10) {
 		                     	location.href = "/company/index";
 		                     } else if (data.result.auth > 0) {

@@ -113,12 +113,18 @@ POST	/data/company/config/ct/update									controllers.CompanyIndustryControlle
 # POST	/data/company/config/ct/query 									controllers.CompanyIndustryController.companyContactQuery
 
 # special way login pages
-GET		/specialway/index               								controllers.SpecialWayController.swLoginIndex
-GET		/specialway/account/extra       								controllers.SpecialWayController.swLoginAccountExtra
-GET		/specialway/account/normalinfo  								controllers.SpecialWayController.swLoginAccountNormalInfo
-GET		/specialway/account/people      								controllers.SpecialWayController.swLoginAccountPeople
-GET		/specialway/account/psw    										controllers.SpecialWayController.swLoginAccountPsw
-GET		/specialway/account/validateinfo 								controllers.SpecialWayController.swLoginAccountValidateInfo
+GET		/specialway/index/:t               								controllers.SpecialWayController.swLoginIndex(t)
+GET		/specialway/index               								controllers.SpecialWayController.swLoginIndex(t="")
+GET		/specialway/account/extra/:t       								controllers.SpecialWayController.swLoginAccountExtra(t)
+GET		/specialway/account/extra       								controllers.SpecialWayController.swLoginAccountExtra(t="")
+GET		/specialway/account/normalinfo/:t  								controllers.SpecialWayController.swLoginAccountNormalInfo(t)
+GET		/specialway/account/normalinfo  								controllers.SpecialWayController.swLoginAccountNormalInfo(t="")
+GET		/specialway/account/people/:t      								controllers.SpecialWayController.swLoginAccountPeople(t)
+GET		/specialway/account/people      								controllers.SpecialWayController.swLoginAccountPeople(t="")
+GET		/specialway/account/psw/:t   									controllers.SpecialWayController.swLoginAccountPsw(t)
+GET		/specialway/account/psw    										controllers.SpecialWayController.swLoginAccountPsw(t="")
+GET		/specialway/account/validateinfo/:t 							controllers.SpecialWayController.swLoginAccountValidateInfo(t)
+GET		/specialway/account/validateinfo 								controllers.SpecialWayController.swLoginAccountValidateInfo(t="")
 GET		/specialway/companylist         								controllers.SpecialWayController.swLoginCompanyList
 GET		/specialway/completeinfo        								controllers.SpecialWayController.swLoginCompleteInfo
 GET		/specialway/completeproduct     								controllers.SpecialWayController.swLoginCompleteProduct
