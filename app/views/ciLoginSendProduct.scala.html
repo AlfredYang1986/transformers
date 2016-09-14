@@ -25,7 +25,7 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
-                                                <option selected disabled>请选择省区</option>
+                                                <option selected disabled>请选择省</option>
                                                 @{cities map { iter => 
                                                     <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
                                                 }};
@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
-                                                <option selected disabled data-filter="choice" >请选择市区</option>
+                                                <option selected disabled data-filter="choice" >请选择市</option>
                                                 @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                                                     <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
                                                 }}};
