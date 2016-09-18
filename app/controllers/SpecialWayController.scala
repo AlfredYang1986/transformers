@@ -189,8 +189,25 @@ object SpecialWayController extends Controller {
     /**
      * Special Way Login Page
      */
-    def swLoginCompleteInfo = Action {
-        Ok(views.html.swLoginCompleteInfo("Your new application is ready."))
+    def swLoginCompleteInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            val vc = ConfigModule.configAllVehicles
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(1)))) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.swLoginCompleteInfo(token)(open_id)(name)(infos))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -237,8 +254,24 @@ object SpecialWayController extends Controller {
     /**
      * Special Way Login Page
      */
-    def swLoginSendInfo = Action {
-        Ok(views.html.swLoginSendInfo("Your new application is ready."))
+    def swLoginSendInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                Ok(views.html.swLoginSendInfo(token)(open_id)(name))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
@@ -264,7 +297,9 @@ object SpecialWayController extends Controller {
             val vc = ConfigModule.configAllVehicles
             
             if ((user \ "auth").asOpt[Int].get > authTypes.speicalwayBase.t) {
-                Ok(views.html.swLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts)(vc))
+//                Ok(views.html.swLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts)(vc))
+              Ok("请先登陆在进行有效操作")
+//                Ok(views.html.swLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts)(vc))
             }
             else Redirect("/index")
         }
@@ -273,8 +308,25 @@ object SpecialWayController extends Controller {
     /**
      * Special Way Login Page
      */
-    def swLoginSentInfo = Action {
-        Ok(views.html.swLoginSentInfo("Your new application is ready."))
+    def swLoginSentInfo(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.swLoginSentInfo(token)(open_id)(name)(infos))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
