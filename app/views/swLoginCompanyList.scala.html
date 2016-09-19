@@ -259,17 +259,25 @@
                                                 }
                                             </div>
 
-                                            <div class="col-sm-4" style="font-size:15px">
-                                                {(iter \ "product_name").asOpt[String].get}  /  {(iter \ "weight").asOpt[Float].get} 吨  / {(iter \ "volume").asOpt[Float].get} 立方米
-                                            </div>  
+                                            
 
-                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#depart-view-" + index} style="font-size:15px">
+                                            {if ((iter \ "isSpecialWay").asOpt[Int].get == 1) {
+                                                <div class="col-sm-4" style="font-size:15px">
+                                                    专线发布
+                                                </div> 
+                                            } else {
+                                                <div class="col-sm-4" style="font-size:15px">
+                                                    {(iter \ "product_name").asOpt[String].get}  /  {(iter \ "weight").asOpt[Float].get} 吨  / {(iter \ "volume").asOpt[Float].get} 立方米
+                                                </div>  
+                                            }}
+
+                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#" + index} style="font-size:15px">
                                                 查看详情
                                             </button>
 
                                         </div>
 
-                                        <div id={"depart-view-" + index} class="collapse">
+                                        <div id={"" + index} class="collapse">
 
                                             <div class="panel">
 
@@ -289,19 +297,21 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">吨位</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{(iter \ "weight").asOpt[Float].get} 吨</label>
+                                                    {if ((iter \ "isSpecialWay").asOpt[Int].get == 0) {
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">吨位</label>
+                                                            <div class="col-sm-6">
+                                                                <label type="text" class="control-label">{(iter \ "weight").asOpt[Float].get} 吨</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">体积</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{(iter \ "volume").asOpt[Float].get} 立方米</label>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">体积</label>
+                                                            <div class="col-sm-6">
+                                                                <label type="text" class="control-label">{(iter \ "volume").asOpt[Float].get} 立方米</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    }}
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">需求车型</label>
@@ -329,24 +339,26 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">时效需求</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{(iter \ "date_requirement").asOpt[String].get}</label>
+                                                    {if ((iter \ "isSpecialWay").asOpt[Int].get == 0) {
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">时效需求</label>
+                                                            <div class="col-sm-6">
+                                                                <label type="text" class="control-label">{(iter \ "date_requirement").asOpt[String].get}</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">其他备注</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{(iter \ "notes").asOpt[String].get}</label>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">其他备注</label>
+                                                            <div class="col-sm-6">
+                                                                <label type="text" class="control-label">{(iter \ "notes").asOpt[String].get}</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
-
+                                                    }}
+                                                    
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">所属公司</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label">澳深科技有限公司</label>
+                                                            <label type="text" class="control-label">{company_name}</label>
                                                         </div>
                                                     </div>
 
@@ -378,7 +390,6 @@
                 </div>
             </div>
         }}
-
 
         </div>
     </div>
