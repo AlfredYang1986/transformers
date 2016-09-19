@@ -355,62 +355,60 @@
                                                         <div class="form-group">
                                                             <div class="row">
                                                             <label class="col-sm-2 control-label">联系人</label>
+                                                                <div class="col-sm-8">
 
-                                                            <div class="col-sm-8">
-
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                    <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
-                                                                        <optgroup label="常用联系人">
-                                                                        @{ contacts map { iter =>
-                                                                            <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
-                                                                        }}                                          
-                                                                        </optgroup>
-                                                                    </select>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
+                                                                                <optgroup label="常用联系人">
+                                                                                @{ contacts map { iter =>
+                                                                                    <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
+                                                                                }}                                          
+                                                                                </optgroup>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
                                                             </div>
 
                                                             <div class="row" style="margin-top:10px">
-                                                            <label class="col-sm-2 control-label">联系人电话</label>
-                                                            <div class="col-sm-8">
+                                                                <label class="col-sm-2 control-label">联系人电话</label>
+                                                                <div class="col-sm-8">
 
-                                                                <div class="row">
-                                                                    <div class="col-sm-8">
-                                                                    <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
-                                                                        <optgroup label="常用联系人电话">
-                                                                            @{ contacts map { iter =>
-                                                                                <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
-                                                                            }}                                              
-                                                                        </optgroup>
-                                                                    </select>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
+                                                                                <optgroup label="常用联系人电话">
+                                                                                    @{ contacts map { iter =>
+                                                                                        <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
+                                                                                    }}                                              
+                                                                                </optgroup>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                        <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
+                                                                            添加常用调度员
+                                                                        </button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="col-sm-4">
-                                                                    <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
-                                                                        添加常用调度员
-                                                                    </button>
+
+                                                                    <div class="row  collapse" id={"phone-collapse-" + product_id} style="margin-top:10px">
+
+                                                                        <div class="col-sm-12">
+                                                                            <input type="text" data-name={"contact-name-input-" + product_id} class="form-control" placeholder="输入调度员姓名" /> 
+                                                                        </div>
+                                  
+                                                                        <div class="col-sm-8" style="margin-top:10px">
+                                                                            <input type="text" data-name={"contact-phone-input-" + product_id} class="form-control" placeholder="输入调度员联系电话" />
+                                                                        </div>
+
+                                                                        <div class="col-sm-4">
+                                                                            <input data-name={"contact-save-" + product_id} type="checkbox" value="save" checked="true" style="margin-top:20px" /> 并保存调度员至调度信息管理
+                                                                        </div>
+
                                                                     </div>
+
                                                                 </div>
-
-                                                                <div class="row  collapse" id={"phone-collapse-" + product_id} style="margin-top:10px">
-
-                                                                    <div class="col-sm-12">
-                                                                        <input type="text" data-name={"contact-name-input-" + product_id} class="form-control" placeholder="输入调度员姓名" /> 
-                                                                    </div>
-                              
-                                                                    <div class="col-sm-8" style="margin-top:10px">
-                                                                        <input type="text" data-name={"contact-phone-input-" + product_id} class="form-control" placeholder="输入调度员联系电话" />
-                                                                    </div>
-
-                                                                    <div class="col-sm-4">
-                                                                        <input data-name={"contact-save-" + product_id} type="checkbox" value="save" checked="true" style="margin-top:20px" /> 并保存调度员至调度信息管理
-                                                                    </div>
-
-                                                                </div>
-
-                                                            </div>
                                                             </div>
 
                                                         </div>

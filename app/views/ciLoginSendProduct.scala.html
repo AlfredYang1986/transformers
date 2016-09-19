@@ -277,7 +277,6 @@
                                     <label class="col-sm-2 control-label">联系人</label>
 
                                     <div class="col-sm-8">
-
                                         <div class="row">
                                             <div class="col-sm-12">
                                             <select class="form-control" data-name="contact-name" onchange="contactNameChange()">
@@ -289,7 +288,6 @@
                                             </select>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -298,18 +296,18 @@
                                     <div class="col-sm-8">
                                         <div class="row">
                                             <div class="col-sm-8">
-                                            <select class="form-control" data-name="contact-phone" onchange="contactPhoneChange()">
-                                                <optgroup label="常用联系人电话" editable>
-                                                    @{ contacts map { iter =>
-                                                        <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
-                                                    }}                                            
-                                                </optgroup>
-                                            </select>
+                                                <select class="form-control" data-name="contact-phone" onchange="contactPhoneChange()">
+                                                    <optgroup label="常用联系人电话" editable>
+                                                        @{ contacts map { iter =>
+                                                            <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
+                                                        }}                                            
+                                                    </optgroup>
+                                                </select>
                                             </div>
                                             <div class="col-sm-4">
-                                            <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#phone-collapse" style="border: 1px solid #008bdc">
-                                                添加常用调度员
-                                            </button>
+                                                <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#phone-collapse" style="border: 1px solid #008bdc">
+                                                    添加常用调度员
+                                                </button>
                                             </div>
                                         </div>
 

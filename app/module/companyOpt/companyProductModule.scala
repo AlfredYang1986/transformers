@@ -23,6 +23,17 @@ import module.auth.registerTypes
 import module.auth.AuthModule
 import module.sercurity.Sercurity
 
+object corTypes {
+  case object nodefine extends corTypeDefines(-1, "未定义")
+  case object oneway extends corTypeDefines(0, "单程")
+  case object twoway extends corTypeDefines(1, "往返")
+  case object longterm extends corTypeDefines(2, "长期")
+  case object whatever extends corTypeDefines(3, "不限")
+  
+}
+
+sealed abstract class corTypeDefines(val t : Int, val des : String)
+
 object productStatus {  
     case object published extends productStatusDefines(0, "approved")
     case object done extends productStatusDefines(1, "progress")
@@ -34,6 +45,24 @@ object companyProductModule {
     def pushProduct(data : JsValue) : JsValue = 
         try {
             val builder = MongoDBObject.newBuilder
+           
+            (data \ "storage").asOpt[JsValue].map { x =>
+                val storage_builder = MongoDBObject.newBuilder
+                storage_builder += "province" -> (x \ "storage_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                storage_builder += "city" -> (x \ "storage_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                storage_builder += "district" -> (x \ "storage_district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                storage_builder += "address" -> (x \ "storage_address").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                builder += "storage" -> storage_builder.result
+            }.getOrElse(builder += "storage" -> MongoDBObject.newBuilder.result)
+            
+            (data \ "cooperation_type").asOpt[Int].map { x => 
+              builder += "cooperation_type" -> x
+              builder += "isSpecialWay" -> 1
+            }.getOrElse {
+              builder += "cooperation_type" -> corTypes.nodefine.t
+              builder += "isSpecialWay" -> 0
+            }
+//            builder += "cooperation_type" -> (data \ "cooperation_type").asOpt[Int].map (x => x).getOrElse(corTypes.nodefine.t)
             
             (data \ "origin").asOpt[JsValue].map { x =>
                 val origin_builder = MongoDBObject.newBuilder
@@ -55,10 +84,11 @@ object companyProductModule {
            
             builder += "vehicle" -> (data \ "vehicle").asOpt[List[String]].map (x => x).getOrElse(throw new Exception("wrong input"))
             builder += "vehicle_length" -> (data \ "vehicle_length").asOpt[List[Float]].map (x => x).getOrElse(throw new Exception("wrong input"))
-            builder += "weight" -> (data \ "weight").asOpt[Float].map (x => x).getOrElse(throw new Exception("wrong input"))
-            builder += "volume" -> (data \ "volume").asOpt[Float].map (x => x).getOrElse(throw new Exception("wrong input"))
             
-            builder += "date_requirement" -> (data \ "date_requirement").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "weight" -> (data \ "weight").asOpt[Float].map (x => x).getOrElse(0.floatValue)
+            builder += "volume" -> (data \ "volume").asOpt[Float].map (x => x).getOrElse(0.floatValue)
+            
+            builder += "date_requirement" -> (data \ "date_requirement").asOpt[String].map (x => x).getOrElse("")
             builder += "notes" -> (data \ "notes").asOpt[String].map (x => x).getOrElse("")
             
             val seed = "alfred yang"
@@ -113,6 +143,17 @@ object companyProductModule {
             
             (from db() in "products" where ("product_id" -> product_id) select (x => x)).toList match {
               case head :: Nil => {
+                  (data \ "storage").asOpt[JsValue].map { x =>
+                      val storage_builder = MongoDBObject.newBuilder
+                      storage_builder += "province" -> (x \ "storage_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      storage_builder += "city" -> (x \ "storage_city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      storage_builder += "district" -> (x \ "storage_district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      storage_builder += "address" -> (x \ "storage_address").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+                      head += "storage" -> storage_builder.result
+                  }.getOrElse(Unit)
+                
+                  (data \ "cooperation_type").asOpt[Int].map (x => head += "cooperation_type" -> x.asInstanceOf[Number] ).getOrElse(Unit)
+                
                   (data \ "origin").asOpt[JsValue].map { x =>
                       val origin_builder = MongoDBObject.newBuilder
                       origin_builder += "province" -> (x \ "origin_province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
@@ -272,23 +313,32 @@ object companyProductModule {
     def product2JsValue(x : MongoDBObject) : JsValue = {
         val origin = x.getAs[MongoDBObject]("origin").get
         val destination = x.getAs[MongoDBObject]("destination").get
+        val storage = x.getAs[MongoDBObject]("storage").map { x => 
+          toJson(Map("province" -> x.getAs[String]("province").get,
+                    "city" -> x.getAs[String]("city").get,
+                    "district" -> x.getAs[String]("district").get,
+                    "address" -> x.getAs[String]("address").get))
+        }.getOrElse(toJson(""))
         val date = Calendar.getInstance
         date.setTimeInMillis(x.getAs[Number]("date").get.longValue)
-        toJson(Map("date_requirement" -> toJson(x.getAs[String]("date_requirement").get),
+        toJson(Map("date_requirement" -> toJson(x.getAs[String]("date_requirement").map (x => x).getOrElse("")),
                    "open_id" -> toJson(x.getAs[String]("open_id").get),
                    "product_name" -> toJson(x.getAs[String]("product_name").get),
                    "product_id" -> toJson(x.getAs[String]("product_id").get),
                    "contact_name" -> toJson(x.getAs[String]("contact_name").get),
                    "contact_phone" -> toJson(x.getAs[String]("contact_phone").get),
-                   "notes" -> toJson(x.getAs[String]("notes").get),
-                   "weight" -> toJson(x.getAs[Number]("weight").get.floatValue),
-                   "volume" -> toJson(x.getAs[Number]("volume").get.floatValue),
+                   "notes" -> toJson(x.getAs[String]("notes").map (x => x).getOrElse("")),
+                   "isSpecialWay" -> toJson(x.getAs[Int]("isSpecialWay").map (x => x).getOrElse(0)),
+                   "cooperation_type" -> toJson(x.getAs[Int]("cooperation_type").map (x => x).getOrElse(-1)),
+                   "weight" -> toJson(x.getAs[Number]("weight").map (x => x.floatValue).getOrElse(0.floatValue)),
+                   "volume" -> toJson(x.getAs[Number]("volume").map (x => x.floatValue).getOrElse(0.floatValue)),
                    "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
                    "vehicle_length" -> toJson(x.getAs[MongoDBList]("vehicle_length").get.toList.asInstanceOf[List[Double]]),
                    "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
                                         "month" -> date.get(Calendar.MONTH),
                                         "day" -> date.get(Calendar.DAY_OF_MONTH))),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
+                   "storage" -> storage,
                    "origin" -> toJson(Map("province" -> toJson(origin.getAs[String]("province").get),
                                          "city" -> toJson(origin.getAs[String]("city").get),
                                          "district" -> toJson(origin.getAs[String]("district").get),

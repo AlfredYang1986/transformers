@@ -129,7 +129,8 @@ GET		/specialway/companylist/:t         								controllers.SpecialWayController
 GET		/specialway/companylist         								controllers.SpecialWayController.swLoginCompanyList(t="")
 GET		/specialway/completeinfo/:t        								controllers.SpecialWayController.swLoginCompleteInfo(t)
 GET		/specialway/completeinfo        								controllers.SpecialWayController.swLoginCompleteInfo(t="")
-GET		/specialway/completeproduct     								controllers.SpecialWayController.swLoginCompleteProduct
+GET		/specialway/completeproduct/:t     								controllers.SpecialWayController.swLoginCompleteProduct(t)
+GET		/specialway/completeproduct     								controllers.SpecialWayController.swLoginCompleteProduct(t="")
 GET		/specialway/driverlist/:t        								controllers.SpecialWayController.swLoginDriverList(t)
 GET		/specialway/driverlist        									controllers.SpecialWayController.swLoginDriverList(t="")
 GET		/specialway/recruitment        									controllers.SpecialWayController.swLoginRecruitment
@@ -139,7 +140,8 @@ GET		/specialway/sendproduct/:t     									controllers.SpecialWayController.sw
 GET		/specialway/sendproduct     									controllers.SpecialWayController.swLoginSendProduct(t="")
 GET		/specialway/sentinfo/:t        									controllers.SpecialWayController.swLoginSentInfo(t)
 GET		/specialway/sentinfo        									controllers.SpecialWayController.swLoginSentInfo(t="")
-GET		/specialway/sentproduct     									controllers.SpecialWayController.swLoginSentProduct
+GET		/specialway/sentproduct/:t     									controllers.SpecialWayController.swLoginSentProduct(t)
+GET		/specialway/sentproduct     									controllers.SpecialWayController.swLoginSentProduct(t="")
 GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLoginSpecialWayList
 GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards
 
