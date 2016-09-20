@@ -456,11 +456,11 @@
 			// var vehicleLengthReg = /^[0-9]*$/;
 			// result &= validate($('input[data-name="vehicle-length"]'), hasInput(driver_vehicle_length) && vehicleLengthReg.test(driver_vehicle_length), 'div[data-name="driver-length-error"]');
 
-			var driver_type = $('input[name="vehicle"]:checked').val();
-			result &= validate($('input[name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="driver-own-vehicle-error"]');
+			var driver_type = $('input[data-name="vehicle"]:checked').val();
+			result &= validate($('input[data-name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="driver-own-vehicle-error"]');
 
-			var driver_insurance = $('input[name="insurance"]:checked').val();
-			result &= validate($('input[name="insurance"]'), (typeof(driver_insurance) != "undefined"), 'div[data-name="driver-insurance-error"]');
+			var driver_insurance = $('input[data-name="insurance"]:checked').val();
+			result &= validate($('input[data-name="insurance"]'), (typeof(driver_insurance) != "undefined"), 'div[data-name="driver-insurance-error"]');
 
 			if (Boolean(result)) {
 				query_object = new Object();
@@ -483,10 +483,10 @@
 		function getDriverVehicle() {
 			var result = true;
 			var vehicle_lst = [];
-			$.each($('input[name="vehicle"]:checked'), function(index, value){
+			$.each($('input[data-name="vehicle"]:checked'), function(index, value){
 				vehicle_lst.push($(this).val());
 			});
-			result &= validate($('input[name="vehicle"]'), vehicle_lst.length > 0)
+			result &= validate($('input[data-name="vehicle"]'), vehicle_lst.length > 0)
 
 			query_object['vehicle'] = vehicle_lst;
 			return Boolean(result);
@@ -495,10 +495,10 @@
 		function getDriverVehicleLength() {
 			var result = true;
 			var vehicle_lst = [];
-			$.each($('input[name="vehicle-length"]:checked'), function(index, value){
+			$.each($('input[data-name="vehicle-length"]:checked'), function(index, value){
 				vehicle_lst.push(Number($(this).val()));
 			});
-			result &= validate($('input[name="vehicle"]'), vehicle_lst.length > 0)
+			result &= validate($('input[data-name="vehicle-length"]'), vehicle_lst.length > 0)
 
 			query_object['vehicle_length'] = vehicle_lst;
 			return Boolean(result);
