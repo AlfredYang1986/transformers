@@ -269,8 +269,25 @@ object SpecialWayController extends Controller {
     /**
      * Special Way Login Page
      */
-    def swLoginRecruitment = Action {
-        Ok(views.html.swLoginRecruitment("Your new application is ready."))
+    def swLoginRecruitment(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.swLoginRecruitment(token)(open_id)(name)(infos))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**

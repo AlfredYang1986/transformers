@@ -133,7 +133,8 @@ GET		/specialway/completeproduct/:t     								controllers.SpecialWayController
 GET		/specialway/completeproduct     								controllers.SpecialWayController.swLoginCompleteProduct(t="")
 GET		/specialway/driverlist/:t        								controllers.SpecialWayController.swLoginDriverList(t)
 GET		/specialway/driverlist        									controllers.SpecialWayController.swLoginDriverList(t="")
-GET		/specialway/recruitment        									controllers.SpecialWayController.swLoginRecruitment
+GET		/specialway/recruitment/:t        								controllers.SpecialWayController.swLoginRecruitment(t)
+GET		/specialway/recruitment        									controllers.SpecialWayController.swLoginRecruitment(t="")
 GET		/specialway/sendinfo/:t        									controllers.SpecialWayController.swLoginSendInfo(t)
 GET		/specialway/sendinfo        									controllers.SpecialWayController.swLoginSendInfo(t="")
 GET		/specialway/sendproduct/:t     									controllers.SpecialWayController.swLoginSendProduct(t)

@@ -1,6 +1,6 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name: String)(infos : List[play.api.libs.json.JsValue])
 
-@sw_login_index_sliders("易聚货专线")("")  {
+@sw_login_index_sliders("易聚货专线")(company_name)  {
     
 } {
 
@@ -8,144 +8,89 @@
     <div id="page-content">
         <div class="container">
 
-        <div id="page-title">
-            <h2>其他信息</h2>
-            <p>可添加文案</p>
-        </div>
+            <div id="page-title">
+                <h2>已发布其他信息</h2>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <h3 class="title-hero">
-                            
-                        </h3>
+            </div>
 
-                        <div class="example-box-wrapper">
-                            <div class="row">
+            <div class="panel">
+                <div class="panel-body">
+                    <h3 class="title-hero">
+                        @{company_name}
+                    </h3>
 
-                                <div class="col-sm-12">
+                    @{ infos map { iter => 
+                    <div class="example-box-wrapper"> 
+                        <div class="row">
 
-                                    <div class="row">
+                            <div class="col-sm-12">
 
+                                <div class="row">
                                     <div class="col-sm-4" style="font-size:15px">
-                                        发出时间
+                                        <label>{(iter \ "year").asOpt[Int].get}年{(iter \ "month").asOpt[Int].get}月{(iter \ "day").asOpt[Int].get}日</label>
                                     </div>
 
                                     <div class="col-sm-6" style="font-size:15px">
-                                        公司专线发送的招聘标题
-                                    </div>    
+                                        <label>{(iter \ "title").asOpt[String].get}</label>
+                                    </div>
 
-
-                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#recruit-view" style="font-size:15px">
+                                    <button type="button" onclick={"setDefault(\""+{"edit"+{(iter \ "info_id").asOpt[String].get}} + "\", \"" + {(iter \ "content").asOpt[String].get}+"\")"} class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#"+{(iter \ "info_id").asOpt[String].get}} style="font-size:15px">
                                         查看详情
                                     </button>
-
-                                    </div>
-        <!-- close directly view the collapse
-                                    <div id="recruit-view" class="collapse in"> -->
-                                    <div id="recruit-view" class="collapse">
-
-                                        <div class="panel">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">这里显示公司专线发送的招聘标题</h3>
-                                            </div>
-
-                                            <div class="panel-body">
-                                                显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容
-                                            </div>
-
-                                            <div class="col-sm-12 panel-body">
-                                                <form class="form-horizontal bordered-row">
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">联系人：林恩</label>
+                                </div>   
+                                
+                                <div id={(iter \ "info_id").asOpt[String].get} class="collapse">
+                                    <div class="panel">
+                                        <div class="panel-body">
+                                            <div class="form-horizontal bordered-row">
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">标题</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" data-title={(iter \ "info_id").asOpt[String].get} value={(iter \ "title").asOpt[String].get} />
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">联系人电话：13857102787</label>
-                                                    </div>             
-                                                </form>                                            
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">正文</label>
+                                                    <div class="col-sm-8" data-name={"edit"+{(iter \ "info_id").asOpt[String].get}}>
+                                                        <div class="wysiwyg-editor"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">联系人</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" data-contact={(iter \ "info_id").asOpt[String].get} value={(iter \ "contact").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">联系人电话</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" data-phone={(iter \ "title").asOpt[String].get} value={(iter \ "phone_no").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">其他信息状态设置</label>
+
+                                                    <!-- <div class="col-sm-2 col-sm-offset-1">
+                                                        <button onclick={"updateInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: 1px solid #008bdc">保存并发布</button> 
+                                                    </div>                 
+                                                    <div class="col-sm-2 col-sm-offset-1">
+                                                        <button class="form-control" style="border: 1px solid #008bdc" onclick={"completeInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"}>信息完成</button>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <button onclick={"deleteInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                                    </div> -->
+                                                </div>             
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
+                    }}
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <h3 class="title-hero">
-                            
-                        </h3>
-
-                        <div class="example-box-wrapper">
-                            <div class="row">
-
-                                <div class="col-sm-12">
-
-                                    <div class="row">
-
-                                    <div class="col-sm-4" style="font-size:15px">
-                                        发出时间
-                                    </div>
-
-                                    <div class="col-sm-6" style="font-size:15px">
-                                        公司专线发送的招聘标题
-                                    </div>    
-
-
-                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#recruit-view-2" style="font-size:15px">
-                                        查看详情
-                                    </button>
-
-                                    </div>
-
-
-
-                                    <div id="recruit-view-2" class="collapse">
-
-                                        <div class="pane2">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">这里显示公司专线发送的招聘标题</h3>
-                                            </div>
-
-                                            <div class="panel-body">
-                                                显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容：显示由公司专线发出的招聘内容
-                                            </div>
-
-                                            <div class="col-sm-12 panel-body">
-                                                <form class="form-horizontal bordered-row">
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">联系人：林恩</label>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="col-xs-12 control-label">联系人电话：13857102787</label>
-                                                    </div>             
-                                                </form>                                            
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
         </div>
     </div>
 </div>
