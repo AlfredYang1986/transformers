@@ -297,6 +297,7 @@
 						
 					</div>	  
 
+<!--
 					<div class="form-group" style="display: none;" data-name='driver-insurance-error'>
 						<span class="col-sm-1 control-label"></span>
 						<label for="company-name" class="col-sm-2 control-label"></label>
@@ -308,6 +309,7 @@
 							</div>
 						</div>
 					</div>
+-->
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
@@ -459,8 +461,8 @@
 			var driver_type = $('input[data-name="vehicle"]:checked').val();
 			result &= validate($('input[data-name="vehicle"]'), (typeof(driver_type) != "undefined"), 'div[data-name="driver-own-vehicle-error"]');
 
-			var driver_insurance = $('input[data-name="insurance"]:checked').val();
-			result &= validate($('input[data-name="insurance"]'), (typeof(driver_insurance) != "undefined"), 'div[data-name="driver-insurance-error"]');
+//			var driver_insurance = $('input[data-name="insurance"]:checked').val();
+//			result &= validate($('input[data-name="insurance"]'), (typeof(driver_insurance) != "undefined"), 'div[data-name="driver-insurance-error"]');
 
 			if (Boolean(result)) {
 				query_object = new Object();
@@ -470,7 +472,7 @@
 				query_object['cell_phone'] = driver_phone_no;
 				query_object['capacity'] = Number(driver_capacity);
 				// query_object['vehicle_length'] = Number(driver_vehicle_length);
-				query_object['insurance'] = Number(driver_insurance);
+				//query_object['insurance'] = Number(driver_insurance);
 				query_object['driver_image'] = driver_images_arr[0];
 				query_object['road_image'] = road_image_arr[0];
 				query_object['company_type'] = 0;
