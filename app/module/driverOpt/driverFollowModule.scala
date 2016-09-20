@@ -31,6 +31,7 @@ object driverFollowModule {
               case head :: Nil => {
                   val following_lst = head.getAs[MongoDBList]("followings").get.toList.asInstanceOf[List[String]]
                   head += "followings" -> (target_open_id :: following_lst).distinct
+                  println((target_open_id :: following_lst).distinct)
                   
                   _data_connection.getCollection("driver_company").update(DBObject("driver_open_id" -> driver_open_id), head)
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson("follow success")))
@@ -39,6 +40,7 @@ object driverFollowModule {
                   val builder = MongoDBObject.newBuilder
                   builder += "driver_open_id" -> driver_open_id
                   builder += "followings" -> (target_open_id :: Nil)
+                  println(target_open_id :: Nil)
                   
                   _data_connection.getCollection("driver_company") += builder.result
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson("follow success")))

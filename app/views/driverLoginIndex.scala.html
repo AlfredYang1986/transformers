@@ -21,16 +21,16 @@
                 @{ (companies zipWithIndex) map { item => 
                 val iter = item._1
                 val index = item._2
-                println(following_lst)
+                val target_id = (iter \ "open_id").asOpt[String].get
                 <div class="panel">
                     <div class="panel-body">
                         <h4 class="title-hero">
                         { (iter \ "company_name").asOpt[String].get } 
                         {
-                            if (following_lst.contains(open_id)) {
-                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"unCollectCompany(\"" + open_id + "\")"} ><i class="glyph-icon icon-star"></i>已收藏</button>
+                            if (following_lst.contains(target_id)) {
+                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"unCollectCompany(\"" + target_id + "\")"} ><i class="glyph-icon icon-star"></i>已收藏</button>
                             } else {
-                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"collectCompany(\"" + open_id + "\")"} ><i class="glyph-icon icon-star"></i>收藏</button>
+                                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"collectCompany(\"" + target_id + "\")"} ><i class="glyph-icon icon-star"></i>收藏</button>
                             }
                         }
                         </h4>

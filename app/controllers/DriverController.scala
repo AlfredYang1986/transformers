@@ -159,6 +159,10 @@ object DriverController extends Controller {
         
         val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
         val cp = AuthModule.queryMultipleProfiles(following_lst)
+        println(123)
+        println(following_lst)
+        println(cp)
+        println(123)
         
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
