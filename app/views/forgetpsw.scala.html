@@ -104,33 +104,6 @@
 			return Boolean(result);
 		}
 
-
-		function register() {
-			var result = getDriverCommonInfo();
-
-			if (Boolean(result)) { 
-				$.ajax({
-		            url: "/auth/driver/register",
-		            type: 'POST',
-		            dataType: 'json',
-		            contentType: 'application/json, charset=utf-8',
-		            data: JSON.stringify(query_object),
-		            cache: false,
-		            success: function (data) {
-		                if (data.status == "ok") {                                          
-		                     alert("提交重置密码成功");
-		                     location.href = "/index";
-		                } else {
-		                    alert(data.error.message);
-		                }
-		            },
-		            error: function (xhr, status, error) {
-		                alert("请检查您的输入");
-		            }
-		        });
-			}
-		}
-
 		function sendCode() {
 			var cell_phone = $('input[data-name="phone-no"]').val();
 
