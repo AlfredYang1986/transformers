@@ -9,6 +9,7 @@ GET		/company														controllers.Elogco.company
 GET		/business														controllers.Elogco.business
 GET		/recruit														controllers.Elogco.recruit
 GET		/help															controllers.Elogco.help
+GET		/forgetpsw														controllers.Elogco.forgetpsw
 
 # register page
 GET     /register/company		        								controllers.RegisterController.register

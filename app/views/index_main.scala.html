@@ -168,7 +168,7 @@
 						</div>
 
 						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-5">
+							<div class="col-sm-offset-2 col-sm-3">
 								<div class="checkbox">
 									<label>
 										<input data-name="pwd-save" checked type="checkbox"> 记住密码
@@ -177,15 +177,16 @@
 															
 							</div>
 
-							<div class="col-sm-5">
+							<div class="col-sm-offset-2 col-sm-3">
 								<div class="checkbox">
 									<label>
-										<input data-name="pwd-save" checked type="checkbox"> 忘记密码
+										<i class="fa fa-question-circle-o" style="margin-right:10px;margin-left:10px" aria-hidden="true"></i><a href="/forgetpsw" style="color:#000000">忘记密码</a>
 									</label>
 								</div>
 							</div>
 
 						</div>
+
 						<div style="width: 100%; text-align:center;">
 						<button class="btn btn-primary home-login-btn col-sm-8" onclick="login()" style="font-size: 15px;">
 							登&nbsp;&nbsp;&nbsp;陆
@@ -284,6 +285,10 @@
 
 			function regPersonalTaped() {
 				location.href = "/register/driver";
+			}
+
+			function regForgetPsw() {
+				location.href = "/forgetpsw";
 			}
 
 			function login() {

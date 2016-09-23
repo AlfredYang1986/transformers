@@ -39,4 +39,12 @@ object Elogco extends Controller {
     def help = Action {
         Ok(views.html.help("Your new application is ready."))
     }
+
+    /**
+    * forget password
+    */
+    def forgetpsw = Action {
+        Ok(views.html.forgetpsw("Your new application is ready."))
+    }
+
 }
