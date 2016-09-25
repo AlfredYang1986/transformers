@@ -34,7 +34,7 @@
                                             <div class="col-sm-4" style="font-size:15px">
                                                 <label>
                                                     { 
-                                                        (iter \ "date" \ "year").asOpt[Int].get + "年" + ((iter \ "date" \ "month").asOpt[Int].get + 1) + "月" + (iter \ "date" \ "day").asOpt[Int].get + "日"
+                                                        (iter \ "date" \ "year").asOpt[Int].get + "年" + ((iter \ "date" \ "month").asOpt[Int].get) + "月" + (iter \ "date" \ "day").asOpt[Int].get + "日"
                                                     }
                                                 </label>
                                             </div>

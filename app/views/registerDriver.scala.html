@@ -170,7 +170,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+<!-- 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
 						<label for="legal-person" class="col-sm-2 control-label">载重</label>
 						<div class="col-sm-9">
@@ -188,7 +188,7 @@
 							  	请填写有效的载重
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -450,9 +450,9 @@
 			var code = $('input[data-name="code"]').val();
 			result &= validate($('input[data-name="code"]'), hasInput(code), 'div[data-name="code-error"]');
 
-			var driver_capacity = $('input[data-name="capacity"]').val();
-			var capacityReg = /^[0-9]*$/;
-			result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity) && capacityReg.test(driver_capacity), 'div[data-name="driver-weight-error"]');	
+			// var driver_capacity = $('input[data-name="capacity"]').val();
+			// var capacityReg = /^[0-9]*$/;
+			// result &= validate($('input[data-name="capacity"]'), hasInput(driver_capacity) && capacityReg.test(driver_capacity), 'div[data-name="driver-weight-error"]');	
 			
 			// var driver_vehicle_length = $('input[data-name="vehicle-length"]').val();
 			// var vehicleLengthReg = /^[0-9]*$/;
@@ -470,7 +470,7 @@
 				query_object['driver_secial_id'] = driver_secial_id;
 				query_object['phone_no'] = driver_phone_no;
 				query_object['cell_phone'] = driver_phone_no;
-				query_object['capacity'] = Number(driver_capacity);
+				// query_object['capacity'] = Number(driver_capacity);
 				// query_object['vehicle_length'] = Number(driver_vehicle_length);
 				//query_object['insurance'] = Number(driver_insurance);
 				query_object['driver_image'] = driver_images_arr[0];

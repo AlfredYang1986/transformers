@@ -345,7 +345,7 @@ object AuthModule {
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
                 (data \ "vehicle_length").asOpt[List[Float]].map (tmp => x += "vehicle_length" -> tmp).getOrElse(x += "vehicle_length" -> MongoDBList.newBuilder.result)
 //                (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
-                (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
+//                (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
                 (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))
                 (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input drive road image"))
                 x += "auth_status" -> authStatus.progress.t.asInstanceOf[Number]
@@ -484,9 +484,9 @@ object AuthModule {
                 "driver_secial_id" -> toJson(x.getAs[String]("driver_secial_id").get),
                 "type" -> toJson(x.getAs[Number]("type").get.intValue),
                 "date" -> toJson(x.getAs[Number]("date").get.longValue),
-                "capacity" -> toJson(x.getAs[Number]("capacity").get.intValue),
+                "capacity" -> toJson(x.getAs[Number]("capacity").map (x => x.floatValue).getOrElse(0.floatValue)),
                 "vehicle_length" -> x.getAs[List[Number]]("vehicle_length").map (x => toJson(x.toList.map (y => y.floatValue))).getOrElse(toJson(x.getAs[Number]("vehicle_length").get.floatValue)),
-//                "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
+                "insurance" -> toJson(x.getAs[Number]("insurance").map (x => x.intValue).getOrElse(0.intValue)),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "driver_image" -> toJson(x.getAs[String]("driver_image").get),
                 "road_image" -> toJson(x.getAs[String]("road_image").get),

@@ -398,7 +398,8 @@
                     cache: false,
                     success: function (data) {
                         if (data.status == "ok") { 
-                             location.reload();
+                            alert("修改成功");
+                            location.reload();
                         } else {
                             alert(data.error.message);
                         }

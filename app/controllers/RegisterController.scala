@@ -11,7 +11,8 @@ object RegisterController extends Controller {
      * certificate
      */
     def register = Action {
-        Ok(views.html.register_index(xmlOpt.allCities))
+        val vc = ConfigModule.configAllVehicles
+        Ok(views.html.register_index(xmlOpt.allCities)(vc))
     }
      
     /**

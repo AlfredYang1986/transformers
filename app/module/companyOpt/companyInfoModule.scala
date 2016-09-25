@@ -132,7 +132,7 @@ object companyInfoModule {
                    "contact" -> toJson(x.getAs[String]("contact").get),
                    "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                    "year" -> toJson(date.get(Calendar.YEAR)),
-                   "month" -> toJson(date.get(Calendar.MONTH)),
+                   "month" -> toJson(date.get(Calendar.MONTH) + 1),
                    "day" -> toJson(date.get(Calendar.DAY_OF_MONTH)),
                    "status" -> toJson(x.getAs[Number]("status").map (x => x.intValue).getOrElse(infoStatus.pushed.t)),
                    "company_name" -> toJson(x.getAs[String]("company_name").map (x => x).getOrElse("")),

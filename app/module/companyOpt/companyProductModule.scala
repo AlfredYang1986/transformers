@@ -335,7 +335,7 @@ object companyProductModule {
                    "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
                    "vehicle_length" -> toJson(x.getAs[MongoDBList]("vehicle_length").get.toList.asInstanceOf[List[Double]]),
                    "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
-                                        "month" -> date.get(Calendar.MONTH),
+                                        "month" -> (date.get(Calendar.MONTH) + 1),
                                         "day" -> date.get(Calendar.DAY_OF_MONTH))),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
                    "storage" -> storage,

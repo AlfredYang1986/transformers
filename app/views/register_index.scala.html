@@ -1,4 +1,4 @@
-@(cities : List[play.api.libs.json.JsValue])
+@(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
 @main("机构注册") {
     <script src="@routes.Assets.at("javascripts/routes-manager.js")"></script>
@@ -471,7 +471,10 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10 register-btn">
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
+							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="proviousStep()">上一步</button>
+						</div>
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
 							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
 						</div>
 					</div>
@@ -522,8 +525,11 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10 register-btn">
-							<button class="btn btn-lg" onclick="register()">注册</button>
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
+							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="proviousStep()">上一步</button>
+						</div>
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
+							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
 						</div>
 					</div>
 				</div>
@@ -708,83 +714,11 @@
 						<label for="certificate-type" class="col-sm-2 control-label" >拥有车型</label>
 
 						<div class="col-sm-offset-3">
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="平板车"> 平板车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="高栏车"> 高栏车
-								</label>
-							</div>						
-							
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="厢式车"> 厢式车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="半挂车"> 半挂车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="危险品车"> 危险品车
-								</label>
-							</div>						
-							
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="高地板"> 高低板
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="起重车"> 起重车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="牵引车"> 牵引车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="罐式车"> 罐式车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="特种车"> 特种车
-								</label>
-							</div>
-
-							<div class="col-sm-2 checkbox">
-								<label>
-									<input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
-								</label>
-							</div>	
+						{ (vc \ "vehicle").asOpt[List[String]].get map { x =>
+                            <div class="col-sm-2 checkbox">
+                                <label><input data-name="vehicle" type="checkbox" value={x} /> {x} </label>
+                            </div>
+                        }}
 						</div>
 					</div>
 
@@ -807,7 +741,6 @@
 							<input type="text" class="form-control" data-name="specialway-web">
 						</div>
 					</div>
-
 
 
 					<div class="form-group">
@@ -838,8 +771,11 @@
 					</div>
 
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10 register-btn">
-							<button class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
+							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="proviousStep()">上一步</button>
+						</div>
+						<div class="col-sm-offset-2 col-sm-4 register-btn">
+							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
 						</div>
 					</div>
 
@@ -1274,6 +1210,13 @@
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
 			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
+		}
+
+		function proviousStep() {
+			$('#company-step').hide();
+			$('#industry-step').hide();
+			$('#spical-step').hide();
+			$('#common-step').show();
 		}
 	</script>
 }
