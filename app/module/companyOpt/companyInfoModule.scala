@@ -40,6 +40,7 @@ object companyInfoModule {
             builder += "content" -> (data \ "content").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             builder += "contact" -> (data \ "contact").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             builder += "phone_no" -> (data \ "phone_no").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "company_name" -> (data \ "company_name").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
            
             val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             builder += "open_id" -> open_id
@@ -134,6 +135,7 @@ object companyInfoModule {
                    "month" -> toJson(date.get(Calendar.MONTH)),
                    "day" -> toJson(date.get(Calendar.DAY_OF_MONTH)),
                    "status" -> toJson(x.getAs[Number]("status").map (x => x.intValue).getOrElse(infoStatus.pushed.t)),
+                   "company_name" -> toJson(x.getAs[String]("company_name").map (x => x).getOrElse("")),
                    "open_id" -> toJson(x.getAs[String]("open_id").get)))
     }  
 }

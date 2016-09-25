@@ -344,7 +344,7 @@ object AuthModule {
     //            (data \ "driver_secial_id").asOpt[String].map (tmp => x += "secial_id" -> tmp).getOrElse(throw new Exception("input driver secial id"))
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(throw new Exception("input driver phone"))
                 (data \ "vehicle_length").asOpt[List[Float]].map (tmp => x += "vehicle_length" -> tmp).getOrElse(x += "vehicle_length" -> MongoDBList.newBuilder.result)
-                (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
+//                (data \ "insurance").asOpt[Int].map (tmp => x += "insurance" -> tmp.asInstanceOf[Number]).getOrElse(x += "insurance" -> not_insuranced.t)
                 (data \ "capacity").asOpt[Int].map (tmp => x += "capacity" -> tmp.asInstanceOf[Number]).getOrElse(x += "capacity" -> 0)
                 (data \ "driver_image").asOpt[String].map (tmp => x += "driver_image" -> tmp).getOrElse(throw new Exception("input drive image"))
                 (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input drive road image"))
@@ -486,7 +486,7 @@ object AuthModule {
                 "date" -> toJson(x.getAs[Number]("date").get.longValue),
                 "capacity" -> toJson(x.getAs[Number]("capacity").get.intValue),
                 "vehicle_length" -> x.getAs[List[Number]]("vehicle_length").map (x => toJson(x.toList.map (y => y.floatValue))).getOrElse(toJson(x.getAs[Number]("vehicle_length").get.floatValue)),
-                "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
+//                "insurance" -> toJson(x.getAs[Number]("insurance").get.intValue),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "driver_image" -> toJson(x.getAs[String]("driver_image").get),
                 "road_image" -> toJson(x.getAs[String]("road_image").get),
