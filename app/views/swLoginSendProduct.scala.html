@@ -426,7 +426,7 @@
             var origin_address = $('textarea[data-name="origin-address"]').val();
 
             result &= validate($('div[data-name="origin"]'), 
-                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined) && hasInput(origin_address),
+                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined), // && hasInput(origin_address),
                         'div[data-name="origin-error"]');
 
 
@@ -436,7 +436,7 @@
             var destination_address = $('textarea[data-name="destination-address"]').val();
 
             result &= validate($('div[data-name="destination"]'), 
-                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined) && hasInput(destination_address),
+                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined), // && hasInput(destination_address),
                         'div[data-name="destination-error"]');
 
             var storage_province = $('select[data-name="storage-province"]').val();
@@ -445,7 +445,7 @@
             var storage_address = $('textarea[data-name="storage-address"]').val();
 
             result &= validate($('div[data-name="storage"]'), 
-                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined) && hasInput(storage_address),
+                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined), // && hasInput(storage_address),
                         'div[data-name="storage-error"]');
 
             // var weight = $('input[data-name="weight"]').val();

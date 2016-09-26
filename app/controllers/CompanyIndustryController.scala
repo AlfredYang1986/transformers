@@ -409,6 +409,9 @@ object CompanyIndustryController extends Controller {
             val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
             
             val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> toJson(open_id), "status" ->toJson(0) ))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            println(companyProductModule.queryProduct(toJson(Map("open_id" -> toJson(open_id), "status" ->toJson(0) ))))
+            println(open_id)
+            println(products)
             val vc = ConfigModule.configAllVehicles
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {

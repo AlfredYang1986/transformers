@@ -22,6 +22,7 @@
                             </h3>
 
                             @{ (products zipWithIndex) map { tmp =>
+                            println(products)
                                 val iter = tmp._1
                                 val index = tmp._2
                                 val product_id = (iter \ "product_id").asOpt[String].get

@@ -300,9 +300,9 @@ object companyProductModule {
               case None => 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
                       (from db() in "products" select (product2JsValue(_))).toList)))
-              case Some(x) => 
+              case Some(x) => { println(from db() in "products" where x select (product2JsValue(_)));
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                      (from db() in "products" where x select (product2JsValue(_))).toList)))
+                      (from db() in "products" where x select (product2JsValue(_))).toList)))}
             }
           
         } catch {
@@ -314,10 +314,10 @@ object companyProductModule {
         val origin = x.getAs[MongoDBObject]("origin").get
         val destination = x.getAs[MongoDBObject]("destination").get
         val storage = x.getAs[MongoDBObject]("storage").map { x => 
-          toJson(Map("province" -> x.getAs[String]("province").get,
-                    "city" -> x.getAs[String]("city").get,
-                    "district" -> x.getAs[String]("district").get,
-                    "address" -> x.getAs[String]("address").get))
+          toJson(Map("province" -> x.getAs[String]("province").map (x => x).getOrElse(""),
+                    "city" -> x.getAs[String]("city").map (x => x).getOrElse(""),
+                    "district" -> x.getAs[String]("district").map (x => x).getOrElse(""),
+                    "address" -> x.getAs[String]("address").map (x => x).getOrElse("")))
         }.getOrElse(toJson(""))
         val date = Calendar.getInstance
         date.setTimeInMillis(x.getAs[Number]("date").get.longValue)
@@ -346,7 +346,7 @@ object companyProductModule {
                    "destination" -> toJson(Map("province" -> toJson(destination.getAs[String]("province").get),
                                                "city" -> toJson(destination.getAs[String]("city").get),
                                                "district" -> toJson(destination.getAs[String]("district").get),
-                                               "address" -> toJson(destination.getAs[String]("address").get)
-                                               ))))
+                                               "address" -> toJson(destination.getAs[String]("address").get)))
+                   ))
     }  
 }
