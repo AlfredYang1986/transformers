@@ -84,7 +84,7 @@ object CompanyIndustryController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountNormalInfo(token)(open_id)(name)(company)(xmlOpt.allCities))
+                Ok(views.html.ciLoginAccountNormalInfo(token)(open_id)(name)(company)(xmlOpt.allCities)((user \ "auth").asOpt[Int].get))
             }
             else Redirect("/index")
         }
@@ -181,7 +181,7 @@ object CompanyIndustryController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountValidateInfo(token)(open_id)(name)(company)(xmlOpt.allCities))
+                Ok(views.html.ciLoginAccountValidateInfo(token)(open_id)(name)(company)(xmlOpt.allCities)((user \ "auth").asOpt[Int].get))
             }
             else Redirect("/index")
         }

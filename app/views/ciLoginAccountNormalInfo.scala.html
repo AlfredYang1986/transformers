@@ -1,4 +1,4 @@
-@(token : String)(open_id : String)(company_name : String)(company : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])
+@(token : String)(open_id : String)(company_name : String)(company : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])(auth : Int)
 
 @ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
     
@@ -331,59 +331,63 @@
         }
 
         function updateCompanyInfo() {
-            var result = true;
-            var query_object = new Object();
-            result &= getCompanylines(query_object);
-            
-            var description = $('input[data-name="description"]').val();
-            //result &= validate($('input[data-name="description"]'), hasInput(description), 'div[data-name="description-error"]');
+            var authrity = @{auth}; 
+            if (auth < 12) {
+                alert("分账号没有权限修改账户信息");
+            } else {
+                var result = true;
+                var query_object = new Object();
+                result &= getCompanylines(query_object);
+                
+                var description = $('input[data-name="description"]').val();
+                //result &= validate($('input[data-name="description"]'), hasInput(description), 'div[data-name="description-error"]');
 
-            var web = $('input[data-name="web"]').val();
-            //result &= validate($('input[data-name="web"]'), hasInput(web), 'div[data-name="web-error"]');
+                var web = $('input[data-name="web"]').val();
+                //result &= validate($('input[data-name="web"]'), hasInput(web), 'div[data-name="web-error"]');
 
-            var fax = $('input[data-name="fax"]').val();
-            //result &= validate($('input[data-name="fax"]'), hasInput(fax), 'div[data-name="fax-error"]');
+                var fax = $('input[data-name="fax"]').val();
+                //result &= validate($('input[data-name="fax"]'), hasInput(fax), 'div[data-name="fax-error"]');
 
-            var email = $('input[data-name="email"]').val();
-            //result &= validate($('input[data-name="email"]'), hasInput(email), 'div[data-name="email-error"]');
+                var email = $('input[data-name="email"]').val();
+                //result &= validate($('input[data-name="email"]'), hasInput(email), 'div[data-name="email-error"]');
 
-            var legal_person = $('input[data-name="legal_person"]').val();
-            result &= validate($('input[data-name="legal_person"]'), hasInput(legal_person), 'div[data-name="legal-person-error"]');
+                var legal_person = $('input[data-name="legal_person"]').val();
+                result &= validate($('input[data-name="legal_person"]'), hasInput(legal_person), 'div[data-name="legal-person-error"]');
 
-            var cell_phone = $('input[data-name="cell_phone"]').val();
-            result &= validate($('input[data-name="cell_phone"]'), hasInput(cell_phone), 'div[data-name="cell-phone-error"]');
+                var cell_phone = $('input[data-name="cell_phone"]').val();
+                result &= validate($('input[data-name="cell_phone"]'), hasInput(cell_phone), 'div[data-name="cell-phone-error"]');
 
-            if (result) {
+                if (result) {
 
-                query_object["description"] = description;
-                query_object["web"] = web;
-                query_object["fax"] = fax;
-                query_object["email"] = email;
-                query_object["legal_person"] = legal_person;
-                query_object["cell_phone"] = cell_phone;
-                query_object["open_id"] = "@{open_id}";
+                    query_object["description"] = description;
+                    query_object["web"] = web;
+                    query_object["fax"] = fax;
+                    query_object["email"] = email;
+                    query_object["legal_person"] = legal_person;
+                    query_object["cell_phone"] = cell_phone;
+                    query_object["open_id"] = "@{open_id}";
 
-                $.ajax({
-                    url: "/auth/update",
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json, charset=utf-8',
-                    data: JSON.stringify(query_object),
-                    cache: false,
-                    success: function (data) {
-                        if (data.status == "ok") {                                          
-                             alert("更新用户信息成功！");
-                             location.reload();
-                        } else {
-                            alert(data.error.message);
+                    $.ajax({
+                        url: "/auth/update",
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: 'application/json, charset=utf-8',
+                        data: JSON.stringify(query_object),
+                        cache: false,
+                        success: function (data) {
+                            if (data.status == "ok") {                                          
+                                 alert("更新用户信息成功！");
+                                 location.reload();
+                            } else {
+                                alert(data.error.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("请检查您的输入");
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("请检查您的输入");
-                    }
-                });
+                    });
+                }
             }
-
         }
     </script>
 } 
