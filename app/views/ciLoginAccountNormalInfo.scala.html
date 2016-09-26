@@ -43,15 +43,21 @@
                                         </div>
 
                                         <div class="col-sm-2">
+                                            {
+                                            val province = (iter \ "origin_province").asOpt[String].get
+                                            val tmp = (iter \ "origin_city").asOpt[String].get
                                             <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                    if ((iter \ "origin_city").asOpt[String].get.startsWith(x)) {
+                                                {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if (tmp.equals(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                         <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                     }
                                                 }}};
                                             </select>  
+                                            }
                                         </div>
                                         <div class="col-sm-1 text-center">
                                             <label><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></label>
@@ -68,15 +74,20 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <select class="form-control" data-name="destination-city" data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                    if ((iter \ "destination_city").asOpt[String].get.startsWith(x)) {
+                                        {
+                                            val province = (iter \ "destination_province").asOpt[String].get
+                                            val tmp = (iter \ "destination_city").asOpt[String].get
+                                            <select class="form-control" data-name="destination-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if (tmp.equals(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                         <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                     }
                                                 }}};
-                                            </select>  
+                                            }
                                         </div>
                                     </div>
                                     }
