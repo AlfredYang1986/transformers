@@ -152,7 +152,7 @@
                                                     {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
-                                                        } else if (province.equals((p \ "provice").asOpt[String].get) {
+                                                        } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
@@ -189,7 +189,7 @@
                                                     {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
-                                                        } else if (province.equals((p \ "provice").asOpt[String].get) {
+                                                        } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
