@@ -755,6 +755,9 @@ object AuthModule {
                   
                   (data \ "cell_phone_owner").asOpt[String].map (x => head += "cell_phone_owner" -> x).getOrElse(Unit)
                   (data \ "cell_phone").asOpt[String].map (x => head += "cell_phone" -> x).getOrElse(Unit)
+                  
+                  (data \ "business_image").asOpt[String].map (x => head += "business_image" -> x).getOrElse(Unit)
+                  (data \ "road_image").asOpt[String].map (x => head += "road_image" -> x).getOrElse(Unit)
 
                   val lines = MongoDBList.newBuilder
                   var bChangeLines = false

@@ -133,7 +133,7 @@ object SpecialWayController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.speicalwayBase.t) {
-                Ok(views.html.ciLoginAccountPsw(token)(open_id)(name))
+                Ok(views.html.swLoginAccountPsw(token)(open_id)(name))
             }
             else Redirect("/index")
         }
