@@ -716,7 +716,7 @@
 						<div class="col-sm-offset-3">
 						@{(vc \ "vehicle").asOpt[List[String]].get map { x =>
                             <div class="col-sm-2 checkbox">
-                                <label><input data-name="vehicle" type="checkbox" value={x} /> {x} </label>
+                                <label><input name="vehicle" type="checkbox" value={x} /> {x} </label>
                             </div>
                         }}
 						</div>
