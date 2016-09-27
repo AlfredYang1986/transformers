@@ -34,6 +34,10 @@ GET		/admin/send/car  												controllers.AdminController.adminSendCar
 GET		/admin/sent/car  												controllers.AdminController.adminHaveSentCar
 GET		/admin/car/history												controllers.AdminController.adminCarHistory
 GET 	/admin/setting													controllers.AdminController.adminSetting
+GET		/admin/validate/company              							controllers.AdminController.adminValidateCompany
+GET		/admin/validate/industry 										controllers.AdminController.adminValidateIndustry
+GET		/admin/validate/specialway										controllers.AdminController.adminValidateSpecialway
+GET		/admin/validate/driver 											controllers.AdminController.adminValidateDriver
 
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)

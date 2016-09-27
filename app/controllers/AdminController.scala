@@ -90,4 +90,20 @@ object AdminController extends Controller {
         Ok(views.html.adminSetting())
     }
 
+    def adminValidateCompany = Action {
+        Ok(views.html.adminValidateCompany())
+    }
+
+    def adminValidateIndustry= Action {
+        Ok(views.html.adminValidateIndustry())
+    }
+
+    def adminValidateSpecialway = Action {
+        Ok(views.html.adminValidateSpecialway())
+    }
+
+    def adminValidateDriver = Action {
+        Ok(views.html.adminValidateDriver())
+    }
+
 }
