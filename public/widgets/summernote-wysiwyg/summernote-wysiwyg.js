@@ -3490,6 +3490,14 @@
 
                 var dropdown = '<ul class="dropdown-menu">' +
                     '<li>' +
+
+                    '<div class="btn-group">' +
+                    '<div class="note-palette-title">' + lang.color.foreground + '</div>' +
+                    '<div class="note-color-reset" data-event="foreColor" data-value="inherit" title="' + lang.color.reset + '">' +
+                    lang.color.resetToDefault +
+                    '</div>' +
+                    '<div class="note-color-palette" data-target-event="foreColor"></div>' +
+                    '</div>' +
                     '<div class="btn-group">' +
                     '<div class="note-palette-title">' + lang.color.background + '</div>' +
                     '<div class="note-color-reset" data-event="backColor"' +
@@ -3497,13 +3505,6 @@
                     lang.color.setTransparent +
                     '</div>' +
                     '<div class="note-color-palette" data-target-event="backColor"></div>' +
-                    '</div>' +
-                    '<div class="btn-group">' +
-                    '<div class="note-palette-title">' + lang.color.foreground + '</div>' +
-                    '<div class="note-color-reset" data-event="foreColor" data-value="inherit" title="' + lang.color.reset + '">' +
-                    lang.color.resetToDefault +
-                    '</div>' +
-                    '<div class="note-color-palette" data-target-event="foreColor"></div>' +
                     '</div>' +
                     '</li>' +
                     '</ul>';
