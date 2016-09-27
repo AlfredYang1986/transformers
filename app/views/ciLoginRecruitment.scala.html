@@ -36,7 +36,7 @@
                                                 {(iter \ "title").asOpt[String].get}
                                             </div>    
 
-                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + index} style="font-size:15px" onclick={"showContent(" + index + ", \"" + {(iter \ "content").asOpt[String].get} + "\")"} >
+                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + index} style="font-size:15px" onclick={"showContent(" + index + ", \"" + {(iter \ "content").asOpt[String].get.replace('\"', '\'')} + "\")"} >
                                                 查看详情
                                             </button>
                                         </div>
@@ -54,11 +54,14 @@
                                                 <div class="col-sm-12 panel-body">
                                                     <form class="form-horizontal bordered-row">
                                                         <div class="form-group">
+                                                            <label class="col-xs-12 control-label">联系人电话：{(iter \ "company_name").asOpt[String].get}</label>
+                                                        </div>  
+                                                        <div class="form-group">
                                                             <label class="col-xs-12 control-label">联系人：{(iter \ "contact").asOpt[String].get}</label>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="col-xs-12 control-label">联系人电话：{(iter \ "phone_no").asOpt[String].get}</label>
-                                                        </div>             
+                                                        </div>
                                                     </form>                                            
                                                 </div>
                                             </div>

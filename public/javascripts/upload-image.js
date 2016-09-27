@@ -27,7 +27,7 @@ function fileUpload(ele) {
 	});
 
 	$(this.element).on('fileclear', function(event) {
-	    this.preview_map = new Object();
+	    that.preview_map = new Object();
 	});
 
 	return this;

@@ -342,7 +342,11 @@
         }
 
         function updateBusinessImage() {
-            is_upload_business_image = true;
+            var business_images_name = upload_business_image.queryFileNames();
+            if (business_images_name.length > 0) {
+                is_upload_business_image = true;
+                $("#business_image_preview").attr("src", "/images/" + business_images_name[0]);
+            }
             $('#business-image-upload').click();
         }
 
@@ -352,7 +356,11 @@
         }
 
         function updateRoadImage() {
-            is_upload_road_image = true;
+            var road_images_name = upload_road_image.queryFileNames();
+            if (road_images_name.length > 0) {
+                is_upload_road_image = true;
+                $("#road_image_preview").attr("src", "/images/" + road_images_name[0]);
+            }
             $('#road-image-upload').click();
         }
 

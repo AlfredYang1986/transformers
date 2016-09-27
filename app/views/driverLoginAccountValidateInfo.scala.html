@@ -56,27 +56,126 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">行驶证</label>
-                                    <div class="col-sm-6 business-license-btn">
-                                        <input id="driver-image-upload" name="driver-image-upload[]" type="file" multiple=true class="file-loading">
-                                    </div>
-                            <!--
+                                    <label class="col-sm-2 control-label">行驶证</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="123456789123456789">
+                                    @if((driver \ "driver_image").asOpt[String].get == "") {
+                                        <img class="form-control" style="height: 400px; display:none;" id="business_image_preview" />
+                                    } else {
+                                        <img id="business_image_preview" class="form-control" style="height: 400px" src=@{"/images/" + {(driver \ "driver_image").asOpt[String].get}} />
+                                    }
                                     </div>
-                            -->
+                                    <div class="col-sm-2">
+                                        <button class="form-control" style="border: 1px solid #008bdc" data-toggle="modal" data-target="#business-image-upload">上传图片</button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">驾驶证</label>
 
-                                    <div class="col-sm-6 business-license-btn">
-                                        <input id="driver-road-image" name="driver-road-image" type="file" multiple=true class="file-loading">
-                                    </div>
-                                <!--    
+                                <!-- Home Page User Login dialog -->
+                                <div class="modal fade" id="business-image-upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content"> <!-- home-reg-dialog -->
+                                            <div class="modal-header home-login-header">
+                                            <!--
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+                                                </button>
+                                            -->
+                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                                                <h3 class="modal-title home-login-title" id="myModalLabel">                 
+                                                    行驶证
+                                                </h3>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="form-horizontal">
+
+                                                    <div class="form-group">
+
+                                                        <label for="business-license" class="col-sm-3 control-label">行驶证上传</label>
+                                                    
+                                                        <div class="col-sm-9 business-license-btn">
+                                                            <input id="upload-business-image" type="file" multiple=true class="file-loading" />
+                                                        </div>
+                                                    
+                                                    </div>
+
+                                                    <div style="width: 100%;" class="form-group">
+
+                                                        <div class="col-sm-3 col-sm-offset-3">
+                                                            <button class="btn btn-default col-sm-12" onclick="updateBusinessImage()" style="font-size: 15px;border: 1px solid #008bdc">
+                                                                提交审核
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="col-xs-offset-3 col-sm-3">
+                                                            <button class="btn btn-default col-sm-12" onclick="cancelBusinessImage()" style="font-size: 15px;border: 1px solid #008bdc">
+                                                                返回
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">道路运输许可证</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="" placeholder="123456789123456789">
+                                    @if((driver \ "road_image").asOpt[String].get == "") {
+                                        <img class="form-control" style="height: 400px; display:none;" id="road_image_preview" /> 
+                                    } else {
+                                        <img id="road_image_preview" class="form-control" style="height: 400px" src=@{"/images/" + {(driver \ "road_image").asOpt[String].get}} />
+                                    }
                                     </div>
-                                -->
+                                    <div class="col-sm-2">
+                                        <button class="form-control" style="border: 1px solid #008bdc" data-toggle="modal" data-target="#road-image-upload">上传图片</button>
+                                    </div>
+                                </div>
+
+                                <!-- Home Page User Login dialog -->
+                                <div class="modal fade" id="road-image-upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content"> <!-- home-reg-dialog -->
+                                            <div class="modal-header home-login-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+                                                </button>
+                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                                                <h3 class="modal-title home-login-title" id="myModalLabel">                 
+                                                    道路运输许可证上传
+                                                </h3>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="business-license" class="col-sm-3 control-label">道路运输许可证上传</label>
+                                                        <div class="col-sm-9 business-license-btn">
+                                                            <input id="upload-road-image" type="file" multiple=true class="file-loading" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="width: 100%;" class="form-group">
+
+                                                        <div class="col-sm-3 col-sm-offset-3">
+                                                            <button class="btn btn-default col-sm-12" onclick="updateRoadImage()" style="font-size: 15px;border: 1px solid #008bdc">
+                                                                提交审核
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="col-xs-offset-3 col-sm-3">
+                                                            <button class="btn btn-default col-sm-12" onclick="cancelRoadImage()" style="font-size: 15px;border: 1px solid #008bdc">
+                                                            返回
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
                                 </div>
 
                                 <div class="form-group text-center">
@@ -99,9 +198,10 @@
 			$('li[data-current="index"]').addClass("active");
 		});
         /** 驾驶员行驶证图片上传**/
-        var drive_image = new fileUpload($("#driver-image-upload"));
-        /** 驾驶员驾驶证图片上传**/
-        var road_image = new fileUpload($("#driver-road-image"));
+        var is_upload_business_image = false;
+        var upload_business_image = new fileUpload($("#upload-business-image"));
+        var is_upload_road_image = false;
+        var upload_road_image = new fileUpload($("#upload-road-image"));
 
         function validate(ele, result, name) {
             if (result) $(ele).removeClass('validate-error');
@@ -120,6 +220,34 @@
             return result;
         }
 
+        function updateBusinessImage() {
+            var business_images_name = upload_business_image.queryFileNames();
+            if (business_images_name.length > 0) {
+                is_upload_business_image = true;
+                $("#business_image_preview").attr("src", "/images/" + business_images_name[0]);
+            }
+            $('#business-image-upload').click();
+        }
+
+        function cancelBusinessImage() {
+            is_upload_business_image = false;
+            $('#business-image-upload').click();
+        }
+
+        function updateRoadImage() {
+            var road_images_name = upload_road_image.queryFileNames();
+            if (road_images_name.length > 0) {
+                is_upload_road_image = true;
+                $("#road_image_preview").attr("src", "/images/" + road_images_name[0]);
+            }
+            $('#road-image-upload').click();
+        }
+
+        function cancelRoadImage() {
+            is_upload_road_image = false;
+            $('#road-image-upload').click();
+        }
+
         function updateValidateInfo() {
             var screen_name = $('input[data-name="screen-name"]').val();
             var social_id = $('input[data-name="social-id"]').val();
@@ -131,14 +259,33 @@
                         'div[data-name="screen-name-error"]');
 
             result &= validate($('div[data-name="social-id"]'),
-                        vehicle_lst.length > 0,
+                        hasInput(social_id),
                         'div[data-name="social-id-error"]');
+
+            var business_images_name = "";
+            if (is_upload_business_image) {
+                business_images_name = upload_business_image.queryFileNames();
+            }
+            
+            var road_image_name = "";
+            if (is_upload_road_image) {
+                road_image_name = upload_road_image.queryFileNames();
+            }
 
             if (result) {
                 var query_object = new Object();
 
                 query_object["driver_name"] = screen_name;
                 query_object["driver_secial_id"] = social_id;
+                query_object['open_id'] = "@{open_id}";
+
+                if (is_upload_business_image) {
+                    query_object['driver_image'] = business_images_name[0];
+                }
+
+                if (is_upload_road_image) {
+                    query_object['road_image'] = road_image_name[0];
+                }
 
                 $.ajax({
                     url: "/auth/driver/update",

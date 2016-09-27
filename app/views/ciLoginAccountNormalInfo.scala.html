@@ -21,7 +21,23 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">业务领域</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" value=@{(company \ "company_business").asOpt[List[String]].get} />
+                                    @{
+                                        val cb = (company \ "company_business").asOpt[List[String]].get
+                                        List("公路", "铁路", "船运", "航空") map { x =>
+                                        if (cb.contains(x)) {
+                                            <div class="col-sm-2 checkbox">
+                                                <label>
+                                                    <input name="field" type="checkbox" value={x} checked="" /> {x}
+                                                </label>
+                                            </div>
+                                        } else {
+                                            <div class="col-sm-2 checkbox">
+                                                <label>
+                                                    <input name="field" type="checkbox" value={x} /> {x}
+                                                </label>
+                                            </div>
+                                        }
+                                    }}
                                     </div>
                                 </div>
 
@@ -154,7 +170,7 @@
                                     <label class="col-sm-2 control-label">公司介绍</label>
                                     <div class="col-sm-8">
                                         @{
-                                        <input type="text" data-name="description" class="form-control" value={(company \ "description").asOpt[String].get} />
+                                            <input type="text" data-name="description" class="form-control" value={(company \ "description").asOpt[String].get} />
                                         }
                                     </div>
                                 </div>

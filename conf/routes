@@ -164,7 +164,6 @@ POST	/auth/sub/push													controllers.AuthController.pushSubuser
 POST	/auth/sub/pop													controllers.AuthController.popSubuser
 POST	/auth/sub/update												controllers.AuthController.updateSubuser
 
-
 # files
 POST	/file/upload					controllers.FileController.upload
 GET		/images/:name					controllers.FileController.downloadFile(name)

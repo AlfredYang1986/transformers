@@ -147,7 +147,8 @@ object AuthModule {
                 (data \ "phone_no").asOpt[String].map (tmp => x += "phone_no" -> tmp).getOrElse(x += "phone_no" -> "")
                 (data \ "phone_sep").asOpt[String].map (tmp => x += "phone_sep" -> tmp).getOrElse(x += "phone_sep" -> "")
                 (data \ "business_image").asOpt[String].map (tmp => x += "business_image" -> tmp).getOrElse(throw new Exception("input business image"))
-                (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input road image"))
+//                (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(throw new Exception("input road image"))
+                (data \ "road_image").asOpt[String].map (tmp => x += "road_image" -> tmp).getOrElse(x += "road_image" -> "")
                 (data \ "cell_phone").asOpt[String].map (tmp => x += "cell_phone" -> tmp).getOrElse(throw new Exception("wrong cell phone"))
 //                (data \ "cell_phone_owner").asOpt[String].map (tmp => x += "cell_phone_owner" -> tmp).getOrElse(throw new Exception("input legal person"))
                 x += "type" -> company_type.asInstanceOf[Number]
@@ -489,7 +490,7 @@ object AuthModule {
                 "insurance" -> toJson(x.getAs[Number]("insurance").map (x => x.intValue).getOrElse(0.intValue)),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
                 "driver_image" -> toJson(x.getAs[String]("driver_image").get),
-                "road_image" -> toJson(x.getAs[String]("road_image").get),
+                "road_image" -> toJson(x.getAs[String]("road_image").map (x => x).getOrElse("")),
                 "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
                 "vehicle" -> toJson(x.getAs[MongoDBList]("vehicle").get.toList.asInstanceOf[List[String]]),
                 "driver_lines" -> toJson(x.getAs[MongoDBList]("driver_lines").get.toList.asInstanceOf[List[BasicDBObject]].map (tmp => 
@@ -506,7 +507,7 @@ object AuthModule {
                 "legal_person_id" -> toJson(x.getAs[String]("legal_person_id").get),
                 "address" -> toJson(x.getAs[String]("address").get),
                 "business_image" -> toJson(x.getAs[String]("business_image").get),
-                "road_image" -> toJson(x.getAs[String]("road_image").get),
+                "road_image" -> toJson(x.getAs[String]("road_image").map (x => x).getOrElse("")),
                 "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
@@ -533,7 +534,7 @@ object AuthModule {
                 "legal_person_id" -> toJson(x.getAs[String]("legal_person_id").get),
                 "address" -> toJson(x.getAs[String]("address").get),
                 "business_image" -> toJson(x.getAs[String]("business_image").get),
-                "road_image" -> toJson(x.getAs[String]("road_image").get),
+                "road_image" -> toJson(x.getAs[String]("road_image").map (x => x).getOrElse("")),
                 "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
@@ -555,7 +556,7 @@ object AuthModule {
                 "legal_person_id" -> toJson(x.getAs[String]("legal_person_id").get),
                 "address" -> toJson(x.getAs[String]("address").get),
                 "business_image" -> toJson(x.getAs[String]("business_image").get),
-                "road_image" -> toJson(x.getAs[String]("road_image").get),
+                "road_image" -> toJson(x.getAs[String]("road_image").map (x => x).getOrElse("")),
                 "auth_status" -> toJson(x.getAs[Number]("auth_status").get.intValue),
                 "phone_dir" -> toJson(x.getAs[String]("phone_dir").get),
                 "phone_no" -> toJson(x.getAs[String]("phone_no").get),
@@ -729,6 +730,8 @@ object AuthModule {
                   (data \ "vehicle_length").asOpt[List[Float]].map (x => head += "vehicle_length" -> x).getOrElse(Unit)
                   (data \ "driver_name").asOpt[String].map (x => head += "driver_name" -> x).getOrElse(Unit)
                   (data \ "driver_social_id").asOpt[String].map (x => head += "driver_social_id" -> x).getOrElse(Unit)
+                  (data \ "driver_image").asOpt[String].map (x => head += "driver_image" -> x).getOrElse(Unit)
+                  (data \ "road_image").asOpt[String].map (x => head += "road_image" -> x).getOrElse(Unit)
                   
                   _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
                   toJson(Map("status" -> "ok", "result" -> "success"))
