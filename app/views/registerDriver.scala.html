@@ -9,7 +9,7 @@
 
 				<label style="font-size: 22px; margin-top: 10px" class="text-center">驾驶员注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 20px; margin-bottom: 5px;">为必填项目</i>
+				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 25px; margin-left: 5px;"><span>为必填项目</span></i>
 
 				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
 
@@ -556,7 +556,7 @@
 		            cache: false,
 		            success: function (data) {
 		                if (data.status == "ok") {                                          
-		                     alert("注册成功审核！");
+		                     alert("提交成功，请等待审核！");
 		                     location.href = "/register/complete";
 		                } else {
 		                    alert(data.error.message);
