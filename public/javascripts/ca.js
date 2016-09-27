@@ -46,7 +46,7 @@
         msgImageHeightLarge: 'L\'alçada de la imatge "{name}" no pot excedir de {size} px.',
         msgImageResizeError: 'No s\'ha pogut obtenir les dimensions d\'imatge per canviar la mida.',
         msgImageResizeException: 'Error en canviar la mida de la imatge.<pre>{errors}</pre>',
-        dropZoneTitle: '上传图片到这里',
+        dropZoneTitle: '请上传清晰完整的图片',
         fileActionSettings: {
             removeTitle: 'Eliminar arxiu',
             uploadTitle: 'Pujar arxiu',
