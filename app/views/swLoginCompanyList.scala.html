@@ -372,7 +372,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">所属公司</label>
                                                         <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{company_name}</label>
+                                                            <label type="text" class="control-label">{(iter \ "company_name").asOpt[String].get}</label>
                                                         </div>
                                                     </div>
 

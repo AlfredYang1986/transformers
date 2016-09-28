@@ -97,8 +97,9 @@ object companyProductModule {
             builder += "open_id" -> open_id
             builder += "date" -> new Date().getTime
             builder += "status" -> productStatus.published.t
+            builder += "company_name" -> (data \ "company_name").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
 
-            val product_name = (data \ "product_name").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val product_name = (data \ "product_name").asOpt[String].map (x => x).getOrElse("")
             builder += "product_name" -> product_name
             val product_name_save = (data \ "product_name_save").asOpt[Int].map (x => x).getOrElse(0)
             if (product_name_save == 1 && !product_name.equals("")) {
@@ -327,6 +328,7 @@ object companyProductModule {
                    "product_id" -> toJson(x.getAs[String]("product_id").get),
                    "contact_name" -> toJson(x.getAs[String]("contact_name").get),
                    "contact_phone" -> toJson(x.getAs[String]("contact_phone").get),
+                   "company_name" -> toJson(x.getAs[String]("company_name").map (x => x).getOrElse("")),
                    "notes" -> toJson(x.getAs[String]("notes").map (x => x).getOrElse("")),
                    "isSpecialWay" -> toJson(x.getAs[Int]("isSpecialWay").map (x => x).getOrElse(0)),
                    "cooperation_type" -> toJson(x.getAs[Int]("cooperation_type").map (x => x).getOrElse(-1)),

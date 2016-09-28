@@ -474,22 +474,22 @@
                         vehicle_length_lst.length > 0,
                         'div[data-name="vehicle-length-error"]');
 
-            var product_name = "";
-            var product_name_save = 0;
-            if($('#name-collapse').hasClass("in")) {
-                product_name = $('input[data-name="product-name-input"]').val();
-                if ($('input[data-name="product-name-save"]').is(':checked')) 
-                    product_name_save = 1;
-                else
-                    product_name_save = 0;
-            }else{
-                product_name = $('select[data-name="product-name"]').val();
-                product_name_save = 0;
-            }
+            // var product_name = "";
+            // var product_name_save = 0;
+            // if($('#name-collapse').hasClass("in")) {
+            //     product_name = $('input[data-name="product-name-input"]').val();
+            //     if ($('input[data-name="product-name-save"]').is(':checked')) 
+            //         product_name_save = 1;
+            //     else
+            //         product_name_save = 0;
+            // }else{
+            //     product_name = $('select[data-name="product-name"]').val();
+            //     product_name_save = 0;
+            // }
 
-            result &= validate($('div[data-name="product-name-container"]'),
-                        hasInput(product_name),
-                        'div[data-name="product-name-error"]');
+            // result &= validate($('div[data-name="product-name-container"]'),
+            //             hasInput(product_name),
+            //             'div[data-name="product-name-error"]');
 
 
             // var date_requirement = $('input[data-name="date-requirement"]').val();
@@ -574,8 +574,8 @@
                 });
                 query_object['vehicle_length'] = vehicle_length_number_lst;
 
-                query_object['product_name_save'] = product_name_save;
-                query_object['product_name'] = product_name;
+                // query_object['product_name_save'] = product_name_save;
+                // query_object['product_name'] = product_name;
 
                 // query_object['notes'] = notes;
                 // query_object['date_requirement'] = date_requirement;
@@ -583,6 +583,7 @@
                 query_object['contact_name'] = contact_name;
                 query_object['contact_phone'] = contact_phone;
                 query_object['contact_save'] = contact_save;
+                query_object['company_name'] = "@company_name";
 
                 query_object['open_id'] = "@open_id";
                 
