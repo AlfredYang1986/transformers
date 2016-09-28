@@ -139,7 +139,7 @@
                                                     <div class="col-sm-offset-1">
                                                         @{(vc \ "vehicle_length").asOpt[List[Double]].get map { x =>
                                                         <div class="col-sm-2 checkbox">
-                                                            <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                            <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {"%.1f".format(x)}米 </label>
                                                         </div>
                                                         }}
                                                     </div>

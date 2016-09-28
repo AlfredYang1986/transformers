@@ -340,20 +340,20 @@
                                                         <label class="col-sm-2 control-label">需求车长</label>
                                                         <div class="col-sm-6">
                                                             { (iter \ "vehicle_length").asOpt[List[Double]].get map { v => 
-                                                                <label type="text" class="control-label">{v}米</label>
+                                                                <label type="text" class="control-label">{"%.1f".format(v)}米</label>
                                                             }}
                                                             
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        <label class="col-sm-2 control-label">货物名称</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label">{(iter \ "product_name").asOpt[String].get}</label>
-                                                        </div>
-                                                    </div>
-
                                                     {if ((iter \ "isSpecialWay").asOpt[Int].get == 0) {
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">货物名称</label>
+                                                            <div class="col-sm-6">
+                                                                <label type="text" class="control-label">{(iter \ "product_name").asOpt[String].get}</label>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">时效需求</label>
                                                             <div class="col-sm-6">
