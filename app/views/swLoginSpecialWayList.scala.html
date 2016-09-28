@@ -1,6 +1,6 @@
-@(message: String)
+@(token : String)(open_id : String)(company_name : String)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)(com_lst : List[play.api.libs.json.JsValue])
 
-@sw_login_index_sliders("易聚货专线")("") {
+@sw_login_index_sliders("易聚货-专线")(company_name) {
     
 } {
 
@@ -45,32 +45,44 @@
                                         <div class="panel-body">
                                         <div class="form-horizontal bordered-row">
                                             <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-2 col-sm-offset-1">
-                                                            <select class="form-control">
-                                                                <option selected>浙江省</option>
-                                                            </select>   
-                                                        </div>
-                                                        <div class="col-sm-2">
-                                                            <select class="form-control">
-                                                                <option selected>杭州市</option>
-                                                            </select>   
-                                                        </div>
-                                                        <div class="col-sm-1 text-center">
-                                                            <label><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></label>
-                                                        </div>
-                                                        <div class="col-sm-2">
-                                                            <select class="form-control">
-                                                                <option selected>浙江省</option>
-                                                            </select>   
-                                                        </div>
-                                                        <div class="col-sm-2">
-                                                            <select class="form-control">
-                                                                <option selected>杭州市</option>
-                                                            </select>   
-                                                        </div>
-                                                    </div>          
-                                            </div>  
+                                                <div class="row">
+                                                    <div class="col-sm-2 col-sm-offset-1">
+                                                        <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                                                            <option selected disabled>请选择省</option>
+                                                            @{cities map { iter => 
+                                                                <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                            }};
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control" data-name="origin-city" data-index="1">
+                                                            <option selected disabled data-filter="choice" >请选择市</option>
+                                                            @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                                <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                            }}};
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <label>--></label>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+                                                            <option selected disabled data-filter="choice" >请选择省</option>
+                                                            @{cities map { iter => 
+                                                                <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                            }};
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select class="form-control" data-name="destination-city" data-index="3">
+                                                            <option selected disabled data-filter="choice" >请选择市</option>
+                                                            @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                                <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                            }}};
+                                                        </select> 
+                                                    </div>
+                                                </div>
+                                            </div> 
                                         </div>      
                                         </div>
                                     </div>
@@ -83,10 +95,9 @@
                                                 <label class="col-sm-3 control-label">按拥有车型搜索</label>
                                                 <div class="col-sm-5 col-sm-offset-2">
                                                 <button type="button" class="col-sm-2 col-xs-12 form-control" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" style="font-size:15px; border:1px solid #008bdc">
-                                            拥有车型选择
-                                            <i class="glyph-icon icon-angle-down"></i>
+                                                    拥有车型选择
+                                                    <i class="glyph-icon icon-angle-down"></i>
                                                 </button>
-
                                                 </div>
                                             </div>              
                                         </div>
@@ -94,91 +105,18 @@
 
                                     <div id="collapseTwo" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                        <div class="form-horizontal bordered-row">
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-1">
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="平板车"> 平板车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="高栏车"> 高栏车
-                                                        </label>
-                                                    </div>                      
-                                                    
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="厢式车"> 厢式车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="半挂车"> 半挂车
-                                                        </label>
-                                                    </div>
-                                                    
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="高地板"> 高低板
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="起重车"> 起重车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="牵引车"> 牵引车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="仓棚车"> 仓棚车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="罐式车"> 罐式车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="特种车"> 特种车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="危险品车"> 危险品车
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="保温冷藏"> 保温冷藏
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="col-sm-2 checkbox">
-                                                        <label>
-                                                            <input name="vehicle" type="checkbox" value="集装箱车"> 集装箱车
-                                                        </label>
-                                                    </div>
+                                            <div class="form-horizontal bordered-row">
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-1">
+                                                    @{(vc \ "vehicle").asOpt[List[String]].get map { x =>
+                                                        <div class="col-sm-2 checkbox">
+                                                            <label><input name="vehicle" type="checkbox" value={x} /> {x} </label>
+                                                        </div>
+                                                    }}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -197,109 +135,143 @@
          </div>
 
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-body">
-                        <h3 class="title-hero">
-                            
-                        </h3>
+        <div data-name="result-container">
 
-                        <div class="example-box-wrapper">
-                            <div class="row">
+        @{ com_lst map { iter =>
+            val iter_open_id = (iter \ "open_id").asOpt[String].get
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3 class="title-hero">
+                                
+                            </h3>
 
-                                <div class="col-sm-12">
-
-                                    <div class="row">
-
-                                    <div class="col-sm-6" style="font-size:15px">
-                                        澳深科技有限公司
-                                    </div>
-
-                                    <div class="col-sm-4" style="font-size:15px">
-                                        浙江杭州 -> 北京北京
-                                    </div>  
-
-                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#recruit-view" style="font-size:15px">
-                                        查看详情
-                                    </button>
-
-                                    </div>
-        <!-- close directly view the collapse
-                                    <div id="recruit-view" class="collapse in"> -->
-                                    <div id="recruit-view" class="collapse">
-
-                                        <div class="panel">
-                                        <!--
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title">这里显示公司专线发送的招聘标题</h3>
+                            <div class="example-box-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6" style="font-size:15px">
+                                                {(iter \ "company_name").asOpt[String].get}
                                             </div>
-        -->
-                                            <div class="panel-body">
-                                            <div class="form-horizontal bordered-row" role="form">
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">公司名字</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">澳深科技有限公司</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="certificate-type" class="col-sm-2 control-label">主营路线</label>
-                                                    <div class="col-sm-8">
-                                                            <label type='text' class="control-label">浙江 杭州 <--> 北京 北京</label> 
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="certificate-type" class="col-sm-2 control-label">仓库地址</label>
-                                                    <div class="col-sm-8">
-                                                            <label type='text' class="control-label">浙江 杭州 </label> 
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">拥有车型</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">平板车</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">发车时效</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">天天发车</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">联系人</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">林恩</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">联系人电话</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">13857102787</label>
-                                                    </div>
-                                                </div> 
-
-                                            </div>
-                                            </div>
+                                            <div class="col-sm-4" style="font-size:15px">
+                                                <label type='text' class="control-label"> 
+                                                    {
+                                                        val x = (iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get.head
+                                                        (x \ "origin_province").asOpt[String].get + " " + 
+                                                        (x \ "origin_city").asOpt[String].get + " --> " + 
+                                                        (x \ "destination_province").asOpt[String].get + " " +
+                                                        (x \ "destination_city").asOpt[String].get
+                                                    }
+                                                </label> 
+                                            </div>  
+                                            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + iter_open_id} style="font-size:15px">
+                                                查看详情
+                                            </button>
                                         </div>
 
-                                    </div>
-                                </div>
+                                        <div id={"recruit-view-" + iter_open_id} class="collapse">
 
+                                            <div class="panel">
+
+                                                <div class="panel-body">
+                                                    <div class="form-horizontal bordered-row" role="form">
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">公司名字</label>
+                                                            <div class="col-sm-8">
+                                                                <label type="text" class="control-label">{(iter \ "company_name").asOpt[String].get}</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="certificate-type" class="col-sm-2 control-label">主营路线</label>
+                                                            {(iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                                <div class="col-sm-8">
+                                                                    <label type='text' class="control-label">
+                                                                    {
+                                                                        (x \ "origin_province").asOpt[String].get + " " + 
+                                                                        (x \ "origin_city").asOpt[String].get + " --> " + 
+                                                                        (x \ "destination_province").asOpt[String].get + " " +
+                                                                        (x \ "destination_city").asOpt[String].get
+                                                                    }
+                                                                    </label> 
+                                                                </div>
+                                                            }}
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="certificate-type" class="col-sm-2 control-label">仓库地址</label>
+                                                            {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                                <div class="col-sm-8">
+                                                                    <label type='text' class="control-label">
+                                                                    {
+                                                                        (x \ "province").asOpt[String].get + " " + 
+                                                                        (x \ "city").asOpt[String].get + " --> " + 
+                                                                        (x \ "district").asOpt[String].get + " " +
+                                                                        (x \ "address").asOpt[String].get
+                                                                    }
+                                                                    </label> 
+                                                                </div>
+                                                            }}
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">拥有车型</label>
+                                                            <div class="col-sm-8">
+                                                                <label type="text" class="control-label">
+                                                                    {
+                                                                        val vehicle = (iter \ "vehicle").asOpt[List[String]].get
+                                                                        (vehicle zipWithIndex) map { x => 
+                                                                            x._1 + (if (x._2 == vehicle.length - 1) ""
+                                                                                    else "/")
+                                                                        }
+                                                                    }
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">发车时效</label>
+                                                            <div class="col-sm-8">
+                                                                <label type="text" class="control-label">
+                                                                    { 
+                                                                        if ((iter \ "special_occation").asOpt[Int].get == 0) "天天发车"
+                                                                        else "隔天发车"
+                                                                    }
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">联系人</label>
+                                                            <div class="col-sm-8">
+                                                                <label type="text" class="control-label">{(iter \ "cell_phone_owner").asOpt[String].get}</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label">联系人电话</label>
+                                                            <div class="col-sm-8">
+                                                                <label type="text" class="control-label">{(iter \ "cell_phone").asOpt[String].get}</label>
+                                                            </div>
+                                                        </div> 
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }}
+        </div> <!-- result container -->
 
 
         </div>
@@ -311,5 +283,21 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
         });
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function districtChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var city = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
+        }
     </script>
 }

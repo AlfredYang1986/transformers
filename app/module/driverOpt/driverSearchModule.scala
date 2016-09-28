@@ -30,6 +30,7 @@ object driverSearchModule {
         def conditionsAcc(o : DBObject, key : String, value : Any) : DBObject = {
             key match {
               case "address" => $and(o, "address" $eq value.asInstanceOf[String])
+              case "type" => $and(o, "type" $eq value.asInstanceOf[Int])
             }
         }
 
@@ -37,6 +38,10 @@ object driverSearchModule {
             var reVal : DBObject = basicCondition
             (data \ "address").asOpt[String].map (x => 
                 reVal = conditionsAcc(reVal, "address", x)
+            ).getOrElse(Unit)
+           
+            (data \ "type").asOpt[Int].map (x => 
+                reVal = conditionsAcc(reVal, "type", x)
             ).getOrElse(Unit)
             
             reVal
@@ -48,6 +53,7 @@ object driverSearchModule {
         val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
         
         toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-            (from db() in "user_profile" where conditions select (AuthModule.detailResult(_))).toList)))
+            ((from db() in "user_profile" where conditions).selectSkipTop(skip)(take)(orderCol) 
+                (AuthModule.detailResult(_))).toList)))
     }
 }

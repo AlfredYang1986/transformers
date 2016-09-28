@@ -234,7 +234,7 @@ object companyProductModule {
             val city = (tmp \ "city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
             val district = (tmp \ "district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
             
-            val con = $and($and((key + ".province") $eq province, (key + ".city") $eq city), (key + ".distinct") $eq district)
+            val con = $and((key + ".province") $eq province, (key + ".city") $eq city, (key + ".distinct") $eq district)
             (tmp \ "address").asOpt[String].map (x => Some($and(con, (key + ".address") $eq x))).getOrElse(Some(con)) 
           }
         }
@@ -270,38 +270,32 @@ object companyProductModule {
             }
         }
         
-        def conditionsAcc(o : Option[DBObject], keys : List[String], func : (String, JsValue) => Option[DBObject]) : Option[DBObject] = keys match {
+        def conditionsAcc(o : List[DBObject], keys : List[String], func : (String, JsValue) => Option[DBObject]) : List[DBObject] = keys match {
           case Nil => o
-          case head :: lst => {
-            val n = o match {
-                        case None => func(head, (data \ head))
-                        case Some(x) => {
-                            func(head, (data \ head)) match {
-                              case None => o
-                              case Some(y) => Some($and(x, y))
-                            }
-                        }
-                    }
-            conditionsAcc(n, lst, func)
-            }
+          case head :: lst => func(head, (data \ head)) match {
+                                  case None => o
+                                  case Some(y) => conditionsAcc(y :: o, lst, func)
+                              }
         }
         
-        def conditions : Option[DBObject] = {
-            var con : Option[DBObject] = 
-                conditionsAcc(None, "date_requirement" :: "open_id" :: "product_name" :: "product_id" :: "contact_name" :: "contact_phone" :: Nil, stringConditions(x => x.asOpt[String]))
+        def conditions : List[DBObject] = {
+            var con  = conditionsAcc(Nil, "date_requirement" :: "open_id" :: "product_name" :: "product_id" :: "contact_name" :: "contact_phone" :: Nil, stringConditions(x => x.asOpt[String]))
             con = conditionsAcc(con, "weight" :: "volume" :: Nil, floatConditions(x => x.asOpt[Float]))
             con = conditionsAcc(con, "status" :: Nil, intConditions(x => x.asOpt[Int]))
-            con = conditionsAcc(con, "origin" :: "destination" :: Nil, addressConditions(x => x.asOpt[Int]))
+            con = conditionsAcc(con, "origin" :: "destination" :: "storage" :: Nil, addressConditions(x => x.asOpt[Int]))
 
             con
         }
+       
+        val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
+        val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
         
         try {
             conditions match {
-              case None => 
+              case Nil => 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
                       (from db() in "products" select (product2JsValue(_))).toList)))
-              case Some(x) => { println(from db() in "products" where x select (product2JsValue(_)));
+              case x : List[DBObject] => { 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
                       (from db() in "products" where x select (product2JsValue(_))).toList)))}
             }

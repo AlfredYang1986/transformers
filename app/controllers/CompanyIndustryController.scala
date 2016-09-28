@@ -421,8 +421,27 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginSpecialWayList = Action {
-        Ok(views.html.ciLoginSpecialWayList("Your new application is ready."))
+    def ciLoginSpecialWayList(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "company_name").asOpt[String].get
+            
+            val vc = ConfigModule.configAllVehicles
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val com_lst = (driverSearchModule.queryCompany(toJson(Map("type" -> 3))) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.ciLoginSpecialWayList(token)(open_id)(name)(xmlOpt.allCities)(vc)(com_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     /**
