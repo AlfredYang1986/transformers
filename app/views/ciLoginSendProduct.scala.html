@@ -1,6 +1,6 @@
 @(cities : List[play.api.libs.json.JsValue])(token : String)(open_id : String)(company_name : String)(pdns : List[String])(contacts : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
-@ci_login_index_sliders("易聚货公司厂家平台")(company_name) {
+@ci_login_index_sliders("易聚货-公司")(company_name) {
     
 } {
 
@@ -48,7 +48,7 @@
                                             </select>
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"></textarea>
                                 </div>
                             </div>
 
@@ -93,7 +93,7 @@
                                             </select> 
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"></textarea>
                                 </div>
                             </div>
 
@@ -207,7 +207,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                         <button data-toggle="collapse" class="form-control" data-parent="#accordion" href="#name-collapse" style="border: 1px solid #008bdc">
-                                            添加其他货物名称
+                                            添加新货物名称
                                         </button>
                                         </div>
                                     </div>
@@ -217,7 +217,7 @@
                                             <input type="text" data-name="product-name-input" class="form-control">
                                         </div>
                                         <div class="col-sm-4">
-                                            <input data-name="product-name-save" type="checkbox" checked="true" style="margin-top:10px"> 并货物名称管理
+                                            <input data-name="product-name-save" type="checkbox" checked="true" style="margin-top:10px"> 保存至货物名称管理
                                         </div>
                                     </div>
 

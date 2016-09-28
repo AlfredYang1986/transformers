@@ -1,6 +1,6 @@
 @(token : String)(open_id : String)(company_name: String)(pdns : List[String])(contacts : List[play.api.libs.json.JsValue])(products : List[play.api.libs.json.JsValue])(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
-@ci_login_index_sliders("易聚货公司厂家平台")(company_name)  {
+@ci_login_index_sliders("易聚货-公司")(company_name)  {
     
 } {
 
@@ -302,7 +302,7 @@
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                     <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#name-collapse-" + product_id} style="border: 1px solid #008bdc">
-                                                                        添加其他货物名称
+                                                                        添加新货物名称
                                                                     </button>
                                                                     </div>
                                                                 </div>
@@ -312,7 +312,7 @@
                                                                         <input type="text" data-name={"product-name-input" + product_id} class="form-control" />
                                                                     </div>
                                                                     <div class="col-sm-4">
-                                                                        <input data-name={"product-name-save-" + product_id} type="checkbox" checked="true" value="save" style="margin-top:10px" /> 并保存至常用货物名称
+                                                                        <input data-name={"product-name-save-" + product_id} type="checkbox" checked="true" value="save" style="margin-top:10px" /> 保存至货物名称管理
                                                                     </div>
                                                                 </div>
 
