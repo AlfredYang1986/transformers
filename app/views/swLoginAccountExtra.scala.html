@@ -88,6 +88,7 @@
             @{ (user_lst zipWithIndex) map { x =>
                 val iter  = x._1
                 val index = x._2
+                if((iter \ "auth").asOpt[Int].get != 12) {
                 <div class="panel">
                     <div class="panel-body">
                         <div class="example-box-wrapper">
@@ -129,6 +130,7 @@
                         </div>
                     </div>
                 </div>
+                }
             }}
             </div>
         </div>
