@@ -51,7 +51,7 @@
                                                 <div class="form-group text-center">
                                                     <label class="col-sm-2 control-label"></label>
                                                     <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" onclick="pushContact()" style="margin-right:20px !important">
-                                                        添加调度员
+                                                        添加并保存
                                                     </button>
                                                 </div>              
                                             </div>
@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"></label>
                                 <div class="col-sm-4 col-sm-offset-1">
-                                    <button class="form-control" onclick={"updateContact(\"" + {(iter._1 \ "contact_id").asOpt[String].get} + "\", \"" + {iter._2} + "\")"} style="border: 1px solid #008bdc">保存</button> 
+                                    <button class="form-control" onclick={"updateContact(\"" + {(iter._1 \ "contact_id").asOpt[String].get} + "\", \"" + {iter._2} + "\")"} style="border: 1px solid #008bdc">修改并保存</button> 
                                 </div>
                                 
                                 <div class="col-sm-3 col-sm-offset-1">
