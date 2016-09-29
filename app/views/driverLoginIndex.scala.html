@@ -15,7 +15,6 @@
                 <script type="text/javascript" src="@routes.Assets.at("widgets/tabs/tabs.js")"></script>
 
                 <div id="page-title">
-                    公司列表
                 </div>
 
                 @{ (companies zipWithIndex) map { item => 
@@ -37,7 +36,7 @@
                         <div class="example-box-wrapper">
                             <div id={"followed_" + index}>
                                 <a href={"#tab1-" + index} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;">公司信息</a>
-                                <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
+                                <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">货源信息</a>
 
 
                                 <div class="tab-content">
