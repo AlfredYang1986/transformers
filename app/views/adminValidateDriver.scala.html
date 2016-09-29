@@ -26,7 +26,64 @@
                                 </thead>
 
                                 <tbody>
-                                                   
+
+                                    <tr class="odd gradeX">
+                                        <td>驾驶员姓名</td>
+                                        <td>27/05/2016</td>
+                                        <td>
+                                            <button id="show-details-btn" class="btn btn-default">查看</button>
+                                        </td>
+                                    </tr>
+                                    <!--View Detail Show&Hide-->
+                                    <tr id="view-details" class="gradeX" style="display: none">
+                                        
+                                        <td>
+                                            <div class="container">
+                                                <h3 style="text-align: center">驾驶员认证详情列表</h3>
+                                                <form class="form-horizontal" role="form">
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person" class="col-sm-2 control-label">驾驶员姓名</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name='legal-person'>data</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person-id" class="col-sm-2 control-label">身份证</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="text" class="control-label" data-name='legal-person-id'>data</label>
+                                                        </div>
+                                                    </div>   
+
+                                                    <div class="form-group">
+                                                        <label for="" class="col-sm-2 control-label">行驶证</label>
+                                                        <div class="col-sm-10">
+                                                            <label type="button" class="btn" data-toggle="modal" data-target="">照片</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="" class="col-sm-2 control-label">驾驶证</label>
+                                                        <div class="col-sm-10 road-license-btn">
+                                                            <label type="button" class="btn" data-toggle="modal" data-target="">照片</label>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+
+                                        <td>
+                                            <button id="" class="btn btn-default">通过</button></br></br>
+                                            <button id="" class="btn btn-default">失败</button></br></br>
+                                            <button class="btn btn-default" id="hide-details-btn">收起</button>
+                                        </td>
+                                    </tr>                                                   
 
                                 </tbody>
                             </table>

@@ -80,10 +80,10 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                                     <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
                                                 </button>
-                                            -->
-                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                                            
+                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">-->
                                                 <h3 class="modal-title home-login-title" id="myModalLabel">                 
-                                                    行驶证
+                                                    行驶证信息修改
                                                 </h3>
                                             </div>
 
@@ -92,7 +92,7 @@
 
                                                     <div class="form-group">
 
-                                                        <label for="business-license" class="col-sm-3 control-label">行驶证上传</label>
+                                                        <label for="business-license" class="col-sm-3 control-label">行驶证</label>
                                                     
                                                         <div class="col-sm-9 business-license-btn">
                                                             <input id="upload-business-image" type="file" multiple=true class="file-loading" />
@@ -104,7 +104,7 @@
 
                                                         <div class="col-sm-3 col-sm-offset-3">
                                                             <button class="btn btn-default col-sm-12" onclick="updateBusinessImage()" style="font-size: 15px;border: 1px solid #008bdc">
-                                                                提交审核
+                                                                提交
                                                             </button>
                                                         </div>
 
@@ -122,7 +122,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">道路运输许可证</label>
+                                    <label class="col-sm-3 control-label">驾驶证</label>
                                     <div class="col-sm-6">
                                     @if((driver \ "road_image").asOpt[String].get == "") {
                                         <img class="form-control" style="height: 400px; display:none;" id="road_image_preview" /> 
@@ -143,16 +143,17 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                                     <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
                                                 </button>
-                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                                                <!--
+                                                <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">-->
                                                 <h3 class="modal-title home-login-title" id="myModalLabel">                 
-                                                    道路运输许可证上传
+                                                    驾驶证信息修改
                                                 </h3>
                                             </div>
 
                                             <div class="modal-body">
                                                 <div class="form-horizontal">
                                                     <div class="form-group">
-                                                        <label for="business-license" class="col-sm-3 control-label">道路运输许可证上传</label>
+                                                        <label for="business-license" class="col-sm-3 control-label">驾驶证</label>
                                                         <div class="col-sm-9 business-license-btn">
                                                             <input id="upload-road-image" type="file" multiple=true class="file-loading" />
                                                         </div>
@@ -162,7 +163,7 @@
 
                                                         <div class="col-sm-3 col-sm-offset-3">
                                                             <button class="btn btn-default col-sm-12" onclick="updateRoadImage()" style="font-size: 15px;border: 1px solid #008bdc">
-                                                                提交审核
+                                                                提交
                                                             </button>
                                                         </div>
 
