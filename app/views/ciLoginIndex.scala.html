@@ -26,7 +26,7 @@
                                                 <div class="col-sm-2" style="font-size:15px">
                                                     <label>{(iter \ "driver_name").asOpt[String].get}</label>
                                                 </div>
-                                                <div class="col-sm-4" style="font-size:15px">
+                                                <div class="col-sm-4" style="font-size:15px; color:grey">
                                                     <label>{
                                                         val head = (iter \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.head
                                                         (head \ "origin_province").asOpt[String].get + " " + (head \ "origin_city").asOpt[String].get + " --> " + (head \ "destination_province").asOpt[String].get + " " + (head \ "destination_city").asOpt[String].get
@@ -34,8 +34,8 @@
                                                 </div>
                                             
 
-                                                <div class="col-sm-4" style="font-size:15px">
-                                                    <label>{ (iter \ "vehicle").asOpt[List[String]].get.head } / { (iter \ "vehicle_length").asOpt[List[Float]].map (x => x.head).getOrElse((iter \ "vehicle_length")) }米</label>
+                                                <div class="col-sm-4" style="font-size:15px; color:grey">
+                                                    <label>{ (iter \ "vehicle").asOpt[List[String]].get.head } / { (iter \ "vehicle_length").asOpt[List[Float]].map (x => "%.1f".format(x.head)).getOrElse((iter \ "vehicle_length")) }米</label>
                                                 </div>  
 
                                                 <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#depart-view-" + index} style="font-size:15px">
@@ -93,7 +93,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group">
+                                                            <!-- <div class="form-group">
                                                                 <label class="col-sm-2 control-label">是否购买货物保险</label>
                                                                 <div class="col-sm-6">
                                                                     { if ((iter \ "insurance").asOpt[Int].get == 1) {
@@ -102,7 +102,7 @@
                                                                         <label type="text" class="control-label">未购买</label>
                                                                     }}
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
 
                                                             <div class="form-group">
                                                                 <label class="col-sm-2 control-label">联系电话</label>

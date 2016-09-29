@@ -316,7 +316,7 @@
                                                         <label class="col-sm-2 control-label">需求车型</label>
                                                         <div class="col-sm-6">
                                                             { (iter \ "vehicle").asOpt[List[String]].get map { v => 
-                                                                <label type="text" class="control-label">{v}</label>
+                                                                <label type="text" class="control-label">{v}&nbsp;&nbsp;</label>
                                                             }}
                                                         </div>
                                                     </div>
@@ -325,7 +325,7 @@
                                                         <label class="col-sm-2 control-label">需求车长</label>
                                                         <div class="col-sm-6">
                                                             { (iter \ "vehicle_length").asOpt[List[Double]].get map { v => 
-                                                                <label type="text" class="control-label">{v}米</label>
+                                                                <label type="text" class="control-label">{"%.1f".format(v)}米&nbsp;&nbsp;</label>
                                                             }}
                                                             
                                                         </div>
