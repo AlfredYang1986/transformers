@@ -273,7 +273,7 @@ object companyProductModule {
         def conditionsAcc(o : List[DBObject], keys : List[String], func : (String, JsValue) => Option[DBObject]) : List[DBObject] = keys match {
           case Nil => o
           case head :: lst => func(head, (data \ head)) match {
-                                  case None => o
+                                  case None => conditionsAcc(o, lst, func)
                                   case Some(y) => conditionsAcc(y :: o, lst, func)
                               }
         }
@@ -297,7 +297,7 @@ object companyProductModule {
                       (from db() in "products" select (product2JsValue(_))).toList)))
               case x : List[DBObject] => { 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                      (from db() in "products" where x select (product2JsValue(_))).toList)))}
+                      (from db() in "products" where $and(x) select (product2JsValue(_))).toList)))}
             }
           
         } catch {

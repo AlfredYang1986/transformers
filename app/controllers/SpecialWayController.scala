@@ -283,7 +283,7 @@ object SpecialWayController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
+                val infos = (companyInfoModule.queryInfo(toJson(Map("status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
                 Ok(views.html.swLoginRecruitment(token)(open_id)(name)(infos))
             }
             else Redirect("/index")

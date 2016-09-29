@@ -60,9 +60,11 @@
                                                 </label>
                                             </div>
 
-                                            <div class="col-sm-1" style="font-size:15px">
-                                                <label>专线发布</label>
-                                            </div>
+                                            {if ((iter \ "isSpecialWay").asOpt[Int].get == 1) {
+                                                <div class="col-sm-1" style="font-size:15px">
+                                                    <label>专线发布</label>
+                                                </div>
+                                            }}
 
                                             <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#" + product_id} style="font-size:15px">
                                                 查看详情
@@ -176,6 +178,7 @@
                                                             </div>
                                                         </div>
 
+                                                        {if ((iter \ "isSpecialWay").asOpt[Int].get == 1) {
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">仓库地址</label>
                                                             <div class="col-sm-8">
@@ -219,6 +222,7 @@
                                                                 <textarea type="text" class="form-control" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
+                                                        }}
 
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">需求车型</label>
@@ -272,6 +276,7 @@
                                                             </div>
                                                         </div>
 
+                                                        {if ((iter \ "isSpecialWay").asOpt[Int].get == 1) {
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">合作模式</label>
                                                             <div class="col-sm-8">
@@ -296,6 +301,7 @@
                                                                     }                                                                  
                                                             </div>
                                                         </div>
+                                                        }}
 <!--货物名称不需要
                                                         <div class="form-group">
 
@@ -508,7 +514,7 @@
             var origin_address = $('textarea[data-name="origin-address-' + product_id + '"]').val();
 
             result &= validate($('div[data-name="origin"]'), 
-                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined) && hasInput(origin_address),
+                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined), // && hasInput(origin_address),
                         'div[data-name="origin-error-' + product_id + '"]');
 
 
@@ -518,7 +524,7 @@
             var destination_address = $('textarea[data-name="destination-address-' + product_id + '"]').val();
 
             result &= validate($('div[data-name="destination"]'), 
-                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined) && hasInput(destination_address),
+                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined), // && hasInput(destination_address),
                         'div[data-name="destination-error-' + product_id + '"]');
 
             var storage_province = $('select[data-name="storage-province-' + product_id + '"]').val();
@@ -527,7 +533,7 @@
             var storage_address = $('textarea[data-name="storage-address-' + product_id + '"]').val();
 
             result &= validate($('div[data-name="storage"]'), 
-                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined) && hasInput(storage_address),
+                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined), // && hasInput(storage_address),
                         'div[data-name="storage-error-' + product_id + '"]');
 
 
@@ -639,7 +645,8 @@
 
                 query_object['storage'] = storage;
 
-                query_object['cooperation_type'] = Number(cooperation_type);
+                if (cooperation_type != undefined)
+                    query_object['cooperation_type'] = Number(cooperation_type);
 
                 // query_object['weight'] = Number(weight);
                 // query_object['volume'] = Number(volume);
@@ -656,8 +663,8 @@
                 });
                 query_object['vehicle_length'] = vehicle_length_number_lst;
 
-                query_object['product_name_save'] = product_name_save;
-                query_object['product_name'] = product_name;
+                // query_object['product_name_save'] = product_name_save;
+                // query_object['product_name'] = product_name;
 
                 // query_object['notes'] = notes;
                 // query_object['date_requirement'] = date_requirement;

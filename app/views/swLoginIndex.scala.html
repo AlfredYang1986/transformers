@@ -21,11 +21,11 @@
                             <div class="example-box-wrapper">
                                 <div id="followed_1">
 
-                                    <a href={"#tab1-" + index} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;">公司信息</a>
-                                    <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">当天货源</a>
+                                    <a href={"#tab1-" + index} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;" onclick={"tab1Click(" + index + ")"}>公司信息</a>
+                                    <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;" onclick={"tab2Click(" + index + ")"}>当天货源</a>
 
                                     <div class="tab-content">
-                                        <div class="tab-pane" id={"tab1-" + index} >
+                                        <div class="collapse" id={"tab1-" + index} >
                                             <div class="content-box">
                                                 <div class="content-box-wrapper">
 
@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id={"tab2-" + index} >
+                                        <div class="collapse" id={"tab2-" + index} >
                                             <div class="content-box">
                                                 <div class="content-box-wrapper">
                                                     当天货源数目:
@@ -465,5 +465,15 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function tab1Click(index) {
+            if ($("#tab2-" + index).hasClass('in'))
+                $("#tab2-" + index).removeClass('in');
+        }
+
+        function tab2Click(index) {
+            if ($("#tab1-" + index).hasClass('in'))
+                $("#tab1-" + index).removeClass('in');
+        }
 	</script>
 }
