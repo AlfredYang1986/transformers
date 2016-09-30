@@ -24,6 +24,12 @@
    vertical-align: middle;
 }
 
+.in-middle-setting-two {
+   display: table-cell;
+   text-align: left;
+   vertical-align: middle;
+}
+
 .home-nav {
 	background-color: transparent;
 	width: 100%;
