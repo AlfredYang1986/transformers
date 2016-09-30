@@ -83,13 +83,13 @@
                         
                         </h4>
                         <div class="example-box-wrapper">
-                            <div id={"followed_" + index}>
-                                <a href={"#tab1-" + index} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;">公司信息</a>
-                                <a href={"#tab2-" + index} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;">货源信息</a>
+                            <div id={"followed_" + target_id}>
+                                <a href={"#tab1-" + target_id} data-toggle="collapse" class="btn bg-blue" style="font-size:12px;" onclick={"tab1Click(\"" + target_id + "\")"}>公司信息</a>
+                                <a href={"#tab2-" + target_id} data-toggle="collapse" class="btn bg-blue" style="margin-left: 10px !important;font-size:12px;" onclick={"tab2Click(\"" + target_id + "\")"}>货源信息</a>
 
 
                                 <div class="tab-content">
-                                    <div class="tab-pane" id={"tab1-" + index}>
+                                    <div class="collapse" id={"tab1-" + target_id}>
                                         <div class="content-box">
                                             <div class="content-box-wrapper">
                                                 <div class="form-horizontal bordered-row" role="form">
@@ -218,7 +218,7 @@
                                         </div>
                                     </div>
 
-                                <div class="tab-pane" id={"tab2-" + index}>
+                                <div class="collapse" id={"tab2-" + target_id}>
                                     <div class="content-box">
                                         <div class="content-box-wrapper">
                                         当天货源数目:
@@ -864,5 +864,13 @@
                 }
             });
 		}
+
+        function tab1Click(target_id) {
+            $('#tab2-' + target_id).removeClass('in');
+        }
+
+        function tab2Click(target_id) {
+            $('#tab1-' + target_id).removeClass('in');
+        }
 	</script>
 }

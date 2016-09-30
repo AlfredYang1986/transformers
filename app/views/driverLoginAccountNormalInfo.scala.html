@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+<!--                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">载重</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control" data-name="capacity" value=@{(driver \ "capacity").asOpt[Int].get} >
@@ -120,7 +120,7 @@
                                             请选择有效的载重
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 @{ ((driver \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.toList zipWithIndex) map { iter_index => 
                                 val iter = iter_index._1
@@ -371,17 +371,17 @@
                         lines.length > 0,
                         'div[data-name="driver-line-error"]');
 
-            var capacity = $('input[data-name="capacity"]').val();
+            // var capacity = $('input[data-name="capacity"]').val();
 
-            result &= validate($('div[data-name="capacity"]'),
-                        hasInput(capacity),
-                        'div[data-name="capacity-error"]');
+            // result &= validate($('div[data-name="capacity"]'),
+            //             hasInput(capacity),
+            //             'div[data-name="capacity-error"]');
 
             if (result) {
                 var query_object = new Object();
 
                 query_object["phone_no"] = phone_no;
-                query_object["capacity"] = Number(capacity);
+                // query_object["capacity"] = Number(capacity);
 
                 var vehicle_str_lst = [];
                 $.each(vehicle_lst, function(index, value){

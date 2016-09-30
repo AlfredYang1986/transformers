@@ -34,12 +34,12 @@
                                                     </div>    
 
 
-                                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#recruit-view" style="font-size:15px" onclick={"changeContent(" + index + ",\"" + content + "\")"}>
+                                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + index} style="font-size:15px" onclick={"changeContent(" + index + ",\"" + content + "\")"}>
                                                         查看详情
                                                     </button>
                                                 </div>
 
-                                                <div id="recruit-view" class="collapse">
+                                                <div id={"recruit-view-" + index} class="collapse">
 
                                                     <div class="panel">
                                                         <div class="panel-heading">
@@ -52,6 +52,9 @@
 
                                                         <div class="col-sm-12 panel-body">
                                                             <div class="form-horizontal bordered-row">
+                                                                <div class="form-group">
+                                                                    <label class="col-xs-12 control-label">联系人：{(iter \ "company_name").asOpt[String].get}</label>
+                                                                </div>
                                                                 <div class="form-group">
                                                                     <label class="col-xs-12 control-label">联系人：{(iter \ "contact").asOpt[String].get}</label>
                                                                 </div>

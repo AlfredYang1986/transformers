@@ -41,15 +41,6 @@
                                                     }
                                                 </label>
                                             </div>
-
-                                            <div class="col-sm-3" style="font-size:15px">
-                                                <label>
-                                                    {
-                                                        (iter \ "weight").asOpt[Int].get + "吨/" + 
-                                                        (iter \ "volume").asOpt[Int].get + "立方米"
-                                                    }
-                                                </label>
-                                            </div>
                   
                                             <div class="col-sm-3" style="font-size:15px">
                                                 <label>
@@ -58,6 +49,15 @@
                                                         (iter \ "origin" \ "city").asOpt[String].get + " --> " + 
                                                         (iter \ "destination" \ "province").asOpt[String].get + " " +
                                                         (iter \ "destination" \ "city").asOpt[String].get
+                                                    }
+                                                </label>
+                                            </div>
+
+                                            <div class="col-sm-3" style="font-size:15px">
+                                                <label>
+                                                    {
+                                                        (iter \ "weight").asOpt[Int].get + "吨/" + 
+                                                        (iter \ "volume").asOpt[Int].get + "立方米"
                                                     }
                                                 </label>
                                             </div>

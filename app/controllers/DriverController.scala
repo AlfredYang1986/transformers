@@ -231,8 +231,27 @@ object DriverController extends Controller {
     /**
      * Driver Search Special Way
      */
-    def driverLoginSearchSpecialWay = Action {
-        Ok(views.html.driverLoginSearchSpecialWay("Your new application is ready."))
+    def driverLoginSearchSpecialWay(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val company = AuthModule.queryInstanceWithToken(token)
+
+            val open_id = (company \ "open_id").asOpt[String].get
+            val name = (company \ "driver_name").asOpt[String].get
+            
+            val vc = ConfigModule.configAllVehicles
+            
+            if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
+                val com_lst = (driverSearchModule.queryCompany(toJson(Map("type" -> 3))) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.driverLoginSearchSpecialWay(token)(open_id)(name)(xmlOpt.allCities)(vc)(com_lst))
+            }
+            else Redirect("/index")
+        }
     }
 
     def driverSearchCompany = Action (request => requestArgs(request)(driverSearchModule.queryCompany))
