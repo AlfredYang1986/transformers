@@ -18,6 +18,7 @@
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
 		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+		<link href="@routes.Assets.at("font-awesome/css/font-awesome.min.css")" rel="stylesheet">
 		<style type="text/css">
         	object,
 	        embed {
@@ -75,19 +76,9 @@
     </head>
     
     <body>
-    	<div class="home-nav">
+		<div class="home-nav">
 	
 		<div style="margin-top:0">&nbsp;</div>
-		
-		<div class="home-nav-phone col-sm-3">
-		
-			<img src="@routes.Assets.at("images/homePage/homePhoneNo.png")" class="home-nav-phone-logo">
-			<label class="home-nav-phone-text">
-			   <br />全国免费服务热线<br />
-         	<span class="home-nav-phone-number">400-016-1956<span>
-			</label>
-			
-		</div>
 		
 		
 		<div class="home-nav-sign-btn-group pull-right">
@@ -197,11 +188,12 @@
 			</div><!-- /.modal-content -->
 	    </div><!-- /.modal -->
 	    </div>
-
+<!--
 	    <div class="home-nav-logo-container">			
  			<img src="/assets/images/homePage/homeLogo.png" class="home-nav-logo img-responsive">					
 		</div>
-		
+-->
+	
 		<nav class="navbar navbar-default home-nav-bar">
 	      <!-- Brand and toggle get grouped for better mobile display -->
 	      <div class="navbar-header">
@@ -221,7 +213,7 @@
 	          	<li data-current="index"><a href="/index">首页</a></li>
 	          	<li data-current="company"><a href="/company">公司介绍</a></li>
 	          	<li data-current="business"><a href="/business">商务合作</a></li>
-	          	<li data-current="recruit"><a href="/recruit">招兵买马</a></li>
+	          	<li data-current="recruit"><a href="/recruit">招贤纳士</a></li>
 	          	<li data-current="help"><a href="/help">帮助</a></li>
 	        </ul>
 	        
@@ -230,19 +222,33 @@
 
         @content
 
-		<div class="home-footer">    
+		<div class="col-sm-12 in-middle" style="height: 150px; background-color: #50555e; text-align: center;">
 
-			<div class="col-sm-12" style="margin-top:30px">
+			<p class="in-middle-setting" style="font-size: 32px; color:#40c3f3;">+&nbsp;&nbsp;关注我们</p>
+
+		</div>
+
+		<div class="col-sm-12 in-middle" style="height: 330px; background-color: #282e3a;">   
+
+			<div class="col-sm-12 in-middle-setting" style="margin-top:30px">
+					<div class="col-sm-12">
+						<p class="footer-color"><i class="fa fa-home fa-lg" aria-hidden="true" style="margin-right:20px;"></i>浙江省杭州市余杭区望梅路578号</p>
+					</div>
+
+			</div>
+		</div>  
+
+<!--
 
 				<div class="col-sm-3 col-sm-offset-3">
 					<div class="col-sm-12">
-						<p class="footer-color"><i class="fa fa-home fa-lg" aria-hidden="true" style="margin-right:20px"></i>浙江省杭州市余杭区望梅路578号</p>
+						<p class="footer-color"><i class="fa fa-home fa-lg" aria-hidden="true" style="margin-right:20px;"></i>浙江省杭州市余杭区望梅路578号</p>
 					</div>
 					<div class="col-sm-12 footer-setting">
 						<p class="footer-color"><i class="fa fa-internet-explorer fa-lg footer-margin-right" aria-hidden="true"></i>www.elogco.com</p>
 					</div>
 					<div class="col-sm-12 footer-setting">
-						<p class="footer-color"><i class="fa fa-phone-square fa-lg footer-margin-right" aria-hidden="true"></i>400-016-1956</p>
+						<p class="footer-color"><i class="fa fa-phone-square fa-lg footer-margin-right" aria-hidden="true"></i>89160770</p>
 					</div>
 					<div class="col-sm-12 footer-setting">
 						<p class="footer-color"><i class="fa fa-envelope fa-lg footer-margin-right" aria-hidden="true"></i>adminelogco.com</p>
@@ -250,34 +256,14 @@
 					<div class="col-sm-12 footer-setting">
 						<p class="footer-color"><i class="fa fa-weixin fa-lg footer-margin-right" aria-hidden="true"></i>elogco</p>
 					</div>
+
+					<img style="width:200px; height:200px" src="@routes.Assets.at("images/weixin_public.jpg")">	
 				</div>
 
-				<div class="con-sm-5 col-sm-offset-1">
 
-					<img style="width:200px; height:200px" src="@routes.Assets.at("images/weixin_public.jpg")">
-<!--
-					<p class="footer-color" style="margin-top:10px">扫一扫，关注我们</p>
--->				
-				</div>
-			</div>
-		</div>  
-<!--
-	    <div class="home-footer">
-			<table class="home-footer-table">
-				<tr>
-					<th colspan="2" class="home-footer-table-title">杭州恒昇网络科技有限公司</th>
-				</tr>
-				<tr>
-					<td class="home-footer-cell">
-	        <img style="width: 70px;" src="@routes.Assets.at("images/homePage/qq.png")">
-					</td>
-					<td class="home-footer-cell">
-	        <img style="width: 80px;" src="@routes.Assets.at("images/homePage/wechat.png")">
-					</td>
-				</tr>
-			</table>
-		</div>
 -->
+
+
 		<script type="text/javascript">
 			function regCompanyTaped() {
 				location.href = "/register/company";

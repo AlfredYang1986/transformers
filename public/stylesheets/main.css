@@ -13,8 +13,19 @@
     }
 }
 
+.in-middle {
+   display: table;
+   width: 100%;
+}
+
+.in-middle-setting {
+   display: table-cell;
+   text-align: center;
+   vertical-align: middle;
+}
+
 .home-nav {
-	background-color: #008bdc;
+	background-color: transparent;
 	width: 100%;
 	height: 200px;
 	position: relative;
@@ -223,6 +234,15 @@
 	background-image: url("/assets/images/home-footer-bkg.png");
 	background-repeat: no-repeat;
 	background-color: #008bdc;
+}
+
+.homebanner {
+	width: 100%;
+	background-image: url("/assets/home/Banner.png");
+	background-repeat: no-repeat;
+	background-color: none;
+	-moz-background-size:100% 100%;
+	background-size:100% 100%;
 }
 
 .home-footer-table {
