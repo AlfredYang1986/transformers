@@ -18,7 +18,7 @@ GET		/register/complete												controllers.RegisterController.registerComple
 
 # contract
 GET		/contract/driver												controllers.ContractController.driverContract
-GET		/contract/contract												controllers.ContractController.companyContract
+GET		/contract/company												controllers.ContractController.companyContract
 
 # admin pages
 GET		/admin/login													controllers.AdminController.adminLogin
