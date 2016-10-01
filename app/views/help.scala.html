@@ -4,84 +4,154 @@
     
 } {
 	<div class="container-fluid">
-		<div class="container another-bkg">
-		
-			<div class="text-center">
-				<label style="font-size: 36px; margin-bottom:10px">常见问题</label> </br>
+		<div class="container">
 
-			</div>
-<!--
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:2px;"></div>
--->
+		   	<div class="container-fluid" style="padding-left: 0; padding-right: 0">
+				<img style="width: 100%" src="@routes.Assets.at("images/main-banner.png")">
+			</div>			
+
+		   	<div class="text-center" style="padding-left: 0; padding-right: 0; margin-top: 67px;">
+				<img src="@routes.Assets.at("images/help/question.png")">
+			</div>				
+
 
 			<div class="col-sm-12">
-				<p style="font-size:20px; color:#008bdc">注册及登录常见问题</p>
-				<p >1.忘记密码怎么办？</p>
-				<p>答：点击 忘记密码，输入注册认证过的手机号码进行验证。通过后，系统会发送新的随机密码到绑定手机上，登录后修改密码即可 </p>
-				<p>2.忘记登录账号怎么办？</p>
-				<p>答：物流公司/厂家/专线 认证成功后登录账号为公司全称，分账号登录为运营者的手机号码（公司管理员自行设置）；驾驶员登录账号为注册所用的手机号码，若更改过绑定手机号码，登录账号即为更改后的手机号码</p>
-				<p>3.身份验证及绑定手机号码，发送验证码后一直没有收到怎么办？</p>
-				<p>答：检查手机号码是否填写正确，在保证手机畅通并没有欠费停机的情况下，等待一段时间后，可重新发送验证码</p>
-				<p>4.如何修改密码？</p>
-				<p>答：登陆后在页面左下角点击 修改密码 ，输入新旧密码进行修改即可</p>
-
-				<p style="font-size:20px; color:#008bdc">使用过程中常见问题</p>
-				<p>*以下物流公司、厂家、专线均简称为公司</p>
-				<p>1.可以变更认证资料吗？</p>
-				<p>答：可以，点击 认证资料 修改完成后点击 提交审核，我们将在2个工作日之内给予答复</p>
-				<p>2.如果变更了公司名称，登录账号是使用原来的还是现在的？交易信息会丢失吗？</p>
-				<p>答：使用变更后公司名称作为登录账号。不排除丢失的风险，尽量谨慎修改。</p>
-				<p>3.如果驾驶员变更了手机号码，登录账号是使用原来的还是现在的？交易信息会丢失吗？</p>
-				<p>答：使用变更后手机号码作为登录账号。不排除丢失的风险，尽量谨慎修改。</p>
-				<p>4.如果公司有多个运营者都是用认证过的公司账号进行登陆吗？</p>
-				<p>答：不是，每一个认证过的公司都设有五个分账号。可以根据每个公司运营的需求，给运营者设置分账号登录。</p>
-				<p>5.主账号和分账号有哪些权限不同？</p>
-				<p>答：主账号可以对公司信息及主账号密码进行修改，可以添加删除分账号，但分账号没有以上权限，其余权限相同。</p>
-				<p>6.如何设置分账号？</p>
-				<p>答：登录主账号后，点击左下角 分账号管理，点击 添加分账号，输入相关信息保存即可</p>
-				<p>7.分账号如何登录？</p>
-				<p>答：分账号管理中的 手机授权账号 信息即为登录账号，预设的登陆密码即为相应登录密码，如需修改密码可在登录后自行修改。</p>
-				<p>8.修改密码时发现忘记旧密码怎么办？</p>
-				<p>答：退出登陆，返回首页点击 忘记密码，输入注册认证过的手机号码进行验证。通过后，系统会发送新的随机密码到绑定手机上，登录后修改密码即可 </p>
-				<p>9.分账号的删除与更改，其历史操作信息会保留在主账号吗？</p>
-				<p>答：分账号的任何操作信息都会保留在主账号上</p>
-				<p>10.发布货源信息时的所有选项都是必填的吗？</p>
-				<p>答：起运地和到达地的详细地址为选填项，需手动输入，但是全部填上有利于驾驶员更好的了解货源详情</p>
-				<p>11.如何修改已发布的货源信息及其他信息？</p>
-				<p>答：点击 已发布的货源信息/其他信息，直接对内容进行修改，完成后点击 保存并发布即可</p>
-				<p>12.如何删除已发布的货源信息及其他信息？</p>
-				<p>答：点击 已发布的货源信息/其他信息，下拉至详情底部，单击 删除 按钮，确认后即可删除</p>
-				<p>13.如何下架已发布的货源信息及其他信息？</p>
-				<p>答：点击 已发布的货源信息/其他信息，下拉至详情底部，单击 已完成 按钮，即可下架信息，该信息跳转保存至已完成货源信息/其他信息 列表</p>
-				<p>14.如何重新发布已下架的货源信息及其他信息？</p>
-				<p>答：点击 已完成的货源信息/其他信息。下拉至详情底部，单击 重新发布 按钮，即可重新上架，该信息跳转至已发布的货源信息/其他信息 列表</p>
-				<p>15.已完成的货源信息/其他信息是否可以删除</p>
-				<p>答：不可以</p>
-				<p>16.公司发布的其他信息是否所有人都看得到？</p>
-				<p>答：只要是通过平台的认证过的物流公司、厂家、专线、驾驶员都可以看到</p>
-				<p>17.我们所看到的货源信息或者其他信息一定是真实有效的吗？</p>
-				<p>答：平台仅对发布者所属公司进行认证审查，但不确保每一条信息的真实性,请谨慎核实，及时规避风险。</p>
-				<p>18.我们所看到的车源信息一定是真实有效的吗？</p>
-				<p>答：平台仅对驾驶员的身份信息进行认证审查，但不确保交易中可能会产生的纠纷，请谨慎核实，及时规避风险。</p>
-				<p>19.什么是平台福利车？</p>
-				<p>答：平台福利车是为入驻平台的公司、专线提供低于市场价的预约发车服务。</p>
-				<p>20.如何预约平台福利车？</p>
-				<p>答：各大公司、专线可于每晚8点之后，根据次日发车详情，对可预约状态下的平台福利车致电预约，预约成功后不可取消，如若爽约将作降权处理，累计满三次将永久冻结此服务。</p>
-				<p>21.为什么无法预约平台福利车？</p>
-				<p>答：在显示满载状态下无法预约。</p>
-				<p>22.平台福利车每天都会有吗？路线和发车时间固定吗？</p>
-				<p>答：每天都会有，路线和发车时间不固定，发车数量会根据市场需求作相应调整。</p>
-				<p>23.是否可以加入平台福利车的行列？</p>
-				<p>答：可以。平台需对车辆及车辆所属的个人或者公司进行审查并签订合约。详情可致电客服咨询。</p>
-				<p>24.加入平台福利车有什么好处？</p>
-				<p>答：减少找货拼货的时间，降低空返率，无论是否有货都可以拿到发车运费，并可以享受平台员工的福利。</p>
-
-
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">忘记登录账号怎么办?</p>
+				</div>
 			</div>
 
-<div>
-	<p>如果还有疑问，请联系易聚货人工服务电话400-123-123</p>
-</div>
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/01.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：物流公司/厂家/专线 认证成功后登录账号为公司全称，分账号登录为运营者的手机号码（公司管理员自行设置）；驾驶员登录账号为注册所用的手机号码，若更改过绑定手机号则为新的手机号</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">如果驾驶员变更了手机号码，登录账号是使用原来的还是现在的？交易信息会丢失吗？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/02.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：使用变更后手机号码作为登录账号。不排除丢失的风险，尽量谨慎修改。</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">如果公司有多个运营者都是用认证过的公司账号进行登陆吗？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/03.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：不是，每一个认证过的公司都设有五个分账号。可以根据每个公司运营的需求，给运营者设置分账号登录。</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">分账号的删除与更改，其历史操作信息会保留在主账号吗？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/04.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：分账号的任何操作信息都会保留在主账号上</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">什么是平台福利车？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/05.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：平台福利车是为入驻平台的公司、专线提供低于市场价的预约发车服务。</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">如何预约平台福利车？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/06.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：各大公司、专线可于每晚8点之后，根据次日发车详情，对可预约状态下的平台福利车致电预约，预约成功后不可取消，如若爽约将作降权处理，累计满三次将永久冻结此服务。</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">是否可以加入平台福利车的行列？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/07.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：可以。平台需对车辆及车辆所属的个人或者公司进行审查并签订合约。详情可致电客服咨询。</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12" style="margin-top:20px;">
+				<div class="col-sm-offset-1 col-sm-11">
+					<p style="color:#fa8564">加入平台福利车有什么好处？</p>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<div class="col-sm-1">
+					<img src="@routes.Assets.at("images/help/08.png")">
+				</div>
+
+				<div class="col-sm-11">
+					<p style="color: #333333">答：减少找货拼货的时间，降低空返率，无论是否有货都可以拿到发车运费，并可以享受平台员工的福利。</p>
+				</div>
+			</div>
+
+			<div class="text-center col-sm-12">
+				<img src="@routes.Assets.at("images/help/separate.png")">
+			</div>
+
+			<div class="text-center col-sm-12" style="margin-top:15px">
+				<p style="color: #333333; font-size: 25px">如果还有疑问，请联系易聚货人工服务电话：400-016-1956</p>
+			</div>
+
+
 
 		</div>
 	</div>
