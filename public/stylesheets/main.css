@@ -25,7 +25,24 @@
                 /* (853 / 1280 * 100) */
 }
 
+.position-set {
+	position: relative;
+	width: 100%;
+}
 
+.main-image {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.main-text {
+    position:absolute;    
+    font-size:24px;
+    width: 100%;
+    left: 0;
+    top: 200px;
+}
 
 .in-middle {
    display: table;
