@@ -155,7 +155,7 @@
 							<input type="text" class="form-control" data-name="company-phone-no" placeholder="电话号">
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" data-name="company-phone-sep" placeholder="分机">
+							<input type="text" class="form-control" data-name="company-phone-sep" placeholder="分机(选填)">
 						</div>
 					</div>
 
@@ -877,7 +877,7 @@
 			
 			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
 			var regIDLDS = /^[0-9]*$/; 
-			result &= validate($('input[data-name="company-phone-sep"]'), regIDLDS.test(company_phone_dir), 'div[data-name="company-phone-sep-error"]');
+			result &= validate($('input[data-name="company-phone-sep"]'), !hasInput(company_phone_sep) || regIDLDS.test(company_phone_sep), 'div[data-name="company-phone-sep-error"]');
 
 			var company_type = $('input[name="company-type"]:checked').val();
 			result &= validate($('input[name="company-type"]'), (typeof(company_type) != "undefined"), 'div[data-name="company-type-error"]');

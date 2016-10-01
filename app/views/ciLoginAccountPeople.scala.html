@@ -42,12 +42,38 @@
                                                         <input type="text" class="form-control" data-name="contact-name-input">
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" style="display: none;" data-name="contact-name-error">
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            请填写姓名
+                                                        </div>
+                                                    </div>
+                                                </div>  
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">调度员手机号码</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" class="form-control" data-name="contact-phone-input">
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" style="display: none;" data-name="contact-phone-error">
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            请填写有效的手机号
+                                                        </div>
+                                                    </div>
+                                                </div>  
+
                                                 <div class="form-group text-center">
                                                     <label class="col-sm-2 control-label"></label>
                                                     <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" onclick="pushContact()" style="margin-right:20px !important">
@@ -76,12 +102,34 @@
                                     <input type="text" class="form-control" data-name={"name-index-" + iter._2} value={(iter._1 \ "contact_name").asOpt[String].get} placeholder={(iter._1 \ "contact_name").asOpt[String].get} />
                                 </div>
                             </div>
+                            <div class="form-group" style="display: none;" data-name={"name-error-index-" + iter._2}>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写姓名
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">调度员手机号码</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" data-name={"phone-index-" + iter._2} value={(iter._1 \ "contact_phone").asOpt[String].get} placeholder={(iter._1 \ "contact_phone").asOpt[String].get} />
                                 </div>
                             </div>
+                            <div class="form-group" style="display: none;" data-name={"phone-error-index-" + iter._2}>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的手机号
+                                    </div>
+                                </div>
+                            </div>  
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"></label>
                                 <div class="col-sm-4 col-sm-offset-1">
@@ -108,12 +156,39 @@
             $('li[data-current="index"]').addClass("active");
         });
 
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
         function pushContact() {
             var contact_name = $('input[data-name="contact-name-input"]').val();
             var contact_phone = $('input[data-name="contact-phone-input"]').val();
             var open_id = "@open_id";
 
-            if (contact_name != undefined && contact_name != "" && contact_phone != undefined && contact_phone != "") {
+            var result = true;
+            result &= validate( $('input[data-name="contact-name-input"]'), 
+                                contact_name != undefined && hasInput(contact_name),
+                                'div[data-name="contact-name-error"]');
+
+            var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate( $('input[data-name="contact-phone-input"]'), 
+                                contact_phone != undefined && hasInput(contact_phone) && cell_phone_reg.test(contact_phone), 
+                                'div[data-name="contact-phone-error"]');
+
+            if (result) {
                 var query_object = new Object();
                 query_object['contact_name'] = contact_name;
                 query_object['contact_phone'] = contact_phone;
@@ -174,7 +249,17 @@
             var contact_name = $('input[data-name="name-index-' + index + '"]').val();
             var contact_phone= $('input[data-name="phone-index-' + index + '"]').val();
 
-            if (contact_id != undefined && contact_id != "") {
+            var result = true;
+            result &= validate( $('input[data-name="name-index-' + index + '"]'),
+                                contact_name != undefined && hasInput(contact_name),
+                                'div[data-name="name-error-index-' + index + '"]');
+
+            var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate( $('input[data-name="phone-index-' + index + '"]'),
+                                contact_phone != undefined && hasInput(contact_phone) && cell_phone_reg.test(contact_phone), 
+                                'div[data-name="phone-error-index-' + index + '"]');
+
+            if (result) {
                 var query_object = new Object();
                 query_object['contact_id'] = contact_id;
                 query_object['open_id'] = open_id;
@@ -190,7 +275,7 @@
                     cache: false,
                     success: function (data) {
                         if (data.status == "ok") {
-                            alert("更新联系人信息成功");
+                            alert("修改成功");
                             location.reload();
                         } else {
                             alert(data.error.message);

@@ -26,7 +26,7 @@ object ErrorCode {
   		new ErrorNode("user not exist", -16, "用户不存在或者密码不正确"),
   		new ErrorNode("wrong cell phone", -17, "输入正确的手机号"),
   		new ErrorNode("wrong code", -18, "输入正确的验证码"),
-  		new ErrorNode("not validate code", -19, "验证码过期"),
+  		new ErrorNode("not validate code", -19, "当前页面停留超时，请返回上一步重新获取验证码"),
   		new ErrorNode("duplicate phone or email", -20, "用户手机或邮箱已经被注册"),
   		new ErrorNode("wrong email", -21, "输入正确的邮件地址"),
   		
