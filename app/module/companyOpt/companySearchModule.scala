@@ -28,56 +28,71 @@ object companySearchModule {
         
         def basicCondition = "type" $eq registerTypes.driver.t
     
-        def cityConditions : Option[DBObject] = 
-            try {
-                val origin_province = (data \ "origin_province").asOpt[String].map (x => x).getOrElse(throw new Exception)
-                val origin_city = (data \ "origin_city").asOpt[String].map (x => x).getOrElse(throw new Exception)
-                val destination_province = (data \ "destination_province").asOpt[String].map (x => x).getOrElse(throw new Exception)
-                val destination_city = (data \ "destination_city").asOpt[String].map (x => x).getOrElse(throw new Exception)
-                Some("driver_lines" $elemMatch ($and($and("destination_province" $eq destination_province, "destination_city" $eq destination_city), $and("origin_province" $eq origin_province, "origin_city" $eq origin_city))))
+        def conditionsAcc(o : DBObject, key : String, value : Any) : DBObject = key match {
+              case "address" => $and(o, "address" $eq value.asInstanceOf[String])
+              case "type" => $and(o, "type" $eq value.asInstanceOf[Int])
+              case "line" => {
+                  val origin_province = (value.asInstanceOf[JsValue] \ "origin_province").asOpt[String].get
+                  val origin_city = (value.asInstanceOf[JsValue] \ "origin_city").asOpt[String].get
+                  val destination_province = (value.asInstanceOf[JsValue] \ "destination_province").asOpt[String].get
+                  val destination_city = (value.asInstanceOf[JsValue] \ "destination_city").asOpt[String].get
+                  
+                  $and(o, ("driver_lines" $elemMatch 
+                          $and(("origin_province" $eq origin_province) :: 
+                               ("origin_city" $eq origin_city) :: 
+                               ("destination_province" $eq destination_province) ::
+                               ("destination_city" $eq destination_city) :: Nil))
+                      )
+              }
+              case "vehicle" => {
+                  val lst = value.asInstanceOf[List[String]]
+                  val con = lst map { str =>
+                      "vehicle" $eq str
+                  }
+                  $and (o, $or(con))
+              }
+              case "vehicle_length" => {
+                  val lst = value.asInstanceOf[List[Float]]
+                  val con = lst map { f =>
+                      "vehicle_length" $eq f
+                  }
+                  $and (o, $or(con))
+              }
+            }
       
-            } catch {
-              case ex : Exception => None
+        def conditions : DBObject = {
+            var reVal : DBObject = basicCondition
+            (data \ "address").asOpt[String].map (x => 
+                reVal = conditionsAcc(reVal, "address", x)
+            ).getOrElse(Unit)
+           
+            (data \ "type").asOpt[Int].map (x => 
+                reVal = conditionsAcc(reVal, "type", x)
+            ).getOrElse(Unit)
+           
+            (data \ "line").asOpt[JsValue].map { x =>
+                reVal = conditionsAcc(reVal, "line", x)
+            }.getOrElse(Unit)
+            
+            (data \ "vehicle").asOpt[List[String]].map { x =>
+                reVal = conditionsAcc(reVal, "vehicle", x)
+            }.getOrElse(Unit)
+           
+            (data \ "vehicle_length").asOpt[List[Float]].map { x =>
+                reVal = conditionsAcc(reVal, "vehicle_length", x)
             }
-        
-        def vehicleConditions : Option[DBObject] = 
-            try {
-                val vehicle = (data \ "vehicle").asOpt[List[String]].map (x => x).getOrElse(throw new Exception)
-                Some(DBObject("vehicle" -> vehicle))
-              
-            } catch {
-              case ex : Exception => None
-            }
-        
-        def vehicleLengthConditions : Option[DBObject] = 
-            try {
-                val length = (data \ "vehicle_length").asOpt[List[Float]].map (x => x).getOrElse(throw new Exception)
-                var reVal : DBObject = null
-                length map { x =>
-                  if (reVal == null) reVal = DBObject("vehicle_length" -> x)
-                  else reVal = $or(reVal, DBObject("vehicle_length" -> x))
-                }
-                if (reVal != null) Some(reVal)
-                else None
-              
-            } catch {
-              case ex : Exception => None
-            }
-        
-        def conditionsAcc(o : DBObject, a : Option[DBObject]) : DBObject = a match {
-              case Some(x) => $and(o, x)
-              case None => o
-            }
-        
+            
+            reVal
+        }
+
         def orderCol = "date"
         
         val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
         val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
        
-        val conditions = conditionsAcc(conditionsAcc(conditionsAcc(basicCondition, cityConditions), vehicleConditions), vehicleLengthConditions)
-        
         toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-            (from db() in "user_profile" where conditions select (AuthModule.detailResult(_))).toList)))
+            ((from db() in "user_profile" where conditions).selectSkipTop(skip)(take)(orderCol) 
+                (AuthModule.detailResult(_))).toList)))
     }
     
 

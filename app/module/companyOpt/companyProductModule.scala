@@ -232,10 +232,11 @@ object companyProductModule {
             val tmp = x.asInstanceOf[JsValue]
             val province = (tmp \ "province").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
             val city = (tmp \ "city").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
-            val district = (tmp \ "district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
-            
-            val con = $and((key + ".province") $eq province, (key + ".city") $eq city, (key + ".distinct") $eq district)
-            (tmp \ "address").asOpt[String].map (x => Some($and(con, (key + ".address") $eq x))).getOrElse(Some(con)) 
+//            val district = (tmp \ "district").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+//            val con = $and((key + ".province") $eq province, (key + ".city") $eq city, (key + ".distinct") $eq district)
+//            (tmp \ "address").asOpt[String].map (x => Some($and(con, (key + ".address") $eq x))).getOrElse(Some(con)) 
+
+            Some($and(((key + ".province") $eq province) :: ((key + ".city") $eq city) :: Nil))
           }
         }
         
@@ -254,8 +255,34 @@ object companyProductModule {
           case Some(x) => Some(key $eq x.asInstanceOf[Int])
         }
         
-        def ListConditions(key : String, value : String) : Option[DBObject] = {
-            None
+        def stringListConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
+          case None => None
+          case Some(x) => {
+            val lst = x.asInstanceOf[List[String]].map { str => 
+                	key $eq str  
+            }
+            Some($or(lst))
+          }
+        }
+       
+        def floatListConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
+          case None => None
+          case Some(x) => {
+            val lst = x.asInstanceOf[List[Float]].map { str => 
+                	key $eq str
+            }
+            Some($or(lst))
+          }
+        }
+        
+        def randgeConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
+          case None => None
+          case Some(x) => {
+            val tmp = x.asInstanceOf[JsValue]
+            val min = (tmp \ "min").asOpt[Float].get
+            val max = (tmp \ "max").asOpt[Float].get
+            Some($and(key $gte min, key $lte max))
+          }
         }
         
         def conditionsOnce(o : Option[DBObject], n : Option[DBObject]) : Option[DBObject] = {
@@ -280,9 +307,11 @@ object companyProductModule {
         
         def conditions : List[DBObject] = {
             var con  = conditionsAcc(Nil, "date_requirement" :: "open_id" :: "product_name" :: "product_id" :: "contact_name" :: "contact_phone" :: Nil, stringConditions(x => x.asOpt[String]))
-            con = conditionsAcc(con, "weight" :: "volume" :: Nil, floatConditions(x => x.asOpt[Float]))
             con = conditionsAcc(con, "status" :: Nil, intConditions(x => x.asOpt[Int]))
-            con = conditionsAcc(con, "origin" :: "destination" :: "storage" :: Nil, addressConditions(x => x.asOpt[Int]))
+            con = conditionsAcc(con, "origin" :: "destination" :: "storage" :: Nil, addressConditions(x => x.asOpt[JsValue]))
+            con = conditionsAcc(con, "vehicle" :: Nil, stringListConditions(x => x.asOpt[List[String]]))
+            con = conditionsAcc(con, "vehicle_length" :: Nil, floatListConditions(x => x.asOpt[List[Float]]))
+            con = conditionsAcc(con, "weight" :: "volume" :: Nil, randgeConditions(x => x.asOpt[JsValue]))
 
             con
         }

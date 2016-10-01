@@ -31,6 +31,32 @@ object driverSearchModule {
             key match {
               case "address" => $and(o, "address" $eq value.asInstanceOf[String])
               case "type" => $and(o, "type" $eq value.asInstanceOf[Int])
+              case "line" => {
+                  val origin_province = (value.asInstanceOf[JsValue] \ "origin_province").asOpt[String].get
+                  val origin_city = (value.asInstanceOf[JsValue] \ "origin_city").asOpt[String].get
+                  val destination_province = (value.asInstanceOf[JsValue] \ "destination_province").asOpt[String].get
+                  val destination_city = (value.asInstanceOf[JsValue] \ "destination_city").asOpt[String].get
+                  
+                  $and(o, $or(
+                      ("detail.company_lines" $elemMatch 
+                          $and(("origin_province" $eq origin_province) :: 
+                               ("origin_city" $eq origin_city) :: 
+                               ("destination_province" $eq destination_province) ::
+                               ("destination_city" $eq destination_city) :: Nil)) ::
+                      ("detail.special_lines" $elemMatch 
+                          $and(("origin_province" $eq origin_province) :: 
+                               ("origin_city" $eq origin_city) :: 
+                               ("destination_province" $eq destination_province) ::
+                               ("destination_city" $eq destination_city) :: Nil))        
+                      ))
+              }
+              case "vehicle" => {
+                  val lst = value.asInstanceOf[List[String]]
+                  val con = lst map { str =>
+                      "detail.vehicle" $eq str
+                  }
+                  $and (o, $or(con))
+              }
             }
         }
 
@@ -43,6 +69,14 @@ object driverSearchModule {
             (data \ "type").asOpt[Int].map (x => 
                 reVal = conditionsAcc(reVal, "type", x)
             ).getOrElse(Unit)
+           
+            (data \ "line").asOpt[JsValue].map { x =>
+                reVal = conditionsAcc(reVal, "line", x)
+            }.getOrElse(Unit)
+            
+            (data \ "vehicle").asOpt[List[String]].map { x =>
+                reVal = conditionsAcc(reVal, "vehicle", x)
+            }.getOrElse(Unit)
             
             reVal
         }

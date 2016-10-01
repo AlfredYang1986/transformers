@@ -468,4 +468,38 @@ object CompanyIndustryController extends Controller {
     def companyContactPop = Action (request => requestArgs(request)(companyConfigModule.companyConfigContactPop))
     def companyContactUpdate = Action (request => requestArgs(request)(companyConfigModule.companyConfigContactUpdate))
 //    def companyContactQuery = Action (request => requestArgs(request)(companyConfigModule.companyConfigProductNameUpdate))
+
+    def companyProductQueryHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val result = (companyProductModule.queryProduct(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.company_product_search_result(result))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  		   
+    }
+    
+    def companySWQueryHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val result = (driverSearchModule.queryCompany(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.specialway_product_search_result(result))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  		   
+    }
+
+    def companySearchDriverHtml = Action { request => // requestArgs(request)(companySearchModule.queryDrivers))
+        try {
+  			    request.body.asJson.map { x => 
+                val result = (companySearchModule.queryDrivers(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.company_driver_search_result(result))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  		   
+    }
+
 }

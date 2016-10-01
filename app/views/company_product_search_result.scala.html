@@ -1,0 +1,176 @@
+@(product_lst : List[play.api.libs.json.JsValue])
+
+@{ product_lst map { iter => 
+    val product_id = (iter \ "product_id").asOpt[String].get
+
+    val origin = (iter \ "origin").asOpt[play.api.libs.json.JsValue].get
+    val destination = (iter \ "destination").asOpt[play.api.libs.json.JsValue].get
+
+    <div class="row" data-name="product-result">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <h3 class="title-hero">
+                        
+                    </h3>
+
+                    <div class="example-box-wrapper">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <div class="row">
+                                    <div class="col-sm-6" style="font-size:15px">
+                                        {
+                                            (origin \ "province").asOpt[String].get + (origin \ "city").asOpt[String].get
+                                        }
+                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        {
+                                            (destination \ "province").asOpt[String].get + (destination \ "city").asOpt[String].get
+                                        }
+                                    </div>
+                                    
+                                    {if ((iter \ "isSpecialWay").asOpt[Int].get == 1) {
+                                        <div class="col-sm-4" style="font-size:15px">
+                                            专线发布
+                                        </div> 
+                                    } else {
+                                        <div class="col-sm-4" style="font-size:15px">
+                                            {(iter \ "product_name").asOpt[String].get}  /  {(iter \ "weight").asOpt[Float].get} 吨  / {(iter \ "volume").asOpt[Float].get} 立方米
+                                        </div>  
+                                    }}
+
+                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#" + product_id} style="font-size:15px">
+                                        查看详情
+                                    </button>
+
+                                </div>
+
+                                <div id={"" + product_id} class="collapse in">
+
+                                    <div class="panel">
+
+                                        <div class="panel-body">
+                                        <div class="form-horizontal bordered-row" role="form">
+                                            <div class="form-group">
+                                                <label for="certificate-type" class="col-sm-2 control-label">起运地</label>
+                                                <div class="col-sm-8">
+                                                    <label type='text' class="control-label">{(origin \ "province").asOpt[String].get + " " + (origin \ "city").asOpt[String].get}</label> 
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="certificate-type" class="col-sm-2 control-label">目的地</label>
+                                                <div class="col-sm-8">
+                                                    <label type='text' class="control-label"> {(destination \ "province").asOpt[String].get + " " + (destination \ "city").asOpt[String].get}</label> 
+                                                </div>
+                                            </div>
+
+                                            {if ((iter \ "isSpecialWay").asOpt[Int].get == 0) {
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">吨位</label>
+                                                    <div class="col-sm-6">
+                                                        <label type="text" class="control-label">{(iter \ "weight").asOpt[Float].get} 吨</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">体积</label>
+                                                    <div class="col-sm-6">
+                                                        <label type="text" class="control-label">{(iter \ "volume").asOpt[Float].get} 立方米</label>
+                                                    </div>
+                                                </div>
+                                            }}
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">需求车型</label>
+                                                <div class="col-sm-6">
+                                                    { (iter \ "vehicle").asOpt[List[String]].get map { v => 
+                                                        <label type="text" class="control-label">{v}&nbsp;&nbsp;</label>
+                                                    }}
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">需求车长</label>
+                                                <div class="col-sm-6">
+                                                    { (iter \ "vehicle_length").asOpt[List[Double]].get map { v => 
+                                                        <label type="text" class="control-label">{"%.1f".format(v)}米&nbsp;&nbsp;</label>
+                                                    }}
+                                                    
+                                                </div>
+                                            </div>
+
+                                            {if ((iter \ "isSpecialWay").asOpt[Int].get == 0) {
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">货物名称</label>
+                                                    <div class="col-sm-6">
+                                                        <label type="text" class="control-label">{(iter \ "product_name").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">时效需求</label>
+                                                    <div class="col-sm-6">
+                                                        <label type="text" class="control-label">{(iter \ "date_requirement").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">其他备注</label>
+                                                    <div class="col-sm-6">
+                                                        <label type="text" class="control-label">{(iter \ "notes").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+                                            } else {
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">合作信息</label>
+                                                    <div class="col-sm-6">
+                                                        {(iter \ "cooperation_type").asOpt[Int].get match {
+                                                            case 0 => <label type="text" class="control-label">单程</label>
+                                                            case 1 => <label type="text" class="control-label">往返</label>
+                                                            case 2 => <label type="text" class="control-label">长期</label>
+                                                            case 3 => <label type="text" class="control-label">不限</label>
+                                                        }}
+                                                    </div>
+                                                </div>
+                                            }}
+                                            
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">所属公司</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{(iter \ "company_name").asOpt[String].get}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">联系人</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{(iter \ "contact_name").asOpt[String].get}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">联系人电话</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{(iter \ "contact_phone").asOpt[String].get}</label>
+                                                </div>
+                                            </div> 
+
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}}
+
+
+

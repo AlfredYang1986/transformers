@@ -258,4 +258,15 @@ object DriverController extends Controller {
     def driverPushCollection = Action (request => requestArgs(request)(driverFollowModule.driverFollowCompany))
     def driverPopCollection = Action (request => requestArgs(request)(driverFollowModule.driverUnFollowCompany))
     def driverQueryCollections = Action (request => requestArgs(request)(driverFollowModule.queryDriverFollowingLst)) 
+
+    def driverSearchCompanyHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val result = driverSearchModule.queryCompany(x)
+                Ok(result)
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  		   
+    }
 }

@@ -1,0 +1,118 @@
+@(drivers : List[play.api.libs.json.JsValue])
+
+@{ drivers map { iter =>
+    var open_id = (iter \ "open_id").asOpt[String].get
+    <div class="row" data-name="result-driver" >
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <h3 class="title-hero"></h3>
+
+                    <div class="example-box-wrapper">
+                        <div class="row">
+
+                            <div class="col-sm-12">
+
+                                <div class="row">
+                                <div class="col-sm-2" style="font-size:15px">
+                                    <label>{(iter \ "driver_name").asOpt[String].get}</label>
+                                </div>
+                                <div class="col-sm-4" style="font-size:15px">
+                                    <label>{
+                                        val head = (iter \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.head
+                                        (head \ "origin_province").asOpt[String].get + " " + (head \ "origin_city").asOpt[String].get + " --> " + (head \ "destination_province").asOpt[String].get + " " + (head \ "destination_city").asOpt[String].get
+                                    }</label>
+                                </div>
+                            
+
+                                <div class="col-sm-4" style="font-size:15px">
+                                    <label>{ (iter \ "vehicle").asOpt[List[String]].get.head } / { (iter \ "vehicle_length").asOpt[List[Float]].map (x => x.head).getOrElse((iter \ "vehicle_length")) }米</label>
+                                </div>  
+
+                                <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#depart-view-" + open_id} style="font-size:15px">
+                                    查看详情
+                                </button>
+
+                                </div>
+
+                                <div id={"depart-view-" + open_id} class="collapse">
+
+                                    <div class="panel">
+
+                                        <div class="panel-body">
+                                        <div class="form-horizontal bordered-row" role="form">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">驾驶员姓名</label>
+                                                <div class="col-sm-8">
+                                                    <label type="text" class="control-label">{(iter \ "driver_name").asOpt[String].get}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">车型</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{
+                                                    (iter \ "vehicle").asOpt[List[String]].get map { tmp =>
+                                                        tmp + " "
+                                                    }}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">车长</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{ (iter \ "vehicle_length").asOpt[List[Float]].map (x => x.head).getOrElse((iter \ "vehicle_length"))}米</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group">
+                                                <label class="col-sm-2 control-label">载重</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{ (iter \ "capacity").asOpt[Int].get }吨</label>
+                                                </div>
+                                            </div> -->
+
+                                            <div class="form-group">
+                                                <label for="certificate-type" class="col-sm-2 control-label">常跑路线</label>
+                                                <div class="col-sm-8">{
+                                                    (iter \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get map { tmp => 
+                                                        <label type="text" class="control-label">{
+                                                        (tmp \ "origin_province").asOpt[String].get + " " + (tmp \ "origin_city").asOpt[String].get + " --> " + (tmp \ "destination_province").asOpt[String].get + " " + (tmp \ "destination_city").asOpt[String].get
+                                                        }</label>
+                                                    }}
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group">
+                                                <label class="col-sm-2 control-label">是否购买货物保险</label>
+                                                <div class="col-sm-6">
+                                                    { if ((iter \ "insurance").asOpt[Int].get == 1) {
+                                                        <label type="text" class="control-label">已购买</label>
+                                                    } else {
+                                                        <label type="text" class="control-label">未购买</label>
+                                                    }}
+                                                </div>
+                                            </div> -->
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">联系电话</label>
+                                                <div class="col-sm-6">
+                                                    <label type="text" class="control-label">{ (iter \ "phone_no").asOpt[String].get }</label>
+                                                </div>
+                                            </div> 
+
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}}

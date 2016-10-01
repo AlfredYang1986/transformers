@@ -64,6 +64,8 @@ POST	/data/driver/collect/push										controllers.DriverController.driverPushC
 POST	/data/driver/collect/pop										controllers.DriverController.driverPopCollection
 POST	/data/driver/coloect/query										controllers.DriverController.driverQueryCollections
 
+POST	/html/driver/search/company										controllers.DriverController.driverSearchCompanyHtml
+
 # company industry login pages
 GET		/company/index/:t               								controllers.CompanyIndustryController.ciLoginIndex(t)
 GET		/company/index                  								controllers.CompanyIndustryController.ciLoginIndex(t="")
@@ -118,6 +120,10 @@ POST	/data/company/config/ct/push 									controllers.CompanyIndustryController
 POST	/data/company/config/ct/pop 									controllers.CompanyIndustryController.companyContactPop
 POST	/data/company/config/ct/update									controllers.CompanyIndustryController.companyContactUpdate
 # POST	/data/company/config/ct/query 									controllers.CompanyIndustryController.companyContactQuery
+
+POST	/html/company/product/query										controllers.CompanyIndustryController.companyProductQueryHtml
+POST	/html/company/search/specialway									controllers.CompanyIndustryController.companySWQueryHtml
+POST	/html/company/search/driver										controllers.CompanyIndustryController.companySearchDriverHtml
 
 # special way login pages
 GET		/specialway/index/:t               								controllers.SpecialWayController.swLoginIndex(t)
