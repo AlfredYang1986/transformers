@@ -13,6 +13,20 @@
     }
 }
 
+.banner-two-set {
+	background-image: url("/assets/images/home/Banner-two.png");
+	background-repeat: no-repeat;
+	filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+	-moz-background-size:100% 100%;
+    background-size: contain;
+    width: 100%;
+    height: 0;
+    padding-top: 18.77%; /* (img-height / img-width * width) */
+                /* (853 / 1280 * 100) */
+}
+
+
+
 .in-middle {
    display: table;
    width: 100%;
