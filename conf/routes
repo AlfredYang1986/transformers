@@ -38,6 +38,14 @@ GET		/admin/validate/company              							controllers.AdminController.adm
 GET		/admin/validate/industry 										controllers.AdminController.adminValidateIndustry
 GET		/admin/validate/specialway										controllers.AdminController.adminValidateSpecialway
 GET		/admin/validate/driver 											controllers.AdminController.adminValidateDriver
+GET		/admin/company/success     							  			controllers.AdminController.adminValidateCompanySuccess
+GET		/admin/industry/success     						    	    controllers.AdminController.adminValidateIndustrySuccess
+GET		/admin/specialway/success						        		controllers.AdminController.adminValidateSpecialwaySuccess
+GET		/admin/driver/success 							    			controllers.AdminController.adminValidateDriverSuccess
+GET		/admin/company/fail     							  			controllers.AdminController.adminValidateCompanyFail
+GET		/admin/industry/fail     						    	    	controllers.AdminController.adminValidateIndustryFail
+GET		/admin/specialway/fail						        			controllers.AdminController.adminValidateSpecialwayFail
+GET		/admin/driver/fail 							    				controllers.AdminController.adminValidateDriverFail
 
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)

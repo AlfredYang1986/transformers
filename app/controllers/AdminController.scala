@@ -106,4 +106,36 @@ object AdminController extends Controller {
         Ok(views.html.adminValidateDriver())
     }
 
+    def adminValidateCompanySuccess = Action {
+        Ok(views.html.adminValidateCompanySuccess())
+    }
+
+    def adminValidateIndustrySuccess= Action {
+        Ok(views.html.adminValidateIndustrySuccess())
+    }
+
+    def adminValidateSpecialwaySuccess = Action {
+        Ok(views.html.adminValidateSpecialwaySuccess())
+    }
+
+    def adminValidateDriverSuccess = Action {
+        Ok(views.html.adminValidateDriverSuccess())
+    }
+
+    def adminValidateCompanyFail = Action {
+        Ok(views.html.adminValidateCompanyFail())
+    }
+
+    def adminValidateIndustryFail= Action {
+        Ok(views.html.adminValidateIndustryFail())
+    }
+
+    def adminValidateSpecialwayFail = Action {
+        Ok(views.html.adminValidateSpecialwayFail())
+    }
+
+    def adminValidateDriverFail = Action {
+        Ok(views.html.adminValidateDriverFail())
+    }
+
 }
