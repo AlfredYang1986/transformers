@@ -110,7 +110,7 @@
 	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 }
-
+/**
 .navbar-nav>.active>a {
 	box-shadow: none !important;
 	-web-box-shadow: none !important;
@@ -133,6 +133,7 @@
 	background-image: none !important;
 	background-color: #008bdc !important;
 }
+**/
 
 .home-nav-sign-btn-group {
 	position: absolute;
