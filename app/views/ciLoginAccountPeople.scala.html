@@ -176,7 +176,7 @@
 
             var result = true;
 
-            var people_name_reg = /[\u4E00-\u9FA5]{2,4}/; 
+            var people_name_reg = /^[\u4e00-\u9fa5]{0,}$/; 
             result &= validate( $('input[data-name="contact-name-input"]'), 
                                 contact_name != undefined && hasInput(contact_name) && people_name_reg.test(contact_name),
                                 'div[data-name="contact-name-error"]');
@@ -248,7 +248,7 @@
             var contact_phone= $('input[data-name="phone-index-' + index + '"]').val();
 
             var result = true;
-            var people_name_reg = /[\u4E00-\u9FA5]{2,4}/; 
+            var people_name_reg = /^[\u4e00-\u9fa5]{0,}$/;  
             result &= validate( $('input[data-name="name-index-' + index + '"]'),
                                 contact_name != undefined && hasInput(contact_name) && people_name_reg.test(contact_name),
                                 'div[data-name="name-error-index-' + index + '"]');
