@@ -321,7 +321,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <input data-name="contact-save" type="checkbox" value="save" checked="true" style="margin-top:20px" > 并保存调度员至调度信息管理
+                                                <input data-name="contact-save" type="checkbox" value="save" checked="true" style="margin-top:20px" > 保存至调度员信息管理
                                             </div>
 
                                         </div>
@@ -566,7 +566,7 @@
                     success: function (data) {
                         if (data.status == "ok") {                                          
                         //     alert("注册成功审核！");
-                             alert("success");
+                             alert("发布成功");
                              location.href = "/company/sentproduct"
                         } else {
                             alert(data.error.message);
