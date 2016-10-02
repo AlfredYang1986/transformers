@@ -57,6 +57,13 @@ object driverSearchModule {
                   }
                   $and (o, $or(con))
               }
+              case "vehicle_length" => {
+                  val lst = value.asInstanceOf[List[Float]]
+                  val con = lst map { f =>
+                      "detail.vehicle_length" $eq f
+                  }
+                  $and (o, $or(con))
+              }
             }
         }
 
@@ -76,6 +83,10 @@ object driverSearchModule {
             
             (data \ "vehicle").asOpt[List[String]].map { x =>
                 reVal = conditionsAcc(reVal, "vehicle", x)
+            }.getOrElse(Unit)
+
+            (data \ "vehicle_length").asOpt[List[Float]].map { x =>
+                reVal = conditionsAcc(reVal, "vehicle_length", x)
             }.getOrElse(Unit)
             
             reVal

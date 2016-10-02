@@ -24,79 +24,59 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="font-size:12px;">
-                                                        起运地选择
+                                                        按路线搜索
                                                         <i class="glyph-icon icon-angle-down"></i>
                                                     </a>
                                                 </h4>
                                             </div>
+
                                             <div id="collapseOne" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                <div class="col-sm-12">
-
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>浙江省</option>
-                                                            </select>   
-                                                        </div>
-
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>杭州市</option>
-                                                            </select>   
-                                                        </div>
-
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>江干区</option>
-
-                                                            </select>   
-                                                        </div>                                     
-                                                    </div> 
-
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                       <div class="panel">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTne" style="font-size:12px;">
-                                                        目的地选择
-                                                        <i class="glyph-icon icon-angle-down"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTne" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                <div class="col-sm-12">
-
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>浙江省</option>
-                                                            </select>   
-                                                        </div>
-
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>杭州市</option>
-                                                            </select>   
-                                                        </div>
-
-                                                        <div class="col-sm-4">
-                                                            <select class="form-control">
-                                                                <option selected>江干区</option>
-
-                                                            </select>   
-                                                        </div>                                     
-                                                    </div> 
-
-                                                </div>
+                                                    <div class="form-horizontal bordered-row" data-name="search-line-condition-container">
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-2 col-sm-offset-1">
+                                                                    <select class="form-control" data-name="search-origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <option selected="" disabled="">请选择省</option>
+                                                                        @{cities map { p => 
+                                                                            <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                                        }};
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <select class="form-control" data-name="search-origin-city" data-index="1" >
+                                                                        <option selected="" disabled="">请选择市</option>
+                                                                        @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                                        }}};
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <label><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></label>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <select class="form-control" data-name="search-destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <option selected="" disabled="">请选择省</option>
+                                                                        @{cities map { p => 
+                                                                            <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
+                                                                        }};
+                                                                    </select>  
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <select class="form-control" data-name="search-destination-city" data-index="3" >
+                                                                        <option selected="" disabled="">请选择市</option>
+                                                                        @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                                        }}};
+                                                                    </select> 
+                                                                </div>
+                                                            </div>          
+                                                        </div>  
+                                                    </div>      
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="panel">
                                             <div class="panel-heading">
                                                 <h4 class="panel-title">
@@ -147,7 +127,7 @@
                                                 <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-xs-5">
-                                                         <input type="text" class="form-control col-xs-12" placeholder="最低吨位">  
+                                                         <input type="text" data-name="min-weight" class="form-control col-xs-12" placeholder="最低吨位">  
                                                     </div>
 
                                                     <div class="col-xs-2 text-center">
@@ -155,10 +135,21 @@
                                                     </div>
 
                                                     <div class="col-xs-5">
-                                                        <input type="text" class="form-control col-xs-12" placeholder="最高吨位">  
+                                                        <input type="text" data-name="max-weight" class="form-control col-xs-12" placeholder="最高吨位">  
                                                     </div>
                                              
                                                 </div> 
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="display: none;" data-name='weight-error'>
+                                                <span class="col-sm-1 control-label"></span>
+                                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                                <div class="col-sm-9">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        请正确填写吨位信息
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,7 +167,7 @@
                                                 <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-xs-5">
-                                                         <input type="text" class="form-control col-xs-12" placeholder="最低体积">  
+                                                         <input type="text" data-name="min-volume" class="form-control col-xs-12" placeholder="最低体积">  
                                                     </div>
 
                                                     <div class="col-xs-2 text-center">
@@ -184,10 +175,21 @@
                                                     </div>
 
                                                     <div class="col-xs-5">
-                                                        <input type="text" class="form-control col-xs-12" placeholder="最高体积">  
+                                                        <input type="text" data-name="max-volume" class="form-control col-xs-12" placeholder="最高体积">  
                                                     </div>
                                              
                                                 </div> 
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="display: none;" data-name='volume-error'>
+                                                <span class="col-sm-1 control-label"></span>
+                                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                                <div class="col-sm-9">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Error:</span>
+                                                        请正确填写体积信息
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +197,7 @@
                                     </div>
                                 </div>
 
-                                <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" style="font-size:15px">
+                                <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" style="font-size:15px" onclick="startSearch()">
                                     确认搜索
                                 </button>
                  
@@ -204,156 +206,10 @@
                     </div>
                  </div>
 
-                 @{ (product_lst zipWithIndex) map { item => 
-                    val iter = item._1
-                    val index = item._2
+                <div data-name="result-container">
+                @company_product_search_result(product_lst)
+                </div>
 
-                    val origin = (iter \ "origin").asOpt[play.api.libs.json.JsValue].get
-                    val destination = (iter \ "destination").asOpt[play.api.libs.json.JsValue].get
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <h3 class="title-hero">
-                                        
-                                    </h3>
-
-                                    <div class="example-box-wrapper">
-                                        <div class="row">
-
-                                            <div class="col-sm-12">
-
-                                                <div class="row">
-                                                    <div class="col-sm-6" style="font-size:15px">
-                                                        {
-                                                            (origin \ "province").asOpt[String].get + (origin \ "city").asOpt[String].get
-                                                        }
-                                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                                        {
-                                                            (destination \ "province").asOpt[String].get + (destination \ "city").asOpt[String].get
-                                                        }
-                                                    </div>
-
-                                                    <div class="col-sm-4" style="font-size:15px">
-                                                        {(iter \ "product_name").asOpt[String].get}  /  {(iter \ "weight").asOpt[Float].get} 吨  / {(iter \ "volume").asOpt[Float].get} 立方米
-                                                    </div>  
-
-                                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#depart-view-" + index} style="font-size:15px">
-                                                        查看详情
-                                                    </button>
-
-                                                </div>
-
-                                                <div id={"depart-view-" + index} class="collapse">
-
-                                                    <div class="panel">
-
-                                                        <div class="panel-body">
-                                                        <div class="form-horizontal bordered-row" role="form">
-                                                            <div class="form-group">
-                                                                <label for="certificate-type" class="col-sm-2 control-label">起运地</label>
-                                                                <div class="col-sm-8">
-                                                                    <label type='text' class="control-label">{(origin \ "province").asOpt[String].get + " " + (origin \ "city").asOpt[String].get}</label> 
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="certificate-type" class="col-sm-2 control-label">目的地</label>
-                                                                <div class="col-sm-8">
-                                                                    <label type='text' class="control-label"> {(destination \ "province").asOpt[String].get + " " + (destination \ "city").asOpt[String].get}</label> 
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">吨位</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "weight").asOpt[Float].get} 吨</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">体积</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "volume").asOpt[Float].get} 立方米</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">需求车型</label>
-                                                                <div class="col-sm-6">
-                                                                    { (iter \ "vehicle").asOpt[List[String]].get map { v => 
-                                                                        <label type="text" class="control-label">{v}</label>
-                                                                    }}
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">需求车长</label>
-                                                                <div class="col-sm-6">
-                                                                    { (iter \ "vehicle_length").asOpt[List[Double]].get map { v => 
-                                                                        <label type="text" class="control-label">{v}米</label>
-                                                                    }}
-                                                                    
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">货物名称</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "product_name").asOpt[String].get}</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">时效需求</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "date_requirement").asOpt[String].get}</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">其他备注</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "notes").asOpt[String].get}</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">所属公司</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">澳深科技有限公司</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">联系人</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "contact_name").asOpt[String].get}</label>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="col-sm-2 control-label">联系人电话</label>
-                                                                <div class="col-sm-6">
-                                                                    <label type="text" class="control-label">{(iter \ "contact_phone").asOpt[String].get}</label>
-                                                                </div>
-                                                            </div> 
-
-                                                        </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }}
             </div>
         </div>
     </div>
@@ -363,5 +219,138 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function startSearch() {
+            var result = true;
+
+            var origin_province = $('select[data-name="search-origin-province"]').val();
+            var origin_city = $('select[data-name="search-origin-city"]').val();
+            var destination_province = $('select[data-name="search-destination-province"]').val();
+            var destination_city = $('select[data-name="search-destination-city"]').val();
+
+            var has_line_condition = (origin_province != null && origin_city != null && destination_province != null && destination_city != null);                            
+            var has_no_line_condition = (origin_province == null && origin_city == null && destination_province == null && destination_city == null)
+
+            // result &= validate( $('div[data-name="search-line-condition-container"]'),
+            //                     has_line_condition || has_no_line_condition,
+            //                     $('div[data-name="search-line-condition-error"]'));
+
+            var has_vehicle_condition = false;
+            var vehicle_lst = [];
+            $.each($('input[data-name="vehicle"]:checked'), function(index, value){
+                vehicle_lst.push($(this).val());
+            });
+            has_vehicle_condition = vehicle_lst.length > 0;
+
+            var has_vehicle_length_condition = false;
+            var vehicle_length_lst = [];
+            $.each($('input[data-name="vehicle-length"]:checked'), function(index, value){
+                vehicle_length_lst.push(Number($(this).val()));
+            });
+            has_vehicle_length_condition = vehicle_length_lst.length > 0;
+
+            var min_weight = $('input[data-name="min-weight').val();
+            var max_weight = $('input[data-name="max-weight').val();
+
+            var has_weight_conditions = min_weight != null && max_weight != null;
+            var has_no_weight_conditions = min_weight == null && max_weight == null;
+
+            // result &= validate( $('div[data-name="weight-container"]'),
+            //                     has_weight_conditions || has_no_weight_conditions,
+            //                     $('div[data-name="weight-error"]'));
+
+            var min_volume = $('input[data-name="min-volume').val();
+            var max_volume = $('input[data-name="max-volume').val();
+
+            var has_volume_conditions = min_volume != null && max_volume != null;
+            var has_no_volume_conditions = min_volume == null && max_volume == null;
+
+            // result &= validate( $('div[data-name="volume-container"]'),
+            //                     has_volume_conditions || has_no_volume_conditions,
+            //                     $('div[data-name="volume-error"]'));
+
+            if (result) {   
+                var query_object = new Object();
+
+                if(has_line_condition) {
+                    var origin_line = new Object();
+                    origin_line['province'] = origin_province;
+                    origin_line['city'] = origin_city;
+                    query_object['origin'] = origin_line;
+
+                    var destination_line = new Object();
+                    destination_line['province'] = destination_province;
+                    destination_line['city'] = destination_city;
+                    query_object['destination'] = destination_line;
+                }
+
+                if (has_vehicle_condition) {
+                    query_object['vehicle'] = vehicle_lst;
+                }
+
+                if (has_vehicle_length_condition) {
+                    query_object['vehicle_length'] = vehicle_length_lst;
+                }
+
+                if (has_weight_conditions) {
+                    var weight = new Object();
+                    weight['min'] = Number(min_weight);
+                    weight['max'] = Number(max_weight);
+
+                    query_object['weight'] = weight;
+                }
+
+                if (has_volume_conditions) {
+                    var volume = new Object();
+                    volume['min'] = Number(min_volume);
+                    volume['max'] = Number(max_volume);
+
+                    query_object['weight'] = volume;
+                }
+
+                $.ajax({
+                    // url: "/html/driver/search/company",
+                    url: "/html/company/product/query",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $("div[data-name='product-result']").remove();
+                        $("div[data-name='result-container']").add(data).appendTo($("div[data-name='result-container']"));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 	</script>
 }
