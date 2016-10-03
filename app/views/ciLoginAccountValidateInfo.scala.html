@@ -164,7 +164,7 @@
                                     <div class="alert alert-danger" role="alert">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
-                                        法定代表人不能为空
+                                        请填写有效的法定代表姓名（中文名）
                                     </div>
                                 </div>
                             </div> 
@@ -182,7 +182,7 @@
                                     <div class="alert alert-danger" role="alert">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
-                                        法定代表人身份证不能为空
+                                        请填写有效的法定代表人身份证号
                                     </div>
                                 </div>
                             </div>  
@@ -200,7 +200,7 @@
                                     <div class="alert alert-danger" role="alert">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
-                                        注册地址不能为空
+                                        注册地址不能为空（中文地址）
                                     </div>
                                 </div>
                             </div>  
@@ -218,7 +218,7 @@
                                     <div class="alert alert-danger" role="alert">
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
-                                        办公室电话不能为空
+                                        办公室电话不能为空（例如：027-84839542）
                                     </div>
                                 </div>
                             </div> 
@@ -314,16 +314,21 @@
         function updateValidateInfo() {
             var result = true;
             var legal_person = $('input[data-name="legal-person"]').val();
-            result &= validate($('input[data-name="legal-person"]'), hasInput(legal_person), 'div[data-name="legal-person-error"]');
+            var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/;
+            result &= validate($('input[data-name="legal-person"]'), hasInput(legal_person) && regNameL.test(legal_person), 'div[data-name="legal-person-error"]');
 
             var legal_person_id = $('input[data-name="legal-person-id"]').val();
-            result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id), 'div[data-name="legal-person-id-error"]');
+            var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+            result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id) && regIDL.test(legal_person_id), 'div[data-name="legal-person-id-error"]');
 
             var address = $('input[data-name="address"]').val();
-            result &= validate($('input[data-name="address"]'), hasInput(address), 'div[data-name="address-error"]');
+            var regCPAD = /^[0-9]*$/;
+            var regCPADD =/^[A-Za-z]+$/;
+            result &= validate($('input[data-name="address"]'), hasInput(address) && !regCPAD.test(address) && !regCPADD.test(address), 'div[data-name="address-error"]');
 
             var phone_no = $('input[data-name="phone-no"]').val();
-            result &= validate($('input[data-name="phone-no"]'), hasInput(phone_no), 'div[data-name="phone-no-error"]');
+            var regPhone = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
+            result &= validate($('input[data-name="phone-no"]'), hasInput(phone_no) && regPhone.test(phone_no), 'div[data-name="phone-no-error"]');
 
             var business_images_name = "";
             if (is_upload_business_image) {

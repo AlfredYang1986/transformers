@@ -204,7 +204,7 @@ object CompanyIndustryController extends Controller {
             val name = (company \ "company_name").asOpt[String].get
             val vc = ConfigModule.configAllVehicles
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val product_lst = (companyProductModule.queryProduct(toJson("")) \ "result").asOpt[List[JsValue]].get
+                val product_lst = (companyProductModule.queryProduct(toJson(Map("status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
                 Ok(views.html.ciLoginCompanyList(token)(open_id)(name)(xmlOpt.allCities)(vc)(product_lst))
             }
             else Redirect("/index")

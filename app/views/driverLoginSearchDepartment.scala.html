@@ -277,8 +277,8 @@
             var min_weight = $('input[data-name="min-weight').val();
             var max_weight = $('input[data-name="max-weight').val();
 
-            var has_weight_conditions = min_weight != null && max_weight != null;
-            var has_no_weight_conditions = min_weight == null && max_weight == null;
+            var has_weight_conditions = hasInput(min_weight) && hasInput(max_weight);
+            var has_no_weight_conditions = min_weight == "" && max_weight == "";
 
             // result &= validate( $('div[data-name="weight-container"]'),
             //                     has_weight_conditions || has_no_weight_conditions,
@@ -287,8 +287,8 @@
             var min_volume = $('input[data-name="min-volume').val();
             var max_volume = $('input[data-name="max-volume').val();
 
-            var has_volume_conditions = min_volume != null && max_volume != null;
-            var has_no_volume_conditions = min_volume == null && max_volume == null;
+            var has_volume_conditions = hasInput(min_volume) && hasInput(max_volume);
+            var has_no_volume_conditions = min_volume == "" && max_volume == "";
 
             // result &= validate( $('div[data-name="volume-container"]'),
             //                     has_volume_conditions || has_no_volume_conditions,

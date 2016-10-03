@@ -50,18 +50,57 @@
                                                         <input type="text" data-name="screen-name-input" class="form-control" /> 
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" style="display: none;" data-name='screen-name-error'>
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            请输入有效的运营者中文名（中文名）
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">身份证号码</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" data-name="social-id-input" class="form-control" />
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" style="display: none;" data-name='social-id-error'>
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            请输入有效的身份证号码
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">授权手机账号</label>
                                                     <div class="col-sm-8">
                                                         <input type="text" data-name="phone-input" class="form-control" />
                                                     </div>
-                                                </div>                                    
+                                                </div>
+
+                                                <div class="form-group" style="display: none;" data-name='phone-error'>
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            请输入有效的手机号码
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label class="col-sm-2 control-label">输入登陆密码</label>
                                                     <div class="col-sm-8">
@@ -74,6 +113,19 @@
                                                         <input type="password" data-name="pwd2" class="form-control" />
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                                    <span class="col-sm-1 control-label"></span>
+                                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                                    <div class="col-sm-9">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                            <span class="sr-only">Error:</span>
+                                                            两次输入的密码不一致
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group text-center">
                                                     <label class="col-sm-2 control-label"></label>
                                                     <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="pushSubuser()">
@@ -104,12 +156,38 @@
                                         <input type="text" class="form-control" data-name={"screen-name-" + index} value={(iter \ "screen_name").asOpt[String].get} />
                                     </div>
                                 </div>
+
+                                <div class="form-group" style="display: none;" data-name={"screen-name-error-" + index}>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请输入有效的运营者中文名（中文名）
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">身份证号码</label>
                                     <div class="col-sm-8">
                                         <label class="form-control">{(iter \ "social_id").asOpt[String].get}</label>
                                     </div>
                                 </div>
+
+                                <div class="form-group" style="display: none;" data-name={"social-id-error-" + index}>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请输入有效的身份证号码
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">授权手机账号</label>
                                     <div class="col-sm-8">
@@ -120,6 +198,19 @@
                                     }}
                                     </div>
                                 </div>
+
+                                <div class="form-group" style="display: none;" data-name={"phone-error-" + index}>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请输入有效的手机号码
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-4 col-sm-offset-1">
@@ -130,6 +221,18 @@
                                         <button class="form-control" style="border: none; color:#848484;" onclick={"popSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} ><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
                                     </div>
                                     }}
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            没有输入有效的密码或者两次输入的密码不一致
+                                        </div>
+                                    </div>
                                 </div>               
                             </div>
                         </div>
@@ -148,16 +251,26 @@
 		});
 
         function pushSubuser() {
+            var result = true;
+
             var screen_name = $('input[data-name="screen-name-input"]').val();
+            var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/;
+            result &= validate($('input[data-name="screen-name-input"]'), hasInput(screen_name) && regNameL.test(screen_name), 'div[data-name="screen-name-error"]');
+
             var phone = $('input[data-name="phone-input"]').val();
+            var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate($('input[data-name="phone-input"]'), hasInput(phone) && cell_phone_reg.test(phone), 'div[data-name="phone-error"]');
+
             var social_id = $('input[data-name="social-id-input"]').val();
+            var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+            result &= validate($('input[data-name="phone-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="phone-error"]');
+
             var pwd = $('input[data-name="pwd"]').val();
-
             var pwd2 = $('input[data-name="pwd2"]').val();
+            result &= validate($('input[data-name="pwd2"]'), hasInput(pwd) && hasInput(pwd2) && pwd == pwd2, 'div[data-name="pwd-error"]');
 
-            if (pwd != pwd2) {
-                alert("两次输入密码不一致");
-            } else {
+
+            if (result) {
                 var query_object = new Object();
 
                 query_object["screen_name"] = screen_name;
@@ -188,36 +301,45 @@
         }
 
         function updateSubuser(index, user_id) {
+            var result = true;
+
             var screen_name = $('input[data-name="screen-name-' + index + '"]').val();
+            var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/;
+            result &= validate($('input[data-name="screen-name-' + index + '"]'), hasInput(screen_name) && regNameL.test(screen_name), 'div[data-name="screen-name-error-' + index + '"]');
+
             var phone = $('input[data-name="phone-' + index + '"]').val();
+            var regPhone = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
+            result &= validate($('input[data-name="phone-' + index + '"]'), hasInput(phone) && regPhone.test(phone), 'div[data-name="phone-error-' + index + '"]');
             // var social_id = $('input[data-name="social-id-' index + '"]').val();
 
-            var query_object = new Object();
+            if (result) {
+                var query_object = new Object();
 
-            query_object["screen_name"] = screen_name;
-            query_object["user_id"] = user_id;
-            query_object["phone"] = phone;;
-            query_object["open_id"] = "@{open_id}";
-            // query_object["social_id"] = social_id;
+                query_object["screen_name"] = screen_name;
+                query_object["user_id"] = user_id;
+                query_object["phone"] = phone;;
+                query_object["open_id"] = "@{open_id}";
+                // query_object["social_id"] = social_id;
 
-            $.ajax({
-                url: "/auth/sub/update",
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json, charset=utf-8',
-                data: JSON.stringify(query_object),
-                cache: false,
-                success: function (data) {
-                    if (data.status == "ok") {                                          
-                         location.reload();
-                    } else {
-                        alert(data.error.message);
+                $.ajax({
+                    url: "/auth/sub/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
                     }
-                },
-                error: function (xhr, status, error) {
-                    alert("请检查您的输入");
-                }
-            });
+                });
+            }
         }
 
         function popSubuser(index, user_id) {
