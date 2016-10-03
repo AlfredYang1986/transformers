@@ -137,13 +137,6 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">公司介绍</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">{(iter \ "description").asOpt[String].get}</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司邮箱</label>
                                                         <div class="col-sm-6">
                                                             {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
@@ -160,6 +153,13 @@
                                                                     {(iter \ "special_email").asOpt[String].get}
                                                                 </label>
                                                             }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">公司介绍</label>
+                                                        <div class="col-sm-6">
+                                                            <label type="text" class="control-label col-sm-6">{(iter \ "description").asOpt[String].get}</label>
                                                         </div>
                                                     </div>
 
