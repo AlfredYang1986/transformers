@@ -9,7 +9,10 @@ import play.api.libs.json.JsValue
 import module.auth.AuthModule.{ queryUserWithToken, queryProfileCondition }
 import module.auth.authTypes
 import module.auth.registerTypes
-import module.auth.authStatus
+//import module.auth.authStatus
+import module.applications.applicationStatus
+import module.applications.applicationTypes
+import module.applications.AppModule
 
 object AdminController extends Controller {
     def adminLogin = Action {
@@ -39,24 +42,26 @@ object AdminController extends Controller {
             try {
                 val user = queryUserWithToken(token)
                 val kt = k match {
-                  case registerTypes.company.des => registerTypes.company.t
-                  case registerTypes.driver.des => registerTypes.driver.t
-                  case registerTypes.industry.des => registerTypes.industry.t
-                  case registerTypes.specialway.des => registerTypes.specialway.t
+                  case applicationTypes.company_registration.des => applicationTypes.company_registration.t
+                  case applicationTypes.driver_registration.des => applicationTypes.driver_registration.t
+                  case applicationTypes.company_update.des => applicationTypes.company_update.t
+                  case applicationTypes.driver_update.des => applicationTypes.driver_update.t
                   case _ => throw new Exception("error input")
                 }
                 
                 val st = s match {
-                  case authStatus.approved.des => authStatus.approved.t
-                  case authStatus.progress.des => authStatus.progress.t
-                  case authStatus.rejected.des => authStatus.rejected.t
+                  case applicationStatus.pushed.des => applicationStatus.pushed.t
+                  case applicationStatus.approved.des => applicationStatus.approved.t
+                  case applicationStatus.rejected.des => applicationStatus.rejected.t
                   case _ => throw new Exception("error input")
                 }
                 
                 val pt = p.toInt
                 
-                val data = toJson(Map("skip" -> toJson(pt * 10), "take" -> toJson(10), "type" -> toJson(kt), "auth_status" -> toJson(st)))
-                val reVal = queryProfileCondition("", "", data)
+//                val data = toJson(Map("skip" -> toJson(pt * 10), "take" -> toJson(10), "type" -> toJson(kt), "auth_status" -> toJson(st)))
+                val data = toJson(Map("app_status" -> toJson(kt), "auth_status" -> toJson(st)))
+//                val reVal = queryProfileCondition("", "", data)
+                val reVal = AppModule.queryApplications(data)
                 
                 val result = (reVal \ "status").asOpt[String].get match {
                   case "ok" => (reVal \ "result").asOpt[List[JsValue]].get
@@ -89,53 +94,4 @@ object AdminController extends Controller {
     def adminSetting = Action {
         Ok(views.html.adminSetting())
     }
-
-    def adminValidateCompany = Action {
-        Ok(views.html.adminValidateCompany())
-    }
-
-    def adminValidateIndustry= Action {
-        Ok(views.html.adminValidateIndustry())
-    }
-
-    def adminValidateSpecialway = Action {
-        Ok(views.html.adminValidateSpecialway())
-    }
-
-    def adminValidateDriver = Action {
-        Ok(views.html.adminValidateDriver())
-    }
-
-    def adminValidateCompanySuccess = Action {
-        Ok(views.html.adminValidateCompanySuccess())
-    }
-
-    def adminValidateIndustrySuccess= Action {
-        Ok(views.html.adminValidateIndustrySuccess())
-    }
-
-    def adminValidateSpecialwaySuccess = Action {
-        Ok(views.html.adminValidateSpecialwaySuccess())
-    }
-
-    def adminValidateDriverSuccess = Action {
-        Ok(views.html.adminValidateDriverSuccess())
-    }
-
-    def adminValidateCompanyFail = Action {
-        Ok(views.html.adminValidateCompanyFail())
-    }
-
-    def adminValidateIndustryFail= Action {
-        Ok(views.html.adminValidateIndustryFail())
-    }
-
-    def adminValidateSpecialwayFail = Action {
-        Ok(views.html.adminValidateSpecialwayFail())
-    }
-
-    def adminValidateDriverFail = Action {
-        Ok(views.html.adminValidateDriverFail())
-    }
-
 }
