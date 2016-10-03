@@ -22,4 +22,6 @@ object AuthController extends Controller {
   
 	def driverRegister = Action (request => requestArgs(request)(AuthModule.driverRegister))
   def driverUpdate = Action (request => requestArgs(request)(AuthModule.updateDriverProfile))
+  
+  def regCodeCheck = Action (request => requestArgs(request)(AuthModule.regCodeCheck))
 }

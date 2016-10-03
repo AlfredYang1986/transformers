@@ -1167,6 +1167,7 @@
 
 			if (!result) return;
 
+
 			// $.ajax({
 	  //           url: "/auth/register",
 	  //           type: 'POST',
@@ -1187,6 +1188,10 @@
 	  //           }
 	  //       });
 
+			codeCheck();
+		}
+
+		function sendApplication() {
 			var app_object = new Object();
 			app_object['company_name'] = query_object['company_name'];
 			app_object['apply_type'] = 0; // company_registration
@@ -1229,6 +1234,32 @@
 	            success: function (data) {
 	                if (data.status == "ok") {                                          
 	                     alert("发送成功");
+	                } else {
+	                    alert(data.error.message);
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                alert("请检查您的输入");
+	            }
+	        });
+		}
+
+		function codeCheck() {
+			// var cell_phone = $('input[data-name="cell-phone"]').val();
+
+			// var tmp = new Object();
+			// tmp['cell_phone'] = cell_phone;
+
+			$.ajax({
+	            url: "/auth/code/check",
+	            type: 'POST',
+	            dataType: 'json',
+	            contentType: 'application/json, charset=utf-8',
+	            data: JSON.stringify(query_object),
+	            cache: false,
+	            success: function (data) {
+	                if (data.status == "ok") {                                          
+	                     sendApplication();
 	                } else {
 	                    alert(data.error.message);
 	                }

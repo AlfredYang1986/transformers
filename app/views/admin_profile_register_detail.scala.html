@@ -1,0 +1,687 @@
+@(token : String)(apply_id : String)(content : play.api.libs.json.JsValue)(date : play.api.libs.json.JsValue)(status : Int)
+
+@admin_main("Admin") {
+    
+} {
+
+    <div id="page-wrapper">
+        <h3 style="text-align: center">认证详情</h3>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper table-responsive">
+                        @{
+                            val kt = (content \ "company_type").asOpt[Int].map (x => x).getOrElse(module.auth.registerTypes.driver.t)
+                            kt match {
+                                case module.auth.registerTypes.company.t => {
+                                    <div>
+                                        <div class="container">
+                                            
+                                            <div class="form-horizontal" role="form">
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">企业全称</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>{(content \ "company_name").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">申请时间</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>
+                                                            {
+                                                                (date \ "year").asOpt[Int].get + "年" +
+                                                                (date \ "year").asOpt[Int].get + "月" +
+                                                                (date \ "year").asOpt[Int].get + "日"
+                                                            }
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
+                                                    <div class="col-sm-10 business-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "business_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person'>{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person-id'>{(content \ "legal_person_id").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>            
+
+                                                <div class="form-group">
+                                                    <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
+                                                    <div class="col-sm-10 road-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
+                                                    <div class="col-sm-10">
+                                                        <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">{(content \ "address").asOpt[String].get}</lbael>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-phone-no" class="col-sm-2 control-label">企业办公电话</label>
+                                                    
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-dir" placeholder="区号">{(content \ "phone_dir").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-no" placeholder="电话号">{(content \ "phone_no").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-sep" placeholder="分机">{(content \ "phone_sep").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="principal-name">{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-phone-no" class="col-sm-2 control-label">主要负责人手机号码</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" id="principal-phone-no">{(content \ "cell_phone").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>                                              
+
+                                                <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">业务领域</label>
+                                                    <div class="col-sm-8">
+                                                    {(content \ "company_business").asOpt[List[String]].get map {iter =>
+                                                        <label type="text" class="control-label" id="certificate-type">{iter}</label>
+                                                        <br/>
+                                                    }}
+                                                    </div>
+                                                </div>                                               
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">主营路线</label>
+                                                    <div class="col-sm-8">
+                                                        {(content \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].get map { line =>
+                                                            <div class="col-sm-2 col-sm-offset-1" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_city").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-1" style="text-align:center;">
+                                                                <img  src="/assets/images/arrow/oneway.png" class="img-swap" />
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_city").asOpt[String].get}</label> 
+                                                            </div>
+                                                        }}
+                                                    </div>
+                                                </div> 
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">公司网站</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-web">{(content \ "company_web").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-fax">{(content \ "company_fax").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="email" class="control-label" data-name="company-email">{(content \ "company_email").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>  
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                case module.auth.registerTypes.industry.t => {
+                                    <div>
+                                        <div class="container">
+                                            <div class="form-horizontal" role="form">
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">企业全称</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>{(content \ "company_name").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">申请时间</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>
+                                                            {
+                                                                (date \ "year").asOpt[Int].get + "年" +
+                                                                (date \ "year").asOpt[Int].get + "月" +
+                                                                (date \ "year").asOpt[Int].get + "日"
+                                                            }
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
+                                                    <div class="col-sm-10 business-license-btn">
+                                                        <!-- <label type="button" class="btn" data-toggle="modal" data-target="#business-image">照片</label> -->
+                                                        <img width="300" src={"/images/" + (content \ "business_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person'>{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person-id'>{(content \ "legal_person_id").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>            
+
+                                                <div class="form-group">
+                                                    <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
+                                                    <div class="col-sm-10 road-license-btn">
+                                                        <!-- <label type="button" class="btn" data-toggle="modal" data-target="#road-license">照片</label> -->
+                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
+                                                    <div class="col-sm-10">
+                                                        <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">{(content \ "address").asOpt[String].get}</lbael>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-phone-no" class="col-sm-2 control-label">企业办公电话</label>
+                                                    
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-dir" placeholder="区号">{(content \ "phone_dir").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-no" placeholder="电话号">{(content \ "phone_no").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-sep" placeholder="分机">{(content \ "phone_sep").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" >{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-phone-no" class="col-sm-2 control-label">主要负责人手机号码</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" >{(content \ "cell_phone").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>                                               
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">公司网站</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-web">{(content \ "industry_web").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-fax">{(content \ "industry_fax").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="email" class="control-label" data-name="company-email">{(content \ "industry_email").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>  
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                case module.auth.registerTypes.specialway.t => {
+                                    <div>
+                                        <div class="container">
+                                            <h3 style="text-align: center">专线认证详情列表</h3>
+                                            <div class="form-horizontal" role="form">
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">企业全称</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>{(content \ "company_name").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">申请时间</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>
+                                                            {
+                                                                (date \ "year").asOpt[Int].get + "年" +
+                                                                (date \ "year").asOpt[Int].get + "月" +
+                                                                (date \ "year").asOpt[Int].get + "日"
+                                                            }
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
+                                                    <div class="col-sm-10 business-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "business_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">法定代表人</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person'>{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">法定代表人身份证</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person-id'>{(content \ "legal_person_id").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>            
+
+                                                <div class="form-group">
+                                                    <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
+                                                    <div class="col-sm-10 road-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-reg-address" class="col-sm-2 control-label">企业注册地址</label>
+                                                    <div class="col-sm-10">
+                                                        <lbael type="text" class="control-label" >{(content \ "address").asOpt[String].get}</lbael>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-phone-no" class="col-sm-2 control-label">企业办公电话</label>
+                                                    
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-dir" placeholder="区号">{(content \ "phone_dir").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-no" placeholder="电话号">{(content \ "phone_no").asOpt[String].get}</label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label type="text" class="control-label" data-name="company-phone-sep" placeholder="分机">{(content \ "phone_sep").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-name" class="col-sm-2 control-label">主要负责人姓名</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" >{(content \ "legal_person").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-phone-no" class="col-sm-2 control-label">主要负责人手机号码</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" id="principal-phone-no">{(content \ "cell_phone").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">仓库地址</label>
+                                                    <div class="col-sm-8">
+                                                        {(content \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { line =>
+                                                            <div class="col-sm-6" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-6" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "city").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-12" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "address").asOpt[String].get}</label> 
+                                                            </div>
+                                                        }}
+                                                    </div>
+                                                </div>                                                    
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">主营路线</label>
+                                                    <div class="col-sm-8">
+                                                        {(content \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { line =>
+                                                            <div class="col-sm-2 col-sm-offset-1" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_city").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-1" style="text-align:center;">
+                                                                <img  src="/assets/images/arrow/oneway.png" class="img-swap" />
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_city").asOpt[String].get}</label> 
+                                                            </div>
+                                                        }}
+                                                    </div>
+                                                </div> 
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">发车时效</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" id="certificate-type">{(content \ "special_occation").asOpt[Int].get match {
+                                                            case module.auth.occationStatus.everyday.t => "天天发车"
+                                                            case module.auth.occationStatus.everyotherday.t => "隔天发车" 
+                                                        }}</label>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">拥有车型</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" id="certificate-type">
+                                                        {(content \ "vehicle").asOpt[List[String]].get map { line =>
+                                                            <label type="text" class="control-label">{line}</label><br/>
+                                                        }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">公司网站</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-web">{(content \ "special_web").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">公司传真</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name="company-fax">{(content \ "special_fax").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">公司邮箱</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="email" class="control-label" data-name="company-email">{(content \ "special_email").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>  
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                                case module.auth.registerTypes.driver.t => {
+                                    <div>
+                                        <div class="container">
+                                            <h3 style="text-align: center">驾驶员认证详情列表</h3>
+                                            <div class="form-horizontal" role="form">
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">姓名</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>{(content \ "driver_name").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="company-name" class="col-sm-2 control-label">申请时间</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='company-name'>
+                                                            {
+                                                                (date \ "year").asOpt[Int].get + "年" +
+                                                                (date \ "year").asOpt[Int].get + "月" +
+                                                                (date \ "year").asOpt[Int].get + "日"
+                                                            }
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="legal-person" class="col-sm-2 control-label">身份证号码</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person'>{(content \ "driver_secial_id").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="business-license" class="col-sm-2 control-label">驾驶员行驶证</label>
+                                                    <div class="col-sm-10 business-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "driver_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="road-license" class="col-sm-2 control-label">驾驶员驾驶证</label>
+                                                    <div class="col-sm-10 road-license-btn">
+                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="principal-phone-no" class="col-sm-2 control-label">手机号码</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label">{(content \ "phone_no").asOpt[String].get}</label>
+                                                    </div>
+                                                </div>
+
+                                                 <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">拥有车型</label>
+                                                    <div class="col-sm-8">
+                                                        {(content \ "vehicle").asOpt[List[String]].get map { line =>
+                                                            <label type="text" class="control-label">{line}</label><br/>
+                                                        }}
+                                                        
+                                                    </div>
+                                                </div>
+
+                                               <!--  <div class="form-group">
+                                                    <label for="legal-person-id" class="col-sm-2 control-label">载重</label>
+                                                    <div class="col-sm-10">
+                                                        <label type="text" class="control-label" data-name='legal-person-id'>{(content \ "capacity").asOpt[Int].get}</label>
+                                                    </div>
+                                                </div>   -->          
+
+
+                                                <div class="form-group">
+                                                    <label for="company-reg-address" class="col-sm-2 control-label">车长</label>
+                                                    <div class="col-sm-10">
+                                                        {(content \ "vehicle_length").asOpt[List[Float]].get map { f =>
+                                                            <label type="text" class="control-label">{"%.1f".format(f)}</label><br/>
+                                                        }}
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="principal-name" class="col-sm-2 control-label">常用路线</label>
+                                                    <div class="col-sm-10">
+                                                        {(content \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get map { line =>
+                                                            <div class="col-sm-2 col-sm-offset-1" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_province").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "origin_city").asOpt[String].get}</label> 
+                                                            </div>
+
+                                                            <div class="col-sm-1" style="text-align:center;">
+                                                                <img  src="/assets/images/arrow/oneway.png" class="img-swap" />
+                                                            </div>
+
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_province").asOpt[String].get}</label> 
+                                                            </div>
+                                                            <div class="col-sm-2" style="padding-right: 0px !important">
+                                                                <label type='text' class="control-label">{(line \ "destination_city").asOpt[String].get}</label> 
+                                                            </div>
+                                                        }}
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div class="form-group">
+                                                    <label for="certificate-type" class="col-sm-2 control-label">是否购买货物险</label>
+                                                    <div class="col-sm-8">
+                                                        <label type="text" class="control-label" id="certificate-type">{(content \ "insurance").asOpt[Int].get match {
+                                                        case 0 => "未购买"
+                                                        case 1 => "已购买"
+                                                        }}</label>
+                                                    </div>
+                                                </div>   -->                                                  
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                }
+                            }}
+                            <div>
+                            </div>
+
+                            @{
+                            status.intValue match {
+                                case module.applications.applicationStatus.pushed.t => {
+                                    <div class="row col-sm-offset-2">
+                                        <button class="btn btn-default" onclick={"approveApplication(\"" + apply_id + "\")"}>通过</button>
+                                        <button class="btn btn-default" onclick={"rejectApplication(\"" + apply_id + "\")"}>失败</button>
+                                    </div>
+                                }
+                                case module.applications.applicationStatus.approved.t => {
+                                    <div class="row col-sm-offset-2">
+                                        <label>已通过</label>
+                                    </div>
+                                } 
+                                case module.applications.applicationStatus.rejected.t => {
+                                    <div class="row col-sm-offset-2">
+                                        <label>已拒绝</label>
+                                    </div>
+                                }
+                                case _ => {
+                                    <div class="row col-sm-offset-2">
+                                        
+                                    </div>
+                                }
+                            }}      
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+} {
+    <script type="text/javascript">
+        $(function(){
+            
+        });
+
+        function approveApplication(apply_id) {
+            var query_object = new Object();
+            query_object['apply_id'] = apply_id;
+            query_object['token'] = "@{token}";
+
+            $.ajax({
+                url: "/apply/approve",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         history.back();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function rejectApplication(apply_id) {
+            var query_object = new Object();
+            query_object['apply_id'] = apply_id;
+            query_object['token'] = "@{token}";
+
+            $.ajax({
+                url: "/apply/reject",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         history.back();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+    </script>
+}

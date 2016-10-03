@@ -30,6 +30,9 @@ GET 	/admin/profiles/:k/:s/:p/:t										controllers.AdminController.profiles(k
 GET 	/admin/profiles/:k/:s/:p										controllers.AdminController.profiles(k, s, p, t="")
 GET 	/admin/profiles/:k/:s											controllers.AdminController.profiles(k, s, p="0", t="")
 
+GET		/admin/detail/:a/:t												controllers.AdminController.adminProfileDetail(a, t)
+GET		/admin/detail/:a												controllers.AdminController.adminProfileDetail(a, t="")
+
 GET		/admin/send/car  												controllers.AdminController.adminSendCar
 GET		/admin/sent/car  												controllers.AdminController.adminHaveSentCar
 GET		/admin/car/history												controllers.AdminController.adminCarHistory
@@ -162,6 +165,7 @@ POST	/auth/driver/register											controllers.AuthController.driverRegister
 POST	/auth/login														controllers.AuthController.login
 POST	/auth/admin/login												controllers.AuthController.admainLogin
 POST	/auth/send/code													controllers.AuthController.sendCode
+POST	/auth/code/check												controllers.AuthController.regCodeCheck
 POST	/auth/update													controllers.AuthController.update
 POST	/auth/driver/update												controllers.AuthController.driverUpdate
 POST	/auth/pwd/reset													controllers.AuthController.changePwd

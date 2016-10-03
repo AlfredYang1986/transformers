@@ -18,6 +18,7 @@ import module.sms.smsModule
 import module.auth.AuthModule
 
 import java.util.Date
+import java.util.Calendar
 
 object applicationStatus {  // auth  indicate weather account is approved 
     case object pushed extends applicationStatusDefines(0, "progressing")
@@ -38,20 +39,32 @@ sealed abstract class applicationTypeDefines(val t : Int, val des : String)
 
 object AppModule {
   
-    def DB2JsValue(x : MongoDBObject) : JsValue = 
+    def DB2JsValue(x : MongoDBObject) : JsValue = {
+        val date = Calendar.getInstance
+        date.setTimeInMillis(x.getAs[Number]("date").get.longValue)
         toJson(Map("apply_id" -> toJson(x.getAs[String]("apply_id").get),
                    "open_id" -> toJson(x.getAs[String]("open_id").get),
                    "company_name" -> toJson(x.getAs[String]("company_name").get),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
-                   "date" -> toJson(x.getAs[Number]("date").get.floatValue)))
+                   "apply_type" -> toJson(x.getAs[Number]("apply_type").get.intValue),
+                   "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
+                                        "month" -> (date.get(Calendar.MONTH) + 1),
+                                        "day" -> date.get(Calendar.DAY_OF_MONTH)))))
+    }
                    
-    def Detail2JsValue(x : MongoDBObject) : JsValue = 
+    def Detail2JsValue(x : MongoDBObject) : JsValue = {
+        val date = Calendar.getInstance
+        date.setTimeInMillis(x.getAs[Number]("date").get.longValue)
         toJson(Map("apply_id" -> toJson(x.getAs[String]("apply_id").get),
                    "open_id" -> toJson(x.getAs[String]("open_id").get),
                    "company_name" -> toJson(x.getAs[String]("company_name").get),
                    "content" -> toJson(toJson(x.getAs[String]("content").get)),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
-                   "date" -> toJson(x.getAs[Number]("date").get.floatValue)))
+                   "apply_type" -> toJson(x.getAs[Number]("apply_type").get.intValue),
+                   "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
+                                        "month" -> (date.get(Calendar.MONTH) + 1),
+                                        "day" -> date.get(Calendar.DAY_OF_MONTH)))))
+    }
   
     def pushApplication(data : JsValue) : JsValue = { 
         try {
@@ -100,23 +113,26 @@ object AppModule {
          
             (from db() in "applications" where ("apply_id" -> apply_id) select (x => x)).toList match {
               case head :: Nil => { 
-                  head += "status" -> applicationStatus.approved.t.asInstanceOf[Number]
+                  val origin_status = head.getAs[Number]("status").get.intValue
+                  if (origin_status != applicationStatus.approved.t) { 
+                      head += "status" -> applicationStatus.approved.t.asInstanceOf[Number]
                  
-                  val content = toJson(head.getAs[String]("content").get)
-                  val result = head.getAs[Number]("apply_type").get.intValue match {
-                    case 0 => (AuthModule.register(content) \ "status").asOpt[String].get
-                    case 1 => (AuthModule.driverRegister(content) \ "status").asOpt[String].get
-                    case 2 => (AuthModule.updateProfile(content) \ "status").asOpt[String].get
-                    case 3 => (AuthModule.updateDriverProfile(content) \ "status").asOpt[String].get
-                  }
+                      val content = Json.parse(head.getAs[String]("content").get)
+                      val result = head.getAs[Number]("apply_type").get.intValue match {
+                          case 0 => AuthModule.register(content)
+                          case 1 => AuthModule.driverRegister(content) 
+                          case 2 => AuthModule.updateProfile(content) 
+                          case 3 => AuthModule.updateDriverProfile(content) 
+                      }
                   
-                  if (result.equals("ok")) {
-                      // TODO: send sms to applyer
-                      _data_connection.getCollection("applications").update(DBObject("apply_id" -> apply_id), head)
-                      toJson(Map("status" -> toJson("ok"), "result" -> toJson(Detail2JsValue(head))))
-                  } else {
-                    throw new Exception("wrong input")
-                  }
+                      if ((result \ "status").asOpt[String].get.equals("ok")) {
+                          // TODO: send sms to applyer
+                          _data_connection.getCollection("applications").update(DBObject("apply_id" -> apply_id), head)
+                          toJson(Map("status" -> toJson("ok"), "result" -> toJson(Detail2JsValue(head))))
+                      } else {
+                          throw new Exception((result \ "error").asOpt[String].get)
+                      }
+                  } else throw new Exception("wrong input")
               }
               case _ => throw new Exception("not existing")
             }
@@ -164,11 +180,11 @@ object AppModule {
             def orderCol = "date"
             val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
             val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
-            val app_status = (data \ "app_status").asOpt[Int].map (x => "status" -> x).getOrElse(DBObject)
-            val app_type = (data \ "apply_type").asOpt[Int].map (x => "apply_type" -> x).getOrElse(DBObject)
-           
+            val app_status = (data \ "apply_status").asOpt[Int].map (x => "status" $eq x).getOrElse("status" $gte 0)
+            val app_type = (data \ "apply_type").asOpt[Int].map (x => "apply_type" $eq x).getOrElse("apply_type" $gte 0)
+            
             toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                (from db() in "application" where (app_status, app_type)).selectSkipTop(skip)(take)(orderCol)(DB2JsValue(_)).toList)))
+                (from db() in "applications" where $and(app_status, app_type)).selectSkipTop(skip)(take)(orderCol)(DB2JsValue(_)).toList)))
           
         } catch {
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)

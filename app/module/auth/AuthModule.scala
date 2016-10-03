@@ -264,10 +264,10 @@ object AuthModule {
         }
       
         val v_indicate = indicateValidateCheck(data)
-        val v_reg = regCodeCheck(data)
+//        val v_reg = regCodeCheck(data)
         
         if ((v_indicate \ "status").asOpt[String].get == "error") v_indicate
-        else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
+//        else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
         else {
           val common = MongoDBObject.newBuilder.result
           val (common_result, common_error) = commonRegisterImpl(common)
@@ -315,10 +315,10 @@ object AuthModule {
       
         try {
             val v_indicate = indicateValidateCheck(data)
-            val v_reg = regCodeCheck(data)
+//            val v_reg = regCodeCheck(data)
             
             if ((v_indicate \ "status").asOpt[String].get == "error") v_indicate
-            else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
+//            else if ((v_reg \ "status").asOpt[String].get == "error") v_reg
             else {
                 val x = MongoDBObject.newBuilder
                 val vehicle = MongoDBList.newBuilder
@@ -638,18 +638,13 @@ object AuthModule {
         else ErrorCode.errorToJson("user not exist")
     }
     
-    def queryProfile(open_id : String, user_id : String, data : JsValue) : JsValue = {
-        val query_open_id = (data \ "query_open_id").asOpt[String].map (x => x).getOrElse("")
-     
-        if (query_open_id == "") ErrorCode.errorToJson("error input")
-        else {
-            toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                (from db() in "user_profile" where ("open_id" -> query_open_id) select (x => x)).toList match {
+//    def queryProfile(open_id : String, user_id : String, data : JsValue) : JsValue = {
+    def queryProfile(open_id : String) : JsValue = {
+        toJson((from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
                   case Nil => ErrorCode.errorToJson("error input")
                   case head :: Nil => detailResult(head)
                   case _ => ???
-                })))
-        }
+               })
     }
     
     def queryProfileCondition(open_id : String, user_id : String, data : JsValue) : JsValue = {

@@ -29,7 +29,6 @@
 
                                 <tbody>
                                 @{ profiles map { iter =>
-                                    println(iter)
                                     val date = (iter \ "date").asOpt[play.api.libs.json.JsValue].get
                                     <tr>
                                         <th>{(iter \ "company_name").asOpt[String].get}</th>
@@ -74,7 +73,7 @@
         }
 
         function jumpToDetial(apply_id) {
-            location.href = "/admin/detail/" + apply_id;
+            alert(apply_id);
         }
     </script>
 }
