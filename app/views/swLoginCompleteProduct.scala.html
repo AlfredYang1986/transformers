@@ -79,7 +79,7 @@
                                                             <div class="col-sm-8">
                                                                 <div class="row">
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"origin-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"origin-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => 
                                                                                 if ((p \ "province").asOpt[String].get.equals((iter \ "origin" \ "province").asOpt[String].get)) {
                                                                                     <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -90,7 +90,7 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"origin-city-" + product_id} data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"origin-city-" + product_id} data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                                                 if (x.equals((iter \ "origin" \ "city").asOpt[String].get)) {
                                                                                     <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -101,7 +101,7 @@
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"origin-district-" + product_id} >
+                                                                        <select class="form-control" disabled="disabled" data-name={"origin-district-" + product_id} >
                                                                             @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                                                 (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -114,7 +114,7 @@
                                                                         </select>   
                                                                     </div>
                                                                 </div>          
-                                                                <textarea type="text" class="form-control" data-name={"origin-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
+                                                                <textarea type="text" disabled="disabled" class="form-control" data-name={"origin-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
@@ -134,7 +134,7 @@
                                                             <div class="col-sm-8">
                                                                 <div class="row">
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"destination-province-" + product_id} data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"destination-province-" + product_id} data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => 
                                                                                 if ({(p \ "province").asOpt[String].get}.equals((iter \ "destination" \ "province").asOpt[String].get)) {
                                                                                     <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -145,7 +145,7 @@
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"destination-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"destination-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                                                 if (x.equals((iter \ "destination" \ "city").asOpt[String].get)) {
                                                                                     <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -156,7 +156,7 @@
                                                                         </select>   
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"destination-district-" + product_id} >
+                                                                        <select class="form-control" disabled="disabled" data-name={"destination-district-" + product_id} >
                                                                             @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                                                 (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -169,7 +169,7 @@
                                                                         </select>   
                                                                     </div>
                                                                 </div>          
-                                                                <textarea type="text" class="form-control" data-name={"destination-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
+                                                                <textarea type="text" disabled="disabled" class="form-control" data-name={"destination-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
@@ -178,7 +178,7 @@
                                                             <div class="col-sm-8">
                                                                 <div class="row">
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"storage-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"storage-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => 
                                                                                 if ((p \ "province").asOpt[String].get.equals((iter \ "storage" \ "province").asOpt[String].get)) {
                                                                                     <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -189,7 +189,7 @@
                                                                         </select> 
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"storage-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                                        <select class="form-control" disabled="disabled" data-name={"storage-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                                                                             @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                                                 if (x.equals((iter \ "storage" \ "city").asOpt[String].get)) {
                                                                                     <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -200,7 +200,7 @@
                                                                         </select>    
                                                                     </div>
                                                                     <div class="col-sm-3">
-                                                                        <select class="form-control" data-name={"storage-district-" + product_id} >
+                                                                        <select class="form-control" disabled="disabled" data-name={"storage-district-" + product_id} >
                                                                             @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                                                 (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -213,7 +213,7 @@
                                                                         </select>  
                                                                     </div>
                                                                 </div>          
-                                                                <textarea type="text" class="form-control" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
+                                                                <textarea type="text" class="form-control" disabled="disabled" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
                                                             </div>
                                                         </div>
 
@@ -223,9 +223,9 @@
                                                                 { (vc \ "vehicle").asOpt[List[String]].get map { x =>
                                                                 <div class="col-sm-2 checkbox">
                                                                     {if ( (iter \ "vehicle").asOpt[List[String]].get.contains(x) ) {
-                                                                        <label><input data-name={"vehicle-" + product_id} type="checkbox" value={x} checked="" /> {x} </label>
+                                                                        <label><input data-name={"vehicle-" + product_id} type="checkbox" value={x} checked="" disabled="disabled" /> {x} </label>
                                                                     } else {
-                                                                        <label><input data-name={"vehicle-" + product_id} type="checkbox" value={x} /> {x} </label>
+                                                                        <label><input data-name={"vehicle-" + product_id} type="checkbox" value={x} disabled="disabled" /> {x} </label>
                                                                     }}
                                                                 </div>
                                                                 }}
@@ -249,9 +249,9 @@
                                                                 { (vc \ "vehicle_length").asOpt[List[Double]].get map { x =>
                                                                 <div class="col-sm-2 checkbox">
                                                                     {if ( (iter \ "vehicle_length").asOpt[List[Double]].get.filter(y => x - y < 0.0001 && x - y > -0.0001) ) {
-                                                                        <label><input data-name={"vehicle-length-" + product_id} type="checkbox" value={x.toString} checked="" /> {x.toString}米 </label>
+                                                                        <label><input data-name={"vehicle-length-" + product_id} type="checkbox" disabled="disabled" value={x.toString} checked="" /> {x.toString}米 </label>
                                                                     } else {
-                                                                        <label><input data-name={"vehicle-length-" + product_id} type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                                                        <label><input data-name={"vehicle-length-" + product_id} type="checkbox" disabled="disabled" value={x.toString} /> {x.toString}米 </label>
                                                                     }}
                                                                 </div>
                                                                 }}
@@ -274,22 +274,22 @@
                                                             <div class="col-sm-8">
                                                                 <div class="col-sm-2 radio">
                                                                     <label>
-                                                                        <input dat-name={"cooperation-type-" + product_id} type="radio" value="0" /> 单程
+                                                                        <input dat-name={"cooperation-type-" + product_id} type="radio" disabled="disabled" value="0" /> 单程
                                                                     </label>
                                                                 </div> 
                                                                 <div class="col-sm-2 radio">
                                                                     <label>
-                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" value="1" /> 往返
+                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" disabled="disabled" value="1" /> 往返
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-sm-2 radio">
                                                                     <label>
-                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" value="2" /> 长期
+                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" disabled="disabled" value="2" /> 长期
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-sm-2 radio">
                                                                     <label>
-                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" value="3" /> 不限
+                                                                        <input data-name={"cooperation-type-" + product_id} type="radio" disabled="disabled" value="3" /> 不限
                                                                     </label>
                                                                 </div>                                                                    
                                                             </div>
@@ -348,7 +348,7 @@
 
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
-                                                                            <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
+                                                                            <select class="form-control" disabled="disabled" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
                                                                                 <optgroup label="常用联系人">
                                                                                 @{ contacts map { iter =>
                                                                                     <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
@@ -366,7 +366,7 @@
 
                                                                     <div class="row">
                                                                         <div class="col-sm-8">
-                                                                            <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
+                                                                            <select class="form-control" disabled="disabled" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
                                                                                 <optgroup label="常用联系人电话">
                                                                                     @{ contacts map { iter =>
                                                                                         <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
@@ -375,7 +375,7 @@
                                                                             </select>
                                                                         </div>
                                                                         <div class="col-sm-4">
-                                                                        <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
+                                                                        <button data-toggle="collapse" disabled="disabled" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
                                                                             添加常用调度员
                                                                         </button>
                                                                         </div>
@@ -461,7 +461,7 @@
                 success: function (data) {
                     if (data.status == "ok") {                                          
                     //     alert("注册成功审核！");
-                         alert("发布成功");
+                         alert("重新发布成功");
                          location.reload();
                     } else {
                         alert(data.error.message);

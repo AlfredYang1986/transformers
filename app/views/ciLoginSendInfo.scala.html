@@ -71,7 +71,7 @@
                                 <div class="alert alert-danger" role="alert">
                                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                     <span class="sr-only">Error:</span>
-                                    请填写联系人
+                                    请填写有效联系人
                                 </div>
                             </div>
                         </div>  
@@ -89,7 +89,7 @@
                                 <div class="alert alert-danger" role="alert">
                                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                     <span class="sr-only">Error:</span>
-                                    请填写联系电话
+                                    请填写有效联系电话
                                 </div>
                             </div>
                         </div>  
@@ -170,7 +170,7 @@
                     cache: false,
                     success: function (data) {
                         if (data.status == "ok") {
-                            alert("success");
+                            alert("发布成功");
                             location.href = "/company/sentinfo"
                         } else {
                             alert(data.error.message);
