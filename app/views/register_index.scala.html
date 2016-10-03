@@ -135,7 +135,7 @@
 							<div class="alert alert-danger" role="alert">
 							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  	<span class="sr-only">Error:</span>
-							  	请填写有效的企业注册地址
+							  	请填写有效的企业注册地址（不能输入特殊字符）
 							</div>
 						</div>
 					</div>
@@ -852,7 +852,7 @@
 			var result = true;
 
 			var company_name = $('input[data-name="company-name"]').val();
-			var regCompName = /([\u4e00-\u9fa5a]+)|([a-zA-z'. ]*)/;
+			var regCompName = /“^[u4e00-u9fa5],{0,}$”/;
 			result &= validate($('input[data-name="company-name"]'), hasInput(company_name) && regCompName.test(company_name), 'div[data-name="company-name-error"]');
 
 			var legal_person = $('input[data-name="legal-person"]').val();
@@ -864,16 +864,23 @@
 			result &= validate($('input[data-name="legal-person-id"]'), hasInput(legal_person_id) && regIDL.test(legal_person_id), 'div[data-name="legal-person-id-error"]');
 
 			var company_reg_address = $('input[data-name="reg-address"]').val();
-			var regCPAD = /^[0-9]*$/;
-			var regCPADD =/^[A-Za-z]+$/;
-			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !regCPAD.test(company_reg_address) && !regCPADD.test(company_reg_address), 'div[data-name="reg-address-error"]');
+
+			//var regCPAD = /^[0-9]*$/;
+			//var regCPADD =/^[A-Za-z]+$/;
+			//result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !regCPAD.test(company_reg_address) && !regCPADD.test(company_reg_address), 'div[data-name="reg-address-error"]');
+
+			//地址不能输入特殊字符
+			var newCPA = /^[A-Za-z0-9\u4E00-\u9FA5_-]+$/;
+			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !newCPA.test(company_reg_address), 'div[data-name="reg-address-error"]');
+
 
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
 			var regIDLD = /^[0-9]*$/;
 			result &= validate($('input[data-name="company-phone-dir"]'), regIDLD.test(company_phone_dir), 'div[data-name="company-phone-dir-error"]');
 
 			var company_phone_no = $('input[data-name="company-phone-no"]').val();
-			result &= validate($('input[data-name="company-phone-no"]'), hasInput(company_phone_no), 'div[data-name="company-phone-no-error"]');			
+			var regCPN = /^[0-9]*$/;
+			result &= validate($('input[data-name="company-phone-no"]'), hasInput(company_phone_no) && regCPN.test(company_phone_no), 'div[data-name="company-phone-no-error"]');			
 			
 			var company_phone_sep = $('input[data-name="company-phone-sep"]').val();
 			var regIDLDS = /^[0-9]*$/; 
