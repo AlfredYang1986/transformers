@@ -186,13 +186,6 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="col-sm-2 control-label">公司介绍</label>
-                                                        <div class="col-sm-6">
-                                                            <label type="text" class="control-label col-sm-6">This is the introduction of the company.</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
                                                         <label class="col-sm-2 control-label">公司邮箱</label>
                                                         <div class="col-sm-6">
                                                             {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
@@ -209,6 +202,13 @@
                                                                     {(iter \ "special_email").asOpt[String].get}
                                                                 </label>
                                                             }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">公司介绍</label>
+                                                        <div class="col-sm-6">
+                                                            <label type="text" class="control-label col-sm-6">This is the introduction of the company.</label>
                                                         </div>
                                                     </div>
 
@@ -669,14 +669,14 @@
 	            html += "</div></div>"
 
 	            html += "<div class=\"form-group\">"
-	            html += "<label class=\"col-sm-2 control-label\">公司介绍</label>"
-	            html += "<div class=\"col-sm-6\">"
-	            html += "<label type=\"text\" class=\"control-label col-sm-6\">This is the introduction of the company.</label>"
-	            html += "</div></div>"
-
-	            html += "<div class=\"form-group\">"
 	            html += "<label class=\"col-sm-2 control-label\">公司邮箱</label>"
 	            html += "<div class=\"col-sm-6\">"
+
+                html += "<div class=\"form-group\">"
+                html += "<label class=\"col-sm-2 control-label\">公司介绍</label>"
+                html += "<div class=\"col-sm-6\">"
+                html += "<label type=\"text\" class=\"control-label col-sm-6\">This is the introduction of the company.</label>"
+                html += "</div></div>"
 
 	            if (ct == 1) {
 	            	html += "<label type=\"text\" class=\"control-label col-sm-6\">" + tmp["company_email"] + "</label>"

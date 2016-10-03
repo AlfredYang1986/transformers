@@ -869,8 +869,8 @@
 			//var regCPADD =/^[A-Za-z]+$/;
 			//result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !regCPAD.test(company_reg_address) && !regCPADD.test(company_reg_address), 'div[data-name="reg-address-error"]');
 
-			//地址不能输入特殊字符
-			var newCPA = /^[A-Za-z0-9\u4E00-\u9FA5_-]+$/;
+			//地址只能输入中文，英文或者数字
+			var newCPA = /"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+"/;
 			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !newCPA.test(company_reg_address), 'div[data-name="reg-address-error"]');
 
 
