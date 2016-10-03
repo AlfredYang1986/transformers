@@ -52,9 +52,8 @@
                                                 </div>
 
                                                 <div class="form-group" style="display: none;" data-name='screen-name-error'>
-                                                    <span class="col-sm-1 control-label"></span>
                                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
@@ -71,9 +70,8 @@
                                                 </div>
 
                                                 <div class="form-group" style="display: none;" data-name='social-id-error'>
-                                                    <span class="col-sm-1 control-label"></span>
                                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
@@ -90,9 +88,8 @@
                                                 </div>
 
                                                 <div class="form-group" style="display: none;" data-name='phone-error'>
-                                                    <span class="col-sm-1 control-label"></span>
                                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
@@ -115,9 +112,8 @@
                                                 </div>
 
                                                 <div class="form-group" style="display: none;" data-name='pwd-error'>
-                                                    <span class="col-sm-1 control-label"></span>
                                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                                    <div class="col-sm-9">
+                                                    <div class="col-sm-8">
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
@@ -158,9 +154,8 @@
                                 </div>
 
                                 <div class="form-group" style="display: none;" data-name={"screen-name-error-" + index}>
-                                    <span class="col-sm-1 control-label"></span>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
@@ -177,9 +172,8 @@
                                 </div>
 
                                 <div class="form-group" style="display: none;" data-name={"social-id-error-" + index}>
-                                    <span class="col-sm-1 control-label"></span>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
@@ -200,9 +194,8 @@
                                 </div>
 
                                 <div class="form-group" style="display: none;" data-name={"phone-error-" + index}>
-                                    <span class="col-sm-1 control-label"></span>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
@@ -224,9 +217,8 @@
                                 </div>
 
                                 <div class="form-group" style="display: none;" data-name='pwd-error'>
-                                    <span class="col-sm-1 control-label"></span>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
@@ -249,6 +241,23 @@
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
 
         function pushSubuser() {
             var result = true;
