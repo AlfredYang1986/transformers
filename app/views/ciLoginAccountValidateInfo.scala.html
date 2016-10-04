@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">企业全称</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" disabled value=@{(company \ "company_name").asOpt[String].get} />
+                                    <input type="text" class="form-control"  data-name="company-name" disabled value=@{(company \ "company_name").asOpt[String].get} />
                                 </div>
                             </div>
 
@@ -357,26 +357,57 @@
                     query_object['road_image'] = road_image_name[0];
                 }
 
-                $.ajax({
-                    url: "/auth/update",
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json, charset=utf-8',
-                    data: JSON.stringify(query_object),
-                    cache: false,
-                    success: function (data) {
-                        if (data.status == "ok") {                                          
-                             alert("修改信息提交成功，请等待审核！");
-                             location.reload();
-                        } else {
-                            alert(data.error.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("请检查您的输入");
-                    }
-                });
+                // $.ajax({
+                //     url: "/auth/update",
+                //     type: 'POST',
+                //     dataType: 'json',
+                //     contentType: 'application/json, charset=utf-8',
+                //     data: JSON.stringify(query_object),
+                //     cache: false,
+                //     success: function (data) {
+                //         if (data.status == "ok") {                                          
+                //              alert("修改信息提交成功，请等待审核！");
+                //              location.reload();
+                //         } else {
+                //             alert(data.error.message);
+                //         }
+                //     },
+                //     error: function (xhr, status, error) {
+                //         alert("请检查您的输入");
+                //     }
+                // });
+
+                sendApplication(query_object)
             }
+        }
+
+        function sendApplication(query_object) {
+            var app_object = new Object();
+            // app_object['company_name'] = query_object['company_name'];
+            app_object['company_name'] = $('input[data-name="company-name"]').val();
+            app_object['apply_type'] = 2; // company_registration
+            app_object['content'] = query_object;
+            app_object["open_id"] = "@{open_id}";
+
+            $.ajax({
+                url: "/apply/push",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(app_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         alert("提交成功，请等待审核！");
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
         }
     </script>
 } 

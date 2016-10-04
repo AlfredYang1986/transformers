@@ -101,11 +101,11 @@ object AdminController extends Controller {
                 }
              
                 val previous = if (open_id == "") None
-                               else Some(AuthModule.queryProfile(open_id)) 
-                                 
+                               else Some(AuthModule.queryProfile(open_id))
+                               
                 if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) previous match {
                   case None => Ok(views.html.admin_profile_register_detail(token)(apply_id)(content)(date)(status))
-                  case Some(x) => Ok("未实现")
+                  case Some(x) => Ok(views.html.admin_profile_detail(token)(apply_id)(x)(content)(date)(status))
                 }
                 else Ok("只有管理员才有这个操作权限")
             

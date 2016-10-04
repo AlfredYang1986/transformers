@@ -298,7 +298,7 @@
 
             var phone_no = $('input[data-name="phone-no"]').val();
             var regPhone = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$/;
-            result &= validate($('input[data-name="phone-no"]'), hasInput(phone_no) && regPhone.test(regPhone), 'div[data-name="phone-no-error"]');
+            result &= validate($('input[data-name="phone-no"]'), hasInput(phone_no) && regPhone.test(phone_no), 'div[data-name="phone-no-error"]');
 
             var business_images_name = "";
             if (is_upload_business_image) {
@@ -327,26 +327,56 @@
                     query_object['road_image'] = road_image_name[0];
                 }
 
-                $.ajax({
-                    url: "/auth/update",
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: 'application/json, charset=utf-8',
-                    data: JSON.stringify(query_object),
-                    cache: false,
-                    success: function (data) {
-                        if (data.status == "ok") {                                          
-                             alert("修改信息提交成功，请等待审核！");
-                             location.reload();
-                        } else {
-                            alert(data.error.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("请检查您的输入");
-                    }
-                });
+                // $.ajax({
+                //     url: "/auth/update",
+                //     type: 'POST',
+                //     dataType: 'json',
+                //     contentType: 'application/json, charset=utf-8',
+                //     data: JSON.stringify(query_object),
+                //     cache: false,
+                //     success: function (data) {
+                //         if (data.status == "ok") {                                          
+                //              alert("修改信息提交成功，请等待审核！");
+                //              location.reload();
+                //         } else {
+                //             alert(data.error.message);
+                //         }
+                //     },
+                //     error: function (xhr, status, error) {
+                //         alert("请检查您的输入");
+                //     }
+                // });
+
+                sendApplication(query_object);
             }
+        }
+
+        function sendApplication(query_object) {
+            var app_object = new Object();
+            app_object['company_name'] = $('input[data-name="company-name"]').val(); // query_object['company_name'];
+            app_object['apply_type'] = 2; // company_update
+            app_object['content'] = query_object;
+            app_object["open_id"] = "@{open_id}";
+
+            $.ajax({
+                url: "/apply/push",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(app_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         alert("提交成功，请等待审核！");
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
         }
 
         function updateBusinessImage() {

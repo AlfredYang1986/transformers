@@ -32,7 +32,7 @@ object applicationTypes {  // auth  indicate weather account is approved
     case object company_registration extends applicationTypeDefines(0, "cr")
     case object driver_registration extends applicationTypeDefines(1, "dr")
     case object company_update extends applicationTypeDefines(2, "cu")
-    case object driver_update extends applicationTypeDefines(2, "du")
+    case object driver_update extends applicationTypeDefines(3, "du")
 }
 
 sealed abstract class applicationTypeDefines(val t : Int, val des : String)

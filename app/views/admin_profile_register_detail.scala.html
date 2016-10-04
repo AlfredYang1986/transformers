@@ -648,7 +648,7 @@
                 cache: false,
                 success: function (data) {
                     if (data.status == "ok") {                                          
-                         history.back();
+                         location.href = "/admin/profiles/cu/progressing"
                     } else {
                         alert(data.error.message);
                     }
