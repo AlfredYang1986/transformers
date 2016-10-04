@@ -33,10 +33,14 @@ GET 	/admin/profiles/:k/:s											controllers.AdminController.profiles(k, s, 
 GET		/admin/detail/:a/:t												controllers.AdminController.adminProfileDetail(a, t)
 GET		/admin/detail/:a												controllers.AdminController.adminProfileDetail(a, t="")
 
-GET		/admin/send/car  												controllers.AdminController.adminSendCar
+GET		/admin/send/car/:t  											controllers.AdminController.adminSendCar(t)
+GET		/admin/send/car  												controllers.AdminController.adminSendCar(t="")
 GET		/admin/sent/car  												controllers.AdminController.adminHaveSentCar
 GET		/admin/car/history												controllers.AdminController.adminCarHistory
 GET 	/admin/setting													controllers.AdminController.adminSetting
+
+POST	/admin/platform/push											controllers.AdminController.adminPlatformPush
+POST	/admin/platform/query											controllers.AdminController.adminPlatformQuery
 
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)

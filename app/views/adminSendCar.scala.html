@@ -1,3 +1,4 @@
+@(token : String)(vc : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])
 
 @admin_main("发送平台福利车") {
     
@@ -17,354 +18,203 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
 
-                <div class="form-horizontal" style="margin-top: 40px;">
+                        <div class="form-horizontal" style="margin-top: 40px;">
 
-                     <div class="form-group">
-                        <label for="principal-phone-no" class="col-sm-1 control-label">行驶路线</label>
+                             <div class="form-group">
+                                <label for="principal-phone-no" class="col-sm-1 control-label">行驶路线</label>
 
-                        <fieldset class="driver-line-lst">
-                        <div class="driver-line" style="min-height: 40px !important">
+                                <fieldset class="platform-line-lst" >
+                                    <div class="platform-line" style="min-height: 40px !important">
+                                        <div class="col-sm-2" style="padding-right: 0px !important">
+                                            <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                                                <option selected disabled>请选择省</option>
+                                                @{cities map { iter => 
+                                                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                }};
+                                            </select>
+                                        </div>
 
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-province" data-index="0">
-                                    <option selected disabled>请选择省</option>
-                                </select>
-                            </div>
+                                        <div class="col-sm-2" style="padding-right: 0px !important">
+                                            <select class="form-control" data-name="origin-city" data-index="1">
+                                                <option selected disabled data-filter="choice" >请选择市</option>
+                                                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                }}};
+                                            </select>
+                                        </div>
 
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >请选择市</option>
-                                </select>
-                            </div>
+                                    <div class="col-sm-2" style="text-align:center;">
+                                    <!--
+                                        <img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
+                                        <i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
+                                    </div>
 
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >请选择区</option>
-                                </select>
-                            </div>
+                                        <div class="col-sm-2" style="padding-right: 0px !important">
+                                            <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+                                                <option selected disabled data-filter="choice" >请选择省</option>
+                                                @{cities map { iter => 
+                                                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                                                }};
+                                            </select>
+                                        </div>
 
-                            <div class="col-sm-1 text-center">
-                                <label><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></label>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-province" data-index="2">
-                                    <option selected disabled>请选择省</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >请选择市</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >请选择区</option>
-                                </select>
-                            </div>                            
-                        </div>
-                    </fieldset>
-                    </div> 
-
-
-                    <div class="form-group">
-                        <label for="principal-phone-no" class="col-sm-1 control-label">发车时间</label>
-
-                        <div class="driver-line" style="min-height: 40px !important">
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-province" data-index="0">
-                                    <option selected disabled>年份</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="origin-city" data-index="1">
-                                    <option selected disabled data-filter="choice" >月份</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-province" data-index="2">
-                                    <option selected disabled data-filter="choice" >日期</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >小时</option>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-1" style="padding-right: 0px !important">
-                                <select class="form-control" data-name="destination-city" data-index="3">
-                                    <option selected disabled data-filter="choice" >分钟</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </div> 
-
-
-                    <div class="form-group">
-                        <label for="certificate-type" class="col-sm-1 control-label" >车型</label>
-
-                        <div class="col-sm-9">
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="平板车"> 平板车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="高栏车"> 高栏车
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="厢式车"> 厢式车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="保温冷藏"> 保温冷藏
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="半挂车"> 半挂车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="危险品车"> 危险品车
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="高地板"> 高低板
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="起重车"> 起重车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="牵引车"> 牵引车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="仓棚车"> 仓棚车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="罐式车"> 罐式车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="特种车"> 特种车
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle" type="radio" value="集装箱车"> 集装箱车
-                                </label>
-                            </div>  
-                        </div>
-                    </div>                  
-
-                    <div class="form-group">
-                        <label for="legal-person-id" class="col-sm-1 control-label">车长</label>
-                        <div class="col-sm-9">
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="four-p-two"> 4.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="four-p-five"> 4.5米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="five"> 5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="six-p-two"> 6.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="six-p-nine"> 6.9米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="seven-p-two"> 7.2米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="seven-p-seven"> 7.7米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="seven-p-eight"> 7.8米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="eight-p-two"> 8.2米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="eight-p-six"> 8.6米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="eight-p-seven"> 8.7米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="nine-p-six"> 9.6米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="eleven-p-seven"> 11.7米
-                                </label>
-                            </div>
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="twelve-p-five"> 12.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="thirdteen"> 13米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="third-p-five"> 13.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="fourthteen"> 14米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="sixteen"> 16米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="seventeen"> 17米
-                                </label>
-                            </div>                      
-                            
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="seventeen-five"> 17.5米
-                                </label>
-                            </div>
-
-                            <div class="col-sm-2 radio">
-                                <label>
-                                    <input name="vehicle-length" type="radio" value="eightteen"> 18米
-                                </label>
+                                        <div class="col-sm-2" style="padding-right: 0px !important">
+                                            <select class="form-control" data-name="destination-city" data-index="3">
+                                                <option selected disabled data-filter="choice" >请选择市</option>
+                                                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                                                }}};
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </div> 
-                        </div>              
-                    </div>  
 
-                    <div class="form-group">
-                        <label for="legal-person-id" class="col-sm-1 control-label">吨位</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" data-name="vehicle-t" placeholder="元/吨">
-                        </div>              
-                    </div> 
+                            <div class="form-group" style="display: none;" data-name='platform-line-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择正确的路线信息
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="legal-person" class="col-sm-1 control-label">方位</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" data-name="item-capacity" placeholder="元/立方">
-                        </div>
-                    </div>     
 
-                    <div class="form-group">
-                        <label for="certificate-type" class="col-sm-1 control-label" >其他备注</label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control" rows="5"></textarea>
-                        </div>
-                        
-                    </div> 
+                            <div class="form-group">
+                                <label for="principal-phone-no" class="col-sm-1 control-label">发车时间</label>
 
-                    <div class="form-group">
-                        <label for="certificate-type" class="col-sm-1 control-label" >预约电话</label>
-                        <div class="col-sm-9 ">
-                            <label class="form-control">400-016-1956</label>
-                        </div>
-                        
-                    </div>    
+                                <div class="driver-line" style="min-height: 40px !important">
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-12">
-                            <button class="btn btn-default col-sm-4 car-send-btn">发送福利车</button>
+                                    <div class="col-sm-2" style="padding-right: 0px !important">
+                                        <input type="datetime" id="platform-time-picker"/>
+                                    </div>
+
+                                </div>
+                            </div> 
+
+                            <div class="form-group" style="display: none;" data-name='playform-time-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择正确的发车时间
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="certificate-type" class="col-sm-1 control-label" >车型</label>
+
+                                <div class="col-sm-9">
+                                    @{(vc \ "vehicle").asOpt[List[String]].get map { x =>
+                                        <div class="col-sm-2 checkbox">
+                                            <label><input data-name="vehicle" type="checkbox" value={x} /> {x} </label>
+                                        </div>
+                                    }}
+                                </div>
+                            </div>   
+
+                            <div class="form-group" style="display: none;" data-name='playform-vehicle-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择正确的车型
+                                    </div>
+                                </div>
+                            </div>               
+
+                            <div class="form-group">
+                                <label for="legal-person-id" class="col-sm-1 control-label">车长</label>
+                                <div class="col-sm-9">
+                                    @{(vc \ "vehicle_length").asOpt[List[Float]].get map { x =>
+                                        <div class="col-sm-2 checkbox">
+                                            <label><input data-name="vehicle-length" type="checkbox" value={x.toString} /> {x.toString}米 </label>
+                                        </div>
+                                    }}
+                                </div>              
+                            </div>  
+
+                            <div class="form-group" style="display: none;" data-name='playform-vehicle-length-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择正确的车长
+                                    </div>
+                                </div>
+                            </div>   
+
+                            <div class="form-group">
+                                <label for="legal-person-id" class="col-sm-1 control-label">吨位</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" data-name="weight" placeholder="元/吨">
+                                </div>              
+                            </div> 
+
+                            <div class="form-group" style="display: none;" data-name='weight-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        吨位不能为空
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="legal-person" class="col-sm-1 control-label">方位</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" data-name="volume" placeholder="元/立方">
+                                </div>
+                            </div>     
+
+                            <div class="form-group" style="display: none;" data-name='volume-error'>
+                                <span class="col-sm-1 control-label"></span>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-9">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        方位不能为空
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="certificate-type" class="col-sm-1 control-label" >其他备注</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="5" data-name="notes"></textarea>
+                                </div>
+                                
+                            </div> 
+
+                            <div class="form-group">
+                                <label for="certificate-type" class="col-sm-1 control-label" >预约电话</label>
+                                <div class="col-sm-9 ">
+                                    <label class="form-control">400-016-1956</label>
+                                </div>
+                                
+                            </div>    
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-12">
+                                    <button class="btn btn-default col-sm-4 car-send-btn" onclick="pushPlatformCar()">发送福利车</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    
-                </div>
-
-
-
-
-                </div>
                 </div>
             </div>
             <!-- /.col-lg-12 -->
@@ -373,7 +223,150 @@
     </div>
     <!-- /#page-wrapper -->
 } {
-    
+    <script type="text/javascript">
+        $(function(){
+            $("#platform-time-picker").datepicker();
+        });
+        
+        var query_object = new Object();
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function cityChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var province = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
+        }
+
+        function districtChanges(ele, container, index) {
+            var a = Number($(ele).attr("data-index"));
+            var city = $(ele).val();
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
+            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
+        }
+
+
+        function getPlatformVehicle() {
+            var result = true;
+            var vehicle_lst = [];
+            $.each($('input[data-name="vehicle"]:checked'), function(index, value){
+                vehicle_lst.push($(this).val());
+            });
+            result &= validate($('input[data-name="vehicle"]'), vehicle_lst.length > 0, 'div[data-name="playform-vehicle-error"]');
+
+            query_object['vehicle'] = vehicle_lst;
+            return Boolean(result);
+        }
+
+        function getPlatformVehicleLength() {
+            var result = true;
+            var vehicle_length_lst = [];
+            $.each($('input[data-name="vehicle-length"]:checked'), function(index, value){
+                vehicle_length_lst.push(Number($(this).val()));
+            });
+            result &= validate($('input[data-name="vehicle-length"]'), vehicle_length_lst.length > 0, 'div[data-name="playform-vehicle-length-error"]');
+
+            query_object['vehicle_length'] = vehicle_length_lst;
+            return Boolean(result);
+        }
+
+        function getPlatformline() {
+            var result = true;
+            // var lines_lst = [];
+            // $.each($('.special-line'), function( index, value ) {
+                var origin_province = $('select[data-name="origin-province"]').val();
+                result &= validate($('select[data-name="origin-province"]'), origin_province != null, 'div[data-name="platform-line-error"]');
+
+                var origin_city = $('select[data-name="origin-city"]').val();
+                result &= validate($('select[data-name="origin-city"]'), origin_city != null, 'div[data-name="platform-line-error"]');
+
+                var destination_province = $('select[data-name="destination-province"]').val();
+                result &= validate($('select[data-name="destination-province"]'), destination_province != null, 'div[data-name="platform-line-error"]');
+
+                var destination_city = $('select[data-name="destination-city"]').val();
+                result &= validate($('select[data-name="destination-city"]'), destination_city != null, 'div[data-name="platform-line-error"]');      
+
+                if (Boolean(result)) {
+                    var tmp = new Object();
+                    tmp['origin_province'] = origin_province;
+                    tmp['origin_city'] = origin_city;
+                    tmp['destination_province'] = destination_province;
+                    tmp['destination_city'] = destination_city;
+
+                    // lines_lst.push(tmp);
+                    query_object['line'] = tmp
+                };
+            // });
+
+            // var final_result = lines_lst.length > 0;
+            // if(final_result) {
+                // query_object['special_lines']=lines_lst;
+            // }
+            // validate($(),final_result,'div[data-name="special-line-error"]');
+            // query_object['special_lines'] = lines_lst;
+            return Boolean(result);
+        }
+
+        function pushPlatformCar() {
+            var result = true;
+
+            result &= getPlatformline();
+            result &= getPlatformVehicle();
+            result &= getPlatformVehicleLength();
+
+            var date = $("#platform-time-picker").val();
+            result &= validate($("#platform-time-picker"), hasInput(date), 'div[data-name="playform-time-error"]');
+
+            var weight = $('input[data-name="weight"]').val();
+            result &= validate($('input[data-name="weight"]'), hasInput(date), 'div[data-name="weight-error"]');
+
+            var volume = $('input[data-name="volume"]').val();
+            result &= validate($('input[data-name="volume"]'), hasInput(volume), 'div[data-name="volume-error"]');
+
+            if (result) {
+                query_object['volume'] = Number(volume);
+                query_object['weight'] = Number(weight);
+                query_object['date_str'] = date;
+
+                $.ajax({
+                    url: "/admin/platform/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             location.href = "/admin/sent/car";
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+    </script>
 }
 
 

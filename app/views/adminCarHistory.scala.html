@@ -140,24 +140,16 @@
 } {
     <script type="text/javascript">
         $(function(){
-            
-
+            $("#datepicker_start").datepicker();
+            $("#datepicker_end").datepicker();
         });
 
-    $(function() {
-        $("#datepicker_start").datepicker();
-    } );
-
-    $(function() {
-        $("#datepicker_end").datepicker();
-    } );
-
-    $("#hide_detail").click(function(){
-        $("#car_info").hide(500);
-    });
-    $("#show_detail").click(function(){
-        $("#car_info").show(500);
-    });
+        $("#hide_detail").click(function(){
+            $("#car_info").hide(500);
+        });
+        $("#show_detail").click(function(){
+            $("#car_info").show(500);
+        });
 
     </script>
 }
