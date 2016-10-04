@@ -852,7 +852,7 @@
 			var result = true;
 
 			var company_name = $('input[data-name="company-name"]').val();
-			var regCompName = /“^[u4e00-u9fa5],{0,}$”/;
+			var regCompName = /[\u4e00-\u9fa5]/;
 			result &= validate($('input[data-name="company-name"]'), hasInput(company_name) && regCompName.test(company_name), 'div[data-name="company-name-error"]');
 
 			var legal_person = $('input[data-name="legal-person"]').val();
