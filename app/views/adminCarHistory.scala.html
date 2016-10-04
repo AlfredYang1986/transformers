@@ -21,45 +21,18 @@
                             
 
                             <div class="driver-line" style="min-height: 40px !important">
-                                <label for="principal-phone-no" class="col-sm-1 control-label">起始时间选择</label>
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="origin-province" data-index="0">
-                                        <option selected disabled>年份</option>
-                                    </select>
+                                <label class="col-sm-2 control-label">起始时间选择</label>
+
+                                <div class="col-sm-2" style="padding-right: 0px !important">
+                                    <input type="text" id="datepicker_start">
                                 </div>
 
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="origin-city" data-index="1">
-                                        <option selected disabled data-filter="choice" >月份</option>
-                                    </select>
+                                <label class="col-sm-2 control-label">终止时间选择</label>
+                                <div class="col-sm-2" style="padding-right: 0px !important">
+                                    <input type="text" id="datepicker_end">
                                 </div>
 
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="destination-province" data-index="2">
-                                        <option selected disabled data-filter="choice" >日期</option>
-                                    </select>
-                                </div>
-
-                                <label for="principal-phone-no" class="col-sm-1 control-label">结束时间选择</label>
-
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="origin-province" data-index="0">
-                                        <option selected disabled>年份</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="origin-city" data-index="1">
-                                        <option selected disabled data-filter="choice" >月份</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-1" style="padding-right: 0px !important">
-                                    <select class="form-control" data-name="destination-province" data-index="2">
-                                        <option selected disabled data-filter="choice" >日期</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3" style="padding-right: 0px !important">
+                                <div class="col-sm-3 col-sm-offset-1" style="padding-right: 0px !important">
                                     <button id="" class="btn btn-default col-sm-3 car-send-btn" >搜索</button>
                                 </div>
                             </div>
@@ -170,6 +143,14 @@
             
 
         });
+
+    $(function() {
+        $("#datepicker_start").datepicker();
+    } );
+
+    $(function() {
+        $("#datepicker_end").datepicker();
+    } );
 
     $("#hide_detail").click(function(){
         $("#car_info").hide(500);
