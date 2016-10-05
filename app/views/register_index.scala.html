@@ -559,7 +559,6 @@
 
 						<fieldset class="special-lines-lst" >
 							<div class="special-line" style="min-height: 40px !important">
-
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
 										<option selected disabled>请选择省</option>
@@ -600,10 +599,8 @@
 									</select>
 								</div>
 								<button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important;" onclick="deleteRoute('special-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
-
 							</div>
 						</fieldset>
-
 					</div>
 				
 					<div class="form-group">
@@ -1036,16 +1033,16 @@
 			var lines_lst = [];
 			$.each($('.special-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), origin_province != null);
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), origin_city != null);
 
 				var destination_province = $(this).find('select[data-name="destination-province"]').val();
-				result &= validate($(this).find('select[data-name="destination-province"]'), (typeof(destination_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="destination-province"]'), destination_province != null);
 
 				var destination_city = $(this).find('select[data-name="destination-city"]').val();
-				result &= validate($(this).find('select[data-name="destination-city"]'), (typeof(destination_city) != "undefined"));		
+				result &= validate($(this).find('select[data-name="destination-city"]'), destination_city != null);		
 
 				if (Boolean(result)) {
 					var tmp = new Object();

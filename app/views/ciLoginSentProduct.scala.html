@@ -44,13 +44,15 @@
         function contactNameChange(product_id) {
             var tmp = $('select[data-name="contact-name-' + product_id + '"]');
             var t = tmp.val();
-            tmp.find('option[data-ct-name="' + t + '"]').attr("selected", true);
+            var other = $('select[data-name="contact-phone-' + product_id + '"]');
+            other.find('option[data-ct-name="' + t + '"]').attr("selected", true);
         }
 
         function contactPhoneChange(product_id) {
             var tmp = $('select[data-name="contact-phone-' + product_id + '"]');
             var t = tmp.val();
-            tmp.find('option[data-ct-phone="' + t + '"]').attr("selected", true);
+            var other = $('select[data-name="contact-name-' + product_id + '"]');
+            other.find('option[data-ct-phone="' + t + '"]').attr("selected", true);
         }
 
         function validate(ele, result, name) {
@@ -95,7 +97,7 @@
             var origin_address = $('textarea[data-name="origin-address-' + product_id + '"]').val();
 
             result &= validate($('div[data-name="origin"]'), 
-                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined) && hasInput(origin_address),
+                        (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined),// && hasInput(origin_address),
                         'div[data-name="origin-error-' + product_id + '"]');
 
 
@@ -105,7 +107,7 @@
             var destination_address = $('textarea[data-name="destination-address-' + product_id + '"]').val();
 
             result &= validate($('div[data-name="destination"]'), 
-                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined) && hasInput(destination_address),
+                        (destination_province != undefined) && (destination_city != undefined) && (destination_district != undefined),// && hasInput(destination_address),
                         'div[data-name="destination-error-' + product_id + '"]');
 
 
@@ -168,6 +170,7 @@
                 notes = "";
             }
 
+            var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
             var contact_name = "";
             var contact_phone = "";
             var contact_save = 0;
@@ -184,9 +187,9 @@
                 contact_save = 0;
             }
 
-            // result &= validate($('div[data-name="contact-container"]'),
-            //             hasInput(contact_name) && hasInput(contact_phone),
-            //             'div[data-name="contact-error-' product_id + '"]');
+            result &= validate($('div[data-name="contact-container"]'),
+                        hasInput(contact_name) && hasInput(contact_phone) && cell_phone_reg.test(contact_phone),
+                        'div[data-name="contact-error-' + product_id + '"]');
 
             if (result) {
                 var query_object = new Object();
@@ -275,6 +278,33 @@
                     if (data.status == "ok") {                                          
                     //     alert("注册成功审核！");
                          alert("交易完成");
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function deleteProduct(product_id) {
+            var query_object = new Object();
+
+            query_object['product_id'] = product_id;
+
+            $.ajax({
+                url: "/data/company/product/pop",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                    //     alert("注册成功审核！");
+                         alert("删除成功");
                          location.reload();
                     } else {
                         alert(data.error.message);

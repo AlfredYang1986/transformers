@@ -125,7 +125,7 @@
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else if (province.equals((p \ "province").asOpt[String].get)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                         } else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                         }
@@ -159,7 +159,7 @@
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else if (province.equals((p \ "province").asOpt[String].get)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                         } else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                         }
@@ -256,7 +256,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">公司官网</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" data-name="web" value=@{(spc \ "special_web").asOpt[String].get} />
+                                        <input type="text" class="form-control" data-name="web" value=@{(spc \ "special_web").asOpt[String].get} >
                                     </div>
                                 </div>
 
@@ -275,7 +275,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">公司传真</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" data-name="fax" value=@{(spc \ "special_fax").asOpt[String].get} />
+                                        <input type="text" class="form-control" data-name="fax" value=@{(spc \ "special_fax").asOpt[String].get} >
                                     </div>
                                 </div>
 
@@ -294,7 +294,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">公司邮箱</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" data-name="email" value=@{(spc \ "special_email").asOpt[String].get} />
+                                        <input type="text" class="form-control" data-name="email" value=@{(spc \ "special_email").asOpt[String].get} >
                                     </div>
                                 </div>
 
@@ -313,14 +313,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">公司介绍</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" data-name="description" value=@{(spc \ "description").asOpt[String].get} />
+                                        <input type="text" class="form-control" data-name="description" value=@{(spc \ "description").asOpt[String].get} >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">负责人</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" data-name="cell-phone-owner" value=@{(spc \ "cell_phone_owner").asOpt[String].get} />
+                                        <input type="text" class="form-control" data-name="cell-phone-owner" value=@{(spc \ "cell_phone_owner").asOpt[String].get} >
                                     </div>
                                 </div>
 
@@ -341,7 +341,7 @@
                                     <div class="col-sm-8">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" data-name="cell-phone" value=@{(spc \ "cell_phone").asOpt[String].get} />
+                                                <input type="text" class="form-control" data-name="cell-phone" value=@{(spc \ "cell_phone").asOpt[String].get} >
                                             </div>
                                         </div>
 

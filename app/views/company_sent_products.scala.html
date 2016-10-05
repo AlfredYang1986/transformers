@@ -33,7 +33,9 @@
                 <div class="col-sm-2" style="font-size:15px">
                     <label>
                         {
-                            (iter \ "product_name").asOpt[String].get
+                            (iter \ "product_name").asOpt[String].get + "/" + 
+                            (iter \ "vehicle").asOpt[List[String]].get.head + "/" +
+                            "%.1f".format((iter \ "vehicle_length").asOpt[List[Float]].get.head) + "米"
                         }
                     </label>
                 </div>
@@ -88,7 +90,7 @@
                                             </select>   
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"origin-district-" + product_id} >
+                                            <select class="form-control" data-name={"origin-district-" + product_id} data-index="2">
                                                 @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -121,7 +123,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"destination-province-" + product_id} data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"destination-province-" + product_id} data-index="3" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => 
                                                     if ({(p \ "province").asOpt[String].get}.equals((iter \ "destination" \ "province").asOpt[String].get)) {
                                                         <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -132,7 +134,7 @@
                                             </select>   
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"destination-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"destination-city-" + product_id} data-index="4" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                     if (x.equals((iter \ "destination" \ "city").asOpt[String].get)) {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -143,7 +145,7 @@
                                             </select>   
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"destination-district-" + product_id} >
+                                            <select class="form-control" data-name={"destination-district-" + product_id} data-index="5">
                                                 @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -166,7 +168,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"storage-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"storage-province-" + product_id} data-index="6" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => 
                                                     if ((p \ "province").asOpt[String].get.equals((iter \ "storage" \ "province").asOpt[String].get)) {
                                                         <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -177,7 +179,7 @@
                                             </select> 
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"storage-city-" + product_id} data-index="3" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"storage-city-" + product_id} data-index="7" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                     if (x.equals((iter \ "storage" \ "city").asOpt[String].get)) {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -188,7 +190,7 @@
                                             </select>    
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"storage-district-" + product_id} >
+                                            <select class="form-control" data-name={"storage-district-" + product_id} data-index="8">
                                                 @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
@@ -354,7 +356,7 @@
 
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
+                                                <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(\"" + product_id + "\")"} >
                                                     <optgroup label="常用联系人">
                                                     @{ contacts map { iter =>
                                                         <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
@@ -372,7 +374,7 @@
 
                                         <div class="row">
                                             <div class="col-sm-8">
-                                                <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
+                                                <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(\"" + product_id + "\")"}>
                                                     <optgroup label="常用联系人电话">
                                                         @{ contacts map { iter =>
                                                             <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
@@ -429,7 +431,7 @@
                                     <button class="form-control" style="border: 1px solid #008bdc" onclick={"completProduct(\"" + product_id + "\")"}>交易完成</button>
                                 </div>
                                 <div class="col-sm-3">
-                                    <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                    <button class="form-control" style="border: none; color:#848484;" onclick={"deleteProduct(\"" + product_id + "\")"}><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
                                 </div>
                             </div>
 
