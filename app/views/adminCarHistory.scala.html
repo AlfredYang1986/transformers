@@ -1,3 +1,5 @@
+@(token : String)(cars : List[play.api.libs.json.JsValue])
+
 @admin_main("平台福利车历史记录") {
     
 } {
@@ -27,13 +29,35 @@
                                     <input type="text" id="datepicker_start">
                                 </div>
 
+                                <div class="form-group" style="display: none;" data-name='start-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写有效的起始时间
+                                        </div>
+                                    </div>
+                                </div> 
+
                                 <label class="col-sm-2 control-label">终止时间选择</label>
                                 <div class="col-sm-2" style="padding-right: 0px !important">
                                     <input type="text" id="datepicker_end">
                                 </div>
 
+                                <div class="form-group" style="display: none;" data-name='end-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请填写有效的起始时间
+                                        </div>
+                                    </div>
+                                </div> 
+
                                 <div class="col-sm-3 col-sm-offset-1" style="padding-right: 0px !important">
-                                    <button id="" class="btn btn-default col-sm-3 car-send-btn" >搜索</button>
+                                    <button id="" class="btn btn-default col-sm-3 car-send-btn" onclick="startSearch()">搜索</button>
                                 </div>
                             </div>
 
@@ -50,80 +74,8 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
-                               
-                                    <tr class="odd gradeX">
-                                        <td>
-                                        2016年6月6日
-                                        </td>
-                                        <td>
-                                        满载
-                                        </td>
-                                        <td>
-                                            <button id="show_detail" class="btn btn-default car-send-btn" >查看</button>
-                                        </td>
-                                    </tr>
-
-                                    <tr id="car_info" class="gradeX" style="display: none">
-                                        
-                                            <td>
-                                                <div class="container">
-                                                    <div class="form-horizontal" role="form">
-
-                                                        <div class="form-group">
-                                                            <label for="company-name" class="col-sm-1 control-label">行驶路线</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="business-license" class="col-sm-1 control-label">发车时间</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="legal-person" class="col-sm-1 control-label">车型</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="legal-person-id" class="col-sm-1 control-label">车长</label>
-
-                                                        </div>            
-
-                                                        <div class="form-group">
-                                                            <label for="road-license" class="col-sm-1 control-label">吨位</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="road-license" class="col-sm-1 control-label">方数</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="road-license" class="col-sm-1 control-label">其它备注</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="road-license" class="col-sm-1 control-label">预约电话</label>
-                                                            <label for="road-license" class="col-sm-8 control-label">400-0000-0000</label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                            </td>
-
-                                     <td>
-                                        </td>
-
-                                        <td>
-                                            <button id="hide_detail" class="btn btn-default car-send-btn">收起</button>
-                                        </td>
-                                    </tr>
-
-                                    
+                                <tbody data-name="result-container">
+                                @admin_car_search_result(cars)(false)
                                 </tbody>
                             </table>
                         </div>
@@ -144,12 +96,67 @@
             $("#datepicker_end").datepicker();
         });
 
-        $("#hide_detail").click(function(){
-            $("#car_info").hide(500);
-        });
-        $("#show_detail").click(function(){
-            $("#car_info").show(500);
-        });
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function showContent(pl_id) {
+            $('#view-details-' + pl_id).show('fast');
+        }
+
+        function hideContent(pl_id) {
+            $('#view-details-' + pl_id).hide('fast');   
+        }
+
+        function startSearch() {
+            var result = true;
+
+            var start = $('#datepicker_start').val();
+            result &= validate($('#datepicker_start'), hasInput(start), 'div[data-name="start-error"]');
+
+            var end = $('#datepicker_end').val();
+            result &= validate($('#datepicker_end'), hasInput(end), 'div[data-name="end-error"]');
+
+            if (result) {
+                var query_object = new Object();
+
+                var date = new Object();
+                date['min'] = start;
+                date['max'] = end;
+
+                query_object['date'] = date;
+
+                $.ajax({
+                    url: "/admin/platform/query/html",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $("tr[data-name='car-result']").remove();
+                        $("tbody[data-name='result-container']").add(data).appendTo($("tbody[data-name='result-container']"));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 
     </script>
 }

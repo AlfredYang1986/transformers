@@ -54,6 +54,7 @@ object PlatformLinesModule {
             
             builder += "weight" -> (data \ "weight").asOpt[Float].map (x => x).getOrElse(throw new Exception("wrong input"))
             builder += "volume" -> (data \ "volume").asOpt[Float].map (x => x).getOrElse(throw new Exception("wrong input"))
+            builder += "notes" -> (data \ "notes").asOpt[String].map (x => x).getOrElse("")
           
             (data \ "date_str").asOpt[String].map { x =>
                 val sdf = new java.text.SimpleDateFormat("MM/dd/yyyy")
@@ -89,11 +90,27 @@ object PlatformLinesModule {
     }
     
     def platformLineUpdate(data : JsValue) : JsValue = {
-        null
+        try {
+            val pl_id = (data \ "pl_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            
+            ((from db() in "platformlines" where ("pl_id" -> pl_id) select (x => x)).toList) match {
+              case head :: Nil => {
+                  (data \ "status").asOpt[Int].map { x =>
+                      head += "status" -> x.asInstanceOf[Number]
+                  }.getOrElse(Unit)
+                 
+                  _data_connection.getCollection("platformlines").update(DBObject("pl_id" -> pl_id), head)
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson(DB2JsValue(head))))
+              }
+              case _ => throw new Exception("not existing")
+            }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
     }
     
     def platformLineQuery(data : JsValue) : JsValue = {
-        def basicCondition = "status" $gte registerTypes.company.t
+        def basicCondition = "status" $gte lineStatus.pushed.t
       
         def conditionsAcc(o : DBObject, key : String, value : Any) : DBObject = {
             key match {
@@ -125,8 +142,9 @@ object PlatformLinesModule {
               }
               case "date" => {
                   val dt = value.asInstanceOf[JsValue]
-                  val min = (dt \ "min").asOpt[Float].get
-                  val max = (dt \ "max").asOpt[Float].get
+                  val sdf = new java.text.SimpleDateFormat("MM/dd/yyyy")
+                  val min = sdf.parse((dt \ "min").asOpt[String].get).getTime
+                  val max = sdf.parse((dt \ "max").asOpt[String].get).getTime
                   
                   $and(o, $and("date" $gte min, "date" $lte max))
               }
@@ -165,7 +183,7 @@ object PlatformLinesModule {
         val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
         
         toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-            ((from db() in "user_profile" where conditions).selectSkipTop(skip)(take)(orderCol) 
+            ((from db() in "platformlines" where conditions).selectSkipTop(skip)(take)(orderCol) 
                 (DB2JsValue(_))).toList)))
     }
     
@@ -183,10 +201,12 @@ object PlatformLinesModule {
         }.getOrElse(throw new Exception("not exising"))
         
         toJson(Map("pl_id" -> toJson(x.getAs[String]("pl_id").get),
+                   "notes" -> toJson(x.getAs[String]("notes").map (x => x).getOrElse("")),
                    "weight" -> toJson(x.getAs[Number]("weight").get.floatValue),
                    "volume" -> toJson(x.getAs[Number]("volume").get.floatValue),
+                   "status" -> toJson(x.getAs[Number]("status").get.intValue),
                    "vehicle" -> toJson(x.getAs[List[String]]("vehicle").get),
-                   "vehicle_length" -> toJson(x.getAs[List[Float]]("vehicle_length").get),
+                   "vehicle_length" -> toJson(x.getAs[List[Double]]("vehicle_length")),
                    "line" -> line,
                    "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
                                         "month" -> (date.get(Calendar.MONTH) + 1),

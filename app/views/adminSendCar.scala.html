@@ -341,10 +341,13 @@
             var volume = $('input[data-name="volume"]').val();
             result &= validate($('input[data-name="volume"]'), hasInput(volume), 'div[data-name="volume-error"]');
 
+            var notes = $('textarea[data-name="notes"]').val();
+
             if (result) {
                 query_object['volume'] = Number(volume);
                 query_object['weight'] = Number(weight);
                 query_object['date_str'] = date;
+                query_object['notes'] = notes;
 
                 $.ajax({
                     url: "/admin/platform/push",

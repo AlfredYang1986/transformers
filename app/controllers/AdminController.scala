@@ -128,27 +128,49 @@ object AdminController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-//            val company = AuthModule.queryInstanceWithToken(token)
-
-//            val open_id = (company \ "open_id").asOpt[String].get
-//            val name = (company \ "company_name").asOpt[String].get
-
             val vc = ConfigModule.configAllVehicles
            
             if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) {
-//              val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
               Ok(views.html.adminSendCar(token)(vc)(xmlOpt.allCities))
             }
             else Redirect("/index")
         }
     }
 
-    def adminHaveSentCar = Action {
-        Ok(views.html.adminHaveSentCar())
+    def adminHaveSentCar(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val vc = ConfigModule.configAllVehicles
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) {
+                val cars = (PlatformLinesModule.platformLineQuery(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.adminHaveSentCar(token)(cars))
+            }
+            else Redirect("/index")
+        }
     }
 
-    def adminCarHistory = Action {
-        Ok(views.html.adminCarHistory())
+    def adminCarHistory(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val vc = ConfigModule.configAllVehicles
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) {
+                val cars = (PlatformLinesModule.platformLineQuery(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.adminCarHistory(token)(cars))
+            }
+            else Redirect("/index")
+        }
     }
 
     def adminSetting = Action {
@@ -159,4 +181,16 @@ object AdminController extends Controller {
     def adminPlatformPop = Action (request => requestArgs(request)(PlatformLinesModule.platformLinePop))
     def adminPlatformUpdate = Action (request => requestArgs(request)(PlatformLinesModule.platformLineUpdate))
     def adminPlatformQuery = Action (request => requestArgs(request)(PlatformLinesModule.platformLineQuery))
+
+//    def adminPlatformQueryHtml(t : String) = Action { request => 
+    def adminPlatformQueryHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val result = (PlatformLinesModule.platformLineQuery(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.admin_car_search_result(result)(false))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  	 
+    }
 }

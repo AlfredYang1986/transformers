@@ -1,0 +1,138 @@
+@(cars : List[play.api.libs.json.JsValue])(control : Boolean)
+
+@{cars map { iter => 
+    val pl_id = (iter \ "pl_id").asOpt[String].get
+    <tr class="odd gradeX" data-name="car-result">
+        <td>
+        {
+            (iter \ "date" \ "year").asOpt[Int].get + "年" +
+            (iter \ "date" \ "month").asOpt[Int].get + "月" +
+            (iter \ "date" \ "day").asOpt[Int].get + "日"
+        }
+        </td>
+        <td>
+        {
+            if ((iter \ "status").asOpt[Int].get == 0) "可预约"
+            else "已满载"
+        }
+        </td>
+        <td>
+            <button onclick={"showContent(\"" + pl_id + "\")"} class="btn btn-default">查看</button>
+        </td>
+    </tr>
+    
+    <tr id={"view-details-" + pl_id} class="gradeX" style="display: none">
+        <td>
+            <div class="">
+                <div class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label for="business-license" class="col-sm-2 control-label">行驶路线</label>
+                        <div class="col-sm-6">
+                            <label type="text" >
+                            {
+                                (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
+                                (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
+                                (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
+                                (iter \ "line" \ "destination_city").asOpt[String].get
+                            }
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="road-license" class="col-sm-2 control-label">发车时间</label>
+                        <div class="col-sm-6">
+                            <label type="text" class="control-label" >
+                            {
+                                (iter \ "date" \ "year").asOpt[Int].get + "年" +
+                                (iter \ "date" \ "month").asOpt[Int].get + "月" +
+                                (iter \ "date" \ "day").asOpt[Int].get + "日"
+                            }
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="legal-person" class="col-sm-2 control-label">车型</label>
+                        <div class="col-sm-6">
+                            <label type="text" class="control-label">
+                            {
+                                var str = ""
+                                (iter \ "vehicle").asOpt[List[String]].get foreach { x => 
+                                    str += x + "/"
+                                }
+                                str.substring(0, str.length - 1)
+                            }
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="legal-person-id" class="col-sm-2 control-label">车长</label>
+                        <div class="col-sm-6">
+                            <label type="text" class="control-label">
+                            {
+                                var str = ""
+                                (iter \ "vehicle_length").asOpt[List[Double]].get foreach { x => 
+                                    str += "%.1f".format(x) + "米/"
+                                }
+                                str.substring(0, str.length - 1)
+                            }
+                            </label>
+                        </div>
+                    </div>            
+
+                    <div class="form-group">
+                        <label for="company-reg-address" class="col-sm-2 control-label">吨位</label>
+                        <div class="col-sm-6">
+                            <lbael type="text" class="control-label">
+                            {
+                                "%.1f元/吨".format((iter \ "weight").asOpt[Float].get)
+                            }
+                            </lbael>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company-reg-address" class="col-sm-2 control-label">体积</label>
+                        <div class="col-sm-6">
+                            <lbael type="text" class="control-label">
+                            {
+                                "%.1f元/立方".format((iter \ "volume").asOpt[Float].get)
+                            }
+                            </lbael>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="company-reg-address" class="col-sm-2 control-label">其他备注</label>
+                        <div class="col-sm-6">
+                            <lbael type="text" class="control-label" >
+                            {
+                                (iter \ "notes").asOpt[String].get
+                            }
+                            </lbael>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company-reg-address" class="col-sm-2 control-label">预约电话</label>
+                        <div class="col-sm-6">
+                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">400-016-1956</lbael>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+        </td>
+        <td>
+            { if(control) {
+                <button onclick={"fullCar(\"" + pl_id + "\")"}  class="btn btn-default">满载</button><br/>
+            }}
+            <button onclick={"hideContent(\"" + pl_id + "\")"} class="btn btn-default" >收起</button>
+        </td>
+    </tr>
+}}

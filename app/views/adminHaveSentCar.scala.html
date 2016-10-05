@@ -1,3 +1,5 @@
+@(token : String)(cars : List[play.api.libs.json.JsValue])
+
 @admin_main("Admin") {
     
 } {
@@ -26,92 +28,8 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
-                                    <tr class="odd gradeX">
-                                        <td>2016年6月6日</td>
-                                        <td>可预约</td>
-                                        <td>
-                                            <button id="show-details-btn" class="btn btn-default">查看</button>
-                                        </td>
-                                    </tr>
-                                    <!--View Detail Show&Hide-->
-                                    <tr id="view-details" class="gradeX" style="display: none">
-                                        
-                                        <td>
-                                            <div class="container">
-                                                <form class="form-horizontal" role="form">
-
-                                                    <div class="form-group">
-                                                        <label for="business-license" class="col-sm-2 control-label">行驶路线</label>
-                                                        <div class="col-sm-10 business-license-btn">
-                                                            <label type="button" class="btn" data-toggle="modal" data-target="#business-image"></label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="road-license" class="col-sm-2 control-label">发车时间</label>
-                                                        <div class="col-sm-10 road-license-btn">
-                                                            <label type="button" class="btn" data-toggle="modal" data-target="#road-license">照片</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="legal-person" class="col-sm-2 control-label">车型</label>
-                                                        <div class="col-sm-10">
-                                                            <label type="text" class="control-label" data-name='legal-person'>data</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="legal-person-id" class="col-sm-2 control-label">车长</label>
-                                                        <div class="col-sm-10">
-                                                            <label type="text" class="control-label" data-name='legal-person-id'>data</label>
-                                                        </div>
-                                                    </div>            
-
-                                                    <div class="form-group">
-                                                        <label for="company-reg-address" class="col-sm-2 control-label">吨位</label>
-                                                        <div class="col-sm-10">
-                                                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">data</lbael>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="company-reg-address" class="col-sm-2 control-label">体积</label>
-                                                        <div class="col-sm-10">
-                                                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">data</lbael>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="form-group">
-                                                        <label for="company-reg-address" class="col-sm-2 control-label">其他备注</label>
-                                                        <div class="col-sm-10">
-                                                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">data</lbael>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="company-reg-address" class="col-sm-2 control-label">预约电话</label>
-                                                        <div class="col-sm-10">
-                                                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">400-016-1956</lbael>
-                                                        </div>
-                                                    </div>
-
-                                                </form>
-                                            </div>
-
-                                        </td>
-                                        <td>
-                                            
-                                        </td>
-
-                                        <td>
-                                            <button id="" class="btn btn-default">满载</button></br></br>
-                                            <button class="btn btn-default" id="hide-details-btn">收起</button>
-                                        </td>
-                                    </tr>
-
+                                <tbody data-name="result-container">
+                                @admin_car_search_result(cars)(true)
                                 </tbody>
                             </table>
                         </div>
@@ -131,16 +49,38 @@
 
         });
 
+        function showContent(pl_id) {
+            $('#view-details-' + pl_id).show('fast');
+        }
 
-        $( "#show-details-btn" ).click(function() {
-            $( "#view-details" ).first().show( "fast", function showNext() {
-                $( this ).next( "#view-details" ).show( "fast", showNext );
+        function hideContent(pl_id) {
+            $('#view-details-' + pl_id).hide('fast');   
+        }
+
+        function fullCar(pl_id) {
+
+            var query_object = new Object();
+            query_object['pl_id'] = pl_id;
+            query_object['status'] = 1;
+
+            $.ajax({
+                url: "/admin/platform/update",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         location.reload();
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
             });
-        });
-
-        $( "#hide-details-btn" ).click(function() {
-            $( "#view-details" ).hide(250);
-        });
-
+        }
     </script>
 }
