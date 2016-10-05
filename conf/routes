@@ -39,11 +39,16 @@ GET		/admin/sent/car/:t  											controllers.AdminController.adminHaveSentCar
 GET		/admin/sent/car  												controllers.AdminController.adminHaveSentCar(t="")
 GET		/admin/car/history/:t											controllers.AdminController.adminCarHistory(t)
 GET		/admin/car/history												controllers.AdminController.adminCarHistory(t="")
-GET 	/admin/setting													controllers.AdminController.adminSetting
+GET 	/admin/setting/:t												controllers.AdminController.adminSetting(t)
+GET 	/admin/setting													controllers.AdminController.adminSetting(t="")
 
 POST	/admin/platform/push											controllers.AdminController.adminPlatformPush
 POST	/admin/platform/query											controllers.AdminController.adminPlatformQuery
 POST	/admin/platform/update											controllers.AdminController.adminPlatformUpdate
+
+POST	/admin/pwd/reset												controllers.AdminController.adminPwdReset
+POST	/admin/sub/delete												controllers.AdminController.adminPopSub
+POST	/admin/sub/push													controllers.AdminController.adminPushSub
 
 POST	/admin/platform/query/html										controllers.AdminController.adminPlatformQueryHtml
 

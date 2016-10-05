@@ -47,8 +47,9 @@ object authTypes {  // auth  indicate which account
     case object speicalwayMaster extends authTypeDefines(22, "speical master")
     
     case object adminBase extends authTypeDefines(100, "admin base")
-    case object admin extends authTypeDefines(101, "admin")
-    case object adminMaster extends authTypeDefines(102, "admin master")
+    case object adminAdjusted extends authTypeDefines(101, "adminAdjusted")
+    case object adminSendCar extends authTypeDefines(102, "adminSendCar")
+    case object adminMaster extends authTypeDefines(110, "admin master")
 }
 
 sealed abstract class authTypeDefines(val t : Int, val des : String)
@@ -93,13 +94,13 @@ object AuthModule {
         try {
             val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
    
-            val indicate = if (company_type == registerTypes.driver.t) (data \ "phone_no").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
-                           else (data \ (company_type match {
-                                    case registerTypes.company.t => "company_email"
-                                    case registerTypes.industry.t => "industry_email"
-                                    case registerTypes.specialway.t => "special_email"
-                                })).asOpt[String].map (x => x).getOrElse(throw new Exception("wrong email"))
-
+            val indicate = company_type match {
+              case registerTypes.driver.t => (data \ "phone_no").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
+              case registerTypes.company.t | registerTypes.industry.t | registerTypes.specialway.t => 
+                    (data \ "cell_phone").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
+              case registerTypes.admin.t => 
+                    (data \ "phone").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
+            }
             
             (from db() in "user_profile" where ("user_lst.indicate" -> indicate) select (x => x)).toList match {
                 case Nil => toJson(Map("status" -> "ok", "result"-> "success"))
@@ -382,6 +383,7 @@ object AuthModule {
         user_lst map { x => 
             toJson(Map("screen_name" -> toJson(x.getAs[String]("screen_name").get),
                        "user_id" -> toJson(x.getAs[String]("user_id").get),
+                       "token" -> toJson(x.getAs[String]("token").get),
                        "social_id" -> toJson(x.getAs[String]("social_id").map (y => y).getOrElse("")),
                        "auth" -> toJson(x.getAs[Number]("auth").map (y => y.intValue).getOrElse(0)),
                        "phone" -> toJson(x.getAs[String]("indicate").map (y => y).getOrElse(""))))}
@@ -392,7 +394,13 @@ object AuthModule {
             val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
             val indicate = (data \ "phone").asOpt[String].map(x => x).getOrElse(throw new Exception("wrong input"))
             val name = (data \ "screen_name").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
-        
+       
+            val validate = indicateValidateCheck(toJson(Map("company_type" -> toJson(-1), "phone" -> toJson(indicate))))
+            (validate \ "status").asOpt[String].map { x => x match { 
+              case "ok" => Unit 
+              case _ => throw new Exception("duplicate phone or email")
+            }}
+            
             (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
               case head :: Nil => {
                  val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
@@ -404,7 +412,7 @@ object AuthModule {
                        builder += "user_id" -> user_id
                        builder += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
                        builder += "screen_name" -> name
-                       builder += "auth" -> authTypes.companyOthers.t
+                       builder += "auth" -> (data \ "auth").asOpt[Int].map (y => y).getOrElse(authTypes.companyOthers.t)
                        builder += "pwd" -> (data \ "pwd").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
                        builder += "social_id" -> (data \ "social_id").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
                        
@@ -680,6 +688,14 @@ object AuthModule {
                   case head :: Nil => toJson(detailResult(head))
                   case _ => ???
         }
+    
+    def queryAdminOpenIdWithToken(token : String) : String = 
+        (from db() in "user_profile" where ("user_lst.token" -> token)
+            select (x => x)).toList match { 
+                  case Nil => ???
+                  case head :: Nil => head.getAs[String]("open_id").get
+                  case _ => ???
+        }
         
     def sendCode(data : JsValue) : JsValue = {
         val phoneNo = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse("")
@@ -821,6 +837,33 @@ object AuthModule {
               }
               case _ => throw new Exception("wrong input")
             }
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
+    }
+   
+    def updateAdminPwd(data : JsValue) : JsValue = {
+        try {
+            val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val user_id = (data \ "user_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val old = (data \ "old").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            val pwd = (data \ "pwd").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            (from db() in "user_profile" where ("open_id" -> open_id) select (x => x)).toList match {
+              case head :: Nil => {
+                  val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                  val user = user_lst.filter (x => user_id.equals(x.get("user_id"))).head
+                  
+                  if (old.equals(user.get("pwd"))) user += "pwd" -> pwd
+                  else throw new Exception("wrong input")
+                  head += "user_lst" -> (user :: (user_lst.filterNot (x => user_id.equals(x.get("user_id")))))
+                  
+                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson("success")))
+              }
+              case Nil => throw new Exception("email not exist")
+              case _ => throw new Exception("email not exist") 
+            }
+        
         } catch {
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }

@@ -1,4 +1,6 @@
-@admin_main("分账号管理") {
+@(token : String)(open_id : String)(auth : Int)(user_lst : List[play.api.libs.json.JsValue])
+
+@admin_main("分账号管理")(auth) {
     
 } {
 
@@ -20,162 +22,98 @@
                                 <thead>
                                     <tr>
                                         <th>运营者姓名</th>
-                                        <th>手机授权账号信息</th>
-                                        <th><button class="btn btn-default car-send-btn" data-toggle="modal" data-target="#additional-account">添加分账号</button></th>
+                                        <!-- <th>手机授权账号信息</th> -->
+
+                                        <th>
+                                        @{auth match {
+                                            case 110 => <button class="btn btn-default car-send-btn" data-toggle="modal" data-target="#additional-account">添加分账号</button>
+                                            case _ => ""
+                                        }}
+                                        </th>
                                     </tr>
                                 </thead>
 
-        <!-- Home Page User Login dialog -->
-        <div class="modal fade" id="additional-account" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header home-login-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
-                    </button>
-                    <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
-                    <h3 class="modal-title home-login-title" id="myModalLabel">                 
-                        分账号添加
-                    </h3>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label class="control-label">手机号码</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" data-name="indicate">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label class="control-label">身份证号码</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" data-name="indicate">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label class="control-label">输入新密码</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" data-name="indicate">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label class="control-label">再次输入密码</label>
-                            </div>
-                            <div class="col-sm-8">
-                                <input type="email" class="form-control" data-name="indicate">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-3">
-                                <label class="control-label">权限</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="radio">
-                                    <label>
-                                        <input data-name="pwd-save" type="radio"> 审核员
-                                    </label>
-                                </div>
-                                                            
-                            </div>
-
-                            <div class="col-sm-4 col-sm-offset-1">
-                                <div class="radio">
-                                    <label>
-                                        <input data-name="pwd-save" type="radio"> 福利车调度员
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                        <div style="text-align:center;">
-                        <button class="btn btn-default col-sm-offset-3 col-sm-8" style="font-size: 15px; background-color: none !important; background-image: none !important; border: 1px solid #008bdc">
-                            添&nbsp;&nbsp;&nbsp;加
-                        </button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-        </div>
-
-
-                                <tbody>
-                               
+                                <tbody data-name="result-container">
+                                @{user_lst map { iter => 
+                                    val user_id = (iter \ "user_id").asOpt[String].get
+                                    val auth = (iter \ "auth").asOpt[Int].get
                                     <tr class="odd gradeX">
                                         <td>
-                                        主账号不可删除
+                                        {
+                                            (iter \ "screen_name").asOpt[String].get
+                                        }
                                         </td>
+
                                         <td>
-                                        13857102787
-                                        </td>
-                                        <td>
-                                            <button id="show_detail" class="btn btn-default car-send-btn" >设置信息</button>
+                                            <button onclick={"showDetail(\"" + user_id + "\")"} class="btn btn-default car-send-btn" >设置信息</button>
                                         </td>
                                     </tr>
 
-                                    <tr id="car_info" class="gradeX" style="display: none">
+                                    <tr id={"user-info-" + user_id} class="gradeX" style="display: none">
                                         
-                                            <td>
-                                                <div class="container">
-                                                    <div class="form-horizontal" role="form">
+                                        <td>
+                                            <div>
+                                                <div class="form-horizontal" role="form">
 
-                                                        <div class="form-group">
-                                                            <label for="company-name" class="col-sm-2 control-label">身份证号码</label>
-
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="business-license" class="col-sm-2 control-label">输入原始密码</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="legal-person" class="col-sm-2 control-label">输入新密码</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="legal-person-id" class="col-sm-2 control-label">再次输入新密码</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="password" disabled  class="form-control" id="inputPassword3">
-                                                            </div>
-                                                        </div>            
-
+                                                    <div class="form-group">
+                                                        <label for="business-license" class="col-sm-2 control-label">授权手机号码</label>
+                                                        {
+                                                            auth match {
+                                                                case 110 => {
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text"  disabled="" class="form-control" value="超级管理员不需要授权手机" />
+                                                                    </div>
+                                                                }
+                                                                case _ => {
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" disabled="" class="form-control" value={(iter \ "phone").asOpt[String].get} />
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                     </div>
+
+                                                    <div class="form-group">
+                                                        <label for="business-license" class="col-sm-2 control-label">输入原始密码</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="password" data-name={"old-" + user_id} class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person" class="col-sm-2 control-label">输入新密码</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="password" data-name={"new1-" + user_id} class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="legal-person-id" class="col-sm-2 control-label">再次输入新密码</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="password" data-name={"new2-" + user_id} class="form-control" />
+                                                        </div>
+                                                    </div>            
+
                                                 </div>
-
-                                            </td>
-
-                                     <td>
+                                            </div>
                                         </td>
 
                                         <td>
-                                            <button id="modify-btn" class="btn btn-default car-send-btn">修改</button><br/><br/>
-                                            <button id="save-btn" disabled="true" class="btn btn-default car-send-btn">保存</button><br/><br/>
-                                            <button id="delete-btn" class="btn btn-default car-send-btn">删除</button><br/><br/>
-                                            <button id="hide_detail" class="btn btn-default car-send-btn">收起</button>
+                                            <button onclick={"changePwd(\"" + user_id + "\")"} class="btn btn-default car-send-btn">修改密码</button><br/>
+
+                                            {auth match {
+                                                case 110 => ""
+                                                case _ => {
+                                                    <button onclick={"deleteUser(\"" + user_id + "\")"} class="btn btn-default car-send-btn">删除</button><br/>
+                                                }
+                                            }}
+                                            
+                                            <button onclick={"hideDetail(\"" + user_id + "\")"} class="btn btn-default car-send-btn">收起</button>
                                         </td>
                                     </tr>
 
-                                    
+                                }}
                                 </tbody>
                             </table>
                         </div>
@@ -186,31 +124,263 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        
+        <!-- Home Page User Login dialog -->
+        <div class="modal fade" id="additional-account" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header home-login-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i><img src="@routes.Assets.at("images/homePage/register-close-icon.png")"></i>
+                        </button>
+                        <img class="home-login-icon" src="@routes.Assets.at("images/homeLogin/logo.png")">
+                        <h3 class="modal-title home-login-title" id="myModalLabel">                 
+                            分账号添加
+                        </h3>
+                    </div>
 
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="control-label">用户名称</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-name="screen-name">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='screen-name-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        用户名必须为中文
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="control-label">手机号码</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-name="phone-input" placeholder="用于登录" >
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='phone-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请输入有效的手机号码
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="control-label">输入新密码</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" data-name="pwd">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="control-label">再次输入密码</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" data-name="pwd2">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        没有输入有效的密码或者两次输入的密码不一致
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label class="control-label">权限</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio">
+                                        <label>
+                                            <input data-name="pwd-save" name="power" type="radio" value="101"> 审核员
+                                        </label>
+                                    </div>
+                                                                
+                                </div>
+
+                                <div class="col-sm-4 col-sm-offset-1">
+                                    <div class="radio">
+                                        <label>
+                                            <input data-name="pwd-save" name="power" type="radio" value="102"> 福利车调度员
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='pwd-save-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请选择权限分级
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div style="text-align:center;">
+                                    <button class="btn btn-default col-sm-offset-3 col-sm-8" style="font-size: 15px; background-color: none !important; background-image: none !important; border: 1px solid #008bdc" onclick="pushSubAdmin()">
+                                        添&nbsp;&nbsp;&nbsp;加
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
     </div>
     <!-- /#page-wrapper -->
 } {
     <script type="text/javascript">
         $(function(){
             
-
         });
 
-    $("#hide_detail").click(function(){
-        $("#car_info").hide(500);
-    });
-    $("#show_detail").click(function(){
-        $("#car_info").show(500);
-    });
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
 
-    $("#modify-btn").click(function(){
-        $("#save-btn").attr("disabled", false);
-        this.prop("disabled", true);
-    });
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
 
-    $("#save-btn").click(function(){
-        this.prop("disabled", true);
-    });
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
 
+            return result;
+        }
+
+        function showDetail(user_id) {
+            $('#user-info-' + user_id).show();
+        }
+
+        function hideDetail(user_id) {
+            $('#user-info-' + user_id).hide();
+        }
+
+        function deleteUser(user_id) {
+
+        }
+
+        function changePwd(user_id) {
+            var old = $('input[data-name="old-' + user_id + '"]').val();
+            var new1 = $('input[data-name="new1-' + user_id + '"]').val();
+            var new2 = $('input[data-name="new2-' + user_id + '"]').val();
+
+            if (new1 != new2) {
+                alert("新密码输入不一致");
+            } else {
+
+                var query_object = new Object();
+                query_object["old"] = old;
+                query_object["pwd"] = new1;
+                query_object["user_id"] = user_id;
+                query_object["open_id"] = "@{open_id}";
+
+                $.ajax({
+                    url: "/admin/pwd/reset",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             alert("修改成功");
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        function pushSubAdmin() {
+            var result = true;
+
+            var screen_name = $('input[data-name="screen-name"]').val();
+            var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/;
+            result &= validate($('input[data-name="screen-name"]'), hasInput(screen_name) && regNameL.test(screen_name), 'div[data-name="screen-name-error"]');
+
+            var phone = $('input[data-name="phone-input"]').val();
+            var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate($('input[data-name="phone-input"]'), hasInput(phone) && cell_phone_reg.test(phone), 'div[data-name="phone-error"]');
+
+            // var social_id = $('input[data-name="social-id-input"]').val();
+            // var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+            // result &= validate($('input[data-name="phone-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="social-id-error"]');
+
+            var pwd = $('input[data-name="pwd"]').val();
+            var pwd2 = $('input[data-name="pwd2"]').val();
+            result &= validate($('input[data-name="pwd2"]'), hasInput(pwd) && hasInput(pwd2) && pwd == pwd2, 'div[data-name="pwd-error"]');
+
+            var auth = $('input[data-name="pwd-save"]:checked').val();
+            result &= validate($('input[data-name="pwd-save"]'), auth != null, 'div[data-name="pwd-save-error"]');            
+
+            if (result) {
+                var query_object = new Object();
+
+                query_object["screen_name"] = screen_name;
+                query_object["phone"] = phone;
+                query_object["pwd"] = pwd;
+                query_object["open_id"] = "@{open_id}";
+                query_object["auth"] = Number(auth);
+                query_object["social_id"] = "";
+
+                $.ajax({
+                    url: "/auth/sub/push",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {                                          
+                             location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
     </script>
 }

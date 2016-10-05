@@ -261,7 +261,7 @@
 
             var social_id = $('input[data-name="social-id-input"]').val();
             var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
-            result &= validate($('input[data-name="phone-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="phone-error"]');
+            result &= validate($('input[data-name="social-id-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="social-id-error"]');
 
             var pwd = $('input[data-name="pwd"]').val();
             var pwd2 = $('input[data-name="pwd2"]').val();

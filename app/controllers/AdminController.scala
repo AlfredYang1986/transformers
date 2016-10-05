@@ -173,14 +173,38 @@ object AdminController extends Controller {
         }
     }
 
-    def adminSetting = Action {
-        Ok(views.html.adminSetting())
+    def adminSetting(t : String) = Action { request => 
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
+            
+            if (auth > authTypes.adminBase.t) {
+                val open_id = AuthModule.queryAdminOpenIdWithToken(token)
+                val user_lst = AuthModule.queryUserLstWithOpenID(open_id)
+                println(user_lst)
+                
+                Ok(views.html.adminSetting(token)(open_id)(auth) { auth match {
+                  case authTypes.adminMaster.t => user_lst
+                  case _ => user_lst.filter (x => (x \ "token").asOpt[String].get == token)
+                }})
+            }
+            else Redirect("/index")
+        }
     }
     
     def adminPlatformPush = Action (request => requestArgs(request)(PlatformLinesModule.platformLinePush))
     def adminPlatformPop = Action (request => requestArgs(request)(PlatformLinesModule.platformLinePop))
     def adminPlatformUpdate = Action (request => requestArgs(request)(PlatformLinesModule.platformLineUpdate))
     def adminPlatformQuery = Action (request => requestArgs(request)(PlatformLinesModule.platformLineQuery))
+
+    def adminPwdReset = Action (request => requestArgs(request)(AuthModule.updateAdminPwd))
+    def adminPushSub = Action (request => requestArgs(request)(AuthModule.pushSubuser))
+    def adminPopSub = Action (request => requestArgs(request)(AuthModule.popSubuser))
 
 //    def adminPlatformQueryHtml(t : String) = Action { request => 
     def adminPlatformQueryHtml = Action { request => 
