@@ -1,20 +1,28 @@
 @(message: String)
 
-@index_main("易聚货-帮助")  {
+@main("易聚货-帮助")  {
     
 } {
-   	<div class="container-fluid" style="padding-left: 0; padding-right: 0">
-		<img style="width: 100%" src="@routes.Assets.at("images/main-banner.png")">
-	</div>	
 
-	<div class="container-fluid">
+	<section class="first">
+		<div class="container"> 
 
-		<div class="container">		
+		<div class="in-middle">
+			<p class="in-middle-setting" style="color:#FFFFFF; font-size:27px">FAQ</br>常见问题</p>
+		</div>
+		<!--
+			<h1 class="text-center">FAQ</h1>
+			<h1 class="texe-center">常见问题</h1>
+		-->
+		</div>
+	</section>
+
+	<section>
+		<div class="container"> 
 
 		   	<div class="text-center" style="padding-left: 0; padding-right: 0; margin-top: 67px;">
 				<img src="@routes.Assets.at("images/help/question.png")">
 			</div>				
-
 
 			<div class="col-sm-12">
 				<div class="col-sm-offset-1 col-sm-11">
@@ -152,10 +160,12 @@
 				<p style="color: #333333; font-size: 25px">如果还有疑问，请联系易聚货人工服务电话：400-016-1956</p>
 			</div>
 
-
-
 		</div>
-	</div>
+	</section>
+
+<!--
+
+-->
 } {
 	<script type="text/javascript">
 		$(function(){

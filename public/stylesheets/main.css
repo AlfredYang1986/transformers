@@ -25,6 +25,43 @@
                 /* (853 / 1280 * 100) */
 }
 
+.first {
+  padding-top:140px;
+  background-image:url('/assets/images/main-banner.png');
+  height: 350px;
+}
+
+.affix {
+  -webkit-transition:padding 0.2s ease-out !important;
+  -moz-transition:padding 0.2s ease-out !important;  
+  -o-transition:padding 0.2s ease-out !important;         
+  transition:padding 0.2s ease-out !important;
+}
+
+.affix-top {
+  /* navbar style at top */
+  background:transparent !important;
+  border-color:transparent !important;
+  padding: 15px !important;
+  -webkit-transition:all 0.5s ease !important;
+  -moz-transition:all 0.5s ease !important; 
+  -o-transition:all 0.5s ease !important;         
+  transition:all 0.5s ease !important;  
+}
+
+.affix-top .nav>li>a {
+   color: #FFFFFF !important;
+}
+
+.affix-top .navbar-collapse {
+   border-color:transparent !important;
+}
+
+section {
+  height:calc(90% - 50px);
+  height: 90vh;
+}
+
 .position-set {
 	position: relative;
 	width: 100%;
@@ -101,15 +138,8 @@
 	margin: 0 auto;
 }
 
-.home-nav-bar {
-	text-align: center !important;
-	background-image: none !important;
-	background-color: transparent !important;
-	border: none !important;
-	font-size: 18px;
-	box-shadow: none !important;
-	-webkit-box-shadow: none !important;
-}
+
+
 /**
 .navbar-nav>.active>a {
 	box-shadow: none !important;

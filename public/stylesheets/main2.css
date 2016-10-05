@@ -9,6 +9,7 @@
     }
 }
 
+/**
 .main-nav-container {
 	position: relative;
 }
@@ -47,6 +48,19 @@
 	font-size: 24px;
 	color: #008bdc !important;
 }
+
+
+.sub-main-page {
+	background: url('/assets/images/main-banner.png') no-repeat center center;
+	padding-top:140px;
+	height:100vh;
+	min-height:400px;
+	background-size:cover;
+}
+**/
+
+
+
 
 .content-bkg {
 	background-image: url("/assets/images/company-content-bkg.jpg");
