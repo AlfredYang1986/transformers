@@ -114,7 +114,8 @@ GET		/company/sentproduct/:t       									controllers.CompanyIndustryControlle
 GET		/company/sentproduct       										controllers.CompanyIndustryController.ciLoginSentProduct(t="")
 GET		/company/specialwaylist/:t    									controllers.CompanyIndustryController.ciLoginSpecialWayList(t)
 GET		/company/specialwaylist    										controllers.CompanyIndustryController.ciLoginSpecialWayList(t="")
-GET		/company/rewards    											controllers.CompanyIndustryController.ciLoginRewards
+GET		/company/rewards/:t    											controllers.CompanyIndustryController.ciLoginRewards(t)
+GET		/company/rewards    											controllers.CompanyIndustryController.ciLoginRewards(t="")
 
 POST	/data/company/search/driver										controllers.CompanyIndustryController.companySearchDriver
 POST	/data/company/info/push											controllers.CompanyIndustryController.companyInfoPush
@@ -171,7 +172,8 @@ GET		/specialway/sentproduct/:t     									controllers.SpecialWayController.sw
 GET		/specialway/sentproduct     									controllers.SpecialWayController.swLoginSentProduct(t="")
 GET		/specialway/specialwaylist/:t  									controllers.SpecialWayController.swLoginSpecialWayList(t)
 GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLoginSpecialWayList(t="")
-GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards
+GET		/specialway/rewards/:t    										controllers.SpecialWayController.swLoginRewards(t)
+GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards(t="")
 
 # auth 
 POST	/auth/register													controllers.AuthController.register

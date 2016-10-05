@@ -14,6 +14,7 @@ import module.common.xml.xmlOpt
 import module.auth.AuthModule
 import module.auth.authTypes
 import module.system.config.ConfigModule
+import module.platformLines.PlatformLinesModule
 
 object SpecialWayController extends Controller {
   
@@ -424,7 +425,22 @@ object SpecialWayController extends Controller {
     /**
      * Special Way Login Page
      */
-    def swLoginRewards = Action {
-        Ok(views.html.swLoginRewards("Your new application is ready."))
+    def swLoginRewards(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                val result = (PlatformLinesModule.platformLineQuery(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.swLoginRewards(token)(open_id)(result))
+            }
+            else Redirect("/index")
+        }
     }
 }

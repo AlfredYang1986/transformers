@@ -1,4 +1,4 @@
-@(message: String)
+@(token : String)(open_id : String)(cars : List[play.api.libs.json.JsValue])
 
 @ci_login_index_sliders("易聚货-公司")("") {
     
@@ -26,106 +26,9 @@
                             
                         </h3>
 
-                        <div class="example-box-wrapper">
-                            <div class="row">
-
-                                <div class="col-sm-12">
-
-                                    <div class="row">
-
-                                    <div class="col-sm-3" style="font-size:15px">
-                                        <label>浙江杭州->北京北京</label>
-                                    </div>
-          
-                                    <div class="col-sm-3" style="font-size:15px">
-                                        <label>平板车 / 15米</label>
-                                    </div>
-
-                                    <div class="col-sm-2" style="font-size:15px">
-                                        <label>2016年7月1日</label>
-                                    </div>
-
-                                    <div class="col-sm-2" style="font-size:15px">
-                                        <label>可预约</label>
-                                    </div>
-
-                                    <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target="#depart-view" style="font-size:15px">
-                                        查看详情
-                                    </button>
-
-                                    </div>
-
-                                    <div id="depart-view" class="collapse">
-
-                                        <div class="panel">
-
-                                            <div class="panel-body">
-                                            <div class="form-horizontal bordered-row" role="form">
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">行驶路线</label>
-                                                    <div class="col-sm-8">
-                                                        <label type="text" class="control-label">张三</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">发车时间</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">平板车</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">车型</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">平板车</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">车长</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">11米</label>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">吨位报价</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">12 元/吨</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">方数报价</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">11 元/立方米</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">其他备注</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">已购买</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-sm-2 control-label">预约电话</label>
-                                                    <div class="col-sm-6">
-                                                        <label type="text" class="control-label">400-000-0000</label>
-                                                    </div>
-                                                </div> 
-
-                                            </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
+                        
+                        <div data-name="result-container">
+                        @company_car_search_result(cars)
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@ import module.common.xml.xmlOpt
 import module.auth.AuthModule
 import module.auth.authTypes
 import module.system.config.ConfigModule
+import module.platformLines.PlatformLinesModule
 
 object CompanyIndustryController extends Controller {
   
@@ -447,8 +448,23 @@ object CompanyIndustryController extends Controller {
     /**
      * Company Login Page
      */
-    def ciLoginRewards = Action {
-        Ok(views.html.ciLoginRewards("Your new application is ready."))
+    def ciLoginRewards(t : String) = Action { request =>
+        var token = t
+        if(token == "") token = request.cookies.get("token").map (x => x.value).getOrElse("")
+        else Unit
+        
+        if (token == "") Ok("请先登陆在进行有效操作")
+        else {
+            val user = AuthModule.queryUserWithToken(token)
+           
+            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                val result = (PlatformLinesModule.platformLineQuery(toJson("")) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.ciLoginRewards(token)(open_id)(result))
+            }
+            else Redirect("/index")
+        }
     }
 
     def companySearchDriver = Action (request => requestArgs(request)(companySearchModule.queryDrivers))

@@ -1,0 +1,170 @@
+@(cars : List[play.api.libs.json.JsValue])
+
+@{ cars map { iter => 
+val pl_id = (iter \ "pl_id").asOpt[String].get
+<div class="example-box-wrapper" data-name="car-result">
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="row">
+
+            <div class="col-sm-3" style="font-size:15px">
+                <label>
+                {
+                    (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
+                    (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
+                    (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
+                    (iter \ "line" \ "destination_city").asOpt[String].get
+                }
+                </label>
+            </div>
+
+            <div class="col-sm-3" style="font-size:15px">
+                <label>
+                {
+                    (iter \ "vehicle").asOpt[List[String]].get.head + " / " + "%.1f".format((iter \ "vehicle_length").asOpt[List[Double]].get.head) + "米"
+                }
+                </label>
+            </div>
+
+            <div class="col-sm-2" style="font-size:15px">
+                <label>
+                {
+                    (iter \ "date" \ "year").asOpt[Int].get + "年" +
+                    (iter \ "date" \ "month").asOpt[Int].get + "月" +
+                    (iter \ "date" \ "day").asOpt[Int].get + "日"
+                }
+                </label>
+            </div>
+
+            <div class="col-sm-2" style="font-size:15px">
+                <label>
+                {
+                    if ((iter \ "status").asOpt[Int].get == 0) "可预约"
+                    else "已满载"
+                }
+                </label>
+            </div>
+
+            <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#depart-view-" + pl_id} style="font-size:15px">
+                查看详情
+            </button>
+
+            </div>
+
+            <div id={"depart-view-" + pl_id} class="collapse">
+
+                <div class="panel">
+
+                    <div class="panel-body">
+                    <div class="form-horizontal bordered-row" role="form">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">行驶路线</label>
+                            <div class="col-sm-8">
+                                <label>
+                                {
+                                    (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
+                                    (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
+                                    (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
+                                    (iter \ "line" \ "destination_city").asOpt[String].get
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">发车时间</label>
+                            <div class="col-sm-6">
+                                <label>
+                                {
+                                    (iter \ "date" \ "year").asOpt[Int].get + "年" +
+                                    (iter \ "date" \ "month").asOpt[Int].get + "月" +
+                                    (iter \ "date" \ "day").asOpt[Int].get + "日"
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">车型</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">
+                                {
+                                    var str = ""
+                                    (iter \ "vehicle").asOpt[List[String]].get foreach { x => 
+                                        str += x + "/"
+                                    }
+                                    str.substring(0, str.length - 1)
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">车长</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">
+                                {
+                                    var str = ""
+                                    (iter \ "vehicle_length").asOpt[List[Double]].get foreach { x => 
+                                        str += "%.1f".format(x) + "米/"
+                                    }
+                                    str.substring(0, str.length - 1)
+                                }
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">吨位报价</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">
+                                {
+                                    "%.1f元/吨".format((iter \ "weight").asOpt[Float].get)
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">方数报价</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">
+                                {
+                                    "%.1f元/立方".format((iter \ "volume").asOpt[Float].get)
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">其他备注</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">
+                                {
+                                    (iter \ "notes").asOpt[String].get
+                                }
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">预约电话</label>
+                            <div class="col-sm-6">
+                                <label type="text" class="control-label">400-016-1956</label>
+                            </div>
+                        </div> 
+
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+}}
