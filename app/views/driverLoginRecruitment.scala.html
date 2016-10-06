@@ -9,7 +9,7 @@
             <div class="container">
 
                 <div id="page-title">
-                    <h2>其他信息</h2>
+                    <h2>商业信息</h2>
                 </div>
                 @{ (info zipWithIndex) map { x =>
                     val iter = x._1
@@ -43,7 +43,7 @@
 
                                                     <div class="panel">
                                                         <div class="panel-heading">
-                                                            <h3 class="panel-title">{(iter \ "title").asOpt[String].get}</h3>
+                                                            <h3 class="panel-title">标题：{(iter \ "title").asOpt[String].get}</h3>
                                                         </div>
 
                                                         <div class="panel-body" data-name={"data-index-" + index}>

@@ -316,7 +316,7 @@
                                             <input type="text" data-name={"product-name-input" + product_id} class="form-control" />
                                         </div>
                                         <div class="col-sm-4">
-                                            <input data-name={"product-name-save-" + product_id} type="checkbox" checked="true" value="save" style="margin-top:10px" /> 并保存至常用货物名称
+                                            <input data-name={"product-name-save-" + product_id} type="checkbox" checked="true" value="save" style="margin-top:10px" /> 保存至常用货物名称
                                         </div>
                                     </div>
 
@@ -357,7 +357,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(\"" + product_id + "\")"} >
-                                                    <optgroup label="常用联系人">
+                                                    <optgroup label="调度员姓名">
                                                     @{ contacts map { iter =>
                                                         <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
                                                     }}                                          
@@ -375,7 +375,7 @@
                                         <div class="row">
                                             <div class="col-sm-8">
                                                 <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(\"" + product_id + "\")"}>
-                                                    <optgroup label="常用联系人电话">
+                                                    <optgroup label="调度员电话">
                                                         @{ contacts map { iter =>
                                                             <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
                                                         }}                                              

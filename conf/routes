@@ -10,6 +10,7 @@ GET		/business														controllers.Elogco.business
 GET		/recruit														controllers.Elogco.recruit
 GET		/help															controllers.Elogco.help
 GET		/forgetpsw														controllers.Elogco.forgetpsw
+GET		/mobilelogin													controllers.Elogco.mobileLogin
 
 # register page
 GET     /register/company		        								controllers.RegisterController.register

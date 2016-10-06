@@ -279,7 +279,7 @@
                                         <div class="row">
                                             <div class="col-sm-12">
                                             <select class="form-control" data-name="contact-name" onchange="contactNameChange()">
-                                                <optgroup label="常用联系人">
+                                                <optgroup label="调度员姓名">
                                                     @{ contacts map { iter =>
                                                         <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
                                                     }}                                           
@@ -296,7 +296,7 @@
                                         <div class="row">
                                             <div class="col-sm-8">
                                                 <select class="form-control" data-name="contact-phone" onchange="contactPhoneChange()">
-                                                    <optgroup label="常用联系人电话" editable>
+                                                    <optgroup label="调度员电话" editable>
                                                         @{ contacts map { iter =>
                                                             <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
                                                         }}                                            

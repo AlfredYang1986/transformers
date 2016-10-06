@@ -47,4 +47,12 @@ object Elogco extends Controller {
         Ok(views.html.forgetpsw("Your new application is ready."))
     }
 
+    /**
+    * mobile login
+    */
+    def mobileLogin = Action {
+        Ok(views.html.mobileLogin("Your new application is ready."))
+    }
+
+
 }
