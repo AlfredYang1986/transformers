@@ -26,9 +26,20 @@
 }
 
 .first {
-  padding-top:140px;
-  background-image:url('/assets/images/main-banner.png');
-  height: 350px;
+	padding-top:140px;  
+	background-image:url('/assets/images/main-banner.png');
+	height: 350px;
+}
+
+.second {
+	padding-top:140px;
+	background-image:url('/assets/images/home/Banner.png');
+	height: 850px;
+}
+
+.third {
+	background-image:url('/assets/images/home/Banner-two.png');
+	height: 280px;
 }
 
 .affix {
