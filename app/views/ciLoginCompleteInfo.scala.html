@@ -31,7 +31,7 @@
                                         <label>{(iter \ "title").asOpt[String].get}</label>
                                     </div>
 
-                                    <button type="button" onclick={"setDefault(\""+{"edit"+{(iter \ "info_id").asOpt[String].get}} + "\", \"" + {(iter \ "content").asOpt[String].get}+"\")"} class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#"+{(iter \ "info_id").asOpt[String].get}} style="font-size:15px">
+                                    <button type="button" onclick={"setDefault(\""+{"edit"+{(iter \ "info_id").asOpt[String].get}} + "\", \"" + {(iter \ "content").asOpt[String].get.replace('\"', '\'')}+"\")"} class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#"+{(iter \ "info_id").asOpt[String].get}} style="font-size:15px">
                                         查看详情
                                     </button>
                                 </div>   

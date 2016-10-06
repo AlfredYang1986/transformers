@@ -19,13 +19,13 @@
                         <div class="example-box-wrapper">
                             <div class="form-horizontal bordered-row">
 
-                                <div class="form-group" data-name="special-storage">
+                                <div class="form-group" data-name="special-storage-container">
 
                                     <label class="col-sm-2 control-label">仓库地址</label>
                                     @{((spc \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get zipWithIndex) map { item =>
                                         val iter = item._1
                                         val index = item._2
-                                        <div class="col-sm-8" data-name="storage-item" id={"storage-index-" + index} >
+                                        <div class="col-sm-8" data-name="storage-item" data-index={"storage-index-" + index} >
                                             <div class="row">                        
                                                 <div class="col-xs-3">
                                                     {
@@ -89,18 +89,18 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;">
+                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addSpecialStorage()" >
                                         新增仓库地址
                                     </button>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" data-name="special-lines-container">
                                     <label class="col-sm-2 control-label">主营路线</label>
 
                                     @{((spc \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get zipWithIndex) map { item => 
                                         val iter = item._1
                                         val index = item._2
-                                        <div class="col-sm-8" data-name="line-item" id={"lines-index-" + index} >
+                                        <div class="col-sm-8" data-name="line-item" data-index={"lines-index-" + index} >
                                             <div class="col-xs-2">
                                             {
                                                 val tmp = (iter \ "origin_province").asOpt[String].get
@@ -174,9 +174,21 @@
                                     }}
                                 </div>
 
+                                <div class="form-group" style="display: none;" data-name='line-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择有效的路线信息
+                                        </div>
+                                    </div>
+                                </div> 
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;">
+                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addSpecialLines()">
                                         新增主营路线
                                     </button>
                                 </div>
@@ -384,6 +396,88 @@
         </div>
     </div>
 
+    <div data-name="special-lines-lst" class="col-sm-8 col-sm-offset-2" style="display: none; clear: both;" >
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                <option selected disabled>请选择省</option>
+                @{cities map { iter => 
+                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                }};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="origin-city" data-index="1">
+                <option selected disabled data-filter="choice" >请选择市</option>
+                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                }}};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center;">
+            <i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+                <option selected disabled data-filter="choice" >请选择省</option>
+                @{cities map { iter => 
+                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                }};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="destination-city" data-index="3">
+                <option selected disabled data-filter="choice" >请选择市</option>
+                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                }}};
+            </select>
+        </div>
+        <button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
+    </div>
+
+    <div class="col-sm-8" data-name="special-storage-lst" data-index={"storage-index-" + index} style="display: none;" >
+        <div class="row">                        
+            <div class="col-xs-3">
+                <select class="form-control" data-name="storage-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                    <option selected disabled>请选择省</option>
+                    @{cities map { iter => 
+                        <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                    }};
+                </select>
+            </div>
+
+            <div class="col-xs-3">
+                <select class="form-control" data-name="storage-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                    <option selected disabled data-filter="choice" >请选择市</option>
+                    @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                        <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                    }}};
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <select class="form-control" data-name='storage-district' data-index='2'>
+                    <option selected disabled data-filter="choice" >请选择区</option>
+                    @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                        (inner \ "districts").asOpt[List[String]].get map { x => 
+                        <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
+                    }}}};
+                </select>
+            </div>
+            <div class="col-xs-3">
+                <button class="form-control col-xs-3" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+            <textarea type="text" class="form-control" data-name="storage-address" rows="4" style="resize: none; margin-top:10px;"></textarea>
+            </div>
+        </div>
+    </div>
+
 } {
     <script type="text/javascript">
         $(function(){
@@ -458,18 +552,19 @@
             $.each(elem, function(){
                 var line_item = new Object;
                 line_item['origin_province'] = $(this).find('select[data-name="origin-province"]').val();
-                result &= validate($(this), (typeof(line_item['origin_province']) != "undefined"));
+                result &= validate($(this), line_item['origin_province'] != null, 'div[data-name="line-error"]');
 
                 line_item['origin_city'] = $(this).find('select[data-name="origin-city"]').val();
-                result &= validate($(this), (typeof(line_item['origin_city']) != "undefined"));
+                result &= validate($(this), line_item['origin_city'] != null, 'div[data-name="line-error"]');
 
                 line_item['destination_province'] = $(this).find('select[data-name="destination-province"]').val();
-                result &= validate($(this), (typeof(line_item['destination_province']) != "undefined"));
+                result &= validate($(this), line_item['destination_province'] != null, 'div[data-name="line-error"]');
 
                 line_item['destination_city'] = $(this).find('select[data-name="destination-city"]').val();
-                result &= validate($(this), (typeof(line_item['destination_city']) != "undefined"));
+                result &= validate($(this), line_item['destination_city'] != null, 'div[data-name="line-error"]');
 
-                line_lst.push(line_item);
+                if (result)
+                    line_lst.push(line_item);
             });
 
             if (result) {
@@ -555,5 +650,43 @@
                 });
             }
         }
+
+        function deleteSpecialLine() {
+            $(this).parent().remove();
+        }
+
+        function addSpecialLines() {
+            var l = $('div[data-name="special-lines-lst"]')
+            var cp = l.clone();
+            cp.removeAttr('data-name');
+            cp.attr('data-name', 'line-item');
+            cp.appendTo($("div[data-name='special-lines-container']"));
+            cp.show();
+
+            var count = $('div[data-name="line-item"]').length;
+            cp.attr('data-index', 'lines-index-' + (count - 1));
+
+            var btn = cp.find('button');
+            btn.click(deleteSpecialLine);
+        }
+
+        function deleteSpecialStorage() {
+            $(this).parent().parent().parent().remove();
+        }
+
+        function addSpecialStorage() {
+            var l = $('div[data-name="special-storage-lst"]')
+            var cp = l.clone();
+            cp.removeAttr('data-name');
+            cp.attr('data-name', 'storage-item');
+            cp.appendTo($("div[data-name='special-storage-container']"));
+            cp.show();
+
+            var count = $('div[data-name="storage-item"]').length;
+            cp.attr('data-index', 'storage-index-' + (count - 1));
+
+            var btn = cp.find('button');
+            btn.click(deleteSpecialStorage);
+        }          
     </script>
 }
