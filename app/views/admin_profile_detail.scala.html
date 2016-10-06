@@ -706,19 +706,19 @@
                             @{
                             status.intValue match {
                                 case module.applications.applicationStatus.pushed.t => {
-                                    <div class="row col-sm-offset-2">
-                                        <button class="btn btn-default" onclick={"approveApplication(\"" + apply_id + "\")"}>通过</button>
-                                        <button class="btn btn-default" onclick={"rejectApplication(\"" + apply_id + "\")"}>失败</button>
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-default col-sm-3 col-sm-offset-2" style="background: transparent !important;" onclick={"approveApplication(\"" + apply_id + "\")"}>通过</button>
+                                        <button class="btn btn-default col-sm-3 col-sm-offset-2" style="background: transparent !important;" onclick={"rejectApplication(\"" + apply_id + "\")"}>失败</button>
                                     </div>
                                 }
                                 case module.applications.applicationStatus.approved.t => {
-                                    <div class="row text-center">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true">已通过</i>
+                                    <div class="text-center">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"><span style="margin-left: 10px">已通过</span></i>
                                     </div>
                                 } 
                                 case module.applications.applicationStatus.rejected.t => {
-                                    <div class="row text-center">
-                                        <i class="fa fa-times-circle-o" aria-hidden="true">已拒绝</i>
+                                    <div class="text-center">
+                                        <i class="fa fa-times-circle-o" aria-hidden="true"><span style="margin-left: 10px">已拒绝</span></i>
                                     </div>
                                 }
                                 case _ => {
