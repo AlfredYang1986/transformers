@@ -132,7 +132,7 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                                         var str = ""
                                                         (iter \ "vehicle").asOpt[List[String]].get map { x => 
                                                         {
-                                                            str += x + "/"
+                                                            str += x + " "
                                                         }}
                                                         str.substring(0, str.length - 1)
                                                     }
