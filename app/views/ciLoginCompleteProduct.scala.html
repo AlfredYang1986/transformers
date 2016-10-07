@@ -367,7 +367,7 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
                                                                     <select class="form-control" disabled="disabled" data-name={"contact-name-" + product_id} onchange={"contactNameChange(" + product_id + ")"} >
-                                                                        <optgroup label="常用联系人">
+                                                                        <optgroup label="调度员姓名">
                                                                         @{ contacts map { iter =>
                                                                             <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
                                                                         }}                                          
@@ -386,7 +386,7 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-8">
                                                                     <select class="form-control" disabled="disabled" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(" + product_id + ")"}>
-                                                                        <optgroup label="常用联系人电话">
+                                                                        <optgroup label="调度员电话">
                                                                             @{ contacts map { iter =>
                                                                                 <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
                                                                             }}                                              
@@ -411,7 +411,7 @@
                                                                     </div>
 
                                                                     <div class="col-sm-4">
-                                                                        <input data-name={"contact-save-" + product_id} type="checkbox" value="save" checked="true" style="margin-top:20px" /> 并保存调度员至调度信息管理
+                                                                        <input data-name={"contact-save-" + product_id} type="checkbox" value="save" checked="true" style="margin-top:20px" /> 保存调度员至调度信息管理
                                                                     </div>
 
                                                                 </div>
