@@ -318,15 +318,16 @@ object companyProductModule {
        
         val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
         val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
+        val order = "date"
         
         try {
             conditions match {
               case Nil => 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                      (from db() in "products" select (product2JsValue(_))).toList)))
-              case x : List[DBObject] => { 
+                      (from db() in "products").selectSkipTop(skip)(take)(order)(product2JsValue(_)).toList)))
+              case x : List[DBObject] => 
                   toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                      (from db() in "products" where $and(x) select (product2JsValue(_))).toList)))}
+                      (from db() in "products" where $and(x)).selectSkipTop(skip)(take)(order)(product2JsValue(_)).toList))) 
             }
           
         } catch {

@@ -176,6 +176,8 @@ GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLog
 GET		/specialway/rewards/:t    										controllers.SpecialWayController.swLoginRewards(t)
 GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards(t="")
 
+POST	/html/specialway/sentproduct/append								controllers.SpecialWayController.swLoginAppendSentProductHtml
+
 # auth 
 POST	/auth/register													controllers.AuthController.register
 POST	/auth/driver/register											controllers.AuthController.driverRegister
