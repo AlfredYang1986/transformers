@@ -13,7 +13,10 @@ val pl_id = (iter \ "pl_id").asOpt[String].get
                 <label>
                 {
                     (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
-                    (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
+                    (iter \ "line" \ "origin_city").asOpt[String].get
+                }
+                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                {
                     (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
                     (iter \ "line" \ "destination_city").asOpt[String].get
                 }
@@ -64,12 +67,15 @@ val pl_id = (iter \ "pl_id").asOpt[String].get
                             <label class="col-sm-2 control-label">行驶路线</label>
                             <div class="col-sm-8">
                                 <label>
-                                {
-                                    (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
-                                    (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
-                                    (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
-                                    (iter \ "line" \ "destination_city").asOpt[String].get
-                                }
+                                    {
+                                        (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
+                                        (iter \ "line" \ "origin_city").asOpt[String].get
+                                    }
+                                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                    {
+                                        (iter \ "line" \ "destination_province").asOpt[String].get + " " + 
+                                        (iter \ "line" \ "destination_city").asOpt[String].get
+                                    }
                                 </label>
                             </div>
                         </div>

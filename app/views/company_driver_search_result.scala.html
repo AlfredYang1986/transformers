@@ -18,10 +18,17 @@
                                     <label>{(iter \ "driver_name").asOpt[String].get}</label>
                                 </div>
                                 <div class="col-sm-4" style="font-size:15px">
-                                    <label>{
+                                    <label>
+                                        {
                                         val head = (iter \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.head
-                                        (head \ "origin_province").asOpt[String].get + " " + (head \ "origin_city").asOpt[String].get + " --> " + (head \ "destination_province").asOpt[String].get + " " + (head \ "destination_city").asOpt[String].get
-                                    }</label>
+                                        (head \ "origin_province").asOpt[String].get + " " + (head \ "origin_city").asOpt[String].get
+                                        }
+                                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        {
+                                        (head \ "destination_province").asOpt[String].get + " " + (head \ "destination_city").asOpt[String].get
+                                        }
+
+                                    </label>
                                 </div>
                             
 
@@ -77,9 +84,15 @@
                                                 <label for="certificate-type" class="col-sm-2 control-label">常跑路线</label>
                                                 <div class="col-sm-8">{
                                                     (iter \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get map { tmp => 
-                                                        <label type="text" class="control-label">{
-                                                        (tmp \ "origin_province").asOpt[String].get + " " + (tmp \ "origin_city").asOpt[String].get + " --> " + (tmp \ "destination_province").asOpt[String].get + " " + (tmp \ "destination_city").asOpt[String].get
-                                                        }</label>
+                                                        <label type="text" class="control-label">
+                                                            {
+                                                            (tmp \ "origin_province").asOpt[String].get + " " + (tmp \ "origin_city").asOpt[String].get
+                                                            }
+                                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                                            {
+                                                            (tmp \ "destination_province").asOpt[String].get + " " + (tmp \ "destination_city").asOpt[String].get
+                                                            }
+                                                        </label>
                                                     }}
                                                 </div>
                                             </div>

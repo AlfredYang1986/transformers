@@ -50,10 +50,15 @@
                                                                     <div class="col-sm-8">
                                                                     <div class="col-sm-4">
                                                                         <label type='text' class="control-label"> 
-                                                                            {(x \ "origin_province").asOpt[String].get + " " + 
-                                                                            (x \ "origin_city").asOpt[String].get + " --> " + 
-                                                                            (x \ "destination_province").asOpt[String].get + " " +
-                                                                            (x \ "destination_city").asOpt[String].get}
+                                                                            {
+                                                                                (x \ "origin_province").asOpt[String].get + " " + 
+                                                                                (x \ "origin_city").asOpt[String].get
+                                                                            } 
+                                                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                                                            {
+                                                                                (x \ "destination_province").asOpt[String].get + " " +
+                                                                                (x \ "destination_city").asOpt[String].get
+                                                                            }
                                                                         </label> 
                                                                     </div>
                                                                     </div>
@@ -66,10 +71,16 @@
                                                                     <div class="col-sm-8">
                                                                     <div class="col-sm-4">
                                                                         <label type='text' class="control-label"> 
-                                                                            {(x \ "origin_province").asOpt[String].get + " " + 
-                                                                            (x \ "origin_city").asOpt[String].get + " --> " + 
-                                                                            (x \ "destination_province").asOpt[String].get + " " +
-                                                                            (x \ "destination_city").asOpt[String].get}
+                                                                            {
+                                                                                (x \ "origin_province").asOpt[String].get + " " + 
+                                                                                (x \ "origin_city").asOpt[String].get
+                                                                            } 
+                                                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                                                            {
+                                                                                (x \ "destination_province").asOpt[String].get + " " +
+                                                                                (x \ "destination_city").asOpt[String].get
+                                                                            }
+
                                                                         </label> 
                                                                     </div>
                                                                     </div>

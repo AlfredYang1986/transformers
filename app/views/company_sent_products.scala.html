@@ -22,9 +22,13 @@
                     <label>
                         {
                             (iter \ "origin" \ "province").asOpt[String].get + " " + 
-                            (iter \ "origin" \ "city").asOpt[String].get + " --> " + 
+                            (iter \ "origin" \ "city").asOpt[String].get
+                        }
+                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        { 
                             (iter \ "destination" \ "province").asOpt[String].get + " " +
                             (iter \ "destination" \ "city").asOpt[String].get
+
                         }
                     </label>
                 </div>
