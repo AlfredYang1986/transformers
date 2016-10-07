@@ -138,6 +138,8 @@
                 cache: false,
                 success: function (data) {
                     $(data).appendTo($('div[data-name="result-container"]'));
+                    $('.wysiwyg-editor').summernote({height: 350});
+                    $('.wysiwyg-editor-air').summernote({airMode: true});
                 },
                 error: function (xhr, status, error) {
                     alert("请检查您的输入");

@@ -113,7 +113,7 @@ object companyInfoModule {
                 c
             }
           
-            val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
+            val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(1)
             val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
             val order = "date"
             
