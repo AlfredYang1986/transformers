@@ -115,9 +115,10 @@ object companyInfoModule {
           
             val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
             val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
+            val order = "date"
             
             toJson(Map("status" -> toJson("ok"), "result" -> toJson(
-                (from db() in "info" where conditions select (infoObject2JsValue(_))).toList)))
+                (from db() in "info" where conditions).selectSkipTop(skip)(take)(order)(infoObject2JsValue(_)).toList)))
           
         } catch {
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)

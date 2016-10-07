@@ -1,0 +1,78 @@
+@(infos : List[play.api.libs.json.JsValue])
+
+@{ infos map { iter => 
+<div class="example-box-wrapper" data-name="info-item"> 
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="row">
+                <div class="col-sm-4" style="font-size:15px">
+                    <label>{(iter \ "year").asOpt[Int].get}年{(iter \ "month").asOpt[Int].get}月{(iter \ "day").asOpt[Int].get}日</label>
+                </div>
+
+                <div class="col-sm-6" style="font-size:15px">
+                    <label>{(iter \ "title").asOpt[String].get}</label>
+                </div>
+
+                <button type="button" onclick={"setDefault(\""+{"edit"+{(iter \ "info_id").asOpt[String].get}} + "\", \"" + {(iter \ "content").asOpt[String].get.replace('\"', '\'')}+"\")"} class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#"+{(iter \ "info_id").asOpt[String].get}} style="font-size:15px">
+                    查看详情
+                </button>
+            </div>   
+            
+            <div id={(iter \ "info_id").asOpt[String].get} class="collapse">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="form-horizontal bordered-row">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-title={(iter \ "info_id").asOpt[String].get} value={(iter \ "title").asOpt[String].get} />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">正文</label>
+                                <div class="col-sm-8" data-name={"edit"+{(iter \ "info_id").asOpt[String].get}}>
+                                    <div class="wysiwyg-editor"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">联系人</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-contact={(iter \ "info_id").asOpt[String].get} value={(iter \ "contact").asOpt[String].get} />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">联系人电话</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" data-phone={(iter \ "title").asOpt[String].get} value={(iter \ "phone_no").asOpt[String].get} />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">公司名称</label>
+                                <div class="col-sm-8">
+                                    <input disabled="" type="text" class="form-control" data-company-name={(iter \ "company_name").asOpt[String].get} value={(iter \ "company_name").asOpt[String].get} />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">其他信息状态设置</label>
+
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button onclick={"updateInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: 1px solid #008bdc">保存并发布</button> 
+                                </div>                 
+                                <div class="col-sm-2 col-sm-offset-1">
+                                    <button class="form-control" style="border: 1px solid #008bdc" onclick={"completeInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"}>信息完成</button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button onclick={"deleteInfo(\"" + (iter \ "info_id").asOpt[String].get + "\")"} class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                </div>
+                            </div>             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}}

@@ -536,4 +536,16 @@ object CompanyIndustryController extends Controller {
   		   	case _ : Exception => BadRequest("Bad Request for input")
   		  }  
     }
+    
+    def companyAppendSentInfoHtml = Action { request =>
+        try {
+  			    request.body.asJson.map { x =>
+  			        val open_id = (x \ "open_id").asOpt[String].get
+                val infos = (companyInfoModule.queryInfo(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.company_sent_info(infos))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  
+    }
 }

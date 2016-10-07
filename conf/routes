@@ -140,6 +140,7 @@ POST	/html/company/product/query										controllers.CompanyIndustryController.
 POST	/html/company/search/specialway									controllers.CompanyIndustryController.companySWQueryHtml
 POST	/html/company/search/driver										controllers.CompanyIndustryController.companySearchDriverHtml
 POST	/html/specialway/sentproduct/append								controllers.CompanyIndustryController.companyAppendSentProductHtml
+POST	/html/company/sentinfo/append									controllers.CompanyIndustryController.companyAppendSentInfoHtml
 
 # special way login pages
 GET		/specialway/index/:t               								controllers.SpecialWayController.swLoginIndex(t)
