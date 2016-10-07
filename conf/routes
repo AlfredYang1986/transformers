@@ -139,6 +139,7 @@ POST	/data/company/config/ct/update									controllers.CompanyIndustryControlle
 POST	/html/company/product/query										controllers.CompanyIndustryController.companyProductQueryHtml
 POST	/html/company/search/specialway									controllers.CompanyIndustryController.companySWQueryHtml
 POST	/html/company/search/driver										controllers.CompanyIndustryController.companySearchDriverHtml
+POST	/html/specialway/sentproduct/append								controllers.CompanyIndustryController.companyAppendSentProductHtml
 
 # special way login pages
 GET		/specialway/index/:t               								controllers.SpecialWayController.swLoginIndex(t)
@@ -176,7 +177,6 @@ GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLog
 GET		/specialway/rewards/:t    										controllers.SpecialWayController.swLoginRewards(t)
 GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards(t="")
 
-POST	/html/specialway/sentproduct/append								controllers.SpecialWayController.swLoginAppendSentProductHtml
 
 # auth 
 POST	/auth/register													controllers.AuthController.register

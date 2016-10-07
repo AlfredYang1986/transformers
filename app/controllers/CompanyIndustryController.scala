@@ -518,4 +518,22 @@ object CompanyIndustryController extends Controller {
   		  }  		   
     }
 
+    def companyAppendSentProductHtml = Action { request =>
+        try {
+  			    request.body.asJson.map { x =>
+  			        val open_id = (x \ "open_id").asOpt[String].get
+            
+                val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
+                val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            
+                val products = (companyProductModule.queryProduct(x) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+                val vc = ConfigModule.configAllVehicles
+                val result = (driverSearchModule.queryCompany(x) \ "result").asOpt[List[JsValue]].get
+                
+                Ok(views.html.company_sent_products(pdns)(contacts)(products)(xmlOpt.allCities)(vc))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  
+    }
 }
