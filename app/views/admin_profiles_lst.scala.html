@@ -1,0 +1,18 @@
+@(profiles : List[play.api.libs.json.JsValue])
+
+@{ profiles map { iter =>
+    val date = (iter \ "date").asOpt[play.api.libs.json.JsValue].get
+    <tr>
+        <th>{(iter \ "company_name").asOpt[String].get}</th>
+        <th>
+        {
+            (date \ "year").asOpt[Int].get + "年" +
+            (date \ "month").asOpt[Int].get + "月" +
+            (date \ "day").asOpt[Int].get + "日"
+        }
+        </th>
+        <th>
+            <button class="btn" onclick={"jumpToDetial(\"" + (iter \ "apply_id").asOpt[String].get + "\")"}>申请详情</button>
+        </th>
+    </tr>
+}}

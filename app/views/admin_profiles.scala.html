@@ -1,4 +1,4 @@
-@(token : String)(profiles : List[play.api.libs.json.JsValue])(kt : Int)
+@(token : String)(profiles : List[play.api.libs.json.JsValue])(kt : Int)(st : Int)
 
 @admin_main("Admin")(110) {
     
@@ -27,24 +27,8 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
-                                @{ profiles map { iter =>
-                                    println(iter)
-                                    val date = (iter \ "date").asOpt[play.api.libs.json.JsValue].get
-                                    <tr>
-                                        <th>{(iter \ "company_name").asOpt[String].get}</th>
-                                        <th>
-                                        {
-                                            (date \ "year").asOpt[Int].get + "年" +
-                                            (date \ "month").asOpt[Int].get + "月" +
-                                            (date \ "day").asOpt[Int].get + "日"
-                                        }
-                                        </th>
-                                        <th>
-                                            <button class="btn" onclick={"jumpToDetial(\"" + (iter \ "apply_id").asOpt[String].get + "\")"}>申请详情</button>
-                                        </th>
-                                    </tr>
-                                }}
+                                <tbody data-name="result-container">
+                                @admin_profiles_lst(profiles)
                                 </tbody>
                             </table>
                         </div>
@@ -76,5 +60,40 @@
         function jumpToDetial(apply_id) {
             location.href = "/admin/detail/" + apply_id;
         }
+
+        function appendProfiles() {    
+            var query_object = new Object();
+
+            query_object['apply_type'] = @kt;
+            query_object['apply_status'] = @st;
+
+            query_object['skip'] = $('div[data-name="car-result"]').length;
+
+            $.ajax({
+                url: "/admin/profile/query/html",
+                type: 'POST',
+                // dataType: 'json',
+                dataType: 'html',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    $(data).appendTo($('tbody[data-name="result-container"]'));
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendProfiles();
+            } else {
+
+            }
+        });
     </script>
 }

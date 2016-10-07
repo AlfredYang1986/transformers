@@ -52,6 +52,7 @@ POST	/admin/sub/delete												controllers.AdminController.adminPopSub
 POST	/admin/sub/push													controllers.AdminController.adminPushSub
 
 POST	/admin/platform/query/html										controllers.AdminController.adminPlatformQueryHtml
+POST	/admin/profile/query/html										controllers.AdminController.adminProfileQueryHtml
 
 # driver login pages
 GET		/driver/index/:t  												controllers.DriverController.driverLoginIndex(t)

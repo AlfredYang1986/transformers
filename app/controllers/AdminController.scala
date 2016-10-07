@@ -74,7 +74,7 @@ object AdminController extends Controller {
                   case "error" => throw new Exception((reVal \ "error" \ "message").asOpt[String].get)
                 }
                 
-                if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) Ok(views.html.admin_profiles(token)(result)(kt))
+                if ((user \ "auth").asOpt[Int].get > authTypes.adminBase.t) Ok(views.html.admin_profiles(token)(result)(kt)(st))
                 else Ok("只有管理员才有这个操作权限")
             
             } catch {
@@ -186,7 +186,6 @@ object AdminController extends Controller {
             if (auth > authTypes.adminBase.t) {
                 val open_id = AuthModule.queryAdminOpenIdWithToken(token)
                 val user_lst = AuthModule.queryUserLstWithOpenID(open_id)
-                println(user_lst)
                 
                 Ok(views.html.adminSetting(token)(open_id)(auth) { auth match {
                   case authTypes.adminMaster.t => user_lst
@@ -212,6 +211,17 @@ object AdminController extends Controller {
   			    request.body.asJson.map { x => 
                 val result = (PlatformLinesModule.platformLineQuery(x) \ "result").asOpt[List[JsValue]].get
                 Ok(views.html.admin_car_search_result(result)(false))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  	 
+    }
+    
+    def adminProfileQueryHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val reVal = (AppModule.queryApplications(x) \ "result").asOpt[List[JsValue]].get
+                Ok(views.html.admin_profiles_lst(reVal))
       			}.getOrElse (BadRequest("Bad Request for input"))
   	   	} catch {
   		   	case _ : Exception => BadRequest("Bad Request for input")

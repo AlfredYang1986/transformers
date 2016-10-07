@@ -158,5 +158,52 @@
             }
         }
 
+        function appendCars() {
+            var result = true;
+
+            var start = $('#datepicker_start').val();
+            result &= validate($('#datepicker_start'), hasInput(start), 'div[data-name="start-error"]');
+
+            var end = $('#datepicker_end').val();
+            result &= validate($('#datepicker_end'), hasInput(end), 'div[data-name="end-error"]');
+
+            if (result) {
+                var query_object = new Object();
+
+                var date = new Object();
+                date['min'] = start;
+                date['max'] = end;
+
+                query_object['date'] = date;
+
+                query_object['skip'] = $('div[data-name="car-result"]').length;
+
+                $.ajax({
+                    url: "/admin/platform/query/html",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $(data).appendTo($('tbody[data-name="result-container"]'));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendCars();
+            } else {
+
+            }
+        });
     </script>
 }
