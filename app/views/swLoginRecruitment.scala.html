@@ -18,67 +18,10 @@
                     <h3 class="title-hero">
                     </h3>
 
-                   @{ (infos zipWithIndex) map { item =>
-                        val iter = item._1
-                        val index = item._2
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <h3 class="title-hero">
-                                            
-                                        </h3>
-
-                                        <div class="example-box-wrapper">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="row">
-                                                        <div class="col-sm-4" style="font-size:15px">
-                                                            {(iter \ "year").asOpt[Int].get}年{(iter \ "month").asOpt[Int].get}月{(iter \ "day").asOpt[Int].get}日
-                                                        </div>
-                                                        <div class="col-sm-6" style="font-size:15px">
-                                                            {(iter \ "title").asOpt[String].get}
-                                                        </div>    
-
-                                                        <button type="button" class="btn btn-info mrg20B col-sm-2 col-xs-12" data-toggle="collapse" data-target={"#recruit-view-" + index} style="font-size:15px" onclick={"showContent(" + index + ", \"" + {(iter \ "content").asOpt[String].get.replace('\"', '\'')} + "\")"} >
-                                                            查看详情
-                                                        </button>
-                                                    </div>
-
-                                                    <div id={"recruit-view-" + index} class="collapse">
-                                                        <div class="panel">
-                                                            <div class="panel-heading">
-                                                                <h3 class="panel-title">{(iter \ "title").asOpt[String].get}</h3>
-                                                            </div>
-
-                                                            <div class="panel-body" data-name={"content-" + index}>
-                                                                
-                                                            </div>
-
-                                                            <div class="col-sm-12 panel-body">
-                                                                <form class="form-horizontal bordered-row">
-                                                                    <div class="form-group">
-                                                                        <label class="col-xs-12 control-label">所属公司：{(iter \ "company_name").asOpt[String].get}</label>
-                                                                    </div>  
-                                                                    <div class="form-group">
-                                                                        <label class="col-xs-12 control-label">联系人：{(iter \ "contact").asOpt[String].get}</label>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label class="col-xs-12 control-label">联系人电话：{(iter \ "phone_no").asOpt[String].get}</label>
-                                                                    </div>
-                                                                </form>                                            
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }}
+                    <div data-name="result-container">
+                    @company_other_info_result(infos)
+                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -94,5 +37,39 @@
         function showContent(index, content) {
             $('div[data-name="content-' + index + '"]').html(content);
         }
+
+        function appendInfos() {
+            var query_object = new Object();
+
+            // query_object['open_id'] = "@open_id";
+            query_object['status'] = 0;
+            query_object['skip'] = $('div[data-name="compay-sent-item"]').length;
+
+            $.ajax({
+                url: "/html/company/otherinfo/append",
+                type: 'POST',
+                // dataType: 'json',
+                dataType: 'html',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    $(data).appendTo($('div[data-name="result-container"]'));
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendInfos();
+            } else {
+
+            }
+        });
     </script>
 }
