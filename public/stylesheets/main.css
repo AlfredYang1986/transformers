@@ -42,6 +42,12 @@
 	height: 280px;
 }
 
+.fourth {
+	background-image:url('/assets/images/main-banner.png');
+	height: 200px;
+	padding-top:80px;
+}
+
 .affix {
   -webkit-transition:padding 0.2s ease-out !important;
   -moz-transition:padding 0.2s ease-out !important;  

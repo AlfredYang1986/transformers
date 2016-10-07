@@ -1,107 +1,145 @@
 @(message: String)
 
-@main("忘记密码") {
+@main_sub("手机登录") {
     <script src="@routes.Assets.at("javascripts/routes-manager.js")"></script>
 } {
+	<section class="fourth">
+		<div class="container"> 
+
+		<div class="in-middle">
+			<p class="in-middle-setting" style="color:#FFFFFF; font-size:27px">用户登录</p>
+		</div>
+		<!--
+			<h1 class="text-center">FAQ</h1>
+			<h1 class="texe-center">常见问题</h1>
+		-->
+		</div>
+	</section>
+
 
 	<div class="container-fluid">
 
 		<div class="container another-bkg third-bkg"">
 
-			<div class="" >
-
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">用户登录</label>
-
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
-
-				<div class="form-horizontal" style="margin-top: 40px;">
-				
-					<div class="form-group">
-						<label for="principal-phone-no" class="col-sm-2 control-label">用户名</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" data-name="phone-no" placeholder="公司名字/手机号码">
-						</div>
-
+			<div class="form-horizontal" style="margin-top: 40px;">
+			
+				<div class="form-group">
+					<label for="principal-phone-no" class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" data-name="indicate" placeholder="公司全称/手机号码">
 					</div>
 
-					<div class="form-group">
-						<label for="verifiable-code" class="col-sm-2 control-label" >密码</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" data-name="code" placeholder="在此输入密码" >
-						</div>
-					</div>
-
-					<div class="form-group" style="margin-top:30px;">
-						<div class="col-sm-offset-2 col-sm-9">
-							<a class="btn btn-default col-sm-12 col-xs-12" style="border: 1 solid #008bdc !important; background: transparent;">忘记密码</a>
-						</div>
-					</div>
-
-					<div class="form-group" style="margin-top:30px;">
-						<div class="col-sm-offset-2 col-sm-9">
-							<button class="btn btn-default col-sm-12 col-xs-12" style="border: 1 solid #008bdc !important; background: transparent;">登录</button>
-						</div>
-					</div>
-
-					
 				</div>
 
+				<div class="form-group">
+					<label for="verifiable-code" class="col-sm-2 control-label" >密码</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" data-name="pwd" placeholder="密码" type="password">
+					</div>
+				</div>
+
+				<div class="form-group" style="margin-top:30px;">
+					<div class="col-sm-offset-2 col-sm-9">
+						<a class="btn btn-default col-sm-12 col-xs-12" href="/forgetpsw" style="border: 1px solid #008bdc !important; background: transparent;">忘记密码</a>
+					</div>
+				</div>
+
+				<div class="form-group" style="margin-top:30px;">
+					<div class="col-sm-offset-2 col-sm-9">
+						<button class="btn btn-default col-sm-12 col-xs-12" style="border: 1px solid #008bdc !important; background: transparent;" onclick="login()">登录</button>
+					</div>
+				</div>
 			</div>
+
 			
 		</div>
 	</div>
 } {
-	<script type="text/javascript">
-		
 
-		function getDriverCommonInfo() {
-			var result = true;
+		<script type="text/javascript">
+			function regCompanyTaped() {
+				location.href = "/register/company";
+			}
 
-			var driver_phone_no = $('input[data-name="phone-no"]').val();
-			var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
-			result &= validate($('input[data-name="phone-no"]'), hasInput(driver_phone_no) && cell_phone_reg.test(driver_phone_no), 'div[data-name="driver-cellphone-error"]');
+			function regPersonalTaped() {
+				location.href = "/register/driver";
+			}
 
-			var code = $('input[data-name="code"]').val();
-			result &= validate($('input[data-name="code"]'), hasInput(code), 'div[data-name="code-error"]');
+			function regForgetPsw() {
+				location.href = "/forgetpsw";
+			}
 
+			function login() {
+				var indicate = $('input[data-name="indicate"]').val();
+				var pwd = $('input[data-name="pwd"]').val();
 
+				var login_object = new Object();
+		        login_object['indicate'] = indicate;
+		        login_object['pwd'] = pwd;
+		        $.ajax({
+		            url: "/auth/login",
+		            type: 'POST',
+		            dataType: 'json',
+		            contentType: 'application/json, charset=utf-8',
+		            data: JSON.stringify(login_object),
+		            cache: false,
+		            success: function (data) {
+		                if (data.status == "ok") {
+		                     setCookie('user_id', data.result.user_id, 1);
+		                     setCookie('token', data.result.token, 1);
+		                     setCookie('screen_name', data.result.screen_name, 1);
+		                     setCookie('auth', data.result.auth, 1);
 
-			if (Boolean(result)) {
-				query_object = new Object();
-				query_object['phone_no'] = driver_phone_no;
-				query_object['cell_phone'] = driver_phone_no;
-				query_object['code'] = code;
-			};
+		                     if (data.result.auth > 100) {
+		                     	alert("请去admin登陆");
+		                     } else if (data.result.auth > 20) {
+		                     	location.href = "/specialway/index";
+		                     } else if (data.result.auth > 10) {
+		                     	location.href = "/company/index";
+		                     } else if (data.result.auth > 0) {
+		                     	location.href = "/driver/index";
+		                     } else {
+		                     	alert("游客登陆");
+		                     }
+		                } else {
+		                    alert(data.error.message);
+		                }
+		            },
+		            error: function (xhr, status, error) {
+		                alert("请检查您的输入");
+		            }
+		        });
+			}
+		</script>
 
-			return Boolean(result);
-		}
+        <script type="text/javascript">
+	        function setCookie(cname,cvalue,expiredays) {
+	            var exp  = new Date();
+	            exp.setTime(exp.getTime() + expiredays*24*60*60*1000);
+	            document.cookie = cname + "="+ escape(cvalue) + ";expires=" + exp.toGMTString()+";path="+"/";
+	        }
 
-		function sendCode() {
-			var cell_phone = $('input[data-name="phone-no"]').val();
+	        function clearCookie(name) {  
+	            var exp = new Date();
+	            exp.setTime(exp.getTime() - 1);
+	            document.cookie= name + "=''"+";expires="+exp.toGMTString()+";path="+"/";
+	        }
 
-			var tmp = new Object();
-			tmp['cell_phone'] = cell_phone;
+	        function logout() {
+	            clearCookie('user_id');
+	            clearCookie('token');
+	            clearCookie('screen_name');
+	            clearCookie('auth')
+	            location.href = "/index";   
+	        };
 
-			$.ajax({
-	            url: "/auth/send/code",
-	            type: 'POST',
-	            dataType: 'json',
-	            contentType: 'application/json, charset=utf-8',
-	            data: JSON.stringify(tmp),
-	            cache: false,
-	            success: function (data) {
-	                if (data.status == "ok") {                                          
-	                     alert("发送成功");
-	                } else {
-	                    alert(data.error.message);
-	                }
-	            },
-	            error: function (xhr, status, error) {
-	                alert("请检查您的输入");
-	            }
-	        });
-		}
-
-	</script>
+	        function adminLogout() {
+	            clearCookie('user_id');
+	            clearCookie('token');
+	            clearCookie('screen_name');
+	            clearCookie('auth')
+	            location.href = "/admin/login"; 	        	
+	        }
+        </script>
 }
 
