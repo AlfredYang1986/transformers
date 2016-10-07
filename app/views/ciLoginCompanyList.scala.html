@@ -426,5 +426,124 @@
                 });
             };
         }
+
+        function appendProducts() {
+            var result = true;
+
+            var origin_province = $('select[data-name="search-origin-province"]').val();
+            var origin_city = $('select[data-name="search-origin-city"]').val();
+            var destination_province = $('select[data-name="search-destination-province"]').val();
+            var destination_city = $('select[data-name="search-destination-city"]').val();
+
+            var has_line_condition = (origin_province != null && origin_city != null && destination_province != null && destination_city != null);                            
+            var has_no_line_condition = (origin_province == null && origin_city == null && destination_province == null && destination_city == null)
+
+            // result &= validate( $('div[data-name="search-line-condition-container"]'),
+            //                     has_line_condition || has_no_line_condition,
+            //                     $('div[data-name="search-line-condition-error"]'));
+
+            var has_vehicle_condition = false;
+            var vehicle_lst = [];
+            $.each($('input[data-name="vehicle"]:checked'), function(index, value){
+                vehicle_lst.push($(this).val());
+            });
+            has_vehicle_condition = vehicle_lst.length > 0;
+
+            var has_vehicle_length_condition = false;
+            var vehicle_length_lst = [];
+            $.each($('input[data-name="vehicle-length"]:checked'), function(index, value){
+                vehicle_length_lst.push(Number($(this).val()));
+            });
+            has_vehicle_length_condition = vehicle_length_lst.length > 0;
+
+            var min_weight = $('input[data-name="min-weight').val();
+            var max_weight = $('input[data-name="max-weight').val();
+
+            var has_weight_conditions = hasInput(min_weight) && hasInput(max_weight);
+            var has_no_weight_conditions = min_weight == "" && max_weight == "";
+
+            // result &= validate( $('div[data-name="weight-container"]'),
+            //                     has_weight_conditions || has_no_weight_conditions,
+            //                     $('div[data-name="weight-error"]'));
+
+            var min_volume = $('input[data-name="min-volume').val();
+            var max_volume = $('input[data-name="max-volume').val();
+
+            var has_volume_conditions = hasInput(min_volume) && hasInput(max_volume);
+            var has_no_volume_conditions = min_volume == "" && max_volume == "";
+
+            // result &= validate( $('div[data-name="volume-container"]'),
+            //                     has_volume_conditions || has_no_volume_conditions,
+            //                     $('div[data-name="volume-error"]'));
+
+            if (result) {
+                var query_object = new Object();
+
+                if(has_line_condition) {
+                    var origin_line = new Object();
+                    origin_line['province'] = origin_province;
+                    origin_line['city'] = origin_city;
+                    query_object['origin'] = origin_line;
+
+                    var destination_line = new Object();
+                    destination_line['province'] = destination_province;
+                    destination_line['city'] = destination_city;
+                    query_object['destination'] = destination_line;
+                }
+
+                if (has_vehicle_condition) {
+                    query_object['vehicle'] = vehicle_lst;
+                }
+
+                if (has_vehicle_length_condition) {
+                    query_object['vehicle_length'] = vehicle_length_lst;
+                }
+
+                if (has_weight_conditions) {
+                    var weight = new Object();
+                    weight['min'] = Number(min_weight);
+                    weight['max'] = Number(max_weight);
+
+                    query_object['weight'] = weight;
+                }
+
+                if (has_volume_conditions) {
+                    var volume = new Object();
+                    volume['min'] = Number(min_volume);
+                    volume['max'] = Number(max_volume);
+
+                    query_object['weight'] = volume;
+                }
+
+                query_object['skip'] = $("div[data-name='product-result']").length;
+
+                $.ajax({
+                    // url: "/html/driver/search/company",
+                    url: "/html/company/product/query",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $(data).appendTo($("div[data-name='result-container']"));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                })
+            }
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendProducts();
+            } else {
+
+            }
+        });
     </script>
 }
