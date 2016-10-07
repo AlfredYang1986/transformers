@@ -89,7 +89,7 @@
                                                         {
                                                             (content \ "road_image").asOpt[String] match {
                                                                 case Some(img_path) => <img width="300" src={"/images/" + img_path} />
-                                                                case None => <img width="300" src={"/images/" + (previous \ "road_image").asOpt[String].get} />
+                                                                case None => <img width="300" src={"/images/" + (previous \ "road_image").asOpt[String].map (y => y).getOrElse("")} />
                                                             }
                                                         }
                                                         <!-- <img width="300" src={"/images/" + (previous \ "road_image").asOpt[String].get} /> -->
