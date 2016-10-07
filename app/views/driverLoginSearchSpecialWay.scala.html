@@ -272,5 +272,93 @@
                 });
             };
         }
+
+        function appendCompanies() {
+            var result = true;
+
+            var origin_province = $('select[data-name="search-origin-province"]').val();
+            var origin_city = $('select[data-name="search-origin-city"]').val();
+            var destination_province = $('select[data-name="search-destination-province"]').val();
+            var destination_city = $('select[data-name="search-destination-city"]').val();
+
+            var has_line_condition = (origin_province != null && origin_city != null && destination_province != null && destination_city != null);                            
+            var has_no_line_condition = (origin_province == null && origin_city == null && destination_province == null && destination_city == null)
+
+            // result &= validate( $('div[data-name="search-line-condition-container"]'),
+            //                     has_line_condition || has_no_line_condition,
+            //                     $('div[data-name="search-line-condition-error"]'));
+
+            var has_vehicle_condition = false;
+            var vehicle_lst = [];
+            $.each($('input[data-name="vehicle"]:checked'), function(index, value){
+                vehicle_lst.push($(this).val());
+            });
+            has_vehicle_condition = vehicle_lst.length > 0;
+
+            var has_vehicle_length_condition = false;
+            var vehicle_length_lst = [];
+            $.each($('input[data-name="vehicle_length"]:checked'), function(index, value){
+                vehicle_length_lst.push(Number($(this).val()));
+            });
+            has_vehicle_length_condition = vehicle_length_lst.length > 0;
+
+            var cooperation_type = $('input[data-name="cooperation_type"]').val();
+            var has_cooperation_type_condition = cooperation_type != null;
+
+            if (result) {
+                var query_object = new Object();
+                query_object['type'] = 3;
+
+                if(has_line_condition) {
+                    var line_con = new Object();
+                    line_con['origin_province'] = origin_province;
+                    line_con['origin_city'] = origin_city;
+                    line_con['destination_province'] = destination_province;
+                    line_con['destination_city'] = destination_city;
+
+                    query_object['line'] = line_con;
+                }
+
+                if (has_vehicle_condition) {
+                    query_object['vehicle'] = vehicle_lst;
+                }
+
+                if (has_vehicle_length_condition) {
+                    query_object['vehicle_length'] = vehicle_length_lst;
+                }
+
+                if (has_cooperation_type_condition) {
+                    query_object['cooperation_type'] = cooperation_type;
+                }
+
+                query_object[skip] = $("div[data-name='sw-result']").length;
+
+                $.ajax({
+                    url: "/html/company/search/specialway",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $(data).appendTo($("div[data-name='result-container']"));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendCompanies();
+            } else {
+
+            }
+        });
 	</script>
 }

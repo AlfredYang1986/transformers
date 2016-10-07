@@ -45,6 +45,40 @@
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
+        });        
+
+        function appendCars() {
+            var query_object = new Object();
+
+            // query_object['open_id'] = "@open_id";
+            // query_object['status'] = 0;
+            query_object['skip'] = $('div[data-name="car-result"]').length;
+
+            $.ajax({
+                url: "/admin/platform/query/html",
+                type: 'POST',
+                // dataType: 'json',
+                dataType: 'html',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(query_object),
+                cache: false,
+                success: function (data) {
+                    $(data).appendTo($('div[data-name="result-container"]'));
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        var $window = $(window);
+        var $document = $(document);
+        $window.scroll(function(){
+            if ($document.scrollTop() + $window.height() >= $document.height()) {
+                appendCars();
+            } else {
+
+            }
         });
     </script>
 } 
