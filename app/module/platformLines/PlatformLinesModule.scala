@@ -206,7 +206,7 @@ object PlatformLinesModule {
                    "volume" -> toJson(x.getAs[Number]("volume").get.floatValue),
                    "status" -> toJson(x.getAs[Number]("status").get.intValue),
                    "vehicle" -> toJson(x.getAs[List[String]]("vehicle").get),
-                   "vehicle_length" -> toJson(x.getAs[List[Double]]("vehicle_length")),
+                   "vehicle_length" -> toJson(x.getAs[List[Double]]("vehicle_length").get),
                    "line" -> line,
                    "date" -> toJson(Map("year" -> date.get(Calendar.YEAR),
                                         "month" -> (date.get(Calendar.MONTH) + 1),

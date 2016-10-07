@@ -85,7 +85,7 @@
 
         function appendCars() {
             var query_object = new Object();
-            query_object['skip'] = $('div[data-name="car-result"]').length;
+            query_object['skip'] = $('tr[data-name="car-result"]').length;
 
             $.ajax({
                 url: "/admin/platform/query/html",
