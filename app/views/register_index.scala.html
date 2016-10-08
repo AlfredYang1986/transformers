@@ -8,13 +8,13 @@
 
 			<!-- common step -->
 			<div class="third-bkg" id='common-step'>
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">物流公司/厂家/专线 注册认证</label>
+				<label class="text-center company-title">物流公司/厂家/专线 注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 20px; margin-bottom: 5px;">为必填项目</i>
+				<i class="glyphicon glyphicon-star pull-right company-compulsory" >为必填项目</i>
 
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
+				<div class="driver-sep-line"></div>
 
-				<div class="form-horizontal" style="margin-top: 40px;">
+				<div class="form-horizontal driver-mt">
 					
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -103,7 +103,7 @@
 							<input id="road-image" type="file" multiple=true class="file-loading">
 						</div>
 						<div class="col-sm-9 col-sm-offset-3">
-							<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#F39C12;"><span style="color:#000000;margin-left: 10px">交通运输企业必须上传道路运输许可证，否则认证无法通过</span></i>
+							<i class="fa fa-exclamation-triangle company-note-color" aria-hidden="true" ><span class="company-note-setting">交通运输企业必须上传道路运输许可证，否则认证无法通过</span></i>
 						</div>
 					</div>
 
@@ -300,7 +300,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox" style="text-align: center;">
+							<div class="checkbox driver-register">
 								<label>
 									<input type="checkbox" checked="true"><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
@@ -323,13 +323,13 @@
 
 			<!-- company step -->
 			<div class="third-bkg" id='company-step'>
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">物流公司注册认证</label>
+				<label class="text-center driver-title">物流公司注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 20px; margin-bottom: 5px;">为必填项目</i>
+				<i class="glyphicon glyphicon-star pull-right driver-compulsory">为必填项目</i>
 
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
+				<div class="driver-sep-line"></div>
 
-				<div class="form-horizontal" style="margin-top: 40px;">
+				<div class="form-horizontal driver-mt">
 				
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -393,7 +393,7 @@
 									</select>
 								</div>
 
-							<div class="col-sm-2" style="text-align:center;">
+							<div class="col-sm-2 driver-register">
 							<!--
 								<img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
 								<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
@@ -416,7 +416,7 @@
 										}}};
 									</select>
 								</div>
-								<button class="btn btn-sm btn-default" style="margin-left: 5px !important; background: none !important; border:none !important" onclick="deleteRoute('company-line', $(this), 6)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
+								<button class="btn btn-sm btn-default company-delete" onclick="deleteRoute('company-line', $(this), 6)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
 
 							</div>
 						</fieldset>
@@ -491,13 +491,13 @@
 
 			<!-- indusry step -->
 			<div class="third-bkg" id='industry-step' style="height: 600px;">
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">厂家注册认证</label>
+				<label class="text-center company-title">厂家注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 20px; margin-bottom: 5px;">为必填项目</i>
+				<i class="glyphicon glyphicon-star pull-right company-compulsory">为必填项目</i>
 
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
+				<div class="driver-sep-line"></div>
 
-				<div class="form-horizontal" style="margin-top: 40px;">								
+				<div class="form-horizontal driver-mt">								
 				
 					<div class="form-group">
 						<label for="company-name" class="col-sm-2 control-label">公司网站</label>
@@ -523,7 +523,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox" style="text-align: center;">
+							<div class="checkbox driver-register">
 								<label>
 									<input type="checkbox" checked="true"><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
@@ -533,10 +533,10 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-4 register-btn">
-							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="proviousStep()">上一步</button>
+							<button type="submit" class="btn btn-lg company-mb" onclick="proviousStep()">上一步</button>
 						</div>
 						<div class="col-sm-offset-2 col-sm-4 register-btn">
-							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
+							<button type="submit" class="btn btn-lg company-mb" onclick="register()">注册</button>
 						</div>
 					</div>
 				</div>
@@ -544,13 +544,13 @@
 
 			<!-- spical step -->
 			<div class="third-bkg" id='spical-step'>
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">专线注册认证</label>
+				<label class="text-center company-title">专线注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 20px; margin-bottom: 5px;">为必填项目</i>
+				<i class="glyphicon glyphicon-star pull-right company-compulsory">为必填项目</i>
 
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
+				<div class="driver-sep-line"></div>
 
-				<div class="form-horizontal" style="margin-top: 40px;">			
+				<div class="form-horizontal driver-mt">			
 
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -598,7 +598,7 @@
 										}}};
 									</select>
 								</div>
-								<button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important;" onclick="deleteRoute('special-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
+								<button class="btn btn-sm btn-default specialway-delete" onclick="deleteRoute('special-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
 							</div>
 						</fieldset>
 					</div>
@@ -658,9 +658,9 @@
 								</select>
 							</div>
 
-							<button class="btn btn-sm btn-default" style="margin-left: 15px !important; background: none !important; border:none !important" onclick="deleteRoute('special-storage', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
+							<button class="btn btn-sm btn-default specialway-delete-type" onclick="deleteRoute('special-storage', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
 
-							<div class="col-sm-12" style="margin-top: 5px;">
+							<div class="col-sm-12 specialway-mt">
 								<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="详细地址（必填）"></textarea>
 							</div>
 					
@@ -670,7 +670,7 @@
 
 					<div class="form-group">
 						<label for="" class="col-sm-3 control-label"></label>
-						<div class="col-sm-offset-4 col-sm-8 business-license-btn" style="margin-bottom: 10px">
+						<div class="col-sm-offset-4 col-sm-8 business-license-btn specialway-mb">
 							<button data-name="special-storage-add" type="button" class="btn col-sm-9" onclick="addRoute('special-storage', $(this), 5)">新增仓库地址</button>
 						</div>
 					</div>									
@@ -770,7 +770,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox" style="text-align: center;">
+							<div class="checkbox driver-register">
 								<label>
 									<input type="checkbox" checked="true"><a href="/contract/company" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
@@ -780,10 +780,10 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-4 register-btn">
-							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="proviousStep()">上一步</button>
+							<button type="submit" class="btn btn-lg company-mb " onclick="proviousStep()">上一步</button>
 						</div>
 						<div class="col-sm-offset-2 col-sm-4 register-btn">
-							<button type="submit" class="btn btn-lg" style="margin-bottom: 20px" onclick="register()">注册</button>
+							<button type="submit" class="btn btn-lg company-mb " onclick="register()">注册</button>
 						</div>
 					</div>
 

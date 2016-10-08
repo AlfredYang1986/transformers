@@ -440,3 +440,118 @@ section {
     -o-background-size: cover;
 }
 
+/*Driver style*/
+.driver-title {
+	font-size: 22px; 
+	margin-top: 10px;
+}
+
+.driver-compulsory {
+	font-size: 15px; 
+	margin-top: 25px; 
+	margin-left: 5px;
+}
+
+.driver-sep-line {
+	margin:0; 
+	padding:0; 
+	width:100%; 
+	height:1px; 
+	background-color:#008bdc; 
+	overflow:hidden; 
+	margin-top:10px;
+}
+
+.driver-mt {
+	margin-top: 40px;
+}
+
+.driver-delete-btn {
+	margin-left: 20px !important; 
+	background: none !important; 
+	border:none !important
+}
+
+.driver-register {
+	text-align: center;
+}
+
+/*Company style*/
+.company-title {
+	font-size: 22px; 
+	margin-top: 10px
+}
+
+.company-compulsory {
+	font-size: 15px; 
+	margin-top: 20px; 
+	margin-bottom: 5px;
+}
+
+.company-note-color {
+	color:#F39C12;
+}
+
+.company-note-setting {
+	color:#000000;
+	margin-left: 10px
+}
+
+.company-delete {
+	margin-left: 5px !important; 
+	background: none !important; 
+	border:none !important
+}
+
+.company-mb {
+	margin-bottom: 20px
+}
+
+.specialway-delete {
+	margin-left: 20px !important; 
+	background: none !important; 
+	border:none !important;
+}
+
+.specialway-delete-type {
+	margin-left: 15px !important; 
+	background: none !important; 
+	border:none !important
+}
+
+.specialway-mt {
+	margin-top: 5px;
+}
+
+.specialway-mb {
+	margin-bottom: 10px;
+}
+
+/*Register complete*/
+
+.rc-mt {
+	margin-top:60px;
+}
+
+.rc-size {
+	font-size: 15px;
+}
+
+.rc-mt-setting {
+	margin-top: 15px;
+}
+
+.rc-mt-reset{
+	margin-top: 55px;
+}
+
+.rc-color {
+	color: #40c3f3
+}
+
+.rc-line {
+	font-size: 13px; 
+	margin-top: 100px;
+}
+
+

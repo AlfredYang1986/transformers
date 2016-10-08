@@ -7,13 +7,13 @@
 		<div class="container another-bkg">
 			<div class="third-bkg">
 
-				<label style="font-size: 22px; margin-top: 10px" class="text-center">驾驶员注册认证</label>
+				<label class="text-center driver-title">驾驶员注册认证</label>
 
-				<i class="glyphicon glyphicon-star pull-right" style="font-size: 15px; margin-top: 25px; margin-left: 5px;"><span>为必填项目</span></i>
+				<i class="glyphicon glyphicon-star pull-right driver-compulsory"><span>为必填项目</span></i>
 
-				<div style="margin:0; padding:0; width:100%; height:1px; background-color:#008bdc; overflow:hidden; margin-top:10px;"></div>
+				<div class="driver-sep-line"></div>
 
-				<div class="form-horizontal" style="margin-top: 40px;">
+				<div class="form-horizontal driver-mt" >
 				
 					<div class="form-group">
 						<span class="glyphicon glyphicon-star col-sm-1 control-label"></span>
@@ -265,7 +265,7 @@
 								</select>
 							</div>
 					
-							<button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important" onclick="deleteRoute('driver-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
+							<button class="btn btn-sm btn-default driver-delete-btn" onclick="deleteRoute('driver-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
 
 
 						</div>
@@ -317,7 +317,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox" style="text-align: center;">
+							<div class="checkbox driver-register" >
 								<label>
 									<input type="checkbox" checked="true"><a href="/contract/driver" target="_blank">注册视为认同《易聚货会员服务协议》</a>
 								</label>
