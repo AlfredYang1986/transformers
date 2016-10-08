@@ -9,7 +9,7 @@
         <div class="container">
 
             <div id="page-title">
-                <h2>已发布其他信息</h2>
+                <h2>已发布商业信息</h2>
                 <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:#D4AC0D; margin-top:10px;">
                     <span style="color:#424949;margin-left: 5px;"> 如需修改发布内容，请在完成后保存并发布；如已完成交易，请及时更改货物状态，点击交易完成，谢谢合作！</span>
                 </i>
@@ -85,7 +85,7 @@
                 cache: false,
                 success: function (data) {
                     if (data.status == "ok") {
-                        alert("success");
+                        alert("修改成功");
                         location.reload();
                     } else {
                         alert(data.error.message);
