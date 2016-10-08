@@ -100,7 +100,7 @@ val pl_id = (iter \ "pl_id").asOpt[String].get
                                 {
                                     var str = ""
                                     (iter \ "vehicle").asOpt[List[String]].get foreach { x => 
-                                        str += x + "/"
+                                        str += x + " "
                                     }
                                     str.substring(0, str.length - 1)
                                 }
@@ -115,7 +115,7 @@ val pl_id = (iter \ "pl_id").asOpt[String].get
                                 {
                                     var str = ""
                                     (iter \ "vehicle_length").asOpt[List[Double]].get foreach { x => 
-                                        str += "%.1f".format(x) + "米/"
+                                        str += "%.1f".format(x) + "米 "
                                     }
                                     str.substring(0, str.length - 1)
                                 }
