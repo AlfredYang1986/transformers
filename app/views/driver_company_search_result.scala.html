@@ -32,7 +32,7 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                     {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
                                         (iter \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
                                             <div class="form-group">
-                                                <label for="certificate-type" class="col-sm-2 control-label">业务领悟</label>
+                                                <label for="certificate-type" class="col-sm-2 control-label">业务领域</label>
                                                 <div class="col-sm-8">
                                                     <div class="col-sm-4">
                                                         <label type='text' class="control-label">
