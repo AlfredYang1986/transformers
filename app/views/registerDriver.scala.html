@@ -434,7 +434,7 @@
 			var result = true;
 
 			var driver_name = $('input[data-name="driver-name"]').val();
-			var regNameL = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/; 
+			var regNameL = /[\u4E00-\u9FA5]{2,4}/; 
 			result &= validate($('input[data-name="driver-name"]'), hasInput(driver_name) && regNameL.test(driver_name), 'div[data-name="driver-name-error"]');
 
 			var driver_secial_id = $('input[data-name="driver-secial-id"]').val();
