@@ -35,8 +35,8 @@
                                                         <label type="text" class="control-label" data-name='company-name'>
                                                             {
                                                                 (date \ "year").asOpt[Int].get + "年" +
-                                                                (date \ "year").asOpt[Int].get + "月" +
-                                                                (date \ "year").asOpt[Int].get + "日"
+                                                                (date \ "month").asOpt[Int].get + "月" +
+                                                                (date \ "day").asOpt[Int].get + "日"
                                                             }
                                                         </label>
                                                     </div>
@@ -72,7 +72,6 @@
                                                                 case None => <img width="300" />
                                                             }
                                                         }
-                                                        <!-- <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} /> -->
                                                     </div>
                                                 </div>
 
@@ -193,8 +192,8 @@
                                                         <label type="text" class="control-label" data-name='company-name'>
                                                             {
                                                                 (date \ "year").asOpt[Int].get + "年" +
-                                                                (date \ "year").asOpt[Int].get + "月" +
-                                                                (date \ "year").asOpt[Int].get + "日"
+                                                                (date \ "month").asOpt[Int].get + "月" +
+                                                                (date \ "day").asOpt[Int].get + "日"
                                                             }
                                                         </label>
                                                     </div>
@@ -203,7 +202,6 @@
                                                 <div class="form-group">
                                                     <label for="business-license" class="col-sm-2 control-label">工商营业执照</label>
                                                     <div class="col-sm-10 business-license-btn">
-                                                        <!-- <label type="button" class="btn" data-toggle="modal" data-target="#business-image">照片</label> -->
                                                         <img width="300" src={"/images/" + (content \ "business_image").asOpt[String].get} />
                                                     </div>
                                                 </div>
@@ -225,8 +223,12 @@
                                                 <div class="form-group">
                                                     <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
                                                     <div class="col-sm-10 road-license-btn">
-                                                        <!-- <label type="button" class="btn" data-toggle="modal" data-target="#road-license">照片</label> -->
-                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                        {
+                                                            (content \ "road_image").asOpt[String] match {
+                                                                case Some(img_path) => <img width="300" src={"/images/" + img_path} />
+                                                                case None => <img width="300" />
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
 
@@ -310,8 +312,8 @@
                                                         <label type="text" class="control-label" data-name='company-name'>
                                                             {
                                                                 (date \ "year").asOpt[Int].get + "年" +
-                                                                (date \ "year").asOpt[Int].get + "月" +
-                                                                (date \ "year").asOpt[Int].get + "日"
+                                                                (date \ "month").asOpt[Int].get + "月" +
+                                                                (date \ "day").asOpt[Int].get + "日"
                                                             }
                                                         </label>
                                                     </div>
@@ -341,7 +343,12 @@
                                                 <div class="form-group">
                                                     <label for="road-license" class="col-sm-2 control-label">道路运输许可证</label>
                                                     <div class="col-sm-10 road-license-btn">
-                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                        {
+                                                            (content \ "road_image").asOpt[String] match {
+                                                                case Some(img_path) => <img width="300" src={"/images/" + img_path} />
+                                                                case None => <img width="300" />
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
 
@@ -492,8 +499,8 @@
                                                         <label type="text" class="control-label" data-name='company-name'>
                                                             {
                                                                 (date \ "year").asOpt[Int].get + "年" +
-                                                                (date \ "year").asOpt[Int].get + "月" +
-                                                                (date \ "year").asOpt[Int].get + "日"
+                                                                (date \ "month").asOpt[Int].get + "月" +
+                                                                (date \ "day").asOpt[Int].get + "日"
                                                             }
                                                         </label>
                                                     </div>
@@ -516,7 +523,12 @@
                                                 <div class="form-group">
                                                     <label for="road-license" class="col-sm-2 control-label">驾驶员驾驶证</label>
                                                     <div class="col-sm-10 road-license-btn">
-                                                        <img width="300" src={"/images/" + (content \ "road_image").asOpt[String].get} />
+                                                        {
+                                                            (content \ "road_image").asOpt[String] match {
+                                                                case Some(img_path) => <img width="300" src={"/images/" + img_path} />
+                                                                case None => <img width="300" />
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
 
@@ -658,7 +670,8 @@
                 cache: false,
                 success: function (data) {
                     if (data.status == "ok") {                                          
-                         location.href = "/admin/profiles/cu/progressing"
+                        // location.href = "/admin/profiles/cu/progressing"
+                        location.href = "/admin/index"
                     } else {
                         alert(data.error.message);
                     }

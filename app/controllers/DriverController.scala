@@ -259,7 +259,10 @@ object DriverController extends Controller {
         try {
   			    request.body.asJson.map { x => 
                 val result = (driverSearchModule.queryCompany(x) \ "result").asOpt[List[JsValue]].get 
-                Ok(views.html.driver_company_search_result(result)(Nil))
+  			        val following_lst = (x \ "open_id").asOpt[String].map { open_id => 
+    			          (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
+  			        }.getOrElse(Nil)
+                Ok(views.html.driver_company_search_result(result)(following_lst))
       			}.getOrElse (BadRequest("Bad Request for input"))
   	   	} catch {
   		   	case _ : Exception => BadRequest("Bad Request for input")

@@ -48,7 +48,8 @@
                                             </select>
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"
+                                    onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></textarea>
                                 </div>
                             </div>
 
@@ -93,7 +94,8 @@
                                             </select> 
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"
+                                    onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></textarea>
                                 </div>
                             </div>
 

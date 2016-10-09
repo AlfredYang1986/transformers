@@ -60,7 +60,7 @@
 
             </div>
 
-            <div id={product_id} class="collapse">
+            <div id={product_id} class="collapse" disabled="" >
 
                 <div class="panel">
 
@@ -107,7 +107,7 @@
                                             </select>   
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" data-name={"origin-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
+                                    <textarea type="text" class="form-control" data-name={"origin-address-" + product_id} rows="4" style="resize: none; margin-top:10px" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
                                 </div>
                             </div>
 
@@ -162,7 +162,7 @@
                                             </select>   
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" data-name={"destination-address-" + product_id} rows="4" style="resize: none; margin-top:10px">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
+                                    <textarea type="text" class="form-control" data-name={"destination-address-" + product_id} rows="4" style="resize: none; margin-top:10px" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
                                 </div>
                             </div>
 
@@ -207,7 +207,7 @@
                                             </select>  
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
+                                    <textarea type="text" class="form-control" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
                                 </div>
                             </div>
                             }}
@@ -268,25 +268,25 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">合作模式</label>
                                 <div class="col-sm-8">
-                                        { 
-                                            val lst = List("单程", "往返", "长期", "不限");
-                                            val cot = (iter \ "cooperation_type").asOpt[Int].get
-                                            (lst zipWithIndex) map { co =>
-                                                if (cot == co._2) {
-                                                <div class="col-sm-2 radio">
-                                                    <label>
-                                                        <input data-name={"cooperation-type-" + product_id} checked="" type="radio" value={"" + co._2} /> {co._1}
-                                                    </label>
-                                                </div> 
-                                                } else {
-                                                <div class="col-sm-2 radio">
-                                                    <label>
-                                                        <input data-name={"cooperation-type-" + product_id} type="radio" value={"" + co._2} /> {co._1}
-                                                    </label>
-                                                </div> 
-                                                }
+                                    { 
+                                        val lst = List("单程", "往返", "长期", "不限");
+                                        val cot = (iter \ "cooperation_type").asOpt[Int].get
+                                        (lst zipWithIndex) map { co =>
+                                            if (cot == co._2) {
+                                            <div class="col-sm-2 radio">
+                                                <label>
+                                                    <input data-name={"cooperation-type-" + product_id} name={"cooperation-type-" + product_id} checked="" type="radio" value={"" + co._2} /> {co._1}
+                                                </label>
+                                            </div> 
+                                            } else {
+                                            <div class="col-sm-2 radio">
+                                                <label>
+                                                    <input data-name={"cooperation-type-" + product_id} name={"cooperation-type-" + product_id} type="radio" value={"" + co._2} /> {co._1}
+                                                </label>
+                                            </div> 
                                             }
-                                        }                                                                  
+                                        }
+                                    }                                                                  
                                 </div>
                             </div>
                             }}
@@ -425,19 +425,35 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">车辆合作信息状态设置</label>
+                            
+                            {
+                                (iter \ "status").asOpt[Int].get match {
+                                    case 0 => {
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">车辆合作信息状态设置</label>
 
-                                <div class="col-sm-2 col-sm-offset-1">
-                                    <button class="form-control" style="border: 1px solid #008bdc" onclick={"updateProduct(\"" + product_id + "\")"} >保存并发布</button> 
-                                </div>                 
-                                <div class="col-sm-2 col-sm-offset-1">
-                                    <button class="form-control" style="border: 1px solid #008bdc" onclick={"completProduct(\"" + product_id + "\")"}>交易完成</button>
-                                </div>
-                                <div class="col-sm-3">
-                                    <button class="form-control" style="border: none; color:#848484;" onclick={"deleteProduct(\"" + product_id + "\")"}><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
-                                </div>
-                            </div>
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <button class="form-control" style="border: 1px solid #008bdc" onclick={"updateProduct(\"" + product_id + "\")"} >保存并发布</button> 
+                                            </div>                 
+                                            <div class="col-sm-2 col-sm-offset-1">
+                                                <button class="form-control" style="border: 1px solid #008bdc" onclick={"completProduct(\"" + product_id + "\")"}>交易完成</button>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <button class="form-control" style="border: none; color:#848484;" onclick={"deleteProduct(\"" + product_id + "\")"}><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    case 1 => {
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">车辆合作信息状态设置</label>
+
+                                            <div class="col-sm-6 col-sm-offset-1">
+                                                <button class="form-control" style="border: 1px solid #008bdc;" onclick={"resetProduct(\"" + product_id + "\")"} >重新发布货源</button> 
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
 
                         </div>
                     </div>

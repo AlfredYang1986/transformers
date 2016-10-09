@@ -39,6 +39,28 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            密码不得低于6位
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='pwd-same-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            两次输入的密码不一致
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
                                     <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateDriverPwd()">
@@ -60,15 +82,35 @@
 			$('li[data-current="index"]').addClass("active");
 		});
 
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
         function updateDriverPwd() {
+            var result = true;
+
             var old = $('input[data-name="old"]').val();
 
             var pwd = $('input[data-name="pwd"]').val();
             var pwd1 = $('input[data-name="pwd1"]').val();
 
-            if (pwd != pwd1) {
-                alert("两次输入的密码不一致");
-            } else {
+            result &= validate($('input[data-name="pwd"]'), pwd.length > 5, 'div[data-name="pwd-error"]');
+            result &= validate($('input[data-name="pwd1"]'), pwd == pwd1, 'div[data-name="pwd-same-error"]');
+
+            if (result) {
                 var query_object = new Object();
 
                 query_object["open_id"] = "@{open_id}";

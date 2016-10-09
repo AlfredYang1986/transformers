@@ -39,6 +39,29 @@
                                 </div>
                             </div>
 
+                            <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        密码不得低于6位
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='pwd-same-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        两次输入的密码不一致
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="form-group text-center">
                                 <label class="col-sm-2 control-label"></label>
                                 <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="resetPwd()">
@@ -60,13 +83,16 @@
         });
 
         function resetPwd() {
+            var result = true;
+
             var old = $('input[data-name="old"]').val();
             var new1 = $('input[data-name="new1"]').val();
             var new2 = $('input[data-name="new2"]').val();
 
-            if (new1 != new2) {
-                alert("新密码输入不一致");
-            } else {
+            result &= validate($('input[data-name="new1"]'), new1.length > 5, 'div[data-name="pwd-error"]');
+            result &= validate($('input[data-name="new2"]'), new1 == new2, 'div[data-name="pwd-same-error"]');
+
+            if (result) {
 
                 var query_object = new Object();
                 query_object["old"] = old;

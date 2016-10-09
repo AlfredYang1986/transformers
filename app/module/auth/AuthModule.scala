@@ -102,7 +102,19 @@ object AuthModule {
                     (data \ "phone").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone"))
             }
             
-            (from db() in "user_profile" where ("user_lst.indicate" -> indicate) select (x => x)).toList match {
+            val master_indicate = company_type match {
+                case registerTypes.company.t | registerTypes.industry.t | registerTypes.specialway.t => 
+                    Some((data \ "compnay_name").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone")))
+                case registerTypes.admin.t => Some("admin")
+                case _ => None
+            }
+            
+            def conditions = master_indicate match {
+              case Some(x) => $or("user_lst.indicate" -> x, "user_lst.indicate" -> indicate)
+              case None => "user_lst.indicate" -> indicate
+            }
+            
+            (from db() in "user_profile" where conditions select (x => x)).toList match {
                 case Nil => toJson(Map("status" -> "ok", "result"-> "success"))
                 case _ => throw new Exception("duplicate phone or email")
             }

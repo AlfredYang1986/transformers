@@ -180,6 +180,7 @@ GET		/specialway/specialwaylist  									controllers.SpecialWayController.swLog
 GET		/specialway/rewards/:t    										controllers.SpecialWayController.swLoginRewards(t)
 GET		/specialway/rewards    											controllers.SpecialWayController.swLoginRewards(t="")
 
+POST	/html/specialway/search/company									controllers.SpecialWayController.swSearchCompanyHtml
 
 # auth 
 POST	/auth/register													controllers.AuthController.register

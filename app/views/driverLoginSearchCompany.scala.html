@@ -90,7 +90,7 @@
 			var sorts = $("input[data-conditions='sort']");
 
 			var query_object = new Object();
-            query_object['skip'] = 
+            query_object['open_id'] = "@open_id";
 
 			$.ajax({
 	            url: "/html/driver/search/company",
@@ -172,7 +172,7 @@
         function appendCompanies() {
             var query_object = new Object();
 
-            // query_object['open_id'] = "@open_id";
+            query_object['open_id'] = "@open_id";
             // query_object['status'] = 0;
             query_object['skip'] = $('div[data-result="company"').length;
 

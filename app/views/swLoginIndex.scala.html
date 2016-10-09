@@ -1,4 +1,4 @@
-@(token : String)(open_id : String)(name : String)(com_lst : List[play.api.libs.json.JsValue])(following_lst : List[String])
+@(token : String)(open_id : String)(name : String)(com_lst : List[play.api.libs.json.JsValue])
 
 @sw_login_index_sliders("易聚货-专线")(name) {
     
@@ -10,7 +10,7 @@
                 <div id="page-title"></div>
 
                 <div data-name="result-container">
-                @driver_company_search_result(com_lst)(following_lst)
+                @specialway_company_search_result(com_lst)
                 </div>
 
             </div>
@@ -41,7 +41,7 @@
             query_object['skip'] = $('div[data-result="company"]').length;
 
             $.ajax({
-                url: "/html/driver/search/company",
+                url: "/html/specialway/search/company",
                 type: 'POST',
                 // dataType: 'json',
                 dataType: 'html',

@@ -118,7 +118,7 @@
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
-                                                            没有输入有效的密码或者两次输入的密码不一致
+                                                            没有输入有效的密码或者两次输入的密码不一致（密码不少于6位）
                                                         </div>
                                                     </div>
                                                 </div>
@@ -215,7 +215,18 @@
                                         <button class="form-control" style="border: none; color:#848484;" onclick={"popSubuser(" + index + ",\"" + (iter \ "user_id").asOpt[String].get + "\")"} ><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button>
                                     </div>
                                     }}
-                                </div>               
+                                </div>
+
+                                <div class="form-group" style="display: none;" data-name='pwd-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            没有输入有效的密码或者两次输入的密码不一致（密码不少于6位）
+                                        </div>
+                                    </div>
+                                </div>                 
                             </div>
                         </div>
                     </div>
@@ -265,6 +276,7 @@
 
             var pwd = $('input[data-name="pwd"]').val();
             var pwd2 = $('input[data-name="pwd2"]').val();
+            result &= validate($('input[data-name="pwd"]'), pwd.length > 5, 'div[data-name="pwd-error"]');
             result &= validate($('input[data-name="pwd2"]'), hasInput(pwd) && hasInput(pwd2) && pwd == pwd2, 'div[data-name="pwd-error"]');
 
 

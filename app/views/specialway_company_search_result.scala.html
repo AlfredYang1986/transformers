@@ -1,4 +1,4 @@
-@(companies : List[play.api.libs.json.JsValue])(following_lst : List[String])
+@(companies : List[play.api.libs.json.JsValue])
 
 @{ (companies zipWithIndex) map { item => 
 val iter = item._1
@@ -8,14 +8,6 @@ val target_id = (iter \ "open_id").asOpt[String].get
     <div class="panel-body">
         <h4 class="title-hero">
         { (iter \ "company_name").asOpt[String].get } 
-        
-        {
-            if (following_lst.contains(target_id)) {
-                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"unCollectCompany(\"" + target_id + "\")"} ><i class="glyph-icon icon-star"></i>已收藏</button>
-            } else {
-                <button class="btn btn-link" style="color:#008bdc; border: none;" onclick={"collectCompany(\"" + target_id + "\")"} ><i class="glyph-icon icon-star"></i>收藏</button>
-            }
-        }
         
         </h4>
         <div class="example-box-wrapper">

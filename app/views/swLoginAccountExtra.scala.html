@@ -117,7 +117,7 @@
                                                         <div class="alert alert-danger" role="alert">
                                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                                             <span class="sr-only">Error:</span>
-                                                            两次输入的密码不一致
+                                                            没有输入有效的密码或者两次输入的密码不一致（密码不少于6位）
                                                         </div>
                                                     </div>
                                                 </div>
@@ -222,7 +222,7 @@
                                         <div class="alert alert-danger" role="alert">
                                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                             <span class="sr-only">Error:</span>
-                                            没有输入有效的密码或者两次输入的密码不一致
+                                            没有输入有效的密码或者两次输入的密码不一致（密码不少于6位）
                                         </div>
                                     </div>
                                 </div>               
@@ -272,12 +272,12 @@
 
             var social_id = $('input[data-name="social-id-input"]').val();
             var regIDL = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
-            result &= validate($('input[data-name="phone-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="social-id-error"]');
+            result &= validate($('input[data-name="social-id-input"]'), hasInput(social_id) && regIDL.test(social_id), 'div[data-name="social-id-error"]');
 
             var pwd = $('input[data-name="pwd"]').val();
             var pwd2 = $('input[data-name="pwd2"]').val();
+            result &= validate($('input[data-name="pwd"]'), pwd.length > 5, 'div[data-name="pwd-error"]');
             result &= validate($('input[data-name="pwd2"]'), hasInput(pwd) && hasInput(pwd2) && pwd == pwd2, 'div[data-name="pwd-error"]');
-
 
             if (result) {
                 var query_object = new Object();

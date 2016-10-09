@@ -47,7 +47,9 @@
                                             </select>
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name="origin-address" style="resize: none; margin-top:10px;"
+                                    onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"
+                                    ></textarea>
                                 </div>
                             </div>
 
@@ -58,6 +60,17 @@
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
                                         请输入完整的起运地
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='origin-address-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        地址中不能有特殊字符
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +105,8 @@
                                             </select> 
                                         </div>
                                     </div>          
-                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" class="form-control" placeholder="详细地址（选填）" rows="4" data-name='destination-address' style="resize: none; margin-top:10px;"
+                                    onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></textarea>
                                 </div>
                             </div>
 
@@ -103,6 +117,17 @@
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
                                         请输入完整的目的地
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='destination-address-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        地址中不能有特殊字符
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +162,8 @@
                                             </select> 
                                         </div>
                                     </div>          
-                                    <textarea type="text" data-name="storage-address" class="form-control" placeholder="详细地址（必填）" rows="4" style="resize: none; margin-top:10px;"></textarea>
+                                    <textarea type="text" data-name="storage-address" class="form-control" placeholder="详细地址（必填）" rows="4" style="resize: none; margin-top:10px;"
+                                    onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))"></textarea>
                                 </div>
                             </div>
 
@@ -148,6 +174,17 @@
                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                         <span class="sr-only">Error:</span>
                                         请输入完整的仓库地址
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='storage-address-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        地址中不能有特殊字符
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +270,7 @@
                                 </div>
                             </div>
 
-<!-- 删除这条发布信息
+                            <!-- 删除这条发布信息
                             <div class="form-group" data-name="product-name-container">
                                 <label class="col-sm-2 control-label">货物名称</label>
                                 <div class="col-sm-8">
@@ -279,7 +316,8 @@
                                     </div>
                                 </div>
                             </div>
--->
+                            -->
+
                             <div class="form-group">
                                 <div class="row">
                                     <label class="col-sm-2 control-label">调度员</label>
@@ -428,7 +466,6 @@
             result &= validate($('div[data-name="origin"]'), 
                         (origin_province != undefined) && (origin_city != undefined) && (origin_district != undefined), // && hasInput(origin_address),
                         'div[data-name="origin-error"]');
-
 
             var destination_province = $('select[data-name="destination-province"]').val();
             var destination_city = $('select[data-name="destination-city"]').val();

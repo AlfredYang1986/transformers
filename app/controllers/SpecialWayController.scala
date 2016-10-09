@@ -36,8 +36,8 @@ object SpecialWayController extends Controller {
            
             if ((user \ "auth").asOpt[Int].get > authTypes.speicalwayBase.t) {
                 val com_lst = (driverSearchModule.queryCompany(toJson("")) \ "result").asOpt[List[JsValue]].get
-                val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
-                Ok(views.html.swLoginIndex(token)(open_id)(name)(com_lst)(following_lst))
+//                val following_lst = (driverFollowModule.queryDriverFollowingLst(toJson(Map("driver_open_id" -> open_id))) \ "result").asOpt[List[String]].get
+                Ok(views.html.swLoginIndex(token)(open_id)(name)(com_lst))
             }
             else Redirect("/index")
         }
@@ -442,5 +442,16 @@ object SpecialWayController extends Controller {
             }
             else Redirect("/index")
         }
+    }
+    
+    def swSearchCompanyHtml = Action { request => 
+        try {
+  			    request.body.asJson.map { x => 
+                val result = (driverSearchModule.queryCompany(x) \ "result").asOpt[List[JsValue]].get 
+                Ok(views.html.specialway_company_search_result(result))
+      			}.getOrElse (BadRequest("Bad Request for input"))
+  	   	} catch {
+  		   	case _ : Exception => BadRequest("Bad Request for input")
+  		  }  		   
     }
 }
