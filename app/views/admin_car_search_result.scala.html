@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for="business-license" class="col-sm-2 control-label">行驶路线</label>
                         <div class="col-sm-6">
-                            <label type="text" >
+                            <label type="text" class="control-label">
                             {
                                 (iter \ "line" \ "origin_province").asOpt[String].get + " " + 
                                 (iter \ "line" \ "origin_city").asOpt[String].get + " --> " +
@@ -86,22 +86,22 @@
                     <div class="form-group">
                         <label for="company-reg-address" class="col-sm-2 control-label">吨位</label>
                         <div class="col-sm-6">
-                            <lbael type="text" class="control-label">
+                            <label type="text" class="control-label">
                             {
                                 "%.1f元/吨".format((iter \ "weight").asOpt[Float].get)
                             }
-                            </lbael>
+                            </label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="company-reg-address" class="col-sm-2 control-label">体积</label>
                         <div class="col-sm-6">
-                            <lbael type="text" class="control-label">
+                            <label type="text" class="control-label">
                             {
                                 "%.1f元/立方".format((iter \ "volume").asOpt[Float].get)
                             }
-                            </lbael>
+                            </label>
                         </div>
                     </div>
 
@@ -109,18 +109,18 @@
                     <div class="form-group">
                         <label for="company-reg-address" class="col-sm-2 control-label">其他备注</label>
                         <div class="col-sm-6">
-                            <lbael type="text" class="control-label" >
+                            <label type="text" class="control-label" >
                             {
                                 (iter \ "notes").asOpt[String].get
                             }
-                            </lbael>
+                            </label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="company-reg-address" class="col-sm-2 control-label">预约电话</label>
                         <div class="col-sm-6">
-                            <lbael type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">18058749738</lbael>
+                            <label type="text" class="control-label" data-name="reg-address" data-target="company-reg-address">18058749738</label>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
             { if(control) {
                 <button onclick={"fullCar(\"" + pl_id + "\")"}  class="btn btn-default">满载</button><br/>
             }}
-            <button onclick={"hideContent(\"" + pl_id + "\")"} class="btn btn-default" >收起</button>
+            <button onclick={"hideContent(\"" + pl_id + "\")"} class="btn btn-default" style="margin-top: 20px;" >收起</button>
         </td>
     </tr>
 }}
