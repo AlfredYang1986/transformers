@@ -758,6 +758,20 @@ object AuthModule {
                   (data \ "driver_social_id").asOpt[String].map (x => head += "driver_social_id" -> x).getOrElse(Unit)
                   (data \ "driver_image").asOpt[String].map (x => head += "driver_image" -> x).getOrElse(Unit)
                   (data \ "road_image").asOpt[String].map (x => head += "road_image" -> x).getOrElse(Unit)
+
+                  (data \ "driver_lines").asOpt[List[JsValue]].map { lst =>   
+                      val lines = MongoDBList.newBuilder
+                      lst foreach { x =>
+                          val item = MongoDBObject.newBuilder
+                          item += "origin_province" -> (x \ "origin_province").asOpt[String].get
+                          item += "origin_city" -> (x \ "origin_city").asOpt[String].get
+                          item += "destination_province" -> (x \ "destination_province").asOpt[String].get
+                          item += "destination_city" -> (x \ "destination_city").asOpt[String].get
+                          
+                          lines += item.result
+                      }
+                      head += "driver_lines" -> lines.result 
+                  }.getOrElse(Unit)
                   
                   _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
                   toJson(Map("status" -> "ok", "result" -> "success"))

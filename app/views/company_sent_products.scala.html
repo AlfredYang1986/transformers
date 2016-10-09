@@ -302,8 +302,12 @@
                                         <div class="col-sm-8">
                                         <select class="form-control" data-name={"product-name-" + product_id} >
                                             <optgroup label="常用货物名称">
-                                            @{ pdns map { iter =>
-                                                <option>{iter}</option>    
+                                            @{ pdns map { pd =>
+                                                if ((iter \ "product_name").asOpt[String].get.equals(pd)) {
+                                                    <option selected="">{pd}</option>
+                                                } else {
+                                                    <option>{pd}</option>
+                                                }
                                             }}                                           
                                             </optgroup>
                                         </select>
@@ -362,8 +366,12 @@
                                             <div class="col-sm-12">
                                                 <select class="form-control" data-name={"contact-name-" + product_id} onchange={"contactNameChange(\"" + product_id + "\")"} >
                                                     <optgroup label="调度员姓名">
-                                                    @{ contacts map { iter =>
-                                                        <option data-ct-phone={(iter \ "contact_phone").asOpt[String].get} value={(iter \ "contact_name").asOpt[String].get} >{(iter \ "contact_name").asOpt[String].get}</option>    
+                                                    @{ contacts map { ct =>
+                                                        if((iter \ "contact_name").asOpt[String].get.equals((ct \ "contact_name").asOpt[String].get)) {
+                                                            <option selected="" data-ct-phone={(ct \ "contact_phone").asOpt[String].get} value={(ct \ "contact_name").asOpt[String].get} >{(ct \ "contact_name").asOpt[String].get}</option>    
+                                                        } else {
+                                                            <option data-ct-phone={(ct \ "contact_phone").asOpt[String].get} value={(ct \ "contact_name").asOpt[String].get} >{(ct \ "contact_name").asOpt[String].get}</option>    
+                                                        }
                                                     }}                                          
                                                     </optgroup>
                                                 </select>
@@ -380,8 +388,12 @@
                                             <div class="col-sm-8">
                                                 <select class="form-control" data-name={"contact-phone-" + product_id} onchange={"contactPhoneChange(\"" + product_id + "\")"}>
                                                     <optgroup label="调度员电话">
-                                                        @{ contacts map { iter =>
-                                                            <option data-ct-name={(iter \ "contact_name").asOpt[String].get}  value={(iter \ "contact_phone").asOpt[String].get} >{(iter \ "contact_phone").asOpt[String].get}</option>
+                                                        @{ contacts map { ct =>
+                                                            if((iter \ "contact_phone").asOpt[String].get.equals((ct \ "contact_phone").asOpt[String].get)) {
+                                                                <option selected="" data-ct-name={(ct \ "contact_name").asOpt[String].get}  value={(ct \ "contact_phone").asOpt[String].get} >{(ct \ "contact_phone").asOpt[String].get}</option>
+                                                            } else {
+                                                                <option data-ct-name={(ct \ "contact_name").asOpt[String].get}  value={(ct \ "contact_phone").asOpt[String].get} >{(ct \ "contact_phone").asOpt[String].get}</option>
+                                                            }
                                                         }}                                              
                                                     </optgroup>
                                                 </select>

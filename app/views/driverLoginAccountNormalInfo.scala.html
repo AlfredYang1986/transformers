@@ -14,8 +14,8 @@
                     <div class="panel-body">
                         <h3 class="title-hero">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:red; margin-top:10px;">
-                    <span style="color:#424949;margin-left: 5px;"> 更改绑定手机号码后，登录账号自动变更为新的手机号码，请谨慎更改！</span>
-            </i>
+                        <span style="color:#424949;margin-left: 5px;"> 更改绑定手机号码后，登录账号自动变更为新的手机号码，请谨慎更改！</span>
+                    </i>
                         </h3>
 
                         <div class="example-box-wrapper">
@@ -122,10 +122,11 @@
                                     </div>
                                 </div> -->
 
+                                <div data-name="line-container">
                                 @{ ((driver \ "driver_lines").asOpt[List[play.api.libs.json.JsValue]].get.toList zipWithIndex) map { iter_index => 
                                 val iter = iter_index._1
                                 val index = iter_index._2
-                                <div class="form-group driver-lines" data-name={"index-" + index}>
+                                <div class="form-group" data-name="driver-lines">
                                     <label class="col-sm-3 control-label">常跑路线</label>
 
                                     <div class="col-sm-9">
@@ -170,7 +171,7 @@
                                             <div class="col-sm-2">
                                                 {
                                                 val tmp = (iter \ "destination_province").asOpt[String].get
-                                                <select class="form-control" data-name="origin-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                     {cities map { p => 
                                                         if (tmp.equals((p \ "province").asOpt[String].get)) {
                                                             <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -186,7 +187,7 @@
                                                 {
                                                 val province = (iter \ "destination_province").asOpt[String].get
                                                 val tmp = (iter \ "destination_city").asOpt[String].get
-                                                <select class="form-control" data-name="origin-city" data-index="3" >
+                                                <select class="form-control" data-name="destination-city" data-index="3" >
                                                     {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -207,57 +208,22 @@
                                     </div>
                                 </div>
                                 }}
+                                </div>
 
-                                <div class="row collapse" id="new-line-collapse" style="margin-top:10px">
-                                    <label class="col-sm-3 control-label">新添路线</label>
-                                    <div class="col-sm-9">
-                                        <div class="row">
-                                            <div class="col-sm-2">
-                                                <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
-                                                    <option disabled="" >请选择省</option>
-                                                    @{cities map { p => 
-                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
-                                                    }};
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-2">
-                                                <select class="form-control" data-name="origin-city" data-index="1" >
-                                                    <option disabled="" >请选择市</option>
-                                                    @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                    }}};
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-1 text-center" style="text-align:center;">
-                                                <i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
-                                            </div>
-
-                                            <div class="col-sm-2">
-                                                <select class="form-control" data-name="origin-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
-                                                    <option disabled="" >请选择省</option>
-                                                    @{cities map { p => 
-                                                        <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
-                                                    }};
-                                                </select>
-                                            </div>
-
-                                            <div class="col-sm-2">
-                                                <select class="form-control" data-name="origin-city" data-index="3" >
-                                                    <option disabled="" >请选择市</option>
-                                                    @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                    }}};
-                                                </select>
-                                            </div>                                                                            
+                                <div class="form-group" style="display: none;" data-name='line-error'>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-8">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择路径信息
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" data-toggle="collapse" href="#new-line-collapse">
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="addDriverLines()">
                                         新增路线
                                     </button>
                                 </div>
@@ -285,6 +251,49 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div data-name="driver-lines-lst" class="col-sm-8 col-sm-offset-2" style="display: none; clear: both;" >
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+                <option selected disabled>请选择省</option>
+                @{cities map { iter => 
+                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                }};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="origin-city" data-index="1">
+                <option selected disabled data-filter="choice" >请选择市</option>
+                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                }}};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="text-align:center;">
+            <i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+                <option selected disabled data-filter="choice" >请选择省</option>
+                @{cities map { iter => 
+                    <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+                }};
+            </select>
+        </div>
+
+        <div class="col-sm-2" style="padding-right: 0px !important">
+            <select class="form-control" data-name="destination-city" data-index="3">
+                <option selected disabled data-filter="choice" >请选择市</option>
+                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+                }}};
+            </select>
+        </div>
+        <button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
     </div>
 
 } {
@@ -322,35 +331,39 @@
             $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
         }
 
+        var lst = [];
         function driverLines() {
-            var lst = [];
-            $.each($('div.driver-lines'), function(){
-                var line = new Object();
-                line["origin_province"] = $(this).find('selected[data-name="origin-province"]').val();
-                line["origin_city"] = $(this).find('selected[data-name="origin-city"]').val();
-                line["destination_province"] = $(this).find('selected[data-name="destination-province"]').val();
-                line["destination_city"] = $(this).find('selected[data-name="destination_city"]').val();
-                lst.push(line);
-            });
+            var result = true;
 
-            if ($('#new-line-collapse').hasClass('in')) {
+            lst = [];
+            $.each($('div[data-name="driver-lines"]'), function(){
                 var line = new Object();
-                line["origin_province"] = $('#new-line-collapse').find('selected[data-name="origin-province"]').val();
-                line["origin_city"] = $('#new-line-collapse').find('selected[data-name="origin-city"]').val();
-                line["destination_province"] = $('#new-line-collapse').find('selected[data-name="destination-province"]').val();
-                line["destination_city"] = $('#new-line-collapse').find('selected[data-name="destination_city"]').val();
-                lst.push(line);
-            }
-            return lst;
+                line["origin_province"] = $(this).find('select[data-name="origin-province"]').val();
+                result &= validate($(this), line['origin_province'] != null, 'div[data-name="line-error"]');
+
+                line["origin_city"] = $(this).find('select[data-name="origin-city"]').val();
+                result &= validate($(this), line['origin_city'] != null, 'div[data-name="line-error"]');
+
+                line["destination_province"] = $(this).find('select[data-name="destination-province"]').val();
+                result &= validate($(this), line['destination_province'] != null, 'div[data-name="line-error"]');
+
+                line["destination_city"] = $(this).find('select[data-name="destination-city"]').val();
+                result &= validate($(this), line['destination_city'] != null, 'div[data-name="line-error"]');
+
+                if (result) 
+                    lst.push(line);
+            });
+            return result;
         }
 
         function updateDriver() {
             var result = true;
 
             var phone_no = $('input[data-name="phone-no"]').val();
+            var regPhone = /^1[3|4|5|7|8]\d{9}$/;
 
             result &= validate($('div[data-name="phone-no"]'),
-                        hasInput(phone_no),
+                        hasInput(phone_no) && regPhone.test(phone_no),
                         'div[data-name="phone-no-error"]');
                         
             var vehicle_lst = $('input[data-name="vehicle"]:checked');
@@ -365,10 +378,10 @@
                         vehicle_length_lst.length > 0,
                         'div[data-name="vehicle-length-error"]');
 
-            var lines = driverLines();
+            result &= driverLines();
 
-            result &= validate($('div[data-name="vehicle-length-container"]'),
-                        lines.length > 0,
+            result &= validate($('div[data-name="line-container"]'),
+                        lst.length > 0,
                         'div[data-name="driver-line-error"]');
 
             // var capacity = $('input[data-name="capacity"]').val();
@@ -395,7 +408,7 @@
                 });
                 query_object['vehicle_length'] = vehicle_length_number_lst;
 
-                query_object['driver_lines'] = lines;
+                query_object['driver_lines'] = lst;
 
                 query_object['open_id'] = "@{open_id}";
 
@@ -419,6 +432,25 @@
                     }
                 });
             }
+        }
+
+        function deleteDriverLine() {
+            $(this).parent().remove();
+        }
+
+        function addDriverLines() {
+            var l = $('div[data-name="driver-lines-lst"]')
+            var cp = l.clone();
+            cp.removeAttr('data-name');
+            cp.attr('data-name', 'driver-lines');
+            cp.appendTo($("div[data-name='line-container']"));
+            cp.show();
+
+            var count = $('div[data-name="line-item"]').length;
+            cp.attr('data-index', 'lines-index-' + (count - 1));
+
+            var btn = cp.find('button');
+            btn.click(deleteDriverLine);
         }
 	</script>
 }

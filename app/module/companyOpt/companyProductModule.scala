@@ -316,7 +316,7 @@ object companyProductModule {
             con
         }
        
-        val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(2)
+        val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
         val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
         val order = "date"
         

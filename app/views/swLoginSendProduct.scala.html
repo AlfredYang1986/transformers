@@ -542,6 +542,7 @@
             // }
 
             var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
+            var contact_name_reg = /[\u4e00-\u9fa5]/;
             var contact_name = "";
             var contact_phone = "";
             var contact_save = 0;
@@ -559,7 +560,7 @@
             }
 
             result &= validate($('div[data-name="contact-container"]'),
-                        hasInput(contact_name) && hasInput(contact_phone) && cell_phone_reg.test(contact_phone),
+                        hasInput(contact_name) && hasInput(contact_phone) && cell_phone_reg.test(contact_phone) && contact_name_reg.test(contact_name),
                         'div[data-name="contact-error"]');
 
             var cooperation_type = $('input[data-name="cooperation-type"]:checked').val();
