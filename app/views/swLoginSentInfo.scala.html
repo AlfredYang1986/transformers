@@ -65,9 +65,9 @@
         function updateInfo(info_id) {
 
             var content = $('div[data-name="edit' + info_id + '"]').find('.note-editable').html();
-            var title = $('div[data-title="' + info_id + '"]').val();
-            var contact = $('div[data-contact="' + info_id + '"]').val();
-            var phone_no = $('div[data-phone="' + info_id + '"]').val();
+            var title = $('input[data-title="' + info_id + '"]').val();
+            var contact = $('input[data-contact="' + info_id + '"]').val();
+            var phone_no = $('input[data-phone="' + info_id + '"]').val();
 
             var query_object = new Object();
             query_object['info_id'] = info_id;
@@ -129,6 +129,7 @@
             query_object['skip'] = $('div[data-name="info-item"]').length;
 
             $.ajax({
+
                 url: "/html/company/sentinfo/append",
                 type: 'POST',
                 // dataType: 'json',

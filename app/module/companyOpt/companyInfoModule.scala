@@ -96,13 +96,13 @@ object companyInfoModule {
         
     def queryInfo(data : JsValue) : JsValue =
         try {
-            def conditionsAcc(o : DBObject, n : Option[DBObject]) : DBObject = n match {
-              case Some(x) => $and(o, x)
-              case None => o
+            def conditionsAcc(lst : List[DBObject], n : Option[DBObject]) : List[DBObject] = n match {
+              case Some(x) => x :: lst
+              case None => lst
             }
             
             def conditions : DBObject = {
-                var c = DBObject()
+                var c : List[DBObject] = Nil
                 List("info_id", "title", "contact", "phone_no", "open_id") foreach { key => 
                     c  = conditionsAcc(c, (data \ key).asOpt[String].map (x => Some(key $eq x)).getOrElse(None))
                 }
@@ -110,13 +110,13 @@ object companyInfoModule {
                 List("status") foreach { key =>
                     c = conditionsAcc(c, (data \ key).asOpt[Int].map (x => Some(key $eq x)).getOrElse(None))
                 }
-                c
+                $and(c)
             }
-          
+         
             val take = (data \ "take").asOpt[Int].map (x => x).getOrElse(20)
             val skip = (data \ "skip").asOpt[Int].map (x => x).getOrElse(0)
             val order = "date"
-            
+           
             toJson(Map("status" -> toJson("ok"), "result" -> toJson(
                 (from db() in "info" where conditions).selectSkipTop(skip)(take)(order)(infoObject2JsValue(_)).toList)))
           

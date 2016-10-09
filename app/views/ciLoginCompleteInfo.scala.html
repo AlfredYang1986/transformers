@@ -28,6 +28,8 @@
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
+            $('div[data-name="compay-sent-item"]').find('input').attr('disabled', true); 
+            $('div[data-name="compay-sent-item"]').find('.form-control').attr('disabled', true); 
         });
 
         function setDefault(edit, html) {
@@ -79,6 +81,8 @@
                     $(data).appendTo($('div[data-name="result-container"]'));
                     $('.wysiwyg-editor').summernote({height: 350});
                     $('.wysiwyg-editor-air').summernote({airMode: true});
+                    $('div[data-name="compay-sent-item"]').find('input').attr('disabled', true); 
+                    $('div[data-name="compay-sent-item"]').find('.form-control').attr('disabled', true); 
                 },
                 error: function (xhr, status, error) {
                     alert("请检查您的输入");
