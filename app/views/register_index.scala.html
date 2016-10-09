@@ -849,7 +849,8 @@
 			var result = true;
 
 			var company_name = $('input[data-name="company-name"]').val();
-			var regCompName = /[\u4e00-\u9fa5]/;
+			var regCompName = /[\u4E00-\u9FA5]{6,20}/g;
+			//var regCompName = /[\u4e00-\u9fa5]/;
 			result &= validate($('input[data-name="company-name"]'), hasInput(company_name) && regCompName.test(company_name), 'div[data-name="company-name-error"]');
 
 			var legal_person = $('input[data-name="legal-person"]').val();
@@ -867,8 +868,9 @@
 			//result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !regCPAD.test(company_reg_address) && !regCPADD.test(company_reg_address), 'div[data-name="reg-address-error"]');
 
 			//地址只能输入中文，英文或者数字
-			var newCPA = /"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+"/;
-			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && !newCPA.test(company_reg_address), 'div[data-name="reg-address-error"]');
+			var newCPA = /^[\u4E00-\u9FA5A-Za-z\d\-\_]{10,60}$/; 
+			//var newCPA = /"[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]+"/;
+			result &= validate($('input[data-name="reg-address"]'), hasInput(company_reg_address) && newCPA.test(company_reg_address), 'div[data-name="reg-address-error"]');
 
 
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
