@@ -221,55 +221,55 @@
 						<label for="principal-phone-no" class="col-sm-2 control-label">常用路线</label>
 
 						<fieldset class="driver-line-lst">
-						<div class="driver-line" style="min-height: 40px !important">
+							<div class="driver-line" style="min-height: 40px !important">
 
-							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
-									<option selected disabled>请选择省</option>
-									@{cities map { iter => 
-										<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
-									}};
-								</select>
+								<div class="col-sm-2" style="padding-right: 0px !important">
+									<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+										<option selected disabled>请选择省</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
+									</select>
+								</div>
+
+								<div class="col-sm-2" style="padding-right: 0px !important">
+									<select class="form-control" data-name="origin-city" data-index="1">
+										<option selected disabled data-filter="choice" >请选择市</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
+									</select>
+								</div>
+
+								<div class="col-sm-2" style="text-align:center;">
+								<!--
+									<img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
+									<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
+								</div>
+
+								<div class="col-sm-2" style="padding-right: 0px !important">
+									<select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+										<option selected disabled data-filter="choice" >请选择省</option>
+										@{cities map { iter => 
+											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+										}};
+									</select>
+								</div>
+
+								<div class="col-sm-2" style="padding-right: 0px !important">
+									<select class="form-control" data-name="destination-city" data-index="3">
+										<option selected disabled data-filter="choice" >请选择市</option>
+										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
+										}}};
+									</select>
+								</div>
+						
+								<button class="btn btn-sm btn-default driver-delete-btn" onclick="deleteRoute('driver-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
+
+
 							</div>
-
-							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="origin-city" data-index="1">
-									<option selected disabled data-filter="choice" >请选择市</option>
-									@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-										<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-									}}};
-								</select>
-							</div>
-
-							<div class="col-sm-2" style="text-align:center;">
-							<!--
-								<img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
-								<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
-							</div>
-
-							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
-									<option selected disabled data-filter="choice" >请选择省</option>
-									@{cities map { iter => 
-										<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
-									}};
-								</select>
-							</div>
-
-							<div class="col-sm-2" style="padding-right: 0px !important">
-								<select class="form-control" data-name="destination-city" data-index="3">
-									<option selected disabled data-filter="choice" >请选择市</option>
-									@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-										<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-									}}};
-								</select>
-							</div>
-					
-							<button class="btn btn-sm btn-default driver-delete-btn" onclick="deleteRoute('driver-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
-
-
-						</div>
-					</fieldset>
+						</fieldset>
 					</div>		
 
 					<div class="form-group">
@@ -279,6 +279,18 @@
 							<button  data-name="driver-line-add" type="button" class="btn col-sm-7" onclick="addRoute('driver-line', $(this), 5)">新增常用路线</button>
 						</div>
 					</div>	
+
+					<div class="form-group" style="display: none;" data-name='driver-line-error'>
+						<span class="col-sm-1 control-label"></span>
+						<label for="company-name" class="col-sm-2 control-label"></label>
+						<div class="col-sm-9">
+							<div class="alert alert-danger" role="alert">
+							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  	<span class="sr-only">Error:</span>
+							  	请填写有效的路线信息
+							</div>
+						</div>
+					</div>
 
 <!-- 					<div class="form-group">
 						<span class="col-sm-1 control-label"></span>
@@ -515,16 +527,16 @@
 			var lines_lst = [];
 			$.each($('.driver-line'), function( index, value ) {
 				var origin_province = $(this).find('select[data-name="origin-province"]').val();
-				result &= validate($(this).find('select[data-name="origin-province"]'), (typeof(origin_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-province"]'), origin_province != null, 'div[data-name="driver-line-error"]');
 
 				var origin_city = $(this).find('select[data-name="origin-city"]').val();
-				result &= validate($(this).find('select[data-name="origin-city"]'), (typeof(origin_city) != "undefined"));
+				result &= validate($(this).find('select[data-name="origin-city"]'), origin_city != null, 'div[data-name="driver-line-error"]');
 
 				var destination_province = $(this).find('select[data-name="destination-province"]').val();
-				result &= validate($(this).find('select[data-name="destination_province"]'), (typeof(destination_province) != "undefined"));
+				result &= validate($(this).find('select[data-name="destination-province"]'), destination_province != null, 'div[data-name="driver-line-error"]');
 
 				var destination_city = $(this).find('select[data-name="destination-city"]').val();
-				result &= validate($(this).find('select[data-name="destination_city"]'), (typeof(destination_city) != "undefined"));		
+				result &= validate($(this).find('select[data-name="destination-city"]'), destination_city != null, 'div[data-name="driver-line-error"]');		
 
 				if (Boolean(result)) {
 					var tmp = new Object();

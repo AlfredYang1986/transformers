@@ -102,7 +102,7 @@ object companyInfoModule {
             }
             
             def conditions : DBObject = {
-                var c : List[DBObject] = Nil
+                var c : List[DBObject] = ("status" $gte 0) :: Nil
                 List("info_id", "title", "contact", "phone_no", "open_id") foreach { key => 
                     c  = conditionsAcc(c, (data \ key).asOpt[String].map (x => Some(key $eq x)).getOrElse(None))
                 }

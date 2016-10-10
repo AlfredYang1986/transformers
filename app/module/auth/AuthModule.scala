@@ -92,6 +92,9 @@ object AuthModule {
     def indicateValidateCheck(data : JsValue) : JsValue = {
         
         try {
+            (data \ "company_name").asOpt[String].map (x => if (x.equals("admin")) throw new Exception("duplicate phone or email")
+                                                            else Unit).getOrElse(Unit)
+          
             val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
    
             val indicate = company_type match {
@@ -105,7 +108,7 @@ object AuthModule {
             val master_indicate = company_type match {
                 case registerTypes.company.t | registerTypes.industry.t | registerTypes.specialway.t => 
                     Some((data \ "compnay_name").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone")))
-                case registerTypes.admin.t => Some("admin")
+//                case registerTypes.admin.t => Some("admin")
                 case _ => None
             }
             
@@ -424,9 +427,18 @@ object AuthModule {
                        builder += "user_id" -> user_id
                        builder += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
                        builder += "screen_name" -> name
-                       builder += "auth" -> (data \ "auth").asOpt[Int].map (y => y).getOrElse(authTypes.companyOthers.t)
                        builder += "pwd" -> (data \ "pwd").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
                        builder += "social_id" -> (data \ "social_id").asOpt[String].map (y => y).getOrElse(throw new Exception("wrong input"))
+
+                       builder += "auth" -> (data \ "auth").asOpt[Int].map (y => y).getOrElse {
+                           head.getAs[Int]("type").get match {
+                             case registerTypes.company.t | registerTypes.industry.t => authTypes.companyOthers.t
+                             case registerTypes.specialway.t => authTypes.speicalwayOther.t
+                             case registerTypes.driver.t => authTypes.driverMaster.t
+                             case registerTypes.admin.t => authTypes.adminAdjusted.t
+                             case _ => throw new Exception("wrong input")
+                           }
+                       }
                        
                        head += "user_lst" -> (builder.result :: user_lst)
                        _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
