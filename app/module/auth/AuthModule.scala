@@ -94,7 +94,6 @@ object AuthModule {
         try {
             (data \ "company_name").asOpt[String].map (x => if (x.equals("admin")) throw new Exception("duplicate phone or email")
                                                             else Unit).getOrElse(Unit)
-          
             val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
    
             val indicate = company_type match {
@@ -107,11 +106,11 @@ object AuthModule {
             
             val master_indicate = company_type match {
                 case registerTypes.company.t | registerTypes.industry.t | registerTypes.specialway.t => 
-                    Some((data \ "compnay_name").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone")))
+                    Some((data \ "company_name").asOpt[String].map (x => x).getOrElse(throw new Exception("input driver phone")))
 //                case registerTypes.admin.t => Some("admin")
                 case _ => None
             }
-            
+           
             def conditions = master_indicate match {
               case Some(x) => $or("user_lst.indicate" -> x, "user_lst.indicate" -> indicate)
               case None => "user_lst.indicate" -> indicate
@@ -278,7 +277,7 @@ object AuthModule {
             x += "pwd" -> "Passw0rd"
             x += "screen_name" -> "company master"
         }
-      
+     
         val v_indicate = indicateValidateCheck(data)
 //        val v_reg = regCodeCheck(data)
         
@@ -289,6 +288,7 @@ object AuthModule {
           val (common_result, common_error) = commonRegisterImpl(common)
           if (!common_result) ErrorCode.errorToJson(common_error)
           else {
+            println(common)
               val detail = MongoDBObject.newBuilder.result
               val (detail_result, detail_error) = company_type match {
                 case company.t => companyRegisterImpl(detail)
