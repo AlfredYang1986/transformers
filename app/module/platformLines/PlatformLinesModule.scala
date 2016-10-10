@@ -48,7 +48,7 @@ object PlatformLinesModule {
                 builder += "vehicle" -> x  
             }.getOrElse(throw new Exception("wrong input"))
             
-            (data \ "vehicle_length").asOpt[List[Float]].map { x =>
+            (data \ "vehicle_length").asOpt[List[Double]].map { x =>
                 builder += "vehicle_length" -> x
             }.getOrElse(throw new Exception("wrong input"))
             
