@@ -118,12 +118,15 @@
                                             </select>
                                         }
                                         </div>
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
+                                        </div>
                                     </div>
                                     }
                                 }
                                 </div>
 
-                                <div class="form-group" style="display: none;" data-name='line-error'>
+                                <div class="form-group" style="display: none;" data-name='company-line-error'>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
                                     <div class="col-sm-8">
                                         <div class="alert alert-danger" role="alert">
@@ -281,11 +284,11 @@
 
                                         <div class="row" style="margin-top:10px">
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control"> 
+                                                <input type="text" class="form-control" data-name="cell_phone_code"> 
                                             </div>
                                             
                                             <div class="col-sm-4">
-                                                <button class="form-control" data-name="cell_code" style="border: 1px solid #008bdc">获取动态验证码</button>
+                                                <button class="form-control" data-name="cell_code" style="border: 1px solid #008bdc" onclick="sendCode()">获取动态验证码</button>
                                             </div>
                                         </div>
                                     </div>
@@ -305,7 +308,7 @@
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateCompanyInfo()">
+                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="checkCode()">
                                         保存
                                     </button>
                                 </div>              
@@ -367,6 +370,7 @@
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
+            $('div[data-name="company-line"]').find('button').click(deleteCompanyLine);
         });
 
         function cityChanges(ele, container, index) {
@@ -448,11 +452,12 @@
             } else return false;
         }
 
-        function updateCompanyInfo() {
+        function updateCompanyInfo(bUpdataPhone) {
             var authrity = @{auth}; 
             if (authrity < 12) {
                 alert("分账号没有权限修改账户信息");
             } else {
+
                 var result = true;
                 var query_object = new Object();
                 result &= getCompanyBusiness(query_object);
@@ -483,8 +488,10 @@
                     query_object["fax"] = fax;
                     query_object["email"] = email;
                     query_object["legal_person"] = legal_person;
-                    query_object["cell_phone"] = cell_phone;
                     query_object["open_id"] = "@{open_id}";
+
+                    if (bUpdataPhone) 
+                        query_object["cell_phone"] = cell_phone;
 
                     $.ajax({
                         url: "/auth/update",
@@ -510,7 +517,7 @@
         }
 
         function deleteCompanyLine() {
-            $(this).parent().remove();
+            $(this).parent().parent().remove();
         }
 
         function addCompanyLines() {
@@ -527,5 +534,64 @@
             var btn = cp.find('button');
             btn.click(deleteCompanyLine);
         }     
+
+        function sendCode() {
+            var cell_phone = $('input[data-name="cell_phone"]').val();
+
+            var tmp = new Object();
+            tmp['cell_phone'] = cell_phone;
+
+            $.ajax({
+                url: "/auth/send/code",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(tmp),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         alert("发送成功");
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function checkCode() {
+            var code = $('input[data-name="cell_phone_code"]').val();
+            if (hasInput(code)) {
+                var cell_phone = $('input[data-name="cell_phone"]').val();
+
+                var tmp = new Object();
+                tmp['cell_phone'] = cell_phone;
+                tmp['code'] = code;
+
+                $.ajax({
+                    url: "/auth/code/check",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(tmp),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                             updateCompanyInfo(true);
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+
+            } else {
+                updateCompanyInfo(false);
+            }
+        }
     </script>
 } 

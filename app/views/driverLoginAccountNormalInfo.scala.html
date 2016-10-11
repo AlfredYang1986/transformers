@@ -32,7 +32,7 @@
                                     <label class="col-sm-3 control-label"></label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control col-sm-3" data-name="phone-code" placeholder="输入动态验证码">
-                                        <button class="col-sm-3 btn bg-blue col-xs-12" style="margin-right:20px !important">
+                                        <button class="col-sm-3 btn bg-blue col-xs-12" style="margin-right:20px !important" onclick="sendCode()">
                                         获取动态验证码
                                         </button>
                                     </div>
@@ -241,7 +241,7 @@
 
                                 <div class="form-group text-center">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="updateDriver()">
+                                    <button class="col-sm-4 col-xs-offset-2 col-xs-8 btn bg-blue" style="margin-right:20px !important" onclick="checkCode()">
                                         保存
                                     </button>
                                 </div>
@@ -300,6 +300,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
+            $('div[data-name="driver-lines"]').find('button').click(deleteDriverLine2);
 		});
 
         function validate(ele, result, name) {
@@ -356,7 +357,7 @@
             return result;
         }
 
-        function updateDriver() {
+        function updateDriver(bUpdatePhone) {
             var result = true;
 
             var phone_no = $('input[data-name="phone-no"]').val();
@@ -393,7 +394,8 @@
             if (result) {
                 var query_object = new Object();
 
-                query_object["phone_no"] = phone_no;
+                if (bUpdatePhone)
+                    query_object["phone_no"] = phone_no;
                 // query_object["capacity"] = Number(capacity);
 
                 var vehicle_str_lst = [];
@@ -438,6 +440,10 @@
             $(this).parent().remove();
         }
 
+        function deleteDriverLine2() {
+            $(this).parent().parent().parent().parent().remove();
+        }
+
         function addDriverLines() {
             var l = $('div[data-name="driver-lines-lst"]')
             var cp = l.clone();
@@ -451,6 +457,65 @@
 
             var btn = cp.find('button');
             btn.click(deleteDriverLine);
+        }
+
+        function sendCode() {
+            var cell_phone = $('input[data-name="phone-no"]').val();
+
+            var tmp = new Object();
+            tmp['cell_phone'] = cell_phone;
+
+            $.ajax({
+                url: "/auth/send/code",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json, charset=utf-8',
+                data: JSON.stringify(tmp),
+                cache: false,
+                success: function (data) {
+                    if (data.status == "ok") {                                          
+                         alert("发送成功");
+                    } else {
+                        alert(data.error.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("请检查您的输入");
+                }
+            });
+        }
+
+        function checkCode() {
+            var code = $('input[data-name="phone-code"]').val();
+            if (hasInput(code)) {
+                var cell_phone = $('input[data-name="phone-no"]').val();
+
+                var tmp = new Object();
+                tmp['cell_phone'] = cell_phone;
+                tmp['code'] = code;
+
+                $.ajax({
+                    url: "/auth/code/check",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(tmp),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                             updateDriver(true);
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+
+            } else {
+                updateDriver(false);
+            }
         }
 	</script>
 }

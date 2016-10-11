@@ -1,11 +1,4 @@
 <options>
-
-	<province name="中国全境">
-		<city name="中国全境">
-			<district name="中国全境" />
-		</city>
-	</province>
-
 	<province name="浙江省">
 		<city name="杭州">
 			<district name="上城区" />
