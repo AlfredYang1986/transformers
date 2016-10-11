@@ -1,8 +1,10 @@
 
 function addRoute(name, sender, limit) {
 	var $routes = $('.' + name);
-    $routes.first().clone().insertAfter($routes.last());
-   
+    var clone = $routes.first().clone()
+    $(clone).insertAfter($routes.last());
+   	$(clone).find('textarea').val("");
+
    	if ($routes.length + 1 >= limit) {
 		$(sender).attr("disabled","disabled"); 
 	} 
