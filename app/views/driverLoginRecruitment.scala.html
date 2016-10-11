@@ -14,7 +14,7 @@
                 @{ (info zipWithIndex) map { x =>
                     val iter = x._1
                     val index = x._2
-                    val content = {(iter \ "content").asOpt[String].get}
+                    val content = (iter \ "content").asOpt[String].get.replace('"', ''')
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="panel">

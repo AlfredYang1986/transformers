@@ -756,6 +756,68 @@ object AuthModule {
         }
     }
     
+    def sendCodeFpw(data : JsValue) : JsValue = {
+        val phoneNo = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse("")
+       
+        if (phoneNo.isEmpty) ErrorCode.errorToJson("wrong cell phone")
+        else if ((from db() in "user_profile" where (
+                    $or("phone_no" -> phoneNo, 
+                        "cell_phone" -> phoneNo,
+                        "user_lst.indicate" -> phoneNo)) select (x => x)).toList.length > 0) {
+          
+          //            val code = scala.util.Random.nextInt(9000) + 1000
+            val code = "1111"
+            
+            (from db() in "reg" where ("cell_phone" -> phoneNo) select (x => x)).toList match {
+              case Nil => {
+                  val builder = MongoDBObject.newBuilder
+                  builder += "cell_phone" -> phoneNo
+                  builder += "code" -> code.toString
+                  builder += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  
+                  _data_connection.getCollection("reg") += builder.result
+              }
+              case head :: Nil => {
+                  head += "code" -> code.toString
+                  head += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  
+                  _data_connection.getCollection("reg").update(DBObject("cell_phone" -> phoneNo), head)
+              }
+            }
+           
+//            import play.api.Play.current
+//            smsModule().sendSMS(phoneNo, code.toString)
+            toJson(Map("status" -> "ok", "result" -> "send sms message success"))
+
+        } else {
+          ErrorCode.errorToJson("phone or email not register")
+        }
+    }
+   
+    def resetPassword(data :  JsValue) : JsValue = {
+        try {
+            val cell_phone = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))
+            
+            (from db() in "user_profile" where ("user_lst.indicate" -> cell_phone) select (x => x)).toList match {
+              case head :: Nil => {
+                  val open_id = head.getAs[String]("open_id").get
+                  val user_lst = head.getAs[MongoDBList]("user_lst").get.toList.asInstanceOf[List[BasicDBObject]]
+                  val user = user_lst.filter (x => cell_phone.equals(x.get("indicate"))).head
+                  
+                  user += "pwd" -> "Passw0rd"
+                  head += "user_lst" -> (user :: (user_lst.filterNot (x => cell_phone.equals(x.get("indicate")))))
+                  
+                  _data_connection.getCollection("user_profile").update(DBObject("open_id" -> open_id), head)
+                  toJson(Map("status" -> toJson("ok"), "result" -> toJson(this.detailResult(head))))
+              }
+              case _ => throw new Exception("not existing")
+            }
+          
+        } catch {
+          case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
+        }
+    }
+    
     def updateDriverProfile(data : JsValue) : JsValue = {
         try {
             val open_id = (data \ "open_id").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong input"))  

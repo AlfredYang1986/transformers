@@ -24,4 +24,6 @@ object AuthController extends Controller {
   def driverUpdate = Action (request => requestArgs(request)(AuthModule.updateDriverProfile))
   
   def regCodeCheck = Action (request => requestArgs(request)(AuthModule.regCodeCheck))
+	def sendCodeFpw = Action (request => requestArgs(request)(AuthModule.sendCodeFpw))
+	def resetPassword = Action (request => requestArgs(request)(AuthModule.resetPassword))
 }

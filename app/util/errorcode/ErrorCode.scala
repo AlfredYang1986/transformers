@@ -30,6 +30,7 @@ object ErrorCode {
   		new ErrorNode("duplicate phone or email", -20, "该手机号码已被授权为公司分帐号，无法再进行注册。如果不是您本人操作，请尽快联系客服400-016-1956"),
   		new ErrorNode("wrong email", -21, "输入正确的邮件地址"),
   		new ErrorNode("wrong input", -22, "输入参数有错误"),
+  		new ErrorNode("phone or email not register", -23, "该手机号码重未被授权为公司分帐号，无法再进行密码重置。请尽快联系客服400-016-1956"),
   		
   		new ErrorNode("auth error", -996, "所在用户组没有访问权限"),
   		new ErrorNode("auth status error", -997, "没有通过授权"),

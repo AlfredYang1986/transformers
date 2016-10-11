@@ -188,6 +188,8 @@ POST	/auth/driver/register											controllers.AuthController.driverRegister
 POST	/auth/login														controllers.AuthController.login
 POST	/auth/admin/login												controllers.AuthController.admainLogin
 POST	/auth/send/code													controllers.AuthController.sendCode
+POST	/auth/send/code/fpw												controllers.AuthController.sendCodeFpw
+POST	/auth/fpw/reset													controllers.AuthController.resetPassword
 POST	/auth/code/check												controllers.AuthController.regCodeCheck
 POST	/auth/update													controllers.AuthController.update
 POST	/auth/driver/update												controllers.AuthController.driverUpdate
