@@ -52,12 +52,13 @@
                                     </div>
                                 </div>  
 
-                                <div data-name="company-line-container">
+                                <div data-name="company-line-container" class="form-group">
                                 @{
                                     val lines = (company \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].map (x => x).getOrElse(Nil)
                                     lines map { iter => 
-                                    <div class="form-group company-line" data-name="company-line">
+                                    <div class="company-line" data-name="company-line">
                                         <label class="col-sm-2 control-label">营业范围</label>
+                                        <div class="col-sm-8">
                                         <div class="col-sm-2">
                                             <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => 
@@ -118,8 +119,9 @@
                                             </select>
                                         }
                                         </div>
-                                        <div class="form-group text-center">
-                                            <button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
+                                        <div class="col-xs-2 col-xs-offset-1">
+                                            <button class="btn btn-sm btn-default form-control" style="margin-left: 20px !important; background: none !important; border:none !important"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
+                                        </div>
                                         </div>
                                     </div>
                                     }
@@ -137,9 +139,8 @@
                                     </div>
                                 </div> 
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addCompanyLines()">
+                                <div class="col-sm-12 form-group">
+                                    <button class="col-sm-6 col-xs-offset-3 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addCompanyLines()">
                                         新增营业范围
                                     </button>
                                 </div>
@@ -319,9 +320,9 @@
             </div>
         </div>
     </div>
+    <div data-name="special-lines-lst" class="col-sm-8 col-sm-offset-2" style="display: none; clear: both; margin-top:15px;" >
 
-    <div data-name="special-lines-lst" class="col-sm-8 col-sm-offset-2" style="display: none; clear: both;" >
-        <div class="col-sm-2" style="padding-right: 0px !important">
+        <div class="col-sm-2 ">
             <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
                 <option selected disabled>请选择省</option>
                 @{cities map { iter => 
@@ -330,7 +331,7 @@
             </select>
         </div>
 
-        <div class="col-sm-2" style="padding-right: 0px !important">
+        <div class="col-sm-2" >
             <select class="form-control" data-name="origin-city" data-index="1">
                 <option selected disabled data-filter="choice" >请选择市</option>
                 @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
@@ -339,11 +340,11 @@
             </select>
         </div>
 
-        <div class="col-sm-2" style="text-align:center;">
+        <div class="col-sm-1" style="text-align:center;">
             <i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i>
         </div>
 
-        <div class="col-sm-2" style="padding-right: 0px !important">
+        <div class="col-sm-2" >
             <select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
                 <option selected disabled data-filter="choice" >请选择省</option>
                 @{cities map { iter => 
@@ -352,7 +353,7 @@
             </select>
         </div>
 
-        <div class="col-sm-2" style="padding-right: 0px !important">
+        <div class="col-sm-2">
             <select class="form-control" data-name="destination-city" data-index="3">
                 <option selected disabled data-filter="choice" >请选择市</option>
                 @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
@@ -360,10 +361,10 @@
                 }}};
             </select>
         </div>
-        <div class="col-xs-2 col-xs-offset-1">
-        <button class="form-control" style="border: none; color:#848484;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>&nbsp;&nbsp;&nbsp;删除</button>
-        </div>
 
+        <div class="col-xs-2 col-xs-offset-1">
+            <button  class="btn btn-sm btn-default form-control" style="border: none; color:#848484;margin-left: 20px !important;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>&nbsp;&nbsp;&nbsp;删除</button>
+        </div>
     </div>
 
 } {
