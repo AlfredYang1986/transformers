@@ -114,7 +114,7 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">发车实效</label>
                                                 <div class="col-sm-6">
-                                                    <label type="text" class="control-label col-sm-6">
+                                                    <label type="text" class="control-label">
                                                     {if ((iter \ "special_occation").asOpt[Int].get == 0) {
                                                         "天天发车"
                                                     }  else { 

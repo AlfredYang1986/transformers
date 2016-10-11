@@ -53,8 +53,9 @@
 
                                                 <div class="form-group">
                                                     <label for="certificate-type" class="col-sm-2 control-label">主营路线</label>
-                                                    {(iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                     
                                                         <div class="col-sm-8">
+                                                        {(iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x =>
                                                             <label type='text' class="control-label">
                                                             {
                                                                 (x \ "origin_province").asOpt[String].get + " " + 
@@ -65,15 +66,17 @@
                                                                 (x \ "destination_province").asOpt[String].get + " " +
                                                                 (x \ "destination_city").asOpt[String].get
                                                             }
-                                                            </label> 
+                                                            </label><br/>
+                                                        }}
                                                         </div>
-                                                    }}
+                                                    
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="certificate-type" class="col-sm-2 control-label">仓库地址</label>
-                                                    {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                     
                                                         <div class="col-sm-8">
+                                                        {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x =>
                                                             <label type='text' class="control-label">
                                                             {
                                                                 (x \ "province").asOpt[String].get + " " + 
@@ -81,9 +84,10 @@
                                                                 (x \ "district").asOpt[String].get + " " +
                                                                 (x \ "address").asOpt[String].get
                                                             }
-                                                            </label> 
+                                                            </label> <br/>
+                                                        }}
                                                         </div>
-                                                    }}
+                                                    
                                                 </div>
 
                                                 <div class="form-group">

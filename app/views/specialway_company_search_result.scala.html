@@ -43,20 +43,23 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                             {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
                                                 (iter \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
                                                     <div class="col-sm-8">
-                                                    <div class="col-sm-4">
-                                                        <label type='text' class="control-label"> 
-                                                            {
-                                                                (x \ "origin_province").asOpt[String].get + " " + 
-                                                                (x \ "origin_city").asOpt[String].get
-                                                            } 
-                                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                                            {
-                                                                (x \ "destination_province").asOpt[String].get + " " +
-                                                                (x \ "destination_city").asOpt[String].get
-                                                            }
-                                                        </label> 
+
+                                                        <div class="col-sm-4">
+                                                            <label type='text' class="control-label"> 
+                                                                {
+                                                                    (x \ "origin_province").asOpt[String].get + " " + 
+                                                                    (x \ "origin_city").asOpt[String].get
+                                                                } 
+                                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                                                {
+                                                                    (x \ "destination_province").asOpt[String].get + " " +
+                                                                    (x \ "destination_city").asOpt[String].get
+                                                                }
+                                                            </label> 
+                                                        </div>
+                                                        
                                                     </div>
-                                                    </div>
+
                                                 }
 
                                             } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.industry.t) { 
@@ -64,19 +67,19 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                             } else if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.specialway.t) { 
                                                 (iter \ "special_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
                                                     <div class="col-sm-8">
-                                                    <div class="col-sm-4">
-                                                        <label type='text' class="control-label"> 
-                                                            {
-                                                                (x \ "origin_province").asOpt[String].get + " " + 
-                                                                (x \ "origin_city").asOpt[String].get
-                                                            }
-                                                            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                                                            {
-                                                                (x \ "destination_province").asOpt[String].get + " " +
-                                                                (x \ "destination_city").asOpt[String].get
-                                                            }
-                                                        </label> 
-                                                    </div>
+                                                        <div class="col-sm-4">
+                                                            <label type='text' class="control-label"> 
+                                                                {
+                                                                    (x \ "origin_province").asOpt[String].get + " " + 
+                                                                    (x \ "origin_city").asOpt[String].get
+                                                                }
+                                                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                                                {
+                                                                    (x \ "destination_province").asOpt[String].get + " " +
+                                                                    (x \ "destination_city").asOpt[String].get
+                                                                }
+                                                            </label> 
+                                                        </div>
                                                     </div>
                                                 }
                                             }}
@@ -86,27 +89,29 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                         case module.auth.registerTypes.specialway.t => {
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">仓库地址</label>
-                                                {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
+                                                
                                                     <div class="col-sm-6">
+                                                    {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
                                                         <label type='text' class="control-label"> 
                                                             {
                                                                 (x \ "province").asOpt[String].get + " " + 
                                                                 (x \ "city").asOpt[String].get + " " + 
-                                                                (x \ "district").asOpt[String].get
+                                                                (x \ "district").asOpt[String].get + "  "
                                                             }
-                                                            <br/>
+                                                            
                                                             {
                                                                 (x \ "address").asOpt[String].get
                                                             }
-                                                        </label>
+                                                        </label><br/>
+                                                        }}
                                                     </div>
-                                                }}
+                                                
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">发车实效</label>
                                                 <div class="col-sm-6">
-                                                    <label type="text" class="control-label col-sm-6">
+                                                    <label type="text" class="control-label">
                                                     {if ((iter \ "special_occation").asOpt[Int].get == 0) {
                                                         "天天发车"
                                                     }  else { 
