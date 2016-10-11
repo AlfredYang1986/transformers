@@ -95,18 +95,20 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">仓库地址</label>
                                                 {(iter \ "special_storage").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
-                                                    <div class="col-sm-6">
-                                                        <label type='text' class="control-label"> 
-                                                            {
-                                                                (x \ "province").asOpt[String].get + " " + 
-                                                                (x \ "city").asOpt[String].get + " " + 
-                                                                (x \ "district").asOpt[String].get
-                                                            }
-                                                            <br/>
-                                                            {
-                                                                (x \ "address").asOpt[String].get
-                                                            }
-                                                        </label>
+                                                    <div class="col-sm-8">
+                                                        <div class="col-sm-12">
+                                                            <label type='text' class="control-label"> 
+                                                                {
+                                                                    (x \ "province").asOpt[String].get + " " + 
+                                                                    (x \ "city").asOpt[String].get + " " + 
+                                                                    (x \ "district").asOpt[String].get
+                                                                }
+                                                                <br/>
+                                                                {
+                                                                    (x \ "address").asOpt[String].get
+                                                                }
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 }}
                                             </div>
@@ -114,7 +116,7 @@ val target_id = (iter \ "open_id").asOpt[String].get
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">发车实效</label>
                                                 <div class="col-sm-6">
-                                                    <label type="text" class="control-label">
+                                                    <label type="text" class="control-label col-sm-6">
                                                     {if ((iter \ "special_occation").asOpt[Int].get == 0) {
                                                         "天天发车"
                                                     }  else { 
