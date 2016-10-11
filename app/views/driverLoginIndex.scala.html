@@ -73,6 +73,9 @@
                     success: function (data) {
                         $("div[data-group='" + target_id + "']").remove();
                         $(data).appendTo($("div[data-name='products-container-" + target_id + "']"));
+
+                        var count = $("div[data-group='" + target_id + "']").length;
+                        $('div[data-name="products-counts-'  + target_id + '"]').html("当天货源数目: " + count);
                     },
                     error: function (xhr, status, error) {
                         alert("请检查您的输入");
