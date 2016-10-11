@@ -6,7 +6,9 @@
     val origin = (iter \ "origin").asOpt[play.api.libs.json.JsValue].get
     val destination = (iter \ "destination").asOpt[play.api.libs.json.JsValue].get
 
-    <div class="row" data-name="product-result">
+    val open_id = (iter \ "open_id").asOpt[String].get
+
+    <div class="row" data-name="product-result" data-group={open_id}>
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-body">

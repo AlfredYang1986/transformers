@@ -285,6 +285,17 @@ object companyProductModule {
           }
         }
         
+       def dataRandgeConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
+          case None => None
+          case Some(x) => {
+            val tmp = x.asInstanceOf[JsValue]
+            val sdf = new java.text.SimpleDateFormat("MM/dd/yyyy")
+            val min = sdf.parse((tmp \ "min").asOpt[String].get).getTime 
+            val max = sdf.parse((tmp \ "max").asOpt[String].get).getTime 
+            Some($and(key $gte min, key $lte max))
+          }
+        }
+        
         def conditionsOnce(o : Option[DBObject], n : Option[DBObject]) : Option[DBObject] = {
             o match {
               case None => n
@@ -312,6 +323,7 @@ object companyProductModule {
             con = conditionsAcc(con, "vehicle" :: Nil, stringListConditions(x => x.asOpt[List[String]]))
             con = conditionsAcc(con, "vehicle_length" :: Nil, floatListConditions(x => x.asOpt[List[Float]]))
             con = conditionsAcc(con, "weight" :: "volume" :: Nil, randgeConditions(x => x.asOpt[JsValue]))
+            con = conditionsAcc(con, "date" :: Nil, dataRandgeConditions(x => x.asOpt[JsValue]))
 
             con
         }

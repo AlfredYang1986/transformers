@@ -26,21 +26,60 @@
     </div>
 
 } {
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/date.js")"></script>
 	<script type="text/javascript">
 		$(function(){
 			$('li[data-current="index"]').addClass("active");
 		});
 
-        function tab1Click(index) {
-            if ($("#tab2-" + index).hasClass('in'))
-                $("#tab2-" + index).removeClass('in');
+        function tab1Click(target_id) {
+            if ($("#tab2-" + target_id).hasClass('in'))
+                $("#tab2-" + target_id).removeClass('in');
         }
 
-        function tab2Click(index) {
-            if ($("#tab1-" + index).hasClass('in'))
-                $("#tab1-" + index).removeClass('in');
+        function tab2Click(target_id) {
+            if ($("#tab1-" + target_id).hasClass('in'))
+                $("#tab1-" + target_id).removeClass('in');
+
+            if (!$("#tab2-" + target_id).hasClass('in'))
+                startSearch(target_id);
         }
         
+        function startSearch(target_id) {
+            var result = true;
+
+            if (result) {   
+                var query_object = new Object();
+
+                var min_date = $.AlTime.SpanToDate($.AlTime.CurTime());
+                var max_date = $.AlTime.SpanToTomorrow($.AlTime.CurTime());
+
+                var date = new Object();
+                date['min'] = min_date;
+                date['max'] = max_date;
+
+                query_object['date'] = date;
+                query_object['open_id'] = target_id;
+
+                $.ajax({
+                    // url: "/html/driver/search/company",
+                    url: "/html/company/product/query",
+                    type: 'POST',
+                    // dataType: 'json',
+                    dataType: 'html',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        $("div[data-group='" + target_id + "']").remove();
+                        $(data).appendTo($("div[data-name='products-container-" + target_id + "']"));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
+                    }
+                });
+            }
+        }
 
         function collectCompany(open_id) {
 

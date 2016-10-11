@@ -220,8 +220,12 @@ val target_id = (iter \ "open_id").asOpt[String].get
                 <div class="collapse" id={"tab2-" + target_id}>
                     <div class="content-box">
                         <div class="content-box-wrapper">
-                            当天货源数目:
-                            <div data-name="products-container">
+                            <div data-name={"products-counts-" + target_id}>
+                                当天货源数目:
+                            </div>
+                            
+                            <div data-name={"products-container-" + target_id}>
+                            
                             </div>
                         </div>
                     </div>
