@@ -26,13 +26,13 @@
                                         if (cb.contains(x)) {
                                             <div class="col-sm-2 checkbox">
                                                 <label>
-                                                    <input name="field" type="checkbox" value={x} checked="" /> {x}
+                                                    <input name="field" data-name="company_business" type="checkbox" value={x} checked="" /> {x}
                                                 </label>
                                             </div>
                                         } else {
                                             <div class="col-sm-2 checkbox">
                                                 <label>
-                                                    <input name="field" type="checkbox" value={x} /> {x}
+                                                    <input name="field" data-name="company_business" type="checkbox" value={x} /> {x}
                                                 </label>
                                             </div>
                                         }
@@ -40,10 +40,23 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group" style="display: none;" data-name='legal-person-error'>
+                                    <span class="col-sm-1 control-label"></span>
+                                    <label for="company-name" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-9">
+                                        <div class="alert alert-danger" role="alert">
+                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                            <span class="sr-only">Error:</span>
+                                            请选择公司业务领域
+                                        </div>
+                                    </div>
+                                </div>  
+
+                                <div data-name="company-line-container">
                                 @{
                                     val lines = (company \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].map (x => x).getOrElse(Nil)
                                     lines map { iter => 
-                                    <div class="form-group company-line" >
+                                    <div class="form-group company-line" data-name="company-line">
                                         <label class="col-sm-2 control-label">营业范围</label>
                                         <div class="col-sm-2">
                                             <select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
@@ -108,6 +121,7 @@
                                     </div>
                                     }
                                 }
+                                </div>
 
                                 <div class="form-group" style="display: none;" data-name='line-error'>
                                     <label for="company-name" class="col-sm-2 control-label"></label>
@@ -122,7 +136,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
-                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addSpecialLines()">
+                                    <button class="col-sm-6 col-xs-offset-1 col-xs-8 btn" style="border:1px solid #008bdc; background-color:#FFFFFF;" onclick="addCompanyLines()">
                                         新增主营路线
                                     </button>
                                 </div>
@@ -387,7 +401,7 @@
 
         function getCompanylines(query_object) {
             var lines_lst = [];
-            $.each($('.company-line'), function( index, value ) {
+            $.each($('div[data-name="company-line"]'), function( index, value ) {
                 var result = true;
                 var origin_province = $(this).find('select[data-name="origin-province"]').val();
                 result &= validate($(this).find('select[data-name="origin-province"]'), (origin_province != null));
@@ -419,6 +433,18 @@
             return Boolean(final_result);
         }
 
+        function getCompanyBusiness(query_object) {
+            var cb = [];
+            $.each($('input[data-name="company_business"]:checked'), function(){
+                cb.push($(this).val());
+            });
+
+            if (cb.length > 0) {
+                query_object['company_business'] = cb;
+                return true;
+            } else return false;
+        }
+
         function updateCompanyInfo() {
             var authrity = @{auth}; 
             if (authrity < 12) {
@@ -426,6 +452,7 @@
             } else {
                 var result = true;
                 var query_object = new Object();
+                result &= getCompanyBusiness(query_object);
                 result &= getCompanylines(query_object);
                 
                 var description = $('input[data-name="description"]').val();
@@ -479,23 +506,23 @@
             }
         }
 
-        function deleteSpecialLine() {
+        function deleteCompanyLine() {
             $(this).parent().remove();
         }
 
-        function addSpecialLines() {
+        function addCompanyLines() {
             var l = $('div[data-name="special-lines-lst"]')
             var cp = l.clone();
             cp.removeAttr('data-name');
-            cp.attr('data-name', 'line-item');
-            cp.appendTo($("div[data-name='special-lines-container']"));
+            cp.attr('data-name', 'company-line');
+            cp.appendTo($("div[data-name='company-line-container']"));
             cp.show();
 
-            var count = $('div[data-name="line-item"]').length;
-            cp.attr('data-index', 'lines-index-' + (count - 1));
+            // var count = $('div[data-name="company-line"]').length;
+            // cp.attr('data-index', 'lines-index-' + (count - 1));
 
             var btn = cp.find('button');
-            btn.click(deleteSpecialLine);
+            btn.click(deleteCompanyLine);
         }     
     </script>
 } 

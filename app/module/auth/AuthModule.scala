@@ -813,7 +813,7 @@ object AuthModule {
                   
                   (data \ "business_image").asOpt[String].map (x => head += "business_image" -> x).getOrElse(Unit)
                   (data \ "road_image").asOpt[String].map (x => head += "road_image" -> x).getOrElse(Unit)
-
+                  
                   val lines = MongoDBList.newBuilder
                   var bChangeLines = false
                   (data \ "lines").asOpt[List[JsValue]].map { lst => bChangeLines = true; lst foreach { x =>
@@ -833,6 +833,8 @@ object AuthModule {
                         (data \ "web").asOpt[String].map (x => detail += "company_web" -> x).getOrElse(Unit)
                         (data \ "email").asOpt[String].map (x => detail += "company_email" -> x).getOrElse(Unit)
                         (data \ "fax").asOpt[String].map (x => detail += "company_fax" -> x).getOrElse(Unit)
+                        
+                        (data \ "company_business").asOpt[List[String]].map (x => detail += "company_business" -> x).getOrElse(Unit)
                     }
                     case registerTypes.industry.t => {
                         (data \ "web").asOpt[String].map (x => detail += "industry_web" -> x).getOrElse(Unit)
