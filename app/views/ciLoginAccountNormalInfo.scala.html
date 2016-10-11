@@ -52,7 +52,7 @@
                                     </div>
                                 </div>  
 
-                                <div data-name="company-line-container" class="form-group">
+                                <div data-name="company-line-container">
                                 @{
                                     val lines = (company \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].map (x => x).getOrElse(Nil)
                                     lines map { iter => 
