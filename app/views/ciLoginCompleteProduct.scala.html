@@ -37,7 +37,8 @@
         $(function(){
             $('li[data-current="index"]').addClass("active");
             $('div[data-name="compay-sent-item"]').find('input').attr('disabled', true); 
-            $('div[data-name="compay-sent-item"]').find('btn[data-name="complete-disable"]').attr('disabled', true); 
+            $('div[data-name="compay-sent-item"]').find('select').attr('disabled', true); 
+            $('div[data-name="compay-sent-item"]').find('button[data-name="complete-disable"]').attr('disabled', true); 
         });
 
         function resetProduct(product_id) {
@@ -86,6 +87,7 @@
                 success: function (data) {
                     $(data).appendTo($('div[data-name="result-container"]'));
                     $('div[data-name="compay-sent-item"]').find('input').attr('disabled', true); 
+                    $('div[data-name="compay-sent-item"]').find('select').attr('disabled', true); 
                     $('div[data-name="compay-sent-item"]').find('button[data-name="complete-disable"]').attr('disabled', true); 
                 },
                 error: function (xhr, status, error) {

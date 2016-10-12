@@ -36,6 +36,7 @@
 </div>
 
 } {
+    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
@@ -70,22 +71,6 @@
         function hasInput(str) {
             var result = (typeof(str) == "string") && (str != "");
             return result;
-        }
-
-        function cityChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var province = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
-        }
-
-        function districtChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var city = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
         }
 
         function updateProduct(product_id) {

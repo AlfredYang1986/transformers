@@ -30,7 +30,7 @@
                                                 <div class="col-xs-3">
                                                     {
                                                     val tmp = (iter \ "province").asOpt[String].get
-                                                    <select class="form-control" data-name="storage-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                                    <select class="form-control" data-name="storage-province" data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)" >
                                                         {cities map { p => 
                                                             if (tmp.equals((p \ "province").asOpt[String].get)) {
                                                                 <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -61,12 +61,16 @@
                                                 </div>
                                                 <div class="col-xs-3">
                                                     {
+                                                    val city = (iter \ "city").asOpt[String].get
                                                     val tmp = (iter \ "district").asOpt[String].get
                                                     <select class="form-control" data-name='storage-district' data-index='2'>
                                                         @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                             (inner \ "districts").asOpt[List[String]].get map { x => 
-                                                            if (tmp.equals(x)) {
-                                                                <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                            
+                                                            if (tmp.equals(x) && city.equals((inner \ "city").asOpt[String].get)) {
+                                                                <option data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                            } else if (city.equals((inner \ "city").asOpt[String].get)) {
+                                                                <option data-filter={(inner \ "city").asOpt[String].get} value={x} >{x}</option>
                                                             } else {
                                                                 <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
                                                             }
@@ -453,7 +457,7 @@
     <div class="col-sm-8 col-sm-offset-2" data-name="special-storage-lst" data-index={"storage-index-" + index} style="display: none; margin-top: 10px" >
         <div class="row">                        
             <div class="col-xs-3">
-                <select class="form-control" data-name="storage-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                <select class="form-control" data-name="storage-province" data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)" >
                     <option selected disabled>请选择省</option>
                     @{cities map { iter => 
                         <option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
@@ -490,28 +494,13 @@
     </div>
 
 } {
+    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
             $('div[data-name="storage-item"]').find('button').click(deleteSpecialStorage);
             $('div[data-name="line-item"]').find('button').click(deleteSpecialLine2);
         });
-
-        function cityChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var province = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
-        }
-
-        function districtChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var city = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
-        }
 
         function validate(ele, result, name) {
             if (result) $(ele).removeClass('validate-error');
