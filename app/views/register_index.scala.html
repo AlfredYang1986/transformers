@@ -2,6 +2,7 @@
 
 @main_sub("机构注册") {
     <script src="@routes.Assets.at("javascripts/routes-manager.js")"></script>
+    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
 } {
 	<div class="container-fluid content-bkg">
 		<div class="container another-bkg">
@@ -1267,22 +1268,6 @@
 	                alert("请检查您的输入");
 	            }
 	        });
-		}
-
-		function cityChanges(ele, container, index) {
-			var a = Number($(ele).attr("data-index"));
-			var province = $(ele).val();
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
-		}
-
-		function districtChanges(ele, container, index) {
-			var a = Number($(ele).attr("data-index"));
-			var city = $(ele).val();
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-			$(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
 		}
 
 		function proviousStep() {

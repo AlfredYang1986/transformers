@@ -72,8 +72,8 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"origin-province-" + product_id} data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => 
+                                            <select class="form-control" data-name={"origin-province-" + product_id} data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)" >
+                                                {cities map { p => 
                                                     if ((p \ "province").asOpt[String].get.equals((iter \ "origin" \ "province").asOpt[String].get)) {
                                                         <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
                                                     } else {
@@ -83,28 +83,40 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"origin-city-" + product_id} data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                    if (x.equals((iter \ "origin" \ "city").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                            {
+                                            val province = (iter \ "origin" \ "province").asOpt[String].get
+                                            val tmp = (iter \ "origin" \ "city").asOpt[String].get
+                                            <select class="form-control" data-name={"origin-city-" + product_id} data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >    
+                                                {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if (tmp.equals(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (province.equals((p \ "province").asOpt[String].get)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                     }
-                                                }}};
-                                            </select>   
+                                                }}}
+                                            </select>  
+                                            } 
                                         </div>
                                         <div class="col-sm-3">
+                                            {
+                                            val city = (iter \ "origin" \ "city").asOpt[String].get
+                                            val tmp = (iter \ "origin" \ "district").asOpt[String].get 
                                             <select class="form-control" data-name={"origin-district-" + product_id} data-index="2">
-                                                @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                {cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
-                                                    if (x.equals((iter \ "origin" \ "district").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    if (tmp.equals(x) && city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
                                                     }
                                                 }}}};
                                             </select>   
+                                            }
                                         </div>
                                     </div>          
                                     <textarea type="text" class="form-control" data-name={"origin-address-" + product_id} rows="4" style="resize: none; margin-top:10px" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "origin" \ "address").asOpt[String].get}</textarea>
@@ -127,7 +139,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"destination-province-" + product_id} data-index="3" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"destination-province-" + product_id} data-index="3" onchange="cityChanges2($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => 
                                                     if ({(p \ "province").asOpt[String].get}.equals((iter \ "destination" \ "province").asOpt[String].get)) {
                                                         <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -138,28 +150,40 @@
                                             </select>   
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"destination-city-" + product_id} data-index="4" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                    if (x.equals((iter \ "destination" \ "city").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                            {
+                                            val province = (iter \ "destination" \ "province").asOpt[String].get
+                                            val tmp = (iter \ "destination" \ "city").asOpt[String].get
+                                            <select class="form-control" data-name={"destination-city-" + product_id} data-index="4" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >    
+                                                {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if (tmp.equals(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (province.equals((p \ "province").asOpt[String].get)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                     }
-                                                }}};
-                                            </select>   
+                                                }}}
+                                            </select>  
+                                            }  
                                         </div>
                                         <div class="col-sm-3">
+                                            {
+                                            val city = (iter \ "destination" \ "city").asOpt[String].get
+                                            val tmp = (iter \ "destination" \ "district").asOpt[String].get 
                                             <select class="form-control" data-name={"destination-district-" + product_id} data-index="5">
-                                                @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                {cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
-                                                    if (x.equals((iter \ "destination" \ "district").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    if (tmp.equals(x) && city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
                                                     }
                                                 }}}};
                                             </select>   
+                                            }
                                         </div>
                                     </div>          
                                     <textarea type="text" class="form-control" data-name={"destination-address-" + product_id} rows="4" style="resize: none; margin-top:10px" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "destination" \ "address").asOpt[String].get}</textarea>
@@ -172,7 +196,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"storage-province-" + product_id} data-index="6" onchange="cityChanges($(this), $(this).parent().parent(), 1)" >
+                                            <select class="form-control" data-name={"storage-province-" + product_id} data-index="6" onchange="cityChanges2($(this), $(this).parent().parent(), 1)" >
                                                 @{cities map { p => 
                                                     if ((p \ "province").asOpt[String].get.equals((iter \ "storage" \ "province").asOpt[String].get)) {
                                                         <option value={(p \ "province").asOpt[String].get} selected="">{(p \ "province").asOpt[String].get}</option>
@@ -183,28 +207,40 @@
                                             </select> 
                                         </div>
                                         <div class="col-sm-3">
-                                            <select class="form-control" data-name={"storage-city-" + product_id} data-index="7" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
-                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                    if (x.equals((iter \ "storage" \ "city").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                            {
+                                            val province = (iter \ "storage" \ "province").asOpt[String].get
+                                            val tmp = (iter \ "storage" \ "city").asOpt[String].get
+                                            <select class="form-control" data-name={"storage-city-" + product_id} data-index="7" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >    
+                                                {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                    if (tmp.equals(x)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (province.equals((p \ "province").asOpt[String].get)) {
+                                                        <option data-filter={(p \ "province").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
                                                     }
-                                                }}};
-                                            </select>    
+                                                }}}
+                                            </select>  
+                                            }     
                                         </div>
                                         <div class="col-sm-3">
+                                            {
+                                            val city = (iter \ "storage" \ "city").asOpt[String].get
+                                            val tmp = (iter \ "storage" \ "district").asOpt[String].get 
                                             <select class="form-control" data-name={"storage-district-" + product_id} data-index="8">
-                                                @{cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                                                {cities map { cd => (cd \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                                                     (inner \ "districts").asOpt[List[String]].get map { x => 
 
-                                                    if (x.equals((iter \ "storage" \ "district").asOpt[String].get)) {
-                                                        <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    if (tmp.equals(x) && city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
+                                                    } else if (city.equals((inner \ "city").asOpt[String].get)) {
+                                                        <option data-filter={(inner \ "city").asOpt[String].get} value={x} >{x}</option>
                                                     } else {
                                                         <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
                                                     }
                                                 }}}};
-                                            </select>  
+                                            </select>   
+                                            } 
                                         </div>
                                     </div>          
                                     <textarea type="text" class="form-control" data-name={"storage-address-" + product_id} placeholder="详细地址" rows="4" style="resize: none; margin-top:10px;" onchange="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">{(iter \ "storage" \ "address").asOpt[String].get}</textarea>
@@ -313,7 +349,7 @@
                                         </select>
                                         </div>
                                         <div class="col-sm-4">
-                                        <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#name-collapse-" + product_id} style="border: 1px solid #008bdc">
+                                        <button data-toggle="collapse" data-name="complete-disable" class="form-control" data-parent="#accordion" href={"#name-collapse-" + product_id} style="border: 1px solid #008bdc">
                                             添加其他货物名称
                                         </button>
                                         </div>
@@ -399,7 +435,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
-                                            <button data-toggle="collapse" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
+                                            <button data-toggle="collapse" data-name="complete-disable" class="form-control" data-parent="#accordion" href={"#phone-collapse-" + product_id} style="border: 1px solid #008bdc">
                                                 添加新调度员
                                             </button>
                                             </div>
