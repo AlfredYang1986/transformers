@@ -829,7 +829,7 @@ object AuthModule {
                   (data \ "vehicle").asOpt[List[String]].map (x => head += "vehicle" -> x).getOrElse(Unit)
                   (data \ "vehicle_length").asOpt[List[Float]].map (x => head += "vehicle_length" -> x).getOrElse(Unit)
                   (data \ "driver_name").asOpt[String].map (x => head += "driver_name" -> x).getOrElse(Unit)
-                  (data \ "driver_social_id").asOpt[String].map (x => head += "driver_social_id" -> x).getOrElse(Unit)
+                  (data \ "driver_social_id").asOpt[String].map (x => head += "driver_secial_id" -> x).getOrElse(Unit)
                   (data \ "driver_image").asOpt[String].map (x => head += "driver_image" -> x).getOrElse(Unit)
                   (data \ "road_image").asOpt[String].map (x => head += "road_image" -> x).getOrElse(Unit)
 
