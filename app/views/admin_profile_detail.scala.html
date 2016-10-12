@@ -40,8 +40,8 @@
                                                         <label type="text" class="control-label" data-name='company-name'>
                                                             {
                                                                 (date \ "year").asOpt[Int].get + "年" +
-                                                                (date \ "year").asOpt[Int].get + "月" +
-                                                                (date \ "year").asOpt[Int].get + "日"
+                                                                (date \ "month").asOpt[Int].get + "月" +
+                                                                (date \ "day").asOpt[Int].get + "日"
                                                             }
                                                         </label>
                                                     </div>
