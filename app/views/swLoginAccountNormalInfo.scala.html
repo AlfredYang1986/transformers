@@ -136,7 +136,7 @@
                                             {
                                                 val province = (iter \ "origin_province").asOpt[String].get
                                                 val tmp = (iter \ "origin_city").asOpt[String].get
-                                                <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                <select class="form-control" data-name="origin-city" data-index="1" >
                                                     {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
@@ -170,7 +170,7 @@
                                             {
                                                 val province = (iter \ "destination_province").asOpt[String].get
                                                 val tmp = (iter \ "destination_city").asOpt[String].get
-                                                <select class="form-control" data-name="destination-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
+                                                <select class="form-control" data-name="destination-city" data-index="1" >
                                                     {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                         if (tmp.equals(x)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
