@@ -1,6 +1,6 @@
-@(token : String)(open_id : String)(company_name : String)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)(com_lst : List[play.api.libs.json.JsValue])
+@(token : String)(open_id : String)(company_name : String)(auth : Int)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)(com_lst : List[play.api.libs.json.JsValue])
 
-@ci_login_index_sliders("易聚货-公司")(company_name)  {
+@ci_login_index_sliders("易聚货-公司")(company_name)(auth) {
     
 } {
 

@@ -29,14 +29,14 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-              val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
-              Ok(views.html.ciLoginIndex(dir_lst)(token)(open_id)(name))
+            if (auth > authTypes.companyBase.t) {
+              val company = AuthModule.queryInstanceWithToken(token)
+              Ok(views.html.ciLoginIndex(
+                     (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get)
+                     (token)((company \ "open_id").asOpt[String].get)
+                     ((company \ "company_name").asOpt[String].get)(auth))
             }
             else Redirect("/index")
         }
@@ -53,19 +53,18 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-           
-            val user_lst = AuthModule.queryUserLstWithOpenID(open_id)
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountExtra(token)(open_id)(name)(user_lst))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                val user_lst = AuthModule.queryUserLstWithOpenID(open_id)
+                Ok(views.html.ciLoginAccountExtra(token)(open_id)
+                       ((company \ "company_name").asOpt[String].get)(auth)
+                       (AuthModule.queryUserLstWithOpenID(open_id)))
             }
             else Redirect("/index")
         }
-      
     }
 
     /**
@@ -79,13 +78,14 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountNormalInfo(token)(open_id)(name)(company)(xmlOpt.allCities)((user \ "auth").asOpt[Int].get))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginAccountNormalInfo(token)
+                      ((company \ "open_id").asOpt[String].get)
+                      ((company \ "company_name").asOpt[String].get)(company)
+                      (xmlOpt.allCities)(auth))
             }
             else Redirect("/index")
         }
@@ -102,15 +102,16 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-            
-            val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountPeople(token)(open_id)(name)(contacts))
+            val auth = (user \ "auth").asOpt[Int].get
+           
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginAccountPeople(token)
+                    (open_id)((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyConfigModule.companyConfigContactQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil)))
             }
             else Redirect("/index")
         }
@@ -127,15 +128,16 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
-            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountProductName(token)(open_id)(name)(pdns))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginAccountProductName(token)
+                      (open_id)((company \ "company_name").asOpt[String].get)(auth)
+                      ((companyConfigModule.companyConfigProductNameQuery(
+                          toJson(Map("open_id" -> open_id))) \ "result").
+                          asOpt[List[String]].map (x => x).getOrElse(Nil)))
             }
             else Redirect("/index")
         }
@@ -153,13 +155,13 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountPsw(token)(open_id)(name))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginAccountPsw(token)
+                      ((company \ "open_id").asOpt[String].get)
+                      ((company \ "company_name").asOpt[String].get)(auth))
             }
             else Redirect("/index")
         }
@@ -176,13 +178,14 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginAccountValidateInfo(token)(open_id)(name)(company)(xmlOpt.allCities)((user \ "auth").asOpt[Int].get))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginAccountValidateInfo(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)
+                    (company)(xmlOpt.allCities)(auth))
             }
             else Redirect("/index")
         }
@@ -199,14 +202,17 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
 
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-            val vc = ConfigModule.configAllVehicles
             if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val product_lst = (companyProductModule.queryProduct(toJson(Map("status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.ciLoginCompanyList(token)(open_id)(name)(xmlOpt.allCities)(vc)(product_lst))
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginCompanyList(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    (xmlOpt.allCities)(ConfigModule.configAllVehicles)
+                    ((companyProductModule.queryProduct(
+                        toJson(Map("status" -> toJson(0)))) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }
@@ -223,14 +229,17 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-            val vc = ConfigModule.configAllVehicles
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(1)))) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.ciLoginCompleteInfo(token)(open_id)(name)(infos))
+            val auth = (user \ "auth").asOpt[Int].get
+      
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginCompleteInfo(token)
+                    (open_id)((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyInfoModule.queryInfo(
+                        toJson(Map("open_id" -> toJson(open_id), 
+                                   "status" -> toJson(1)))) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }
@@ -247,17 +256,23 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
 
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-            val vc = ConfigModule.configAllVehicles
-            val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
-            val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(1)))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-                Ok(views.html.ciLoginCompleteProduct(token)(open_id)(name)(pdns)(contacts)(products)(xmlOpt.allCities)(vc))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginCompleteProduct(token)
+                    (open_id)((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyConfigModule.companyConfigProductNameQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[String]].map (x => x).getOrElse(Nil))
+                    ((companyConfigModule.companyConfigContactQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil))
+                    ((companyProductModule.queryProduct(
+                        toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(1)))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil))
+                    (xmlOpt.allCities)(ConfigModule.configAllVehicles))
             }
             else Redirect("/index")
         }
@@ -272,19 +287,19 @@ object CompanyIndustryController extends Controller {
         else Unit
         
         val user = AuthModule.queryUserWithToken(token)
-        val company = AuthModule.queryInstanceWithToken(token)
+        val auth = (user \ "auth").asOpt[Int].get
 
-        val open_id = (company \ "open_id").asOpt[String].get
-        val name = (company \ "company_name").asOpt[String].get
-        val vc = ConfigModule.configAllVehicles
-        val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
-        val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-        
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
-            val dir_lst = (companySearchModule.queryDrivers(toJson("")) \ "result").asOpt[List[JsValue]].get
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginDriverList(token)(open_id)(name)(dir_lst)(xmlOpt.allCities)(vc))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginDriverList(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((companySearchModule.queryDrivers(
+                        toJson("")) \ "result").
+                        asOpt[List[JsValue]].get)
+                    (xmlOpt.allCities)(ConfigModule.configAllVehicles))
             }
             else Redirect("/index")
         }
@@ -301,15 +316,16 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-
-            val infos = (companyInfoModule.queryInfo(toJson("")) \ "result").asOpt[List[JsValue]].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginRecruitment(token)(open_id)(name)(infos))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginRecruitment(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyInfoModule.queryInfo(
+                        toJson("")) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }
@@ -326,13 +342,13 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
 
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-           
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginSendInfo(token)(open_id)(name))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginSendInfo(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth))
             }
             else Redirect("/index")
         }
@@ -349,18 +365,20 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-
-            val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
-            val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
+            val auth = (user \ "auth").asOpt[Int].get
            
-            val vc = ConfigModule.configAllVehicles
-            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginSendProduct(xmlOpt.allCities)(token)(open_id)(name)(pdns)(contacts)(vc))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginSendProduct(xmlOpt.allCities)(token)(open_id)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyConfigModule.companyConfigProductNameQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[String]].map (x => x).getOrElse(Nil))
+                    ((companyConfigModule.companyConfigContactQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil))
+                    (ConfigModule.configAllVehicles))
             }
             else Redirect("/index")
         }        
@@ -377,14 +395,16 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val infos = (companyInfoModule.queryInfo(toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.ciLoginSentInfo(token)(open_id)(name)(infos))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginSentInfo(token)(open_id)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyInfoModule.queryInfo(
+                        toJson(Map("open_id" -> toJson(open_id), "status" -> toJson(0)))) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }
@@ -401,19 +421,23 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
-
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
+            val auth = (user \ "auth").asOpt[Int].get
             
-            val pdns = (companyConfigModule.companyConfigProductNameQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[String]].map (x => x).getOrElse(Nil)
-            val contacts = (companyConfigModule.companyConfigContactQuery(toJson(Map("open_id" -> open_id))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-            
-            val products = (companyProductModule.queryProduct(toJson(Map("open_id" -> toJson(open_id), "status" ->toJson(0) ))) \ "result").asOpt[List[JsValue]].map (x => x).getOrElse(Nil)
-            val vc = ConfigModule.configAllVehicles
-            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                Ok(views.html.ciLoginSentProduct(token)(open_id)(name)(pdns)(contacts)(products)(xmlOpt.allCities)(vc))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                val open_id = (company \ "open_id").asOpt[String].get
+                Ok(views.html.ciLoginSentProduct(token)(open_id)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((companyConfigModule.companyConfigProductNameQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[String]].map (x => x).getOrElse(Nil))
+                    ((companyConfigModule.companyConfigContactQuery(
+                        toJson(Map("open_id" -> open_id))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil))
+                    ((companyProductModule.queryProduct(
+                        toJson(Map("open_id" -> toJson(open_id), "status" ->toJson(0) ))) \ "result").
+                        asOpt[List[JsValue]].map (x => x).getOrElse(Nil))
+                    (xmlOpt.allCities)(ConfigModule.configAllVehicles))
             }
             else Redirect("/index")
         }
@@ -430,16 +454,17 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
-            val company = AuthModule.queryInstanceWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
 
-            val open_id = (company \ "open_id").asOpt[String].get
-            val name = (company \ "company_name").asOpt[String].get
-            
-            val vc = ConfigModule.configAllVehicles
-            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
-                val com_lst = (driverSearchModule.queryCompany(toJson(Map("type" -> 3))) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.ciLoginSpecialWayList(token)(open_id)(name)(xmlOpt.allCities)(vc)(com_lst))
+            if (auth > authTypes.companyBase.t) {
+                val company = AuthModule.queryInstanceWithToken(token)
+                Ok(views.html.ciLoginSpecialWayList(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    (xmlOpt.allCities)(ConfigModule.configAllVehicles)
+                    ((driverSearchModule.queryCompany(
+                        toJson(Map("type" -> 3))) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }
@@ -456,12 +481,16 @@ object CompanyIndustryController extends Controller {
         if (token == "") Ok("请先登陆在进行有效操作")
         else {
             val user = AuthModule.queryUserWithToken(token)
+            val auth = (user \ "auth").asOpt[Int].get
            
-            if ((user \ "auth").asOpt[Int].get > authTypes.companyBase.t) {
+            if (auth > authTypes.companyBase.t) {
                 val company = AuthModule.queryInstanceWithToken(token)
-                val open_id = (company \ "open_id").asOpt[String].get
-                val result = (PlatformLinesModule.platformLineQuery(toJson("")) \ "result").asOpt[List[JsValue]].get
-                Ok(views.html.ciLoginRewards(token)(open_id)(result))
+                Ok(views.html.ciLoginRewards(token)
+                    ((company \ "open_id").asOpt[String].get)
+                    ((company \ "company_name").asOpt[String].get)(auth)
+                    ((PlatformLinesModule.platformLineQuery(
+                        toJson("")) \ "result").
+                        asOpt[List[JsValue]].get))
             }
             else Redirect("/index")
         }

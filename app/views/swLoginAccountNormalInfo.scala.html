@@ -1,6 +1,6 @@
-@(token : String)(open_id : String)(name : String)(spc : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
+@(token : String)(open_id : String)(name : String)(auth : Int)(spc : play.api.libs.json.JsValue)(cities : List[play.api.libs.json.JsValue])(vc : play.api.libs.json.JsValue)
 
-@sw_login_index_sliders("易聚货-专线")(name) {
+@sw_login_index_sliders("易聚货-专线")(name)(auth) {
     
 } {
 

@@ -1,4 +1,4 @@
-@(title: String)(name : String)(include: Html)(content: Html)(scripts: Html)
+@(title: String)(name : String)(auth : Int)(include: Html)(content: Html)(scripts: Html)
 
 @sw_login_index_main("易聚货-专线")(name)  {
     
@@ -106,23 +106,28 @@
 
     <li class="header"><span>账户管理</span></li>
 
-    <li>
-        <a href="/specialway/account/validateinfo">
-            <i class="glyph-icon icon-lock"></i>
-            <span>认证资料</span>
-        </a>
-    </li>
+    @{ auth match {
+        case 22 => {
+            <li>
+                <a href="/specialway/account/validateinfo">
+                    <i class="glyph-icon icon-lock"></i>
+                    <span>认证资料</span>
+                </a>
+            </li>
 
-    <li class="divider"></li>
+            <li class="divider"></li>
 
-    <li>
-        <a href="/specialway/account/normalinfo">
-            <i class="glyph-icon icon-bookmark"></i>
-            <span>公司资料</span>
-        </a>
-    </li>
+            <li>
+                <a href="/specialway/account/normalinfo">
+                    <i class="glyph-icon icon-bookmark"></i>
+                    <span>公司资料</span>
+                </a>
+            </li>
 
-    <li class="divider"></li>
+            <li class="divider"></li>
+        }
+        case _ => ""
+    }}
 
     <li>
         <a href="/specialway/account/people">
@@ -133,14 +138,19 @@
 
     <li class="divider"></li>
 
-    <li>
-        <a href="/specialway/account/extra">
-            <i class="glyph-icon icon-user"></i>
-            <span>分账号管理</span>
-        </a>
-    </li>
+    @{ auth match {
+        case 22 => {
+            <li>
+                <a href="/specialway/account/extra">
+                    <i class="glyph-icon icon-user"></i>
+                    <span>分账号管理</span>
+                </a>
+            </li>
 
-    <li class="divider"></li>
+            <li class="divider"></li>
+        }
+        case _ => ""
+    }}
 
     <li>
         <a href="/specialway/account/psw">
