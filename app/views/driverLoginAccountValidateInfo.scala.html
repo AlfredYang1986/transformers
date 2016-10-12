@@ -60,11 +60,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">行驶证</label>
                                     <div class="col-sm-6">
-                                    @if((driver \ "driver_image").asOpt[String].get == "") {
-                                        <img class="form-control" style="height: 400px; display:none;" id="business_image_preview" />
+                                    @{ 
+                                    val x = (driver \ "driver_image").asOpt[String].get
+                                    if("".equals(x)) {
+                                        <img id="business_image_preview" class="form-control" style="height: 400px" src={"/assets/images/no-image.png"} />
                                     } else {
-                                        <img id="business_image_preview" class="form-control" style="height: 400px" src=@{"/images/" + {(driver \ "driver_image").asOpt[String].get}} />
-                                    }
+                                        <img id="business_image_preview" class="form-control" style="height: 400px" src={"/images/" + x} />
+                                    }}
                                     </div>
                                     <div class="col-sm-2">
                                         <button class="form-control" style="border: 1px solid #008bdc" data-toggle="modal" data-target="#business-image-upload">上传图片</button>
@@ -124,11 +126,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">驾驶证</label>
                                     <div class="col-sm-6">
-                                    @if((driver \ "road_image").asOpt[String].get == "") {
-                                        <img class="form-control" style="height: 400px; display:none;" id="road_image_preview" /> 
+                                    @{ 
+                                    val x = (driver \ "road_image").asOpt[String].get
+                                    if("".equals(x)) {
+                                        <img id="road_image_preview" class="form-control" style="height: 400px" src={"/assets/images/no-image.png"} />
                                     } else {
-                                        <img id="road_image_preview" class="form-control" style="height: 400px" src=@{"/images/" + {(driver \ "road_image").asOpt[String].get}} />
-                                    }
+                                        <img id="road_image_preview" class="form-control" style="height: 400px" src={"/images/" + x} />
+                                    }}
                                     </div>
                                     <div class="col-sm-2">
                                         <button class="form-control" style="border: 1px solid #008bdc" data-toggle="modal" data-target="#road-image-upload">上传图片</button>
