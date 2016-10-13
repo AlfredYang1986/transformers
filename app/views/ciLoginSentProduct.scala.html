@@ -138,7 +138,7 @@
             }
 
             result &= validate($('div[data-name="product-name-container"]'),
-                        hasInput(product_name) && reg_product_name(product_name),
+                        hasInput(product_name) && reg_product_name.test(product_name),
                         'div[data-name="product-name-error-' + product_id + '"]');
 
 
