@@ -168,7 +168,7 @@
             var contact_name = "";
             var contact_phone = "";
             var contact_save = 0;
-            if($('#phone-collapse').hasClass("in")) {
+            if($('#phone-collapse-' + product_id).hasClass("in")) {
                 contact_name = $('input[data-name="contact-name-input-' + product_id + '"]').val();
                 contact_phone = $('input[data-name="contact-phone-input-' + product_id + '"]').val();
                 if ($('input[data-name="contact-save' + product_id + '"]').is(':checked')) 
