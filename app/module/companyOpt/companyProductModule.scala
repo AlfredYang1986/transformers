@@ -264,12 +264,13 @@ object companyProductModule {
             Some($or(lst))
           }
         }
-       
+      
+        def floatdismiss = 0.0001
         def floatListConditions(getter : JsValue => Any)(key : String, value : JsValue) : Option[DBObject] = getter(value) match {
           case None => None
           case Some(x) => {
-            val lst = x.asInstanceOf[List[Float]].map { str => 
-                	key $eq str
+            val lst = x.asInstanceOf[List[Float]].map { f => 
+                	$and(key $gte (f - floatdismiss), key $lte (f + floatdismiss))
             }
             Some($or(lst))
           }

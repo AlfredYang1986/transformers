@@ -27,6 +27,7 @@ object driverSearchModule {
       
         def basicCondition = "type" $gte registerTypes.company.t
       
+        def floatdismiss = 0.0001
         def conditionsAcc(o : DBObject, key : String, value : Any) : DBObject = {
             key match {
               case "address" => $and(o, "address" $eq value.asInstanceOf[String])
@@ -60,7 +61,8 @@ object driverSearchModule {
               case "vehicle_length" => {
                   val lst = value.asInstanceOf[List[Float]]
                   val con = lst map { f =>
-                      "detail.vehicle_length" $eq f
+                      $and("detail.vehicle_length" $gte (f - floatdismiss),
+                           "detail.vehicle_length" $lte (f + floatdismiss))
                   }
                   $and (o, $or(con))
               }

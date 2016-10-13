@@ -445,7 +445,7 @@
                         vehicle_length_lst.length > 0,
                         'div[data-name="vehicle-length-error"]');
 
-
+            var reg_product_name = /^[\u4E00-\u9FA5]{2,10}$/; 
             var product_name = "";
             var product_name_save = 0;
             if($('#name-collapse').hasClass("in")) {
@@ -460,7 +460,7 @@
             }
 
             result &= validate($('div[data-name="product-name-container"]'),
-                        hasInput(product_name),
+                        hasInput(product_name) && reg_product_name(product_name),
                         'div[data-name="product-name-error"]');
 
 

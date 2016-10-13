@@ -27,7 +27,8 @@ object companySearchModule {
     def queryDrivers(data : JsValue) : JsValue = {
         
         def basicCondition = "type" $eq registerTypes.driver.t
-    
+   
+        def floatdismiss = 0.0001
         def conditionsAcc(o : DBObject, key : String, value : Any) : DBObject = key match {
               case "address" => $and(o, "address" $eq value.asInstanceOf[String])
               case "type" => $and(o, "type" $eq value.asInstanceOf[Int])
@@ -54,7 +55,8 @@ object companySearchModule {
               case "vehicle_length" => {
                   val lst = value.asInstanceOf[List[Float]]
                   val con = lst map { f =>
-                      "vehicle_length" $eq f
+                      $and("vehicle_length" $gte (f - floatdismiss),
+                           "vehicle_length" $lte (f + floatdismiss))
                   }
                   $and (o, $or(con))
               }

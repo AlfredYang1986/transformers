@@ -1072,13 +1072,13 @@
 			var storage_lst = [];
 			$.each($('.special-storage'), function( index, value ) {
 				var province = $(this).find('select[data-name="province"]').val();
-				result &= validate($(this).find('select[data-name="province"]'), (typeof(province) != "undefined"));
+				result &= validate($(this).find('select[data-name="province"]'), province != null, 'div[data-name="special-storage-error"]');
 
 				var city = $(this).find('select[data-name="city"]').val();
-				result &= validate($(this).find('select[data-name="city"]'), (typeof(city) != "undefined"));
+				result &= validate($(this).find('select[data-name="city"]'), city != null, 'div[data-name="special-storage-error"]');
 
 				var district = $(this).find('select[data-name="district"]').val();
-				result &= validate($(this).find('select[data-name="district"]'), (typeof(district) != "undefined"));
+				result &= validate($(this).find('select[data-name="district"]'), district != null, 'div[data-name="special-storage-error"]');
 
 				var address = $(this).find('textarea[data-name="address"]').val();
 				result &= validate($(this).find('select[data-name="address"]'), hasInput(address));
@@ -1095,10 +1095,10 @@
 			});
 
 			var final_result = storage_lst.length > 0;
-			if(final_result) {
+			if(final_result && result) {
 				query_object['special_storage'] = storage_lst;
 			}
-			validate($(),final_result,'div[data-name="special-storage-error"]');
+			// validate($(),final_result,'div[data-name="special-storage-error"]');
 			
 			return Boolean(result);
 		}

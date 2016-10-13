@@ -122,7 +122,6 @@ object AuthModule {
             }
           
         } catch {
-          
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
@@ -288,7 +287,6 @@ object AuthModule {
           val (common_result, common_error) = commonRegisterImpl(common)
           if (!common_result) ErrorCode.errorToJson(common_error)
           else {
-            println(common)
               val detail = MongoDBObject.newBuilder.result
               val (detail_result, detail_error) = company_type match {
                 case company.t => companyRegisterImpl(detail)

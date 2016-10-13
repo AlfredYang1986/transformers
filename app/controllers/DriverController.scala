@@ -134,7 +134,9 @@ object DriverController extends Controller {
             val open_id = (driver \ "open_id").asOpt[String].get
             val name = (driver \ "driver_name").asOpt[String].get
            
-            val info_lst = (companyInfoModule.queryInfo(toJson("")) \ "result").asOpt[List[JsValue]].get
+            val info_lst = (companyInfoModule.queryInfo(
+                                toJson(Map("status" -> 0))) \ "result").
+                                asOpt[List[JsValue]].get
             
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
                 Ok(views.html.driverLoginRecruitment(token)(open_id)(name)(info_lst))
@@ -217,7 +219,9 @@ object DriverController extends Controller {
         else {
             val user = AuthModule.queryUserWithToken(token)
             if ((user \ "auth").asOpt[Int].get > authTypes.driverBase.t) {
-                val product_lst = (companyProductModule.queryProduct(toJson("")) \ "result").asOpt[List[JsValue]].get
+                val product_lst = (companyProductModule.queryProduct(
+                    toJson(Map("status" -> 0))) \ "result").
+                    asOpt[List[JsValue]].get
                 Ok(views.html.driverLoginSearchDepartment(token)(open_id)(name)(xmlOpt.allCities)(vc)(product_lst))
             }
             else Redirect("/index")

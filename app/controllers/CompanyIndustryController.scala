@@ -324,7 +324,7 @@ object CompanyIndustryController extends Controller {
                     ((company \ "open_id").asOpt[String].get)
                     ((company \ "company_name").asOpt[String].get)(auth)
                     ((companyInfoModule.queryInfo(
-                        toJson("")) \ "result").
+                        toJson(Map("status" -> 0))) \ "result").
                         asOpt[List[JsValue]].get))
             }
             else Redirect("/index")

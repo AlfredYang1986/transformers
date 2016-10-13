@@ -123,10 +123,10 @@
                         vehicle_length_lst.length > 0,
                         'div[data-name="vehicle-length-error-' + product_id + '"]');
 
-
+            var reg_product_name = /^[\u4E00-\u9FA5]{2,10}$/; 
             var product_name = "";
             var product_name_save = 0;
-            if($('#name-collapse').hasClass("in")) {
+            if($('#name-collaps-' + product_id).hasClass("in")) {
                 product_name = $('input[data-name="product-name-input-' + product_id + '"]').val();
                 if ($('input[data-name="product-name-save-' + product_id + '"]').is(':checked')) 
                     product_name_save = 1;
@@ -138,7 +138,7 @@
             }
 
             result &= validate($('div[data-name="product-name-container"]'),
-                        hasInput(product_name),
+                        hasInput(product_name) && reg_product_name(product_name),
                         'div[data-name="product-name-error-' + product_id + '"]');
 
 
@@ -155,11 +155,12 @@
                 notes = "";
             }
 
+            var reg_contact_name = /^[\u4E00-\u9FA5]{2,5}$/; 
             var cell_phone_reg = /^1[3|4|5|7|8]\d{9}$/;
             var contact_name = "";
             var contact_phone = "";
             var contact_save = 0;
-            if($('#phone-collapse').hasClass("in")) {
+            if($('#phone-collapse-' + product_id).hasClass("in")) {
                 contact_name = $('input[data-name="contact-name-input-' + product_id + '"]').val();
                 contact_phone = $('input[data-name="contact-phone-input-' + product_id + '"]').val();
                 if ($('input[data-name="contact-save' + product_id + '"]').is(':checked')) 
@@ -173,7 +174,7 @@
             }
 
             result &= validate($('div[data-name="contact-container"]'),
-                        hasInput(contact_name) && hasInput(contact_phone) && cell_phone_reg.test(contact_phone),
+                        hasInput(contact_name) && reg_contact_name.test(contact_name) && hasInput(contact_phone) && cell_phone_reg.test(contact_phone),
                         'div[data-name="contact-error-' + product_id + '"]');
 
             if (result) {

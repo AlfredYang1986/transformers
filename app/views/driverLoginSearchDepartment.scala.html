@@ -326,6 +326,8 @@
                     query_object['weight'] = volume;
                 }
 
+                query_object['status'] = 0;
+
                 $.ajax({
                     // url: "/html/driver/search/company",
                     url: "/html/company/product/query",
@@ -435,6 +437,7 @@
                 }
 
                 query_object['skip'] = $("div[data-name='product-result']").length;
+                query_object['status'] = 0;
 
                 $.ajax({
                     // url: "/html/driver/search/company",
