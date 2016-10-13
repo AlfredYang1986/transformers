@@ -395,7 +395,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">时效需求</label>
                                 <div class="col-sm-8">
-                                    <input type="text"  data-name='date-requirement' class="form-control" placeholder="默认为正常时效" value={(iter \ "date_requirement").asOpt[String].get} />
+                                    <input type="text"  data-name={"date-requirement-" + product_id} class="form-control" placeholder="默认为正常时效" value={(iter \ "date_requirement").asOpt[String].get} />
                                 </div>
                             </div>
 
@@ -413,7 +413,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">其他备注</label>
                                 <div class="col-sm-8">
-                                    <textarea type="text" class="form-control" rows="3" data-name='notes' style="resize: none;">{(iter \ "notes").asOpt[String].get}</textarea>
+                                    <textarea type="text" class="form-control" rows="3" data-name={"notes-" + product_id} style="resize: none;">{(iter \ "notes").asOpt[String].get}</textarea>
                                 </div>
                             </div>
 
