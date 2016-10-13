@@ -632,7 +632,7 @@
 							<div class="special-storage" style="min-height: 40px !important;"> 
 								
 								<div class="col-sm-2" style="padding-right: 0px !important">
-									<select class="form-control" data-name="province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+									<select class="form-control" data-name="province" data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)">
 										<option selected disabled>请选择省</option>
 										@{cities map { iter => 
 											<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
@@ -1098,7 +1098,7 @@
 			if(final_result && result) {
 				query_object['special_storage'] = storage_lst;
 			}
-			// validate($(),final_result,'div[data-name="special-storage-error"]');
+			 validate($(),final_result && result,'div[data-name="special-storage-error"]');
 			
 			return Boolean(result);
 		}
