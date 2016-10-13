@@ -391,6 +391,42 @@
                                     <label><input class="form-control" data-name={"volume-" + product_id} type="text" value={(iter \ "volume").asOpt[Float].get.toString} /></label>
                                 </div>
                             </div>
+                            } else {
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时效需求</label>
+                                <div class="col-sm-8">
+                                    <input type="text"  data-name='date-requirement' class="form-control" placeholder="默认为正常时效">
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='date-requirement-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的失效需求
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">其他备注</label>
+                                <div class="col-sm-8">
+                                    <textarea type="text" class="form-control" rows="3" data-name='notes' style="resize: none;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none;" data-name='notes-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效的备注信息
+                                    </div>
+                                </div>
+                            </div>
                             }}
 
                             <div class="form-group">
