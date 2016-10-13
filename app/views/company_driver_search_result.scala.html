@@ -74,7 +74,7 @@
                                                     <label type="text" class="control-label">
                                                     { 
                                                         (iter \ "vehicle_length").asOpt[List[Double]].get.map { x => 
-                                                            x + "米 "
+                                                            "%.1f".format(x) + "米 "
                                                         }
                                                     }</label>
                                                 </div>
