@@ -32,30 +32,79 @@ val content = (iter \ "content").asOpt[String].get.replace('"', ''')
                                     <input type="text" class="form-control" data-title={(iter \ "info_id").asOpt[String].get} value={(iter \ "title").asOpt[String].get} />
                                 </div>
                             </div>
+
+                            <div class="form-group" style="display: none;" data-name='title-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        标题不少于3个字
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">正文</label>
                                 <div class="col-sm-8" data-name={"edit"+{(iter \ "info_id").asOpt[String].get}}>
                                     <div class="wysiwyg-editor"></div>
                                 </div>
                             </div>
+
+                            <div class="form-group" style="display: none;" data-name='content-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写正文
+                                    </div>
+                                </div>
+                            </div> 
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">联系人</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" data-contact={(iter \ "info_id").asOpt[String].get} value={(iter \ "contact").asOpt[String].get} />
                                 </div>
                             </div>
+
+                            <div class="form-group" style="display: none;" data-name='contact-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效联系人
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">联系人电话</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" data-phone={(iter \ "info_id").asOpt[String].get} value={(iter \ "phone_no").asOpt[String].get} />
                                 </div>
                             </div>
+
+                            <div class="form-group" style="display: none;" data-name='phone-no-error'>
+                                <label for="company-name" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <div class="alert alert-danger" role="alert">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Error:</span>
+                                        请填写有效联系电话
+                                    </div>
+                                </div>
+                            </div> 
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">公司名称</label>
                                 <div class="col-sm-8">
                                     <input disabled="" type="text" class="form-control" data-company-name={(iter \ "company_name").asOpt[String].get} value={(iter \ "company_name").asOpt[String].get} />
                                 </div>
                             </div>
+
 
                             {
                                 (iter \ "status").asOpt[Int].get match {

@@ -32,6 +32,23 @@
             $('li[data-current="index"]').addClass("active");
         });
 
+        function hasInput(str) {
+            var result = (typeof(str) == "string") && (str != "");
+            return result;
+        }
+
+        function validate(ele, result, name) {
+            if (result) $(ele).removeClass('validate-error');
+            else $(ele).addClass('validate-error');
+
+            if (name) {
+                if (result) $(String(name)).css({"display": "none"});
+                else $(String(name)).css({"display": "block"});
+            }
+
+            return result;
+        }
+
         function setDefault(edit, html) {
             $('div[data-name="' + edit + '"]').find('.note-editable').html(html);
         }
@@ -63,11 +80,24 @@
         }
 
         function updateInfo(info_id) {
+            var result = true;
+
+            var title = $('input[data-title="' + info_id + '"]').val();
+            var regTitle = /^.{3,30}$/;
+            result &= validate($('input[data-title="' + info_id + '"]'), hasInput(title) && regTitle.test(title), 'div[data-name="title-error"]');
 
             var content = $('div[data-name="edit' + info_id + '"]').find('.note-editable').html();
-            var title = $('input[data-title="' + info_id + '"]').val();
+            result &= validate($('div[data-name="edit' + info_id + '"]'), hasInput(content), 'div[data-name="content-error"]');
+
             var contact = $('input[data-contact="' + info_id + '"]').val();
+            regName = /^[\u4e00-\u9fa5]{0,}$/;
+            result &= validate($('input[data-contact="' + info_id + '"]'), hasInput(contact) && regName.test(contact), 'div[data-name="contact-error"]');
+
             var phone_no = $('input[data-phone="' + info_id + '"]').val();
+            regPhone = /^1[3|4|5|7|8]\d{9}$/;
+            result &= validate($('input[data-phone="' + info_id + '"]'), hasInput(phone_no) && regPhone.test(phone_no), 'div[data-name="phone-no-error"]');
+
+
 
             var query_object = new Object();
             query_object['info_id'] = info_id;
@@ -76,25 +106,27 @@
             query_object['content'] = content;
             query_object['phone_no'] = phone_no;
 
-            $.ajax({
-                url: "/data/company/info/update",
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json, charset=utf-8',
-                data: JSON.stringify(query_object),
-                cache: false,
-                success: function (data) {
-                    if (data.status == "ok") {
-                        alert("修改成功");
-                        location.reload();
-                    } else {
-                        alert(data.error.message);
+            if (result) {
+                $.ajax({
+                    url: "/data/company/info/update",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json, charset=utf-8',
+                    data: JSON.stringify(query_object),
+                    cache: false,
+                    success: function (data) {
+                        if (data.status == "ok") {
+                            alert("修改成功");
+                            location.reload();
+                        } else {
+                            alert(data.error.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("请检查您的输入");
                     }
-                },
-                error: function (xhr, status, error) {
-                    alert("请检查您的输入");
-                }
-            });
+                });
+            }
         }
 
         function deleteInfo(info_id) {
