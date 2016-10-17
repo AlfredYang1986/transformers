@@ -728,8 +728,8 @@ object AuthModule {
                         "cell_phone" -> phoneNo,
                         "user_lst.indicate" -> phoneNo)) select (x => x)).toList.length > 0) ErrorCode.errorToJson("duplicate phone or email")
         else {
-//            val code = scala.util.Random.nextInt(9000) + 1000
-            val code = "1111"
+            val code = scala.util.Random.nextInt(9000) + 1000
+//            val code = "1111"
             
             (from db() in "reg" where ("cell_phone" -> phoneNo) select (x => x)).toList match {
               case Nil => {
@@ -748,8 +748,8 @@ object AuthModule {
               }
             }
            
-//            import play.api.Play.current
-//            smsModule().sendSMS(phoneNo, code.toString)
+            import play.api.Play.current
+            smsModule().sendSMS(phoneNo, code.toString)
             toJson(Map("status" -> "ok", "result" -> "send sms message success"))
         }
     }
@@ -763,8 +763,8 @@ object AuthModule {
                         "cell_phone" -> phoneNo,
                         "user_lst.indicate" -> phoneNo)) select (x => x)).toList.length > 0) {
           
-          //            val code = scala.util.Random.nextInt(9000) + 1000
-            val code = "1111"
+            val code = scala.util.Random.nextInt(9000) + 1000
+//            val code = "1111"
             
             (from db() in "reg" where ("cell_phone" -> phoneNo) select (x => x)).toList match {
               case Nil => {
@@ -783,8 +783,8 @@ object AuthModule {
               }
             }
            
-//            import play.api.Play.current
-//            smsModule().sendSMS(phoneNo, code.toString)
+            import play.api.Play.current
+            smsModule().sendSMS(phoneNo, code.toString)
             toJson(Map("status" -> "ok", "result" -> "send sms message success"))
 
         } else {
