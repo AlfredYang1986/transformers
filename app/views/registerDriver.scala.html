@@ -266,8 +266,6 @@
 								</div>
 						
 								<button class="btn btn-sm btn-default driver-delete-btn" onclick="deleteRoute('driver-line', $(this), 5)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i> &nbsp;&nbsp;&nbsp; 删除</button> 
-
-
 							</div>
 						</fieldset>
 					</div>		
@@ -354,6 +352,21 @@
 			</div>
 		</div>
 	</div>
+
+	<ul>
+		@{cities map { iter => 
+			<li data-category="province" data-value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</li>
+		}};
+
+		@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+			<li data-category="city" data-filter={(iter \ "province").asOpt[String].get} data-value={x}>{x}</li>
+		}}};
+
+		@{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+			(inner \ "districts").asOpt[List[String]].get map { x => 
+			<li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
+		}}}};
+	</ul>
 } {
 	<script src="@routes.Assets.at("javascripts/district-change.js")"></script>
 	<script type="text/javascript">
