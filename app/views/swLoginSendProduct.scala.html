@@ -32,18 +32,11 @@
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name="origin-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
                                                 <option selected disabled data-filter="choice" >请选择市</option>
-                                                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                }}}; -->
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name='origin-district' data-index='2'>
                                                 <option selected disabled data-filter="choice" >请选择区</option>
-                                                <!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
-                                                    (inner \ "districts").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-                                                }}}}; -->
                                             </select>
                                         </div>
                                     </div>          
@@ -90,18 +83,11 @@
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name="destination-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
                                                 <option selected disabled data-filter="choice" >请选择市</option>
-                                                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                }}}; -->
                                             </select> 
                                         </div>
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name='destination-district' data-index='2'>
                                                 <option selected disabled data-filter="choice" >请选择区</option>
-                                                <!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
-                                                    (inner \ "districts").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-                                                }}}}; -->
                                             </select> 
                                         </div>
                                     </div>          
@@ -147,18 +133,11 @@
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name="storage-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
                                                 <option selected disabled data-filter="choice" >请选择市</option>
-                                                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                }}}; -->
                                             </select>
                                         </div>
                                         <div class="col-sm-3">
                                             <select class="form-control" data-name='storage-district' data-index='2'>
                                                 <option selected disabled data-filter="choice" >请选择区</option>
-                                                <!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
-                                                    (inner \ "districts").asOpt[List[String]].get map { x => 
-                                                    <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-                                                }}}}; -->
                                             </select> 
                                         </div>
                                     </div>          

@@ -343,14 +343,10 @@ object SpecialWayController extends Controller {
             val user = AuthModule.queryUserWithToken(token)
             val auth = (user \ "auth").asOpt[Int].get
 
-
-         
-            
             if (auth > authTypes.speicalwayBase.t) {
                 val company = AuthModule.queryInstanceWithToken(token)
                 val open_id = (company \ "open_id").asOpt[String].get
                 Ok(views.html.swLoginSendProduct(xmlOpt.allCities)(token)
-//                Ok(views.html.swLoginSendProduct(Nil)(token)
                     ((company \ "open_id").asOpt[String].get)
                     ((company \ "company_name").asOpt[String].get)(auth)
                     ((companyConfigModule.companyConfigProductNameQuery(
