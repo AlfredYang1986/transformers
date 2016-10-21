@@ -343,6 +343,20 @@ object SpecialWayController extends Controller {
             val user = AuthModule.queryUserWithToken(token)
             val auth = (user \ "auth").asOpt[Int].get
 
+            {
+              var startTime=System.currentTimeMillis()   //获取开始时间  
+              xmlOpt.allCities  //测试的代码段  
+              var endTime=System.currentTimeMillis() //获取结束时间  
+              println("程序运行时间： "+ (endTime - startTime) + "ms")
+            }
+            
+            {
+              var startTime=System.currentTimeMillis()   //获取开始时间  
+              xmlOpt.allCities  //测试的代码段  
+              var endTime=System.currentTimeMillis() //获取结束时间  
+              println("程序运行时间： "+ (endTime - startTime) + "ms")
+            }
+            
             if (auth > authTypes.speicalwayBase.t) {
                 val company = AuthModule.queryInstanceWithToken(token)
                 val open_id = (company \ "open_id").asOpt[String].get
