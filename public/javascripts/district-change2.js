@@ -11,11 +11,6 @@ function cityChanges(ele, container, index) {
 	});
 }
 
-function cityChanges2(ele, container, index) {
-	cityChanges(ele, container, index);
-	districtChanges($(container).find('select[data-index="' + String(a + 1) + '"]'), container, index);
-}
-
 function districtChanges(ele, container, index) {
 	var a = Number($(ele).attr("data-index"));
 	var city = $(ele).val();
@@ -27,4 +22,10 @@ function districtChanges(ele, container, index) {
 		var v = $(this).attr("data-value");
 		$("<option value='" + v  + "'>" + v + "</option>").appendTo(s);
 	});
+}
+
+function cityChanges2(ele, container, index) {
+	var a = Number($(ele).attr("data-index"));
+	cityChanges(ele, container, index);
+	districtChanges($(container).find('select[data-index="' + String(a + 1) + '"]'), container, index);
 }
