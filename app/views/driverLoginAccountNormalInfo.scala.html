@@ -141,7 +141,7 @@
                                                         } else {
                                                             <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
                                                         }
-                                                    }};
+                                                    }}
                                                 </select>
                                                 }
                                             </div>
@@ -151,16 +151,16 @@
                                                 val province = (iter \ "origin_province").asOpt[String].get
                                                 val tmp = (iter \ "origin_city").asOpt[String].get
                                                 <select class="form-control" data-name="origin-city" data-index="1" >
-                                                    {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                        if (tmp.equals(x)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
-                                                        } else if (province.equals((p \ "province").asOpt[String].get)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } 
-                                                        <!-- else {
-                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } -->
-                                                    }}};
+                                                    { 
+                                                        val cts = ((cities filter ( p => (p \ "province").asOpt[String].get.equals(province))).head \ "cities").asOpt[List[String]].get
+                                                        cts map { x => 
+                                                            if (tmp.equals(x)) {
+                                                                <option data-filter={province} value={x} selected="">{x}</option>
+                                                            } else {
+                                                                <option data-filter={province} value={x} >{x}</option>
+                                                            }
+                                                        }
+                                                    }
                                                 </select>
                                                 }
                                             </div>
@@ -179,7 +179,7 @@
                                                         } else {
                                                             <option value={(p \ "province").asOpt[String].get}>{(p \ "province").asOpt[String].get}</option>
                                                         }
-                                                    }};
+                                                    }}
                                                 </select>
                                                 } 
                                             </div>
@@ -189,16 +189,16 @@
                                                 val province = (iter \ "destination_province").asOpt[String].get
                                                 val tmp = (iter \ "destination_city").asOpt[String].get
                                                 <select class="form-control" data-name="destination-city" data-index="3" >
-                                                    {cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
-                                                        if (tmp.equals(x)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
-                                                        } else if (province.equals((p \ "province").asOpt[String].get)) {
-                                                            <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } 
-                                                        <!-- else {
-                                                            <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } -->
-                                                    }}};
+                                                    { 
+                                                        val cts = ((cities filter ( p => (p \ "province").asOpt[String].get.equals(province))).head \ "cities").asOpt[List[String]].get
+                                                        cts map { x => 
+                                                            if (tmp.equals(x)) {
+                                                                <option data-filter={province} value={x} selected="">{x}</option>
+                                                            } else {
+                                                                <option data-filter={province} value={x} >{x}</option>
+                                                            }
+                                                        }
+                                                    }
                                                 </select>
                                                 }
                                             </div>      
@@ -268,9 +268,6 @@
         <div class="col-sm-2" style="padding-right: 0px !important">
             <select class="form-control" data-name="origin-city" data-index="1">
                 <option selected disabled data-filter="choice" >请选择市</option>
-                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                }}}; -->
             </select>
         </div>
 
@@ -290,9 +287,6 @@
         <div class="col-sm-2" style="padding-right: 0px !important">
             <select class="form-control" data-name="destination-city" data-index="3">
                 <option selected disabled data-filter="choice" >请选择市</option>
-                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-                    <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                }}}; -->
             </select>
         </div>
         <button class="btn btn-sm btn-default" style="margin-left: 20px !important; background: none !important; border:none !important;"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>

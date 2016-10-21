@@ -388,15 +388,10 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city" data-index="1">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 
 							<div class="col-sm-2 driver-register">
-							<!--
-								<img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
 								<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
 							</div>
 
@@ -412,9 +407,6 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city" data-index="3">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 								<button class="btn btn-sm btn-default company-delete" onclick="deleteRoute('company-line', $(this), 6)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
@@ -572,9 +564,6 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city" data-index="1">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 
@@ -594,9 +583,6 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city" data-index="3">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 								<button class="btn btn-sm btn-default specialway-delete" onclick="deleteRoute('special-line', $(this), 5)"><i class="fa fa-trash-o" style="color:#6E6E6E"><span style="color: #6E6E6E; margin-left: 15px;">删除</span></i></button>
@@ -643,19 +629,12 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name='district' data-index='2'>
 										<option selected disabled data-filter="choice" >请选择区</option>
-										<!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
-											(inner \ "districts").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-										}}}}; -->
 									</select>
 								</div>
 
@@ -808,6 +787,76 @@
 			<li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
 		}}}};
 	</ul>
+
+	<div class="company-line-copy" style="min-height: 40px !important">
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
+				<option selected disabled>请选择省</option>
+				@{cities map { iter => 
+					<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+				}};
+			</select>
+		</div>
+
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="origin-city" data-index="1">
+				<option selected disabled data-filter="choice" >请选择市</option>
+			</select>
+		</div>
+
+		<div class="col-sm-2 driver-register">
+			<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
+		</div>
+
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="destination-province" data-index="2" onchange="cityChanges($(this), $(this).parent().parent(), 3)">
+				<option selected disabled data-filter="choice" >请选择省</option>
+				@{cities map { iter => 
+					<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+				}};
+			</select>
+		</div>
+
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="destination-city" data-index="3">
+				<option selected disabled data-filter="choice" >请选择市</option>
+			</select>
+		</div>
+		<button class="btn btn-sm btn-default company-delete" onclick="deleteRoute('company-line', $(this), 6)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
+
+	</div>
+
+	<div class="special-storage-copy" style="min-height: 40px !important;"> 
+		
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="province" data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)">
+				<option selected disabled>请选择省</option>
+				@{cities map { iter => 
+					<option value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</option>
+				}};
+			</select>
+		</div>
+
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name="city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
+				<option selected disabled data-filter="choice" >请选择市</option>
+			</select>
+		</div>
+
+		<div class="col-sm-2" style="padding-right: 0px !important">
+			<select class="form-control" data-name='district' data-index='2'>
+				<option selected disabled data-filter="choice" >请选择区</option>
+			</select>
+		</div>
+
+		<button class="btn btn-sm btn-default specialway-delete-type" onclick="deleteRoute('special-storage', $(this), 5)"><i class="fa fa-trash-o" style="color:#6E6E6E"><span style="color: #6E6E6E; margin-left: 15px;">删除</span></i></button>
+
+		<div class="col-sm-12 specialway-mt">
+			<textarea type="address" data-name='address' class="form-control" rows="3" placeholder="详细地址（必填）"></textarea>
+		</div>
+
+	</div>
+
 } {
 	<script type="text/javascript">
 		var query_object;

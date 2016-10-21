@@ -235,15 +235,10 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city" data-index="1">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="text-align:center;">
-								<!--
-									<img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
 									<i class="fa fa-exchange fa-2x" aria-hidden="true"></i>
 								</div>
 
@@ -259,9 +254,6 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city" data-index="3">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
-											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}}; -->
 									</select>
 								</div>
 						
