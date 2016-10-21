@@ -407,6 +407,9 @@
 </div>
 
     <ul style="display: none;">
+    @{
+        val startTime=System.currentTimeMillis()
+            
         @{cities map { iter => 
             <li data-category="province" data-value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</li>
         }};
@@ -419,6 +422,10 @@
             (inner \ "districts").asOpt[List[String]].get map { x => 
             <li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
         }}}};
+
+        val endTime=System.currentTimeMillis()
+        println("程序运行时间： "+ (endTime - startTime) + "ms")
+    }
     </ul>
 
 } {
