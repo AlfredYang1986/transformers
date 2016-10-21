@@ -2,7 +2,7 @@
 
 @main_sub("机构注册") {
     <script src="@routes.Assets.at("javascripts/routes-manager.js")"></script>
-    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
+    <script src="@routes.Assets.at("javascripts/district-change2.js")"></script>
 } {
 	<div class="container-fluid content-bkg">
 		<div class="container another-bkg">
@@ -388,9 +388,9 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city" data-index="1">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}};
+										}}}; -->
 									</select>
 								</div>
 
@@ -412,9 +412,9 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city" data-index="3">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}};
+										}}}; -->
 									</select>
 								</div>
 								<button class="btn btn-sm btn-default company-delete" onclick="deleteRoute('company-line', $(this), 6)"><i class="fa fa-trash-o fa-2x" style="color:#6E6E6E"></i>删除</button>
@@ -572,9 +572,9 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="origin-city" data-index="1">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}};
+										}}}; -->
 									</select>
 								</div>
 
@@ -594,9 +594,9 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="destination-city" data-index="3">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}};
+										}}}; -->
 									</select>
 								</div>
 								<button class="btn btn-sm btn-default specialway-delete" onclick="deleteRoute('special-line', $(this), 5)"><i class="fa fa-trash-o" style="color:#6E6E6E"><span style="color: #6E6E6E; margin-left: 15px;">删除</span></i></button>
@@ -643,19 +643,19 @@
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name="city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)">
 										<option selected disabled data-filter="choice" >请选择市</option>
-										@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+										<!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-										}}};
+										}}}; -->
 									</select>
 								</div>
 
 								<div class="col-sm-2" style="padding-right: 0px !important">
 									<select class="form-control" data-name='district' data-index='2'>
 										<option selected disabled data-filter="choice" >请选择区</option>
-										@{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+										<!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
 											(inner \ "districts").asOpt[List[String]].get map { x => 
 											<option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-										}}}};
+										}}}}; -->
 									</select>
 								</div>
 
@@ -793,6 +793,21 @@
 			</div>
 		</div>
 	</div>
+
+	<ul style="display: none;">
+		@{cities map { iter => 
+			<li data-category="province" data-value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</li>
+		}};
+
+		@{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+			<li data-category="city" data-filter={(iter \ "province").asOpt[String].get} data-value={x}>{x}</li>
+		}}};
+
+		@{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+			(inner \ "districts").asOpt[List[String]].get map { x => 
+			<li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
+		}}}};
+	</ul>
 } {
 	<script type="text/javascript">
 		var query_object;
