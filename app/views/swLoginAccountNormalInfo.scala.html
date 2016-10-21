@@ -52,9 +52,10 @@
                                                                 <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                             } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                                 <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
-                                                            } else {
+                                                            } 
+                                                            <!-- else {
                                                                 <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                            }
+                                                            } -->
                                                         }}};
                                                     </select>
                                                     }
@@ -71,9 +72,10 @@
                                                                 <option data-filter={(inner \ "city").asOpt[String].get} value={x} selected="">{x}</option>
                                                             } else if (city.equals((inner \ "city").asOpt[String].get)) {
                                                                 <option data-filter={(inner \ "city").asOpt[String].get} value={x} >{x}</option>
-                                                            } else {
+                                                            } 
+                                                            <!-- else {
                                                                 <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-                                                            }
+                                                            } -->
                                                         }}}};
                                                     </select>
                                                     }
@@ -142,9 +144,10 @@
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } else {
+                                                        } 
+                                                        <!-- else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        }
+                                                        } -->
                                                     }}};
                                                 </select>
                                             }
@@ -176,9 +179,10 @@
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x} selected="">{x}</option>
                                                         } else if (province.equals((p \ "province").asOpt[String].get)) {
                                                             <option data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        } else {
+                                                        } 
+                                                        <!-- else {
                                                             <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                        }
+                                                        } -->
                                                     }}};
                                                 </select>
                                             }
@@ -420,9 +424,9 @@
         <div class="col-xs-2" style="padding-right: 0px !important">
             <select class="form-control" data-name="origin-city" data-index="1">
                 <option selected disabled data-filter="choice" >请选择市</option>
-                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                     <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                }}};
+                }}}; -->
             </select>
         </div>
 
@@ -442,9 +446,9 @@
         <div class="col-xs-2" style="padding-right: 0px !important">
             <select class="form-control" data-name="destination-city" data-index="3">
                 <option selected disabled data-filter="choice" >请选择市</option>
-                @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                     <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                }}};
+                }}}; -->
             </select>
         </div>
         <div class="col-xs-2 col-xs-offset-1">
@@ -468,18 +472,18 @@
             <div class="col-xs-3">
                 <select class="form-control" data-name="storage-city" data-index="1" onchange="districtChanges($(this), $(this).parent().parent(), 1)" >
                     <option selected disabled data-filter="choice" >请选择市</option>
-                    @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                    <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                         <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                    }}};
+                    }}}; -->
                 </select>
             </div>
             <div class="col-xs-3">
                 <select class="form-control" data-name='storage-district' data-index='2'>
                     <option selected disabled data-filter="choice" >请选择区</option>
-                    @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+                    <!-- @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
                         (inner \ "districts").asOpt[List[String]].get map { x => 
                         <option style="display:none" data-filter={(inner \ "city").asOpt[String].get} value={x}>{x}</option>
-                    }}}};
+                    }}}}; -->
                 </select>
             </div>
             <div class="col-xs-3">
@@ -493,8 +497,23 @@
         </div>
     </div>
 
+    <ul style="display: none;">
+        @{cities map { iter => 
+            <li data-category="province" data-value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</li>
+        }};
+
+        @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+            <li data-category="city" data-filter={(iter \ "province").asOpt[String].get} data-value={x}>{x}</li>
+        }}};
+
+        @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+            (inner \ "districts").asOpt[List[String]].get map { x => 
+            <li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
+        }}}};
+    </ul>
+
 } {
-    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
+    <script src="@routes.Assets.at("javascripts/district-change2.js")"></script>
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");

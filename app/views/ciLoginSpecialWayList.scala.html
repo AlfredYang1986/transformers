@@ -56,9 +56,9 @@
                                                     <div class="col-sm-2">
                                                         <select class="form-control" data-name="search-origin-city" data-index="1">
                                                             <option selected disabled data-filter="choice" >请选择市</option>
-                                                            @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                            <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                                                                 <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                            }}};
+                                                            }}}; -->
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-1 text-center">
@@ -75,9 +75,9 @@
                                                     <div class="col-sm-2">
                                                         <select class="form-control" data-name="search-destination-city" data-index="3">
                                                             <option selected disabled data-filter="choice" >请选择市</option>
-                                                            @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+                                                            <!-- @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
                                                                 <option style="display:none" data-filter={(iter \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                            }}};
+                                                            }}}; -->
                                                         </select> 
                                                     </div>
                                                 </div>
@@ -154,7 +154,7 @@
 </div>
 
 } {
-    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
+    <script src="@routes.Assets.at("javascripts/district-change2.js")"></script>
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");

@@ -56,9 +56,9 @@
                                                         <div class="col-sm-2">
                                                             <select class="form-control" data-name="search-origin-city" data-index="1" >
                                                                 <option selected="" disabled="">请选择市</option>
-                                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                <!-- @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                                     <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                                }}};
+                                                                }}}; -->
                                                             </select>
                                                         </div>
                                                         <div class="col-sm-1">
@@ -75,9 +75,9 @@
                                                         <div class="col-sm-2">
                                                             <select class="form-control" data-name="search-destination-city" data-index="3" >
                                                                 <option selected="" disabled="">请选择市</option>
-                                                                @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
+                                                                <!-- @{cities map { p => (p \ "cities").asOpt[List[String]].get map { x => 
                                                                     <option style="display:none" data-filter={(p \ "province").asOpt[String].get} value={x}>{x}</option>
-                                                                }}};
+                                                                }}}; -->
                                                             </select> 
                                                         </div>
                                                     </div>          
@@ -288,8 +288,23 @@
     </div>
 </div>
 
+    <ul style="display: none;">
+        @{cities map { iter => 
+            <li data-category="province" data-value={(iter \ "province").asOpt[String].get}>{(iter \ "province").asOpt[String].get}</li>
+        }};
+
+        @{cities map { iter => (iter \ "cities").asOpt[List[String]].get map { x => 
+            <li data-category="city" data-filter={(iter \ "province").asOpt[String].get} data-value={x}>{x}</li>
+        }}};
+
+        @{cities map { iter => (iter \ "city_ditails").asOpt[List[play.api.libs.json.JsValue]].get map { inner => 
+            (inner \ "districts").asOpt[List[String]].get map { x => 
+            <li data-category="district" data-filter={(inner \ "city").asOpt[String].get} data-value={x}>{x}</li>
+        }}}};
+    </ul>
+
 } {
-    <script src="@routes.Assets.at("javascripts/district-change.js")"></script>
+    <script src="@routes.Assets.at("javascripts/district-change2.js")"></script>
     <script type="text/javascript">
         $(function(){
             $('li[data-current="index"]').addClass("active");
