@@ -21,7 +21,7 @@ function districtChanges(ele, container, index) {
 	var city = $(ele).val();
 
 	var s = $(container).find('select[data-index="' + String(a + 1) + '"]');
-	s.children().remove();
+	s.empty();
 
 	$.each($('li[data-category="district"][data-filter="' + city + '"]'), function() {
 		var v = $(this).attr("data-value");
