@@ -108,6 +108,10 @@
 			<district name="缙云县" />
 			<district name="遂昌县" />
 			<district name="松阳县" />
+			<district name="龙泉市" />
+			<district name="景宁县" />
+			<district name="云和县" />
+			<district name="庆元县" />
 		</city>
 
 		<city name="衢州">
@@ -138,6 +142,8 @@
 			<district name="平谷区" />
 			<district name="密云县" />
 			<district name="延庆县" />
+			<district name="崇文区" />
+			<district name="宣武区" />
 		</city>
 	</province>
 
@@ -159,6 +165,9 @@
 			<district name="青浦区" />
 			<district name="奉贤区" />
 			<district name="崇明县" />
+			<district name="闸北区" />
+			<district name="卢湾区" />
+			<district name="南汇区" />
 		</city>
 	</province>
 
@@ -223,6 +232,8 @@
 			<district name="秀山县" />
 			<district name="酉阳县" />
 			<district name="彭水县" />
+			<district name="万盛区" />
+			<district name="双桥区" />
 		</city>
 	</province>
 
@@ -236,6 +247,20 @@
 			<district name="藁城区" />
 			<district name="鹿泉区" />
 			<district name="栾城区" />
+			<district name="辛集市" />
+			<district name="晋州市" />
+			<district name="新乐市" />
+			<district name="井陉县" />
+			<district name="正定县" />
+			<district name="行唐县" />
+			<district name="灵寿县" />
+			<district name="高邑县" />
+			<district name="深泽县" />
+			<district name="赞皇县" />
+			<district name="无极县" />
+			<district name="平山县" />
+			<district name="元氏县" />
+			<district name="赵县" />
 		</city>
 
 		<city name="张家口">
@@ -247,6 +272,13 @@
 			<district name="崇礼区" />
 			<district name="张北县" />
 			<district name="康保县" />
+			<district name="沽源县" />
+			<district name="尚义县" />
+			<district name="蔚县" />
+			<district name="阳原县" />
+			<district name="怀安县" />
+			<district name="涿鹿县" />
+			<district name="赤城县" />
 		</city>
 			
 		<city name="承德">
@@ -703,6 +735,7 @@
 			<district name="南票区" />
 			<district name="绥中县" />
 			<district name="建昌县" />
+			<district name="兴城市" />
 		</city>
 	</province>
 
@@ -1019,6 +1052,10 @@
 			<district name="淮阴区" />
 			<district name="清浦区" />
 			<district name="涟水县" />
+			<district name="洪泽区" />
+			<district name="盱眙县" />
+			<district name="金湖县" />
+			<district name="楚州区" />
 		</city>
 
 		<city name="盐城">
@@ -1248,7 +1285,14 @@
 			<district name="砀山县" />
 			<district name="萧县" />
 			<district name="灵璧县" />
-			<district name="泗县" />		
+			<district name="泗县" />	
+			<district name="宣州区" />	
+			<district name="宁国市" />	
+			<district name="郎溪县" />	
+			<district name="广德县" />	
+			<district name="泾县" />	
+			<district name="绩溪县" />	
+			<district name="旌德县" />		
 		</city>
 
 		<city name="亳州">
@@ -1876,6 +1920,11 @@
 			<district name="罗山县" />
 			<district name="光山县" />
 			<district name="新县" />
+			<district name="潢川县" />
+			<district name="淮滨县" />
+			<district name="息县" />
+			<district name="商城县" />
+			<district name="固始县" />
 		</city>
 
 		<city name="周口">
@@ -1897,6 +1946,11 @@
 			<district name="上蔡县" />
 			<district name="平舆县" />
 			<district name="正阳县" />
+			<district name="遂平县" />
+			<district name="汝南县" />
+			<district name="确山县" />
+			<district name="泌阳县" />
+			<district name="新蔡县" />
 		</city>
 	</province>
 
@@ -2167,6 +2221,14 @@
 			<district name="京山县" />
 			<district name="沙洋县" />
 			<district name="钟祥市" />
+			<district name="荆州区" />
+			<district name="沙市区" />
+			<district name="石首市" />
+			<district name="松滋市" />
+			<district name="洪湖市" />
+			<district name="公安县" />
+			<district name="监利县" />
+			<district name="江陵县" />
 		</city>
 
 		<city name="宜昌">
@@ -2267,7 +2329,36 @@
 			<district name="宋洛乡" />
 			<district name="九湖镇" />
 			<district name="下谷坪土家族乡" />			
-		</city> 
+		</city>
+
+		<city name="仙桃市">
+			<district name="郑场镇" />
+			<district name="毛嘴镇" />
+			<district name="剅河镇" />
+			<district name="三伏潭镇" />
+			<district name="胡场镇" />
+			<district name="西流河镇" />
+			<district name="彭场镇" />
+			<district name="沙湖镇" />
+			<district name="杨林尾镇" />
+			<district name="张沟镇" />
+			<district name="郭河镇" />
+			<district name="通海口镇" />
+			<district name="陈场镇" />
+			<district name="长埫口镇" />
+			<district name="沔城回族镇" />
+			<district name="干河街道" />
+			<district name="龙华山街道" />
+			<district name="沙嘴街道" />
+			<district name="仙桃经济开发区" />
+			<district name="仙桃工业园" />
+			<district name="刘口工业园" />
+			<district name="仙桃高新技术产业园区" />
+			<district name="仙桃市精细化工园区" />
+			<district name="彭场工业园" />
+			<district name="仙桃国家农业科技园" />
+		</city>
+
 	</province>
 
 	<province name="广东省">
@@ -2283,6 +2374,33 @@
 			<district name="南沙区" />
 			<district name="从化区" />
 			<district name="增城区" />
+		</city>
+
+		<city name="中山">
+			<district name="火炬高技术产业开发区" />
+			<district name="石岐区办事处" />
+			<district name="东区办事处" />
+			<district name="西区办事处" />
+			<district name="南区办事处" />
+			<district name="五桂山办事处" />
+			<district name="黄圃镇" />
+			<district name="南头镇" />
+			<district name="东凤镇" />
+			<district name="阜沙镇" />
+			<district name="小榄镇" />
+			<district name="东升镇" />
+			<district name="古镇镇" />
+			<district name="横栏镇" />
+			<district name="三角镇" />
+			<district name="民众镇" />
+			<district name="南朗镇" />
+			<district name="港口镇" />
+			<district name="大涌镇" />
+			<district name="沙溪镇" />
+			<district name="三乡镇" />
+			<district name="板芙镇" />
+			<district name="神湾镇" />
+			<district name="坦洲镇" />
 		</city>
 
 		<city name="清远">
@@ -2410,6 +2528,8 @@
 			<district name="宝安区" />
 			<district name="龙岗区" />
 			<district name="盐田区" />
+			<district name="龙华区" />
+			<district name="坪山区" />
 		</city>
 
 		<city name="珠海">
@@ -2753,6 +2873,7 @@
 			<district name="彭州市" />
 			<district name="邛崃市" />
 			<district name="崇州市" />
+			<district name="简阳市" />
 		</city>
 			
 		<city name="广元">
@@ -3098,7 +3219,8 @@
 			<district name="贞丰县" />
 			<district name="望谟县" />
 			<district name="册亨县" />
-			<district name="安龙县" />		
+			<district name="安龙县" />
+			<district name="兴义市" />
 		</city>
 	</province>
 
@@ -3731,6 +3853,18 @@
 			<district name="丰镇市" />
 		</city>
 
+		<city name="通辽市">
+			<district name="通辽市" />
+			<district name="科尔沁区" />
+			<district name="霍林郭勒市" />
+			<district name="开鲁县" />
+			<district name="库伦旗" />
+			<district name="奈曼旗" />
+			<district name="扎鲁特旗" />
+			<district name="科尔沁左翼中旗" />
+			<district name="科尔沁左翼后旗" />
+		</city>
+		
 		<city name="鄂尔多斯">
 			<district name="东胜区" />
 			<district name="达拉特旗" />
