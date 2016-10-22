@@ -3874,6 +3874,7 @@
 			<district name="杭锦旗" />
 			<district name="乌审旗" />
 			<district name="伊金霍洛旗" />
+			<district name="康巴什新区" />
 		</city>
 
 		<city name="巴彦淖尔">
@@ -3907,6 +3908,24 @@
 			<district name="上林县" />
 			<district name="宾阳县" />
 			<district name="横县" />
+		</city>
+
+		<city name="来宾">
+			<district name="兴宾区" />
+			<district name="合山市" />
+			<district name="象州县" />
+			<district name="武宣县" />
+			<district name="忻城县金秀瑶族自治县" />
+		</city>
+
+		<city name="崇左">
+			<district name="江州区" />
+			<district name="凭祥市" />
+			<district name="扶绥县" />
+			<district name="宁明县" />
+			<district name="龙州县" />
+			<district name="大新县" />
+			<district name="天等县" />
 		</city>
 
 		<city name="桂林">
@@ -3967,6 +3986,7 @@
 			<district name="博白县" />
 			<district name="兴业县" />
 			<district name="北流市" />
+			<district name="福绵区" />
 		</city>
 
 		<city name="钦州">
@@ -4023,7 +4043,8 @@
 			<district name="八步区" />
 			<district name="昭平县" />
 			<district name="钟山县" />
-			<district name="富川县" />	
+			<district name="富川县" />
+			<district name="平桂区" />	
 		</city>
 	</province>
 
@@ -4174,11 +4195,18 @@
 			<district name="乌鲁木齐县" />
 		</city>
 
-		<city name="克拉玛奇">
+		<city name="克拉玛依">
 			<district name="独山子区" />
 			<district name="克拉玛依区" />
 			<district name="白碱滩区" />
 			<district name="乌尔禾区" />
+		</city>
+
+		<city name="克孜勒苏柯尔克孜自治州">
+			<district name="阿图什市" />
+			<district name="阿克陶县" />
+			<district name="阿合奇县" />
+			<district name="乌恰县" />
 		</city>
 
 		<city name="喀什">
@@ -4235,6 +4263,7 @@
 			<district name="博乐市" />
 			<district name="精河县" />
 			<district name="温泉县" />
+			<district name="阿拉山口市" />
 		</city>
 
 		<city name="昌吉">
@@ -4343,6 +4372,22 @@
 			<district name="兵团一零二团" />
 			<district name="兵团一零三团" />
 		</city>
+
+		<city name="北屯市">
+		</city>
+
+		<city name="铁门关市">
+		</city>
+
+		<city name="双河市">
+		</city>	
+
+		<city name="可克达拉市">
+		</city>
+
+		<city name="昆玉市">
+		</city>	
+
 	</province>
 
 	<province name="香港">
