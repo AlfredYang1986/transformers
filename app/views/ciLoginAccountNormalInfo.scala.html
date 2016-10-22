@@ -25,7 +25,7 @@
                                         <label class="col-sm-2 control-label">业务领域</label>
 
                                         <div class="col-sm-8">
-                                        @{
+                                        {
                                             val t = (company \ "type").asOpt[Int].get
                                             if (t != 2) {
                                                 val cb = (company \ "company_business").asOpt[List[String]].get
