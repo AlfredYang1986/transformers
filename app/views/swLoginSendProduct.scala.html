@@ -461,7 +461,7 @@
             var storage_address = $('textarea[data-name="storage-address"]').val();
 
             result &= validate($('div[data-name="storage"]'), 
-                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined), // && hasInput(storage_address),
+                        (storage_province != undefined) && (storage_city != undefined) && (storage_district != undefined) && hasInput(storage_address),
                         'div[data-name="storage-error"]');
 
             // var weight = $('input[data-name="weight"]').val();
@@ -545,7 +545,7 @@
             var cooperation_type = $('input[data-name="cooperation-type"]:checked').val();
 
             result &= validate($('div[data-name="cooperation-type-container"]'),
-                        vehicle_length_lst.length > 0,
+                        $('input[data-name="cooperation-type"]:checked').length > 0,
                         'div[data-name="cooperation-type-error"]');
 
             if (result) {

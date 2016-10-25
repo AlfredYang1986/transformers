@@ -30,20 +30,18 @@ val target_id = (iter \ "open_id").asOpt[String].get
                             <div class="content-box-wrapper">
                                 <div class="form-horizontal bordered-row" role="form">
                                     {if ((iter \ "type").asOpt[Int].get == module.auth.registerTypes.company.t) {
-                                        (iter \ "company_lines").asOpt[List[play.api.libs.json.JsValue]].get map { x => 
-                                            <div class="form-group">
-                                                <label for="certificate-type" class="col-sm-2 control-label">业务领域</label>
-                                                <div class="col-sm-8">
-                                                    <div class="col-sm-4">
-                                                        <label type='text' class="control-label">
-                                                        { (iter \ "company_business").asOpt[List[String]].get map { x => 
-                                                            {x + " "} 
-                                                        }}
-                                                        </label> 
-                                                    </div>
+                                        <div class="form-group">
+                                            <label for="certificate-type" class="col-sm-2 control-label">业务领域</label>
+                                            <div class="col-sm-8">
+                                                <div class="col-sm-4">
+                                                    <label type='text' class="control-label">
+                                                    { (iter \ "company_business").asOpt[List[String]].get map { x => 
+                                                        {x + " "} 
+                                                    }}
+                                                    </label> 
                                                 </div>
                                             </div>
-                                        }
+                                        </div>
                                     }}
 
                                     <div class="form-group">
