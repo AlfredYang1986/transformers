@@ -12,4 +12,11 @@ object Sercurity {
 	def getTimeSpanWith10Minutes : String = String.valueOf(Math.floor(new Date().getTime() / (1000 * 60 * 10)))
 	def getTimeSpanWithDay : String = String.valueOf(Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24)))
 	def getTimeSpanWith7Day : String = String.valueOf(Math.floor(new Date().getTime() / (1000 * 60 * 60 * 24 * 7)))
+
+	def getTimeSpanWithPast10Minutes : List[String] = {
+		val m = Math.floor(new Date().getTime() / (1000 * 60))
+		(0 to 9).map { tmp => 
+			String.valueOf(m - tmp)
+		}.toList
+	}
 }

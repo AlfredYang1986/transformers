@@ -130,13 +130,13 @@ object AuthModule {
         try {
             val cell_phone = (data \ "cell_phone").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong cell phone"))
             val code = (data \ "code").asOpt[String].map (x => x).getOrElse(throw new Exception("wrong code"))
-            val validate = Sercurity.getTimeSpanWith10Minutes
+            val validate = Sercurity.getTimeSpanWithPast10Minutes
             
             (from db() in "reg" where ("cell_phone" -> cell_phone) select (x => x)).toList match {
               case Nil => throw new Exception("wrong cell phone")
               case head :: Nil => {
                   if (head.getAs[String]("code").get != code) throw new Exception("wrong code")
-                  else if (head.getAs[String]("validate").get != validate) throw new Exception("not validate code")
+                  else if (!validate.contains(head.getAs[String]("validate").get)) throw new Exception("not validate code")
                   else toJson(Map("status" -> "ok", "result" -> "code is validate"))
               }
               case _ => throw new Exception("wrong cell phone")
@@ -145,8 +145,11 @@ object AuthModule {
           case ex : Exception => ErrorCode.errorToJson(ex.getMessage)
         }
     }
+
+
   
     def register(data : JsValue) : JsValue = {
+        val originPwd = (scala.util.Random.nextInt(900000) + 100000).toString
         val company_type = (data \ "company_type").asOpt[Int].map (x => x).getOrElse(throw new Exception("Bad Input"))
 
         def commonRegisterImpl(x : MongoDBObject) : (Boolean, String) =
@@ -273,7 +276,7 @@ object AuthModule {
             x += "auth" -> (if (company_type == specialway.t) authTypes.speicalwayMaster.t.asInstanceOf[Number]
                            else authTypes.companyMaster.t.asInstanceOf[Number])
             x += "indicate" -> name
-            x += "pwd" -> "Passw0rd"
+            x += "pwd" -> originPwd
             x += "screen_name" -> "company master"
         }
      
@@ -305,6 +308,12 @@ object AuthModule {
                  common += "user_lst" -> user_lst.result
                  
                  _data_connection.getCollection("user_profile") += common
+
+                {
+                    val phoneNo = (data \ "cell_phone").asOpt[String].get
+                    import play.api.Play.current
+                    smsModule().sendPassword(phoneNo, originPwd)
+                }
                  toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
               }
           }
@@ -312,6 +321,7 @@ object AuthModule {
     }
     
     def driverRegister(data : JsValue) : JsValue = {
+        val originPwd = (scala.util.Random.nextInt(900000) + 100000).toString
       
         import registerTypes._
         def createBasicAccount(x : MongoDBObject) = {
@@ -323,7 +333,7 @@ object AuthModule {
             x += "token" -> Sercurity.md5Hash(user_id +Sercurity.getTimeSpanWithMillSeconds)
             x += "auth" -> authTypes.driverMaster.t.asInstanceOf[Number]
             x += "indicate" -> phone
-            x += "pwd" -> "Passw0rd"
+            x += "pwd" -> originPwd
             x += "screen_name" -> name
         }
       
@@ -343,12 +353,12 @@ object AuthModule {
                 
                 val lines = MongoDBList.newBuilder
                 (data \ "driver_lines").asOpt[List[JsValue]].getOrElse(Nil).foreach { iter => 
-                      val line = MongoDBObject.newBuilder
-                      (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
-                      (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
-                      (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
-                      (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
-                      lines += line.result
+                    val line = MongoDBObject.newBuilder
+                    (iter \ "origin_province").asOpt[String].map (tmp => line += "origin_province" -> tmp).getOrElse(line += "origin_province" -> "")
+                    (iter \ "origin_city").asOpt[String].map (tmp => line += "origin_city" -> tmp).getOrElse(line += "origin_city" -> "")
+                    (iter \ "destination_province").asOpt[String].map (tmp => line += "destination_province" -> tmp).getOrElse(line += "destination_province" -> "")
+                    (iter \ "destination_city").asOpt[String].map (tmp => line += "destination_city" -> tmp).getOrElse(line += "destination_city" -> "")
+                    lines += line.result
                 }
                 x += "driver_lines" -> lines.result
                
@@ -375,6 +385,12 @@ object AuthModule {
                 x += "user_lst" -> user_lst.result
                 
                 _data_connection.getCollection("user_profile") += x.result
+
+                {
+                    val phoneNo = (data \ "phone_no").asOpt[String].get
+                    import play.api.Play.current
+                    smsModule().sendPassword(phoneNo, originPwd)
+                }
         
                 toJson(Map("status" -> toJson("ok"), "result" -> userResult(company_master)))
             }
@@ -736,13 +752,13 @@ object AuthModule {
                   val builder = MongoDBObject.newBuilder
                   builder += "cell_phone" -> phoneNo
                   builder += "code" -> code.toString
-                  builder += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  builder += "validate" -> Sercurity.getTimeSpanWithMinutes
                   
                   _data_connection.getCollection("reg") += builder.result
               }
               case head :: Nil => {
                   head += "code" -> code.toString
-                  head += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  head += "validate" -> Sercurity.getTimeSpanWithMinutes
                   
                   _data_connection.getCollection("reg").update(DBObject("cell_phone" -> phoneNo), head)
               }
