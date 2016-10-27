@@ -32,7 +32,7 @@
 							<div class="alert alert-danger" role="alert">
 							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  	<span class="sr-only">Error:</span>
-							  	请输入有效的公司名
+							  	请输入有效的公司名(公司名必须6各字以上)
 							</div>
 						</div>
 					</div>
@@ -136,7 +136,7 @@
 							<div class="alert alert-danger" role="alert">
 							  	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 							  	<span class="sr-only">Error:</span>
-							  	请填写有效的企业注册地址（不能输入特殊字符）
+							  	请填写有效的企业注册地址（不能输入特殊字符，并且地址在12个字以上）
 							</div>
 						</div>
 					</div>
@@ -788,7 +788,7 @@
 		}}}};
 	</ul>
 
-	<div class="company-line-copy" style="min-height: 40px !important">
+	<div style="display:none" class="company-line-copy" style="min-height: 40px !important">
 		<div class="col-sm-2" style="padding-right: 0px !important">
 			<select class="form-control" data-name="origin-province" data-index="0" onchange="cityChanges($(this), $(this).parent().parent(), 1)">
 				<option selected disabled>请选择省</option>
@@ -826,7 +826,7 @@
 
 	</div>
 
-	<div class="special-storage-copy" style="min-height: 40px !important;"> 
+	<div style="display:none" class="special-storage-copy" style="min-height: 40px !important;"> 
 		
 		<div class="col-sm-2" style="padding-right: 0px !important">
 			<select class="form-control" data-name="province" data-index="0" onchange="cityChanges2($(this), $(this).parent().parent(), 1)">
