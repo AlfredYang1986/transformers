@@ -349,6 +349,8 @@ object companyProductModule {
     }
     
     def product2JsValue(x : MongoDBObject) : JsValue = {
+        println(x.getAs[String]("product_id").get)
+
         val origin = x.getAs[MongoDBObject]("origin").get
         val destination = x.getAs[MongoDBObject]("destination").get
         val storage = x.getAs[MongoDBObject]("storage").map { x => 
