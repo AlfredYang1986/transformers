@@ -420,16 +420,17 @@
 
 
             var weight = $('input[data-name="weight"]').val();
+            var regIDLD = /^\d{3,4}$/;
 
             result &= validate($('input[data-name="weight"]'),
-                        hasInput(weight) && !isNaN(Number(weight)),
+                        hasInput(weight) && !isNaN(Number(weight) && regIDLD.test(weight)),
                         'div[data-name="weight-error"]');
 
 
             var volume = $('input[data-name="volume"]').val();
 
             result &= validate($('div[data-name="volume"]'),
-                        hasInput(volume) && !isNaN(Number(volume)),
+                        hasInput(volume) && !isNaN(Number(volume) && regIDLD.test(volume)),
                         'div[data-name="volume-error"]');
 
 

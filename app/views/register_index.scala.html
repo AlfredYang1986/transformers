@@ -939,7 +939,7 @@
 
 
 			var company_phone_dir = $('input[data-name="company-phone-dir"]').val();
-			var regIDLD = /^\d{4}$/;
+			var regIDLD = /^\d{3,4}$/;
 			result &= validate($('input[data-name="company-phone-dir"]'), hasInput(company_phone_dir) && regIDLD.test(company_phone_dir), 'div[data-name="company-phone-dir-error"]');
 
 			var company_phone_no = $('input[data-name="company-phone-no"]').val();
