@@ -41,8 +41,6 @@
                                         </div>
 
                                     <div class="col-sm-2" style="text-align:center;">
-                                    <!--
-                                        <img  src="@routes.Assets.at("images/arrow/twoway.png")"> -->
                                         <i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i>
                                     </div>
 
@@ -250,23 +248,6 @@
             var result = (typeof(str) == "string") && (str != "");
             return result;
         }
-
-        function cityChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var province = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + province + '"]').css({"display":"block"});
-        }
-
-        function districtChanges(ele, container, index) {
-            var a = Number($(ele).attr("data-index"));
-            var city = $(ele).val();
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children().css({"display":"none"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="choice"]').css({"display":"block"});
-            $(container).find('select[data-index="' + String(a + 1) + '"]').children('option[data-filter="' + city + '"]').css({"display":"block"});
-        }
-
 
         function getPlatformVehicle() {
             var result = true;
