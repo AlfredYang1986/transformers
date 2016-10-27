@@ -420,7 +420,7 @@
 
 
             var weight = $('input[data-name="weight"]').val();
-            var regIDLD = /^\d{3,4}$/;
+            var regIDLD = /^\d{1,4}$/;
 
             result &= validate($('input[data-name="weight"]'),
                         hasInput(weight) && !isNaN(Number(weight)) && regIDLD.test(weight),
