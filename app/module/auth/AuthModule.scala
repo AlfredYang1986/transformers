@@ -775,9 +775,9 @@ object AuthModule {
        
         if (phoneNo.isEmpty) ErrorCode.errorToJson("wrong cell phone")
         else if ((from db() in "user_profile" where (
-                    $or("phone_no" -> phoneNo, 
-                        "cell_phone" -> phoneNo,
-                        "user_lst.indicate" -> phoneNo)) select (x => x)).toList.length > 0) {
+                        "user_lst.indicate" -> phoneNo) select (x => x)).toList.length > 0) {
+                        // $or("phone_no" -> phoneNo, 
+                        // "cell_phone" -> phoneNo,
           
             val code = scala.util.Random.nextInt(9000) + 1000
 //            val code = "1111"
