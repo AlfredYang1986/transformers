@@ -787,13 +787,13 @@ object AuthModule {
                   val builder = MongoDBObject.newBuilder
                   builder += "cell_phone" -> phoneNo
                   builder += "code" -> code.toString
-                  builder += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  builder += "validate" -> Sercurity.getTimeSpanWithMinutes
                   
                   _data_connection.getCollection("reg") += builder.result
               }
               case head :: Nil => {
                   head += "code" -> code.toString
-                  head += "validate" -> Sercurity.getTimeSpanWith10Minutes
+                  head += "validate" -> Sercurity.getTimeSpanWithMinutes
                   
                   _data_connection.getCollection("reg").update(DBObject("cell_phone" -> phoneNo), head)
               }
