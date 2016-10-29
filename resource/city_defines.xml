@@ -1126,6 +1126,8 @@
 			<district name="滨湖区" />
 			<district name="江阴市" />
 			<district name="宜兴市" />
+			<district name="梁溪区" />
+			<district name="新吴区" />
 		</city>
 
 		<city name="苏州">
@@ -1199,6 +1201,7 @@
 			<district name="八公山区" />
 			<district name="潘集区" />
 			<district name="凤台县" />
+			<district name="寿县" />
 		</city>
 
 		<city name="滁州">
@@ -1237,6 +1240,11 @@
 			<district name="狮子山区" />
 			<district name="郊区" />
 			<district name="铜陵县" />
+			<district name="郊区" />
+			<district name="义安区" />
+			<district name="铜官区" />
+			<district name="枞阳县" />
+
 		</city>
 
 		<city name="安庆">
@@ -1266,7 +1274,7 @@
 		<city name="六安">
 			<district name="金安区" />
 			<district name="裕安区" />
-			<district name="寿县" />
+			<district name="叶集县" />
 			<district name="霍邱县" />
 			<district name="舒城县" />
 			<district name="金寨县" />
@@ -1438,7 +1446,7 @@
 			<district name="修水县" />
 			<district name="永修县" />
 			<district name="德安县" />
-			<district name="星子县" />
+			<district name="濂溪区" />
 			<district name="都昌县" />
 			<district name="湖口县" />
 			<district name="彭泽县" />
@@ -2891,7 +2899,7 @@
 			<district name="游仙区" />
 			<district name="三台县" />
 			<district name="盐亭县" />
-			<district name="安县" />
+			<district name="安州区" />
 			<district name="梓潼县" />
 			<district name="北川县" />
 			<district name="平武县" />
